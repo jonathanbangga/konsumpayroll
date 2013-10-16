@@ -30,7 +30,7 @@
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "Company Approvers 3";
+			$data['page_title'] = "Company Approvers";
 			
 			$this->layout->set_layout($this->theme);	
 			$this -> layout -> view('pages/view_company_approvers', $data);
