@@ -9,7 +9,6 @@
  * @version 1.0
  * @author Jonathan Bangga <jonathanbangga@gmail.com>
  */
-
 	class Company_approvers extends CI_Controller {
 		
 		/**
@@ -30,10 +29,13 @@
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "Company Approvers 3";
-			
+			$data['page_title'] = "Company Approvers 3";			
 			$this->layout->set_layout($this->theme);	
-			$this -> layout -> view('pages/view_company_approvers', $data);
+			$this->layout->view('pages/view_company_approvers', $data);
+		}
+		
+		public function we(){
+			echo 'tetwe';
 		}
 		
 	}
