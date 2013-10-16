@@ -29,15 +29,31 @@
 		public function index() {
 			$data['page_title'] = "Company Information";			
 			$this->layout->set_layout($this->theme);	
-		#	$this->layout->view('pages/hr/company_approvers_view', $data);
 			$this->layout->view('pages/hr/company_information_view', $data);
 		}
 		
 		public function approvers(){
-			$data['page_title'] = "Company Approvers 4";			
+			$data['page_title'] = "Company Approvers";			
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/company_approvers_view', $data);
-			
+			$this->layout->view('pages/hr/company_approvers_view', $data);	
+		}
+		
+		public function company_principal(){
+			$data['page_title'] = "Company Principal";			
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/company_principal_view', $data);	
+		}
+		
+		public function cost_center(){
+			$data['page_title'] = "Cost Center";			
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/cost_center_view', $data);		
+		}		
+		
+		public function gov_registration(){
+			$data['page_title'] = "Government Registration";			
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/government_registration_view', $data);			
 		}
 	
 	}
