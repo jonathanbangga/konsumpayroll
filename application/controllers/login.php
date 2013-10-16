@@ -7,10 +7,21 @@ class Login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->theme = $this->config->item('temp_company_wizard');
+		
 	}
 
 	public function index()
-	{
+	{		
+		if($this->input->post('login')) {
+			$this->form_validation->set_rules("username","username","required");
+			$this->form_validation->set_rules("password","password","required");
+			if($this->form_validation->run() == FALSE) {
+				
+			} else {
+				$this->session->set_userdata("user_id","1"); // test ra ni para sa hr oh yeah
+				redirect("/hr/company_approvers");
+			}
+		}
 		$data['page_title'] = "Company Approvers 3";			
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/login_view', $data);

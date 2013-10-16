@@ -3,11 +3,9 @@
 /**
  * Company Approvers Controller
  *
- * @package Module
- * @subpackage Company Approvers
  * @category Controller
  * @version 1.0
- * @author Jonathan Bangga <jonathanbangga@gmail.com>
+ * @author Christopher Cuizon <christophercuizons@gmail.com>
  */
 	class Company_approvers extends CI_Controller {
 		
@@ -29,13 +27,17 @@
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "Company Approvers 3";			
+			$data['page_title'] = "Company Information";			
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/company_approvers_view', $data);
+		#	$this->layout->view('pages/hr/company_approvers_view', $data);
+			$this->layout->view('pages/hr/company_information_view', $data);
 		}
 		
-		public function we(){
-			echo 'tetew';
+		public function approvers(){
+			$data['page_title'] = "Company Approvers 4";			
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/company_approvers_view', $data);
+			
 		}
 	
 	}
