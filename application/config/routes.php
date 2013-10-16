@@ -41,8 +41,8 @@
 $route['default_controller'] = "company_approvers";
 $route['404_override'] = '';
 
-//jc
-$route['([A-Za-z0-9_.])+/(:any)'] = "$2";
+#jc
+#$route['([A-Za-z0-9_.])+/(:any)'] = "$2";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

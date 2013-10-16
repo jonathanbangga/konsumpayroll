@@ -34,10 +34,7 @@
 			$this->layout->view('pages/view_company_approvers', $data);
 		}
 		
-		public function we(){
-			echo 'tetwe';
-		}
-		
+	
 	}
 
 /* End of file company_approvers.php */
