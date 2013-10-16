@@ -36,6 +36,10 @@
 			$this -> layout -> view('pages/view_company_approvers', $data);
 		}
 		
+		public function wee(){
+			print "test";
+		}
+		
 	}
 
 /* End of file company_approvers.php */
