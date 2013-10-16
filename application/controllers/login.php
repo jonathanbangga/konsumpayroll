@@ -19,7 +19,7 @@ class Login extends CI_Controller {
 				
 			} else {
 				$this->session->set_userdata("user_id","1"); // test ra ni para sa hr oh yeah
-				redirect("/hr/company_approvers");
+				redirect("/hr/Company");
 			}
 		}
 		$data['page_title'] = "Company Approvers 3";			
