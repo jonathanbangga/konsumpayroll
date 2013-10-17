@@ -1,0 +1,112 @@
+<?php print form_open('','onsubmit="return validateEmployee(this)"');?>
+	<h1>Add Employee</h1>
+	<div class="successContBox" style="display:none;"><?php print $this->session->flashdata('message');?></div>
+	company_id<input type="text" id="company_id" name="company_id" /> <br />
+	rank_id<input type="text" id="rank_id" name="rank_id" /> <br />
+	dept_id<input type="text" id="dept_id" name="dept_id" /> <br />
+	location_id<input type="text" id="location_id" name="location_id" /> <br />
+	fname<input type="text" id="fname" name="fname" /> <br />
+	mname<input type="text" id="mname" name="mname" /> <br />
+	lname<input type="text" id="lname" name="lname" /> <br />
+	emailaddress<input type="text" id="emailaddress" name="emailaddress" /> <br />
+	dob<input type="text" id="dob" name="dob" /> <br />
+	gender<input type="text" id="gender" name="gender" /> <br />
+	marital_status<input type="text" id="marital_status" name="marital_status" /> <br />
+	contact_no<input type="text" id="contact_no" name="contact_no" /> <br />
+	photo<input type="text" id="photo" name="photo" /> <br />
+	tin<input type="text" id="tin" name="tin" /> <br />
+	sss<input type="text" id="sss" name="sss" /> <br />
+	phil_health<input type="text" id="phil_health" name="phil_health" /> <br />
+	gsis<input type="text" id="gsis" name="gsis" /> <br />
+	emergency_contact_person<input type="text" id="emergency_contact_person" name="emergency_contact_person" /> <br />
+	emergency_contact_number<input type="text" id="emergency_contact_number" name="emergency_contact_number" /> <br />
+	position_id<input type="text" id="position_id" name="position_id" /> <br />
+	<br />
+	username<input type="text" id="username" name="username" /> <br />
+	password<input type="text" id="password" name="password" /> <br />
+	confirmpass<input type="text" id="confirmpass" name="confirmpass" /> <br />
+	permission<input type="text" id="access_level" name="access_level" /> <br />
+	payroll_group_id<input type="text" id="payroll_group_id" name="payroll_group_id" /> <br />
+	<br />
+	<input type="submit" class="btn" value="SAVE" name="save" />
+	<script>
+		function validateEmployee(){
+			var why = "";
+	
+			var company_id = jQuery("#company_id").val();
+			var rank_id = jQuery("#rank_id").val();
+			var dept_id = jQuery("#dept_id").val();
+			var location_id = jQuery("#location_id").val();
+			var fname = jQuery("#fname").val();
+			var mname = jQuery("#mname").val();
+			var lname = jQuery("#lname").val();
+			var emailaddress = jQuery("#emailaddress").val();
+			var dob = jQuery("#dob").val();
+			var marital_status = jQuery("#marital_status").val();
+			var contact_no = jQuery("#contact_no").val();
+			var tin = jQuery("#tin").val();
+			var sss = jQuery("#sss").val();
+			var phil_health = jQuery("#phil_health").val();
+			var gsis = jQuery("#gsis").val();
+			var emergency_contact_person = jQuery("#emergency_contact_person").val();
+			var emergency_contact_number = jQuery("#emergency_contact_number").val();
+			var position_id = jQuery("#position_id").val();
+			var username = jQuery("#username").val();
+			var password = jQuery("#password").val();
+			var confirmpass = jQuery("#confirmpass").val();
+			var access_level = jQuery("#access_level").val();
+			var payroll_group_id = jQuery("#payroll_group_id").val();
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			
+			if(company_id=="") why += "- Please enter Company \n";
+			if(rank_id=="") why += "- Please enter Rank \n";
+			if(dept_id=="") why += "- Please enter Depertment \n";
+			if(location_id=="") why += "- Please enter Location \n";
+			if(fname=="") why += "- Please enter Firstname \n";
+			if(mname=="") why += "- Please enter Middlename \n";
+			if(lname=="") why += "- Please enter Lastname \n";
+			if(emailaddress==""){
+				why += "- Please enter Email Address <br />";
+			}else if(!emailReg.test(emailaddress)){
+				why += "- The Email Address field must contain a valid email address \n";
+			}
+			if(dob=="") why += "- Please enter Date of birth \n";
+			if(marital_status=="") why += "- Please Marital Status \n";
+			if(contact_no=="") why += "- Please enter Contact Number \n";
+			if(tin=="") why += "- Please enter TIN \n";
+			if(sss=="") why += "- Please enter SSS \n";
+			if(phil_health=="") why += "- Please enter PhilHealth \n";
+			if(gsis=="") why += "- Please enter GSIS \n";
+			if(emergency_contact_person=="") why += "- Please enter Emergency Contact Person \n";
+			if(emergency_contact_number=="") why += "- Please enter Emergency Contact Number \n";
+			if(position_id=="") why += "- Please enter Position ID \n";
+			if(username=="") why += "- Please enter Username \n";
+			if(password==""){
+				why += "- Please enter Password \n";
+			}else if(password != confirmpass){
+				why += "- The password field must match the password confirmation field";
+			}
+			if(access_level=="") why += "- Please enter Permission \n";
+			if(payroll_group_id=="") why += "- Please enter Payroll Group \n";
+			
+			if(why!=""){
+				alert(why); return false;
+				return false;
+			}
+		}
+
+		function _successContBox(){
+			var successContBox = jQuery.trim(jQuery(".successContBox").text());
+			if(successContBox != ""){
+			    jQuery(".successContBox").css("display","block");
+			    setTimeout(function(){
+			        jQuery(".successContBox").fadeOut('100');
+			    },3000);
+			}
+		}
+
+		jQuery(function(){
+			_successContBox();
+		});
+	</script>
+<?php print form_close();?>
