@@ -10,9 +10,27 @@ var kpay = {
 					}
 				});
 			}
+		},
+		admin: {
+			company:{
+				add_company: function(e){
+					if(jQuery.trim(jQuery("#error").html())){
+						var h = jQuery("#error").html();
+						alert(h);
+					}
+				}
+			
+			}
 		}
 };
+
+// overwrite comments
+window.alert = function(msg){
+   jQuery(".source_error").html(msg);
+   jQuery(".source_error").dialog();
+}
 
 jQuery(function(){
 	kpay.hr.company_sidebar();
 });
+
