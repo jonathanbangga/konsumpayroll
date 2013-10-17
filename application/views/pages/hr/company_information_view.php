@@ -1,4 +1,4 @@
-	<a class="btn right" href="#">EDIT</a>
+	
 	<h1><?php echo $page_title;?></h1>
 	<table>
 		<tr>
@@ -46,4 +46,6 @@
 		  <td><input class="txtfield" name="" type="text" value="" ></td>
 		</tr>
 	</table>
+	<input type="submit" class="btn" value="EDIT" name="edit" />
+	
 	  
