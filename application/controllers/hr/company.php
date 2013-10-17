@@ -7,7 +7,7 @@
  * @version 1.0
  * @author Christopher Cuizon <christophercuizons@gmail.com>
  */
-	class Company_approvers extends CI_Controller {
+	class Company extends CI_Controller {
 		
 		/**
 		 * Theme options - default theme
