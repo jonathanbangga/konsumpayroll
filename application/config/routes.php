@@ -46,9 +46,5 @@ $route['admin/(:any)'] = "admin/manage/tetew";
 #jc
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
 
-
-
-
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
