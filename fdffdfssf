@@ -1,0 +1,103 @@
+[33mcommit 8cc9e80dd715edbd78f9a3e29c02d1e1396dd2b2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 16:40:20 2013 +0800
+
+    Deleted company_approvers and change to company due to redundancy
+
+[33mcommit 6aec88c824a49b17adf7f48a0879f54b4b97667c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 16:01:58 2013 +0800
+
+    Updated all on sidebar menu controller approvers as well as the views on company info ,gov registration , company approvers , principal cost center
+
+[33mcommit f97c4c073e4606a7a45171f6547d44e281889cb1[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 15:32:55 2013 +0800
+
+    updated company for hr controllers and views
+
+[33mcommit ddf65f1706f2fa8bdcb8c4892c92e80946060dc9[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 14:32:30 2013 +0800
+
+    Updated new hr controllers
+
+[33mcommit d135193421dab37d5fe139fb1a10d60eb9fc7817[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 14:24:54 2013 +0800
+
+    new updates
+
+[33mcommit 8ef2eea6ab6355e36664ab51dde4d09072b7d930[m
+Merge: c7232fe e04febd
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 14:04:18 2013 +0800
+
+    Updated the conflicts between company approvers
+
+[33mcommit e04febd1978ed9269a994f878f5dfd16eaa08dd3[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:56:58 2013 +0800
+
+    new updates
+
+[33mcommit c7232fed94f15bea4b1bd31809599bbb6f887ed3[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 13:54:29 2013 +0800
+
+    added new test controller
+
+[33mcommit 0cd87b78911108dfbad7b0bbc62d6dcc4ed618bf[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:52:10 2013 +0800
+
+    new updates
+
+[33mcommit 76eb0e957e9d6bd1b840a1530ee06305a5317008[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:48:47 2013 +0800
+
+    new updates
+
+[33mcommit 5aefc44c875a782b30e026f08cb4bcc68d2d3e7c[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 12:59:34 2013 +0800
+
+    company approvers 3
+
+[33mcommit a5a8217273b388bc854c70de3aaf0b5abc3323ac[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 12:55:33 2013 +0800
+
+    nag add ko oi
+
+[33mcommit fdbbcbe666f023ef19b08a626a3871ca62cc93e1[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 10:35:21 2013 +0800
+
+    new template
+
+[33mcommit bec22a19aed9d74b796ae4c220edae1fbd4ede76[m
+Merge: 286ed69 f18526d
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:47:13 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 286ed6946b6e82ffc53090dc20bc4a4590dae1c1[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:25:00 2013 +0800
+
+    added readme, htaccess, routes and test funtion in welcome controller class
+
+[33mcommit f18526d5dd5064512ee82cb9ab86d21fc00af2cb[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:25:00 2013 +0800
+
+    added readme, htaccess and routes
+
+[33mcommit cf9eb4c8d874942d05e837eb6cb07eeb8c55a7c0[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:19:10 2013 +0800
+
+    my first commit

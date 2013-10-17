@@ -1,4 +1,4 @@
-		<a class="btn right" href="#">ADD APPROVER</a>
+	
       <h1><?php print $page_title;?></h1>
       <p>Input this form with the people you need to run the payroll process.<br>
         The person is responsible for confirming the payroll run before releasing the funds.</p>
@@ -34,3 +34,4 @@
           <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
         </tr>
       </table>
+	  <a href="#" class="btn">ADD APPROVER</a>
