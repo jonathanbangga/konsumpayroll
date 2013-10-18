@@ -31,7 +31,7 @@
 					
 			$where = array(
 				'username' => $username,
-				'status' => 'Yes',
+				'status' => 'Active',
 				'password' => $password);
 					
 			$this->db->select('konsum_admin_id');

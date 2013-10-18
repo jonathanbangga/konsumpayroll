@@ -21,7 +21,6 @@ class Users_model extends CI_Model {
 	public function fetch_activity_logs($limit,$start){
 		$this->db->limit($limit,$start);
 		$query = $this->db->get("company_owner");
-		
 		$result = $query->result();
 		$query->free_result();
 		return $result;
@@ -35,7 +34,25 @@ class Users_model extends CI_Model {
 	public function add_all_user($fields) {
 		return $this->db->insert("company_owner",$fields);
 	}
+	
+	/**
+	*	fetch all admin
+	*	@param int $limit
+	*	@param int $start
+	*	@return 
+	*/
+	public function fetch_admin($limit,$start) {
+		$this->db->limit($limit,$start);
+		$query = $this->db->get("konsum_admin");
+		$result = $query->result();
+		$query->free_result();
+		return $result;
+	}
 
+	public function count_admin(){
+		$val = $this->db->count_all("konsum_admin");
+		return $val;
+	}
 	
 }
 

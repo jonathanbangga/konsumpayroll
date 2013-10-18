@@ -19,7 +19,7 @@ class Users extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->theme = $this->config->item('temp_company_wizard');
+		$this->theme = $this->config->item('temp_admin');
 		$this->load->model("admin/users_model");
 		$this->segment_url = 4;
 		$this->num_pagi = 5;
@@ -44,10 +44,10 @@ class Users extends CI_Controller {
 	
 	public function all_admin(){
 		$data['page_title'] = "Admin"; 
-		$total_rows = $this->users_model->count_activity_logs();
+		$total_rows = $this->users_model->count_admin();
 		$get_pagi = init_pagination($this->dashboard,$total_rows,$this->num_pagi,$this->segment_url);
 		$pagi_url = $this->uri->segment(4) == "" ?  0 : $this->uri->segment(4);
-		$data['client_user'] = $this->users_model->fetch_activity_logs($get_pagi['per_page'],intval($pagi_url));
+		$data['client_user'] = $this->users_model->fetch_admin($get_pagi['per_page'],intval($pagi_url));
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/users_view', $data);	
@@ -78,6 +78,11 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	*	Call back on email checking if it's already in used
+	*	@param string $str
+	*	@return string
+	*/
 	public function email_check($str){
 		$query = $this->db->query("SELECT * from company_owner WHERE email_address ='{$this->db->escape_str($str)}'");
 		$row = $query->row();

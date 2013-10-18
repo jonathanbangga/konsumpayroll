@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2013 at 09:27 AM
+-- Generation Time: Oct 18, 2013 at 09:35 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -841,10 +841,17 @@ CREATE TABLE IF NOT EXISTS `konsum_admin` (
   `fname` varchar(50) NOT NULL,
   `lname` varchar(50) NOT NULL,
   `email_address` varchar(50) NOT NULL,
-  `status` enum('Yes','No') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`konsum_admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `konsum_admin`
+--
+
+INSERT INTO `konsum_admin` (`konsum_admin_id`, `username`, `password`, `fname`, `lname`, `email_address`, `status`, `deleted`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'christopher', 'cuizon', 'admin@yahoo.com', 'Active', '1');
 
 -- --------------------------------------------------------
 

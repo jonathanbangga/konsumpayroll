@@ -35,7 +35,10 @@ var kpay = {
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
 							if(status.success == '1') {
-								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() { location.reload(); }});
+								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
+									window.location.href ="/admin/all_user/";
+
+								}});
 								return false;
 							} else {
 								alert(status.error_msg);
