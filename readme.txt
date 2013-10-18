@@ -1,4 +1,4 @@
-[Git Useful Commands]
+[Get Useful Commands]
 This text will only appear on test branch
 -- Start-up ---------------------------------------------------
 
