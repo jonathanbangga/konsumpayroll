@@ -92,6 +92,29 @@
   - unmodifiying the modified file or undo changes of your file back to the last commited state
 
  
-
-	
+6.) Tagging/Versioning
+ a.) list all tags
+	git tag 
+ b.) list tags according to search filter
+  command: git tag -l 'v1.4.2.*'
+  output: v1.4.2.1
+		  v1.4.2.2
+		  v1.4.2.3
+		  v1.4.2.4
+ c.) Creating tags: 
+	a.) annonated tags
+	 git tag -a v1.4 -m 'my version 1.4'
+	  - create a tag v1.4 and a description
+	  -a --> add tag name
+	  -m --> message
+ 	b.) lightweight tags
+	 git tag v1.2
+	 - creates a tag v1.2
+ d.) create a tag of past commits via hash
+    git tag -a v1.2 -m 'version 1.2' 9fceb02 
+ 3.) sharing tags
+	git push origin [tag_name]
+	- push a tag to a remote server
+	git push origin --tags
+	- push all tags to a remote server
 		

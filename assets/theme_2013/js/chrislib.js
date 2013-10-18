@@ -27,7 +27,18 @@ var kpay = {
 // overwrite comments
 window.alert = function(msg){
    jQuery(".source_error").html(msg);
-   jQuery(".source_error").dialog();
+   jQuery(".source_error").dialog({
+	   width: 'inherit',
+	   draggable: false,
+	   modal: true,
+	   dialogClass:'transparent',
+	   open : function() {
+		   jQuery('.source_error').dialog("option", "title" ,"Error");
+	   },
+	   overlay: {
+   		   opacity: 0
+   	   }
+   });
 }
 
 jQuery(function(){
