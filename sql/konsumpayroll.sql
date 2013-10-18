@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2013 at 09:15 AM
+-- Generation Time: Oct 18, 2013 at 09:27 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -838,6 +838,9 @@ CREATE TABLE IF NOT EXISTS `konsum_admin` (
   `konsum_admin_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(80) NOT NULL,
   `password` varchar(32) NOT NULL,
+  `fname` varchar(50) NOT NULL,
+  `lname` varchar(50) NOT NULL,
+  `email_address` varchar(50) NOT NULL,
   `status` enum('Yes','No') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`konsum_admin_id`)
