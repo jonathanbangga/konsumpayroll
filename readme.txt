@@ -1,5 +1,5 @@
-[Get Useful Commands]
-This text will only appear on test branch
+[Git Useful Commands]
+
 -- Start-up ---------------------------------------------------
 
 1.) Set-up identity
@@ -125,16 +125,22 @@ This text will only appear on test branch
 7.) Branching
  a.) git branch
   - display all branches
- b.) git branch branch_name
+ b.) git branch -v
+  - display all branches and their latest commit
+ c.) git branch branch_name
   - create a new branch
- c.) git checkout branch_name
+ d.) git checkout branch_name
   - switch to the specified branch
- d.) git checkout -b branch_name
+ e.) git checkout -b branch_name
  - creates a new branch and automatically switch into it
- e.) git branch -d branch_name
+ f.) git branch -d branch_name
  - deletes the specified branch
- f.) git merge branch_name
+ g.) git merge branch_name
  - merge your current branch to the specified branch 
+ h.) git branch --merge
+ - displays already merged braches
+ i.) git branch --no-merge
+ - displays branches that has not been merged
  ref: http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging
  
 
