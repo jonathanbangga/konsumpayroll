@@ -9,4 +9,12 @@
 	padding:0;
 }
 
+.cbtnadd {
+    margin: 0 6px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 57px;
+}
+
 .ihide{display:none;}
+

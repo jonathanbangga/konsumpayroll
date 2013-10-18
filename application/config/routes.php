@@ -44,8 +44,10 @@ $route['404_override'] = '';
 $route['admin/dashboard'] = "admin/dashboard/index";
 $route['admin/dashboard/:any'] = "admin/dashboard/index/$1";
 $route['admin/account'] = "admin/account/index";
+$route['admin/login'] = "admin/login/index";
 $route['admin/users'] = "admin/users/index";
 $route['admin/users/all_users'] = "admin/users/all_users";
+$route['admin/users/all_users/:any'] = "admin/users/all_users/$1";
 $route['admin/company_setup'] = "admin/company_setup/add";
 $route['admin/company_setup/add'] = "admin/company_setup/add";
 #jc
