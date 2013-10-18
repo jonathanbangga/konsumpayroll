@@ -131,6 +131,8 @@
   - switch to the specified branch
  d.) git checkout -b branch_name
  - creates a new branch and automatically switch into it
+ e.) git branch -d branch_name
+ - deletes the specified branch
  
 
 	
