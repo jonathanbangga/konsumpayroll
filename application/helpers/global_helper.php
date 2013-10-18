@@ -2,7 +2,7 @@
 /**
 *	Helper : global helpers
 *	Author : Christopher Cuizon <christophercuizons@gmail.com>
-*	Usage  : For activity logs
+*	Usage  : Use for all
 */
 	
 	function itoken_name(){
