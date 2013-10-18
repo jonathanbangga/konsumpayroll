@@ -1,5 +1,5 @@
 [Git Useful Commands]
-this text only appears on hotfix branch
+
 -- Start-up ---------------------------------------------------
 
 1.) Set-up identity
@@ -121,6 +121,18 @@ this text only appears on hotfix branch
 	- push a tag to a remote server
 	git push origin --tags
 	- push all tags to a remote server
+	
+7.) Branching
+ a.) git branch
+  - display all branches
+ b.) git branch branch_name
+  - create a new branch
+ c.) git checkout branch_name
+  - switch to the specified branch
+ d.) git checkout -b branch_name
+ - creates a new branch and automatically switch into it
+ 
+
 	
 
 	
