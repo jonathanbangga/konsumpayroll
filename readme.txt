@@ -21,9 +21,11 @@
 1.) Add file to the staging area
  a.)Add a single file
   git add filename
- b.)Add all files
+ b.)add multiple file(separated by spaces)
+	git add file1 file2 file3
+ c.)Add all files
   git add .
- c.)Add all files, will also let you tracked the removed files
+ d.)Add all files, will also let you tracked the removed files
   git add --all 
   
 2.) Commit 
