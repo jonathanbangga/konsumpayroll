@@ -50,7 +50,7 @@ class Users extends CI_Controller {
 		$data['client_user'] = $this->users_model->fetch_admin($get_pagi['per_page'],intval($pagi_url));
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
-		$this->layout->view('pages/admin/users_view', $data);	
+		$this->layout->view('pages/admin/admin_view', $data);	
 	}
 	
 	public function add_users(){

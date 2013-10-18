@@ -1,8 +1,8 @@
 <?php
-	$main_menu = "content_holders/main_menu";
+	$main_menu = "content_holders/admin_menu";
 	$company_wizards_menu = "content_holders/admin_sidebar_menu";
 	$script_library = "content_holders/script_library";
-	$header_panel = "content_holders/header_panel";
+	$header_panel = "content_holders/admin_header_panel";
 	$main_header = "content_holders/main_header";
 ?>
 <!DOCTYPE HTML>

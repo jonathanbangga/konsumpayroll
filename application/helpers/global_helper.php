@@ -15,3 +15,11 @@
 		return $CI->config->item('csrf_cookie_name');
 	}
 
+	function check_user_admin(){
+		$CI =& get_instance();
+		$id = $CI->session->userdata('account_id');
+		$query = $CI->db->get_where("konsum_admin",array("konsum_admin_id"=>$id));
+		$row = $query->row();
+		return $row;
+	}
+	
