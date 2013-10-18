@@ -117,4 +117,6 @@
 	- push a tag to a remote server
 	git push origin --tags
 	- push all tags to a remote server
-		
+	
+7) Mo conflict ni?
+	
