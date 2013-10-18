@@ -58,36 +58,36 @@
 			var payroll_group_id = jQuery("#payroll_group_id").val();
 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			
-			if(company_id=="") why += "- Please enter Company \n";
-			if(rank_id=="") why += "- Please enter Rank \n";
-			if(dept_id=="") why += "- Please enter Depertment \n";
-			if(location_id=="") why += "- Please enter Location \n";
-			if(fname=="") why += "- Please enter Firstname \n";
-			if(mname=="") why += "- Please enter Middlename \n";
-			if(lname=="") why += "- Please enter Lastname \n";
+			if(company_id=="") why += "- Please enter Company <br />";
+			if(rank_id=="") why += "- Please enter Rank <br />";
+			if(dept_id=="") why += "- Please enter Depertment <br />";
+			if(location_id=="") why += "- Please enter Location <br />";
+			if(fname=="") why += "- Please enter Firstname <br />";
+			if(mname=="") why += "- Please enter Middlename <br />";
+			if(lname=="") why += "- Please enter Lastname <br />";
 			if(emailaddress==""){
-				why += "- Please enter Email Address <br />";
+				why += "- Please enter Email Address";
 			}else if(!emailReg.test(emailaddress)){
-				why += "- The Email Address field must contain a valid email address \n";
+				why += "- The Email Address field must contain a valid email address <br />";
 			}
-			if(dob=="") why += "- Please enter Date of birth \n";
-			if(marital_status=="") why += "- Please Marital Status \n";
-			if(contact_no=="") why += "- Please enter Contact Number \n";
-			if(tin=="") why += "- Please enter TIN \n";
-			if(sss=="") why += "- Please enter SSS \n";
-			if(phil_health=="") why += "- Please enter PhilHealth \n";
-			if(gsis=="") why += "- Please enter GSIS \n";
-			if(emergency_contact_person=="") why += "- Please enter Emergency Contact Person \n";
-			if(emergency_contact_number=="") why += "- Please enter Emergency Contact Number \n";
-			if(position_id=="") why += "- Please enter Position ID \n";
-			if(username=="") why += "- Please enter Username \n";
+			if(dob=="") why += "- Please enter Date of birth <br />";
+			if(marital_status=="") why += "- Please Marital Status <br />";
+			if(contact_no=="") why += "- Please enter Contact Number <br />";
+			if(tin=="") why += "- Please enter TIN <br />";
+			if(sss=="") why += "- Please enter SSS <br />";
+			if(phil_health=="") why += "- Please enter PhilHealth <br />";
+			if(gsis=="") why += "- Please enter GSIS <br />";
+			if(emergency_contact_person=="") why += "- Please enter Emergency Contact Person <br />";
+			if(emergency_contact_number=="") why += "- Please enter Emergency Contact Number <br />";
+			if(position_id=="") why += "- Please enter Position ID <br />";
+			if(username=="") why += "- Please enter Username <br />";
 			if(password==""){
-				why += "- Please enter Password \n";
+				why += "- Please enter Password <br />";
 			}else if(password != confirmpass){
 				why += "- The password field must match the password confirmation field";
 			}
-			if(access_level=="") why += "- Please enter Permission \n";
-			if(payroll_group_id=="") why += "- Please enter Payroll Group \n";
+			if(access_level=="") why += "- Please enter Permission <br />";
+			if(payroll_group_id=="") why += "- Please enter Payroll Group <br />";
 			
 			if(why!=""){
 				alert(why); return false;
