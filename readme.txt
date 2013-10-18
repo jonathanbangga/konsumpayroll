@@ -1,5 +1,5 @@
-[Git useful commands]
-
+[Git useful commands sdfsdfsdf]
+['JC conflict here
 -- Start-up ---------------------------------------------------
 
 1.) Set-up identity
