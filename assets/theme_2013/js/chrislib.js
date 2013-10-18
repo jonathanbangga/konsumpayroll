@@ -26,22 +26,21 @@ var kpay = {
 
 // overwrite comments
 window.alert = function(msg){
-   jQuery(".source_error").html(msg);
-   jQuery(".source_error").dialog({
-	   width: 'inherit',
-	   draggable: false,
-	   modal: true,
-	   dialogClass:'transparent',
-	   open : function() {
-		   jQuery('.source_error').dialog("option", "title" ,"Error");
-	   },
-	   overlay: {
-   		   opacity: 0
-   	   }
+   jQuery(".source_error").html(msg).dialog({
+	   	draggable: false,
+	   	resizable: false,
+	   	modal: true,
+	   	width: 'inherit',
+	   	dialogClass:'transparent',
+	   	overlay: {
+   	    	opacity: 0
+   	    },
+	    open : function() {
+           jQuery('.source_error').dialog("option", "title" ,"Error");
+     	}
    });
 }
 
 jQuery(function(){
 	kpay.hr.company_sidebar();
 });
-

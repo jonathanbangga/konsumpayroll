@@ -90,7 +90,7 @@
 			if(payroll_group_id=="") why += "- Please enter Payroll Group <br />";
 			
 			if(why!=""){
-				alert(why); return false;
+				alert(why);
 				return false;
 			}
 		}
