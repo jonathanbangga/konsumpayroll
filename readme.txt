@@ -1,5 +1,5 @@
 [Git Useful Commands]
-
+this text only appears on hotfix branch
 -- Start-up ---------------------------------------------------
 
 1.) Set-up identity
