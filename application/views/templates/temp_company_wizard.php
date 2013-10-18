@@ -18,6 +18,7 @@
 <link href="/assets/theme_2013/css/custom-theme/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/theme_2013/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/assets/theme_2013/js/customSelect.jquery.js"></script>
+<script type="text/javascript"  src="/assets/theme_2013/js/jquery.cookie.js"></script>
 <script type="text/javascript"  src="/assets/theme_2013/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/assets/theme_2013/js/html5.js" type="text/javascript"></script>
 </head>

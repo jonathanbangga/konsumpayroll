@@ -12,6 +12,10 @@
 			echo $logs_fetch->name." on ".time_only($logs_fetch->date);
 			echo "</li>";	
 		endforeach;
+	} else {
+?>
+	<li>No activity yet has been made to the system yet.</li>
+<?php 
 	}
 ?>
 </ul>
