@@ -1,4 +1,4 @@
-[Git useful commands sdfsdfsdf]
+oi pagdali diha kay daghan patang tiwasonon
 ['JC conflict here
 -- Start-up ---------------------------------------------------
 
