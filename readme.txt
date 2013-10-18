@@ -133,6 +133,9 @@ This text will only appear on test branch
  - creates a new branch and automatically switch into it
  e.) git branch -d branch_name
  - deletes the specified branch
+ f.) git merge branch_name
+ - merge your current branch to the specified branch 
+ ref: http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging
  
 
 	
