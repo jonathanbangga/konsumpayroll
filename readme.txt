@@ -31,6 +31,8 @@
  - Add staged file to your local repository, and put a comment	
  b.) git commit -a -m "your message"
  - Automatically add file commit
+ c.) git commit --amend 
+  - appends newly added file in this type of commit
  
 3.) push
  - (upload) push your local repository files to remote repository
@@ -66,6 +68,8 @@
    - list all remotes
   git remote -v
   - list all remote name and url
+ e.) check remote repository info
+	git remote show remote_name
  
 4.) View commit history
  ref: http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
@@ -84,11 +88,9 @@
   - display commits for a specific author
   
 5.) Undo 
- a.) git commit --amend 
-  - appends newly added file in this type of commit
- b.) git reset HEAD filename
+ a.) git reset HEAD filename
   - unstage tracked file
- c.) git checkout -- filename
+ b.) git checkout -- filename
   - unmodifiying the modified file or undo changes of your file back to the last commited state
 
  
