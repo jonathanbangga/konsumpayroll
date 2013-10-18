@@ -35,14 +35,11 @@ var kpay = {
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
 							if(status.success == '1') {
-								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
-								location.reload();
-								}});
+								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() { location.reload(); }});
 								return false;
 							} else {
-								 jQuery(".source_error").attr("title","Error");
-								  alert(status.error_msg);
-								  return false;
+								alert(status.error_msg);
+								return false;
 							}
 						}
 					});return false;
@@ -55,25 +52,11 @@ var kpay = {
 				}
 			}
 		}
-		
 };
 
 // overwrite comments
 window.alert = function(msg){
-<<<<<<< HEAD
-   jQuery(".source_error").html(msg).dialog({
-	   	draggable: false,
-	   	resizable: false,
-	   	modal: true,
-	   	width: 'inherit',
-	   	dialogClass:'transparent',
-	   	overlay: {
-   	    	opacity: 0
-   	    },
-	    open : function() {
-           jQuery('.source_error').dialog("option", "title" ,"Error");
-     	}
-=======
+
    jQuery(".source_error").html(msg);
    jQuery(".source_error").dialog({
 	   width: 'inherit',
@@ -86,10 +69,9 @@ window.alert = function(msg){
 	   overlay: {
    		   opacity: 0
    	   }
->>>>>>> 0901721c83f32782c4105126a1da4909b1dce271
    });
 }
 
-jQuery(function(){
+jQuery(function() {
 	kpay.hr.company_sidebar();
 });

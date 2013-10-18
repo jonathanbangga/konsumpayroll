@@ -58,7 +58,7 @@ class Users extends CI_Controller {
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('owner_name','Owner name','xss_clean|trim|required');
 				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|callback_email_check');
-				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]');
+				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[12]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
 					$fields = array(
