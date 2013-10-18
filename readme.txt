@@ -1,5 +1,4 @@
-oi pagdali diha kay daghan patang tiwasonon
-['JC conflict here
+[Git Useful Commands]
 -- Start-up ---------------------------------------------------
 
 1.) Set-up identity
