@@ -15,4 +15,4 @@ $config['konsum_groups'] = array(
 	'user' 	 		 => 3,
 	'anonymous' 	 => 20);
 
-$config['admin_tbl'] = 'user_credentials';
+$config['admin_tbl'] = 'konsum_admin';

@@ -30,18 +30,18 @@
 			}	
 					
 			$where = array(
-				'payroll_cloud_id' => $username,
-				'status' => 'Active',
+				'username' => $username,
+				'status' => 'Yes',
 				'password' => $password);
 					
-			$this->db->select('emp_id');
+			$this->db->select('konsum_admin_id');
 			$this->db->where($where);
 			$query = $this->db->get($this->_admin_tbl);
 			
 			if ($query->num_rows() > 0) {
 	            $row = $query->row();
 				$auth['group'] = 1;
-				$auth['account_id'] = $row->emp_id;
+				$auth['account_id'] = $row->konsum_admin_id;
 				$query->free_result();
 	            return $auth;
 	        } else {

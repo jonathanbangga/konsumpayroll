@@ -30,7 +30,8 @@ class Konsumpay_Auth {
         $this->_CI->load->library(array('session'));
 		
 		$group = $this->_CI->uri->segment(1);
-		if($group=='logout'){
+		$admin_login = $this->_CI->uri->segment(2);
+		if($group=='logout' || ($group=='admin' && $admin_login=='login')){
 			$var = "";
 		}else if ($group != 'login' && $group) {
 			$this->allow($group,'login');
