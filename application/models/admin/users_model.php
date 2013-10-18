@@ -31,6 +31,10 @@ class Users_model extends CI_Model {
 		$val = $this->db->count_all("company_owner");
 		return $val;
 	}
+	
+	public function add_all_user($fields) {
+		return $this->db->insert("company_owner",$fields);
+	}
 
 	
 }
