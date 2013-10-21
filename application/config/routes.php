@@ -63,6 +63,12 @@ $route['admin/users/all_admin'] = "admin/users/all_admin";
 $route['admin/users/all_admin/:any'] = "admin/users/all_admin/$1";
 $route['admin/company_setup'] = "admin/company_setup/add";
 $route['admin/company_setup/add'] = "admin/company_setup/add";
+
+#athan
+$route['login/owner'] = "login/owner";
+$route['login/admin'] = "login/admin";
+$route['owner/cpanel'] = "owner/cpanel";
+
 #jc
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
 
