@@ -164,6 +164,11 @@ ref: http://git-scm.com/doc
 # Don't do it if you have uncommitted work you want to keep
   ref: http://stackoverflow.com/questions/4114095/revert-to-previous-git-commit
 	   http://stackoverflow.com/questions/373812/rollback-file-to-much-earlier-version
+	   
+	   
+ difficult advance topics:
+ remote branches
+ http://git-scm.com/book/en/Git-Branching-Remote-Branches
   
 	
 
