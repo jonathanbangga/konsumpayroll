@@ -1,5 +1,6 @@
 [Git Useful Commands] 
 ref: http://git-scm.com/doc
+(new!)a more user friendly guide: http://www-cs-students.stanford.edu/~blynn/gitmagic/ch02.html
 
 -- Start-up ---------------------------------------------------
 
@@ -147,8 +148,23 @@ ref: http://git-scm.com/doc
  
  8.) rebase(an alternative to merge,much cleaner commit history)
  git rebase branch_to_rebase
+ warning: Do not rebase commits that you have pushed to a public repository.
+ ref: http://git-scm.com/book/en/Git-Branching-Rebasing
  
 
+ 9.) Reset(Go back to an old commit or version)
+  # this will detach your HEAD, i.e. leave you with no branch checked out
+  a.) Reset using git checkout
+        git checkout 8charactercommithash
+        git checkout -b new_branch
+  # This will destroy any local modifications
+  # Don't do it if you have uncommitted work you want to keep
+  b.) Reset using git reset
+        git reset --hard 8charactercommithash
+# Don't do it if you have uncommitted work you want to keep
+  ref: http://stackoverflow.com/questions/4114095/revert-to-previous-git-commit
+	   http://stackoverflow.com/questions/373812/rollback-file-to-much-earlier-version
+  
 	
 
 	
