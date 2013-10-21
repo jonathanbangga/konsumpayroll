@@ -1,4 +1,5 @@
-[Git Useful Commands]
+[Git Useful Commands] 
+ref: http://git-scm.com/doc
 
 -- Start-up ---------------------------------------------------
 
