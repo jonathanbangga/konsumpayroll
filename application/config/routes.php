@@ -63,8 +63,8 @@ $route['admin/company_setup'] = "admin/company_setup/add";
 $route['admin/company_setup/add'] = "admin/company_setup/add";
 
 #athan
-$route['owner/login'] = "owner/login";
-$route['owner/employee'] = "owner/employee";
+$route['login/owner'] = "login/owner";
+$route['login/admin'] = "login/admin";
 $route['owner/cpanel'] = "owner/cpanel";
 
 #jc
