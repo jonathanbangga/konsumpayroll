@@ -16,7 +16,7 @@ class Company_setup extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->theme = $this->config->item('temp_company_wizard');
+		$this->theme = $this->config->item('temp_admin');
 	}
 
 	public function add()

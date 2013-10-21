@@ -38,7 +38,6 @@
 			
 			if ($username && $password) {
 				$verify = $this->konsumpay_auth->login($username, $password,'admin');
-				
 				if ($verify == FALSE)
 					$data['msg_error'] = "Incorrect username/password!";
 			}
@@ -46,8 +45,10 @@
 			if ($this->konsumpay_auth->is_logged_in()) {
 	            // Redirect to landing page.
 	            $session = $this->konsumpay_auth->get_session_data();
+					$value = sprintf(lang("last_login"),"administrator");
+					add_activity($value,"admin");
 	            if ($session['account_type'] == 'admin') {
-	                redirect('admin/company_setup','refresh');
+	                redirect('admin/dashboard','refresh');
 				} else {
 					//if current user is not admin, show error.
 					show_404();

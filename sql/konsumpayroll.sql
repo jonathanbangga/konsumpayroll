@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2013 at 09:27 AM
+-- Generation Time: Oct 21, 2013 at 05:33 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -33,40 +33,17 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `activity_logs`
 --
 
 INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `deleted`) VALUES
-(1, 'administrator has login on 2013-10-17 00:00:00', '2013-10-17 07:26:41', 0, '0'),
-(2, 'administrator has login on 2013-10-17 00:00:00', '2013-10-17 07:26:46', 0, '0'),
-(3, 'administrator has login', '2013-10-17 07:27:25', 0, '0'),
-(4, 'administrator has login', '2013-10-17 07:27:57', 0, '0'),
-(5, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(6, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(7, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(8, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(9, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(10, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(11, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(12, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(13, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(14, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(15, 'administrator has login', '2013-10-17 07:28:15', 0, '0'),
-(16, 'administrator has login', '2013-10-17 07:28:21', 0, '0'),
-(17, 'administrator has login', '2013-10-17 07:28:21', 0, '0'),
-(18, 'administrator has login', '2013-10-17 07:28:21', 0, '0'),
-(19, 'administrator has login', '2013-10-17 07:28:21', 0, '0'),
-(20, 'administrator has login', '2013-10-17 07:28:21', 0, '0'),
-(21, 'administrator has login', '2013-10-18 07:28:21', 0, '0'),
-(22, 'administrator has login', '2013-10-18 07:28:21', 0, '0'),
-(23, 'administrator has login', '2013-10-19 07:28:21', 0, '0'),
-(24, 'administrator has login', '2013-10-16 07:28:21', 0, '0'),
-(25, 'administrator has login', '2013-10-18 07:28:21', 0, '0'),
-(26, 'administrator has login', '2013-10-16 07:28:21', 0, '0'),
-(27, 'administrator has login', '2013-10-17 07:30:10', 0, '0');
+(1, 'administrator has login', '2013-10-18 11:16:27', 0, '0'),
+(2, 'administrator has login', '2013-10-18 11:19:19', 0, '0'),
+(3, 'administrator has login', '2013-10-21 02:32:20', 0, '0'),
+(4, 'administrator has login', '2013-10-21 02:40:10', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -141,6 +118,22 @@ CREATE TABLE IF NOT EXISTS `area_of_approval` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assign_company_head`
+--
+
+CREATE TABLE IF NOT EXISTS `assign_company_head` (
+  `assign_company_head_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `user_created` datetime NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`assign_company_head_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `basic_pay_adjustment`
 --
 
@@ -189,6 +182,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `company_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_owner_id` int(11) NOT NULL,
   `registered_business_name` varchar(80) NOT NULL,
+  `sub_domain` varchar(15) NOT NULL,
   `trace_name` int(80) NOT NULL,
   `business_address` int(80) NOT NULL,
   `city` int(80) NOT NULL,
@@ -220,47 +214,51 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
   `company_owner_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_name` varchar(60) NOT NULL,
   `email_address` varchar(100) NOT NULL,
+  `password` varchar(32) NOT NULL,
   `address` varchar(150) NOT NULL,
   `street` varchar(150) NOT NULL,
   `city` varchar(150) NOT NULL,
   `zipcode` int(11) NOT NULL,
   `mobile` int(11) NOT NULL,
   `country` varchar(50) NOT NULL,
-  `password` varchar(32) NOT NULL,
   `date` datetime NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `company_owner`
 --
 
-INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `email_address`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `password`, `date`, `status`, `deleted`) VALUES
-(1, 'Joe Mercado', 'j.m@techgrowthglobal.com', 'Cebu', 'Street ', 'Cebu City', 6000, 1234857485, 'philippines', 'a52e19f2eac5a9f7afb357dfd1a5014c', '2013-10-18 01:06:25', 'Active', '0'),
-(2, 'Julian Tan', 'j.t@julian.com', 'Australia', 'Sydney', 'Australia', 6001, 1234857485, 'Australia', 'a52e19f2eac5a9f7afb357dfd1a5014c', '2013-10-19 00:08:10', 'Active', '0'),
-(3, 'Juan Dela Cruz', 'juan_dela@text.com', '', '', '', 0, 0, '', '', '0000-00-00 00:00:00', 'Active', '0'),
-(4, 'michi', 'arkitson@gmail.com', '', '', '', 0, 0, '', 'Tech123', '0000-00-00 00:00:00', 'Active', '0'),
-(5, 'Juan Dela Cruz', 'arkitson@gmail.com', '', '', '', 0, 0, '', 'Tech123', '0000-00-00 00:00:00', 'Active', '0'),
-(6, 'heheh', 'arkitdson@gmail.com', '', '', '', 0, 0, '', 'hehe', '0000-00-00 00:00:00', 'Active', '0'),
-(7, 'we234e', 'tes234324223423434t@yahoo.com', '', '', '', 0, 0, '', 'Tech123', '0000-00-00 00:00:00', 'Active', '0'),
-(8, 'we234e', 'adsfsfsdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(9, 'we234e', 'adssfsfsdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(10, 'we234e', 'adssfsfssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(11, 'we234e', 'adsssdfsfssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(12, 'we234e', 'adsssdfsdsffssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(13, 'we234e', 'adsssdfsfdsffssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(14, 'we234e', 'adsssdfsffdsffssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(15, 'we234e', 'adsssdfsffdsbffssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(16, 'we234e', 'adsssdfsffdssdfbffssdfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(17, 'we234e', 'adsssdfsffdssdfbffssddfsfdf@yahoo.com', '', '', '', 0, 0, '', 'asdfadsf', '0000-00-00 00:00:00', 'Active', '0'),
-(18, 'sfsf', 'sdfsdf@yahoo.com', '', '', '', 0, 0, '', 'sdfsdf', '0000-00-00 00:00:00', 'Active', '0'),
-(19, 'megan', 'fox@yahoo.com', '', '', '', 0, 0, '', 'Tech123', '0000-00-00 00:00:00', 'Active', '0'),
-(20, 'megan', 'fox@yahodo.com', '', '', '', 0, 0, '', 'fox@yahoo.com', '0000-00-00 00:00:00', 'Active', '0'),
-(21, 'megansd', 'fomegansdx@yahodo.com', '', '', '', 0, 0, '', 'megansd', '0000-00-00 00:00:00', 'Active', '0'),
-(22, 'safsf', 'sdfsdf@test.com', '', '', '', 0, 0, '', 'sdf', '0000-00-00 00:00:00', 'Active', '0'),
-(23, 'safsffsdf', 'sdfsdsdff@test.com', '', '', '', 0, 0, '', 'safsffsdf', '0000-00-00 00:00:00', 'Active', '0');
+INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `email_address`, `password`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `date`, `status`, `deleted`) VALUES
+(1, 'Joe Mercado', 'j.m@techgrowthglobal.com', '', 'Cebu', 'Street ', 'Cebu City', 6000, 1234857485, 'philippines', '2013-10-18 01:06:25', 'Active', '0'),
+(2, 'Julian Tan', 'j.t@julian.com', '', 'Australia', 'Sydney', 'Australia', 6001, 1234857485, 'Australia', '2013-10-19 00:08:10', 'Active', '0'),
+(3, 'Juan Dela Cruz', 'juan_dela@text.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(4, 'michi', 'arkitson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(5, 'Juan Dela Cruz', 'arkitson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(6, 'heheh', 'arkitdson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(7, 'we234e', 'tes234324223423434t@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(8, 'we234e', 'adsfsfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(9, 'we234e', 'adssfsfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(10, 'we234e', 'adssfsfssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(11, 'we234e', 'adsssdfsfssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(12, 'we234e', 'adsssdfsdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(13, 'we234e', 'adsssdfsfdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(14, 'we234e', 'adsssdfsffdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(15, 'we234e', 'adsssdfsffdsbffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(16, 'we234e', 'adsssdfsffdssdfbffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(17, 'we234e', 'adsssdfsffdssdfbffssddfsfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(18, 'sfsf', 'sdfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(19, 'megan', 'fox@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(20, 'megan', 'fox@yahodo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(21, 'megansd', 'fomegansdx@yahodo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(22, 'safsf', 'sdfsdf@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(23, 'safsffsdf', 'sdfsdsdff@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(24, 'users234', 'tewtew@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(25, 'sdfsdf', 'sdfs323df@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(26, 'obama', 'obama@yahoo.com', '12345678', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(27, 'atan', 'atan@yahoo.com', 'atanatan', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -838,13 +836,22 @@ CREATE TABLE IF NOT EXISTS `konsum_admin` (
   `konsum_admin_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(80) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `fname` varchar(50) NOT NULL,
-  `lname` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email_address` varchar(50) NOT NULL,
-  `status` enum('Yes','No') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`konsum_admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `konsum_admin`
+--
+
+INSERT INTO `konsum_admin` (`konsum_admin_id`, `username`, `password`, `name`, `email_address`, `status`, `deleted`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'christopher cuizon', 'admin@yahoo.com', 'Active', '1'),
+(8, 'madz@yaho', '6829185cd5d11a4b191a2615873a93f8', 'madz', 'madz@yahoo.com', 'Active', '0'),
+(9, 'jonathan', '78842815248300fa6ae79f7776a5080a', 'jonathan', 'jonathan@gmail.com', 'Active', '0'),
+(10, 'joechristian', '541d98adec241e382bbcba5e1bd21f38', 'joechristian', 'joechristian@yahoo.com', 'Active', '0');
 
 -- --------------------------------------------------------
 
