@@ -161,7 +161,6 @@ ref: http://git-scm.com/doc
   # Don't do it if you have uncommitted work you want to keep
   b.) Reset using git reset
         git reset --hard 8charactercommithash
-# Don't do it if you have uncommitted work you want to keep
   ref: http://stackoverflow.com/questions/4114095/revert-to-previous-git-commit
 	   http://stackoverflow.com/questions/373812/rollback-file-to-much-earlier-version
   
