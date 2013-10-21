@@ -35,6 +35,29 @@ class Users_model extends CI_Model {
 		return $this->db->insert("company_owner",$fields);
 	}
 	
+	public function select_admin_user($id){
+		if(is_numeric($id)){
+			$query = $this->db->get_where("konsum_admin",array("konsum_admin_id"=>$id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	
+	public function add_all_admin($fields) {
+		return $this->db->insert("konsum_admin",$fields);
+	}
+	
+	public function add_data_fields($database,$fields){
+		return $this->db->insert($database,$fields);
+	}
+	
+	public function delete_users_id($db,$id) {
+		return $this->db->delete($db,$id);
+	}
+	
 	/**
 	*	fetch all admin
 	*	@param int $limit

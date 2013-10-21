@@ -45,6 +45,8 @@
 			if ($this->konsumpay_auth->is_logged_in()) {
 	            // Redirect to landing page.
 	            $session = $this->konsumpay_auth->get_session_data();
+					$value = sprintf(lang("last_login"),"administrator");
+					add_activity($value,"admin");
 	            if ($session['account_type'] == 'admin') {
 	                redirect('admin/dashboard','refresh');
 				} else {

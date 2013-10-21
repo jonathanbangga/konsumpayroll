@@ -58,7 +58,7 @@
   </section>
   <!-- WRAPPER END -->
 </div>
-<div class="ihide"><div class="source_error" title="Information"></div></div>
+<div class="ihide"><div class="source_error" title="Information"></div><div class="option_alert" title="Warning"></div></div>
 <?php print $this->load->view($script_library);?>
 </body>
 </html>
