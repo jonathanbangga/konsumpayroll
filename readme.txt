@@ -144,6 +144,10 @@ ref: http://git-scm.com/doc
  - displays branches that has not been merged
  ref: http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging
  
+ 
+ 8.) rebase(an alternative to merge,much cleaner commit history)
+ git rebase branch_to_rebase
+ 
 
 	
 
