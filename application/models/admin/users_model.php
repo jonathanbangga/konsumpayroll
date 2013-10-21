@@ -50,6 +50,11 @@ class Users_model extends CI_Model {
 		return $this->db->insert("konsum_admin",$fields);
 	}
 	
+	public function update_admin_user($fields,$id) {
+		$this->db->where("konsum_admin_id",$this->db->escape_str($id));
+		return $this->db->update("konsum_admin",$fields);
+	}
+	
 	public function add_data_fields($database,$fields){
 		return $this->db->insert($database,$fields);
 	}

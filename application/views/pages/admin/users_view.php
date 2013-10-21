@@ -9,12 +9,15 @@
 		</tr>
 		<?php 
 		if($client_user) {
+			p($client_user);
 			foreach($client_user as $all_user): ?>
-			<tr>
+			<tr id="jcomp_<?php echo $all_user->company_owner_id;?>">
 				<td class="own_name"><?php echo $all_user->owner_name;?></td>
 				<td></td>
 				<td>
-					<a href="#" class="btn cbtnadd">VIEW</a> <a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="#" class="btn btn-red btn-action">DELETE</a>
+					<a href="#" class="btn cbtnadd juser_view"  id="user_view_<?php echo $all_user->company_owner_id;?>"  set_id="<?php echo $all_user->company_owner_id;?>">VIEW</a> 
+					<a href="#" class="btn btn-gray btn-action juser_edit" id="user_edit_<?php echo $all_user->company_owner_id;?>" set_id="<?php echo $all_user->company_owner_id;?>">EDIT</a> 
+					<a href="#" class="btn btn-red btn-action juser_del" id="user_id_<?php echo $all_user->company_owner_id;?>"  set_id="<?php echo $all_user->company_owner_id;?>">DELETE</a>
 				</td>
 			</tr>
 		<?php	
@@ -62,6 +65,7 @@
 <script type="text/javascript">
 	jQuery(function(){
 		kpay.admin.userz.show_add_form();
+		kpay.admin.userz.delete_users('/admin/users/delete_user',"<?php echo itoken_cookie();?>");	
 	});
 </script>
 

@@ -108,7 +108,7 @@ class Users extends CI_Controller {
 		if($this->input->is_ajax_request()){
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('name','name','xss_clean|trim|required');
-				$this->form_validation->set_rules('username','username','xss_clean|trim|required|callback_username_check');
+				$this->form_validation->set_rules('username','username','xss_clean|trim|required|callback_admin_username_check');
 				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|callback_email_check');
 				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
@@ -131,7 +131,7 @@ class Users extends CI_Controller {
 		}
 	}	
 	
-	public function update_admin_users() {
+	public function update_users() {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
@@ -142,6 +142,34 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
 				if($this->form_validation->run() == true) {	
+					echo json_encode(array("error_msg"=>'',"success"=>"1"));
+				} else {
+					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
+				}
+			}
+		} else {
+			show_404();
+		}
+	}
+	
+	public function update_admin_users() {
+		if($this->input->is_ajax_request()) {
+			if($this->input->post('update')) {
+				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
+				$this->form_validation->set_rules('edit_id','id','xss_clean|trim|required');
+				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_check');
+				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_admin_username_update_check');
+				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
+				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
+				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
+				if($this->form_validation->run() == true) {	
+					$fields = array(
+								"name"		=> $this->db->escape_str($this->input->post('edit_name')),
+								"username" 	=> $this->db->escape_str($this->input->post('edit_username')),
+								"email_address" => $this->db->escape_str($this->input->post('edit_email')),
+								"password"		=> $this->db->escape_str(md5($this->input->post('edit_password')))
+							);
+					$this->users_model->update_admin_user($fields,$this->input->post('edit_id'));
 					echo json_encode(array("error_msg"=>'',"success"=>"1"));
 				} else {
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
@@ -172,7 +200,7 @@ class Users extends CI_Controller {
 			if($this->input->post('delete')) {
 				$this->form_validation->set_rules("admin_id","user","xss_clean|trim|required");
 				if($this->form_validation->run()) {
-					$this->users_model->delete_users_id("konsum_admin",array("konsum_admin_id"=>$this->input->post("admin_id")));
+					echo '5454'; 
 				}else{
 					echo validation_errors();
 				}
@@ -210,12 +238,24 @@ class Users extends CI_Controller {
 		}
 	}
 	
-	public function username_check($str){
+	public function admin_username_update_check($str){
 		$old_username = $this->input->post("edit_username_old");
 		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}' AND NOT username='{$old_username}'");
 		$row = $query->row();
 		if($row){
-			$this->form_validation->set_message("username_check","The username is already in use");
+			$this->form_validation->set_message("admin_username_check","The username is already in use");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public function admin_username_check($str){
+		$old_username = $this->input->post("edit_username_old");
+		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}'");
+		$row = $query->row();
+		if($row){
+			$this->form_validation->set_message("admin_username_check","The username is already in use");
 			return false;
 		}else{
 			return true;
