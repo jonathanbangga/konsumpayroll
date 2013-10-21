@@ -46,9 +46,17 @@ $route['admin/dashboard/:any'] = "admin/dashboard/index/$1";
 $route['admin/account'] = "admin/account/index";
 $route['admin/login'] = "admin/login/index";
 $route['admin/users'] = "admin/users/index";
+// all users
 $route['admin/users/add_users'] = "admin/users/add_users";
 $route['admin/users/all_users'] = "admin/users/all_users";
+$route['admin/users/delete_admin_user'] = "admin/users/delete_admin_user";
+$route['admin/users/show_edit_admin'] = "admin/users/show_edit_admin";
+$route['admin/users/update_admin_users'] = "admin/users/update_admin_users";
+
 $route['admin/users/all_users/:any'] = "admin/users/all_users/$1";
+
+// admin users 
+$route['admin/users/add_admin_users'] = "admin/users/add_admin_users";
 $route['admin/users/all_admin'] = "admin/users/all_admin";
 $route['admin/users/all_admin/:any'] = "admin/users/all_admin/$1";
 $route['admin/company_setup'] = "admin/company_setup/add";
