@@ -38,9 +38,10 @@
 |
 */
 
-$route['default_controller'] = "login/owner";
+$route['default_controller'] = "login";
 $route['404_override'] = '';
 
+/*
 $route['admin/dashboard'] = "admin/dashboard/index";
 $route['admin/dashboard/:any'] = "admin/dashboard/index/$1";
 $route['admin/account'] = "admin/account/index";
@@ -69,9 +70,13 @@ $route['admin/company_setup/add'] = "admin/company_setup/add";
 $route['login/owner'] = "login/owner";
 $route['login/admin'] = "login/admin";
 $route['owner/cpanel'] = "owner/cpanel";
+*/
 
 #jc
+$route['login/validate_login'] = "login/validate_login";
+$route['admin/(:any)'] = "admin/$1";
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
