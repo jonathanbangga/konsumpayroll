@@ -40,7 +40,7 @@
 			}else if ($group=='logout' || ($group=='admin' && $admin_login=='login') || ($group=='owner' && $admin_login=='login')) {
 				$var = "";
 			}else if ($group != 'login' && $group) {
-				$this->allow($group,'/login');
+				$this->allow($group,'/');
 			}
 	    }
 		
