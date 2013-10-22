@@ -35,14 +35,14 @@ class Users extends CI_Controller {
 	
 	public function all_users(){
 		$data['page_title'] = "Users"; 
-		$total_rows = $this->users_model->count_activity_logs();
+		$total_rows = $this->users_model->users_count_list();
 		$config["base_url"] 	= $this->all_user;
         $config["total_rows"] 	= $total_rows;
         $config["per_page"] 	= $this->num_pagi;
         $config["uri_segment"] 	= $this->segment_url;
         $this->pagination->initialize($config);
 		$pagi_url = $this->uri->segment(4) == "" ?  0 : $this->uri->segment(4);
-		$data['client_user'] = $this->users_model->fetch_activity_logs($config['per_page'],intval($pagi_url));
+		$data['client_user'] = $this->users_model->users_list($config['per_page'],intval($pagi_url));
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/users_view', $data);	
@@ -71,6 +71,22 @@ class Users extends CI_Controller {
 					echo json_encode(validation_errors());
 				} else {
 				$user_item = $this->users_model->select_admin_user($this->input->post("admin_id"));
+					echo json_encode($user_item);
+				}
+			}
+		}else{
+			show_404();
+		}
+	}
+
+	public function show_edit_user() {
+		if($this->input->is_ajax_request()) {
+			if($this->input->post("update_edit")) {
+				$this->form_validation->set_rules("admin_id","id","xss_clean|trim|required");
+				if($this->form_validation->run() == false) {
+					echo json_encode(validation_errors());
+				} else {
+					$user_item = $this->users_model->select_user($this->input->post("admin_id"));
 					echo json_encode($user_item);
 				}
 			}
@@ -136,7 +152,6 @@ class Users extends CI_Controller {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_id','id','xss_clean|trim|required');
-				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_username_check');
 				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_admin_email_check');
 				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
 				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
@@ -200,7 +215,11 @@ class Users extends CI_Controller {
 			if($this->input->post('delete')) {
 				$this->form_validation->set_rules("admin_id","user","xss_clean|trim|required");
 				if($this->form_validation->run()) {
-					echo '5454'; 
+					$fields = array(
+								"status" => "Inactive",
+								"deleted" => "1"
+							);
+					$this->users_model->disable_user($fields,$this->input->post('admin_id'));
 				}else{
 					echo validation_errors();
 				}

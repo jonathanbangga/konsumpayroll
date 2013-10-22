@@ -46,7 +46,53 @@ var kpay = {
 							}
 						}
 					});return false;
-				},				
+				},	
+				update_user: function(urls,token){
+					jQuery(document).on("click",".juser_edit",function(e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var getid= el.attr("set_id");
+						jQuery(".jshowupdate").dialog();
+						jQuery("form.jaddusers_update")[0].reset();
+						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
+							var jres = jQuery.parseJSON(ret);
+							jQuery("input[id^='edit_owner']").val(jres.owner_name);
+							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
+							jQuery("input[id^='edit_email']").val(jres.email_address);
+							jQuery("input[id^='edit_old_email']").val(jres.email_address);
+							jQuery("input[id^='edit_pass']").val();
+							jQuery("input[id^='edit_cpass']").val();
+						});
+					});
+				},
+				update_user_form: function(urls,token) {
+					$.ajax({
+					url:urls,
+					type: "POST",
+					data:{
+						'edit_id':jQuery("input[id^='edit_owner_id']").val(),
+						'edit_name':jQuery("input[id^='edit_owner']").val(),
+						'edit_email':jQuery("input[id^='edit_email']").val(),
+						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
+						'edit_pass':jQuery("input[id^='edit_pass']").val(),
+						'edit_cpass':jQuery("input[id^='edit_cpass']").val(),
+						'ZGlldmlyZ2luamM':jQuery.cookie(token),
+						'update':'true'
+						},success: function(data) {
+							var status = jQuery.parseJSON(data);
+							if(status.success == '1') {
+								jQuery(".success_update").dialog({width: 'auto',Maxwidth:750,close: function() {
+								window.location.href ="/admin/users/all_admin"; 
+								}});
+								return false;
+							} else {
+								alert(status.error_msg);
+								return false;
+							}
+						}
+					});
+					return false;
+				},
 				delete_users: function(urls,token) {		
 					jQuery(document).on("click",".juser_del",function(e){
 						e.preventDefault();
@@ -60,6 +106,7 @@ var kpay = {
 							buttons: {
 							"Yes": function () {
 								jQuery("#jcomp_"+ids).remove();
+								jQuery.post(urls,{"admin_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
 								jQuery(".option_alert").dialog("close");
 							},
 							No: function () {
