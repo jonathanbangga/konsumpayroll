@@ -56,7 +56,7 @@ var kpay = {
 						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
-							jQuery("input[id^='edit_owner']").val(jres.owner_name);
+							jQuery("input[name='edit_owner']").val(jres.owner_name);
 							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
 							jQuery("input[id^='edit_email']").val(jres.email_address);
 							jQuery("input[id^='edit_old_email']").val(jres.email_address);
@@ -71,7 +71,7 @@ var kpay = {
 					type: "POST",
 					data:{
 						'edit_id':jQuery("input[id^='edit_owner_id']").val(),
-						'edit_name':jQuery("input[id^='edit_owner']").val(),
+						'edit_name':jQuery("input[name='edit_owner']").val(),
 						'edit_email':jQuery("input[id^='edit_email']").val(),
 						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
 						'edit_pass':jQuery("input[id^='edit_pass']").val(),
@@ -81,8 +81,9 @@ var kpay = {
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
 							if(status.success == '1') {
-								jQuery(".success_update").dialog({width: 'auto',Maxwidth:750,close: function() {
-								window.location.href ="/admin/users/all_admin"; 
+								
+								jQuery(".success_updated").dialog({width: 'auto',Maxwidth:750,close: function() {
+								window.location.href ="/admin/users/all_users"; 
 								}});
 								return false;
 							} else {
@@ -127,7 +128,7 @@ var kpay = {
 						'password':jQuery("input[name='password']:visible").val(),
 						'cpassword':jQuery("input[name='cpassword']:visible").val(),
 						'ZGlldmlyZ2luamM':jQuery.cookie(token),
-						'add':'true'
+						'add':'true',
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
 							if(status.success == '1') {
@@ -260,6 +261,7 @@ var kpay = {
 				show_add_form: function(){
 					jQuery(document).on('click',"#jlight_adduser",function(e){
 						e.preventDefault();
+						jQuery("form.jaddusers")[0].reset();
 						jQuery(".jreg").dialog();
 					});
 				}
@@ -276,7 +278,7 @@ window.alert = function(msg){
 	   modal: true,
 	   dialogClass:'transparent',
 	   open : function() {
-		   jQuery('.source_error').dialog("option", "title" ,"Information");
+		   jQuery('.source_error').dialog("option", "title" ,"Warning");
 	   },
 	   overlay: {
    		   opacity: 0

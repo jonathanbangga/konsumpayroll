@@ -61,14 +61,14 @@
 				<tr>
 					<td style="width:155px">Name:</td>
 					<td>
-					<input type="hidden"  readonly="readonly"  value="<?php echo set_value("owner_name");?>" name="edit_owner_id" id="edit_owner_id" class="txtfield">
-					<input type="text"  value="<?php echo set_value("owner_name");?>" name="edit_owner" id="edit_owner" class="txtfield">
+					<input type="hidden"  readonly="readonly"  value="" name="edit_owner_id" id="edit_owner_id" class="txtfield">
+					<input type="text"  value="" name="edit_owner" id="edit_owner" class="txtfield">
 					
 					</td>
 				</tr>
 				<tr>
 					<td>Email Address:</td>
-					<td><input type="text" value="<?php echo set_value("email_address");?>" name="edit_email" id="edit_email"  class="txtfield"></td>
+					<td><input type="text" value="" name="edit_email" id="edit_email"  class="txtfield"></td>
 					<td><input type="hidden" readonly="readonly" value="<?php echo set_value("email_address");?>" name="edit_old_email" id="edit_old_email"  class="txtfield"></td>
 				</tr>
 				<tr>
@@ -91,6 +91,9 @@
 <div class="ihide">
 	<div class="success_add" title="Successfull Save">
 		<p>Success you have added a user</p>
+	</div>
+	<div class="success_updated" title="Successfull Updated">
+		<p>Success you have updated a user</p>
 	</div>
 </div>
 <!-- end lightbox success -->

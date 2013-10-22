@@ -39,6 +39,11 @@ class Users_model extends CI_Model {
 		return $this->db->insert("company_owner",$fields);
 	}
 	
+	public function update_all_user($fields,$owner_id) {
+		$this->db->where("company_owner_id",$this->db->escape_str($owner_id));
+		return $this->db->update("company_owner",$fields);
+	}
+
 	public function disable_user($fields,$owner_id){
 		$this->db->where("company_owner_id",$this->db->escape_str($owner_id));
 		return $this->db->update("company_owner",$fields);

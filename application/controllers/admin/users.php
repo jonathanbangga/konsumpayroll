@@ -106,7 +106,7 @@ class Users extends CI_Controller {
 					$fields = array(
 								"owner_name" 	=> $this->db->escape_str($this->input->post('owner_name')),
 								"email_address" => $this->db->escape_str($this->input->post('email_address')),
-								"password"		=> $this->db->escape_str($this->input->post('password'))
+								"password"		=> $this->db->escape_str(md5($this->input->post('password')))
 							);
 					$this->users_model->add_all_user($fields);
 					echo json_encode(array("success"=>"1","error_msg"=>""));
@@ -152,12 +152,19 @@ class Users extends CI_Controller {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_id','id','xss_clean|trim|required');
-				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_admin_email_check');
+				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_update_user_email_check');
 				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
-				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
-				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
+				$this->form_validation->set_rules('edit_pass','Password','xss_clean|trim|required|matches[edit_cpass]|min_length[8]|max_length[18]');
+				$this->form_validation->set_rules('edit_cpass','Confirm Password','xss_clean|trim|required'); 
 				if($this->form_validation->run() == true) {	
-					echo json_encode(array("error_msg"=>'',"success"=>"1"));
+				
+					$fields = array(
+								"owner_name" 	=> $this->db->escape_str($this->input->post('edit_name')),
+								"email_address" => $this->db->escape_str($this->input->post('edit_email')),
+								"password"		=> $this->db->escape_str(md5($this->input->post('edit_pass')))
+							);
+					$this->users_model->update_all_user($fields,$this->input->post('edit_id'));
+					echo json_encode(array("error_msg"=>'',"success"=>"1","value"=>$fields));
 				} else {
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
 				}
@@ -239,6 +246,18 @@ class Users extends CI_Controller {
 		$row = $query->row();
 		if($row){
 			$this->form_validation->set_message("email_check","The email address is already in use");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public function update_user_email_check($str){
+		$old_email = $this->input->post('edit_old_email');
+		$query = $this->db->query("SELECT * from company_owner WHERE email_address ='{$this->db->escape_str($str)}' AND NOT email_address = '{$old_email}'");
+		$row = $query->row();
+		if($row){
+			$this->form_validation->set_message("update_user_email_check","The email address is already in use");
 			return false;
 		}else{
 			return true;
