@@ -1,4 +1,11 @@
-<?php print form_open('','onsubmit="return validateEmployee(this)"');?>
+<?php 
+	if($employee_list != NULL){
+		foreach($employee_list as $row){
+			print "<p>{$row->fname} {$row->mname} {$row->fname} <a href=''>edit</a> <a href=''>delete</a></p>";
+		}
+	}
+?>
+<?php print form_open('','onsubmit="return validateEmployee()"');?>
 	<h1>Add Employee</h1>
 	<div class="successContBox" style="display:none;"><?php print $this->session->flashdata('message');?></div>
 	company_id<input type="text" id="company_id" name="company_id" /> <br />
@@ -12,6 +19,8 @@
 	dob<input type="text" id="dob" name="dob" /> <br />
 	gender<input type="text" id="gender" name="gender" /> <br />
 	marital_status<input type="text" id="marital_status" name="marital_status" /> <br />
+	address<input type="text" id="address" name="address" /> <br />
+	<br />
 	contact_no<input type="text" id="contact_no" name="contact_no" /> <br />
 	photo<input type="text" id="photo" name="photo" /> <br />
 	tin<input type="text" id="tin" name="tin" /> <br />
@@ -31,7 +40,7 @@
 	<input type="submit" class="btn" value="SAVE" name="save" />
 	<script>
 		function validateEmployee(){
-			var why = "";
+			//var why = "";
 	
 			var company_id = jQuery("#company_id").val();
 			var rank_id = jQuery("#rank_id").val();
@@ -43,6 +52,7 @@
 			var emailaddress = jQuery("#emailaddress").val();
 			var dob = jQuery("#dob").val();
 			var marital_status = jQuery("#marital_status").val();
+			var address = jQuery("#address").val();
 			var contact_no = jQuery("#contact_no").val();
 			var tin = jQuery("#tin").val();
 			var sss = jQuery("#sss").val();
@@ -58,7 +68,7 @@
 			var payroll_group_id = jQuery("#payroll_group_id").val();
 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			
-			if(company_id=="") why += "- Please enter Company <br />";
+			/*if(company_id=="") why += "- Please enter Company <br />";
 			if(rank_id=="") why += "- Please enter Rank <br />";
 			if(dept_id=="") why += "- Please enter Depertment <br />";
 			if(location_id=="") why += "- Please enter Location <br />";
@@ -66,12 +76,12 @@
 			if(mname=="") why += "- Please enter Middlename <br />";
 			if(lname=="") why += "- Please enter Lastname <br />";
 			if(emailaddress==""){
-				why += "- Please enter Email Address";
+				why += "- Please enter Email Address <br />";
 			}else if(!emailReg.test(emailaddress)){
 				why += "- The Email Address field must contain a valid email address <br />";
 			}
 			if(dob=="") why += "- Please enter Date of birth <br />";
-			if(marital_status=="") why += "- Please Marital Status <br />";
+			if(marital_status=="") why += "- Please enter Marital Status <br />";
 			if(contact_no=="") why += "- Please enter Contact Number <br />";
 			if(tin=="") why += "- Please enter TIN <br />";
 			if(sss=="") why += "- Please enter SSS <br />";
@@ -92,7 +102,63 @@
 			if(why!=""){
 				alert(why);
 				return false;
-			}
+			}else{*/
+				var urls = window.location.href;
+				$.ajax({
+					url:urls,
+					type: "POST",
+					data:{
+						'company_id':company_id,
+						'rank_id':rank_id,
+						'dept_id':dept_id,
+						'location_id':location_id,
+						'fname':fname,
+						'mname':mname,
+						'lname':lname,
+						'emailaddress':emailaddress,
+						'dob':dob,
+						'marital_status':marital_status,
+						'address':address,
+						'contact_no':contact_no,
+						'tin':tin,
+						'sss':sss,
+						'phil_health':phil_health,
+						'gsis':gsis,
+						'emergency_contact_person':emergency_contact_person,
+						'emergency_contact_number':emergency_contact_number,
+						'position_id':position_id,
+						'username':username,
+						'password':password,
+						'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+						'save':'true'
+						},success: function(data) {
+							var status = jQuery.parseJSON(data);
+							if(status.success == '1') {
+								jQuery("body").append("<div class='success_add' title='Information'>Successfully saved</div>");
+								jQuery(".success_add").dialog({
+									width: 'inherit',
+								   draggable: false,
+								   modal: true,
+								   dialogClass:'transparent',
+								   overlay: {opacity: 0 },
+									close: function() {
+										window.location.href = urls;
+									},
+									buttons:{
+										"Close": function (){
+											window.location.href = urls;
+										}
+									}
+								});
+								return false;
+							} else {
+								alert(status.error_msg);
+								return false;
+							}
+						}
+				});
+				return false;
+			//}
 		}
 
 		function _successContBox(){
@@ -110,3 +176,6 @@
 		});
 	</script>
 <?php print form_close();?>
+<br />
+<br />
+<br />

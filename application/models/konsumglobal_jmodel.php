@@ -45,6 +45,19 @@
 			}
 		}
 		
+		/**
+		 * Display data
+		 * @param table_name
+		 * @return data result
+		 */
+		public function display_data($table_name){
+			$this->db->where('status','active');
+			$query = $this->db->get($this->db->dbprefix($table_name));
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}
+		
 	}
 	
 /* End of file konsumglobal_jmodel.php */
