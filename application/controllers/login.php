@@ -22,12 +22,12 @@ class Login extends CI_Controller {
 		if($sql->num_rows()>0){
 			$a = $sql->row();
 			// admin
-			if($a->account_type_id==1){
+		/* 	if($a->account_type_id==1){
 				redirect('/admin/dashboard');
 			// users
 			}else{
 				redirect('/konsum/dashboard');
-			}
+			} */
 		}else{
 			redirect('/');
 		}

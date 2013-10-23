@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2013 at 07:08 AM
+-- Generation Time: Oct 23, 2013 at 03:27 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -23,6 +23,50 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_cloud_id` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `account_type_id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `deleted` int(11) NOT NULL,
+  PRIMARY KEY (`account_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `password`, `account_type_id`, `email`, `deleted`) VALUES
+(1, '10-010055', 'tech123', 2, '', 0),
+(2, 'admin', 'tech123', 1, '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_type`
+--
+
+CREATE TABLE IF NOT EXISTS `account_type` (
+  `account_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`account_type_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `account_type`
+--
+
+INSERT INTO `account_type` (`account_type_id`, `name`) VALUES
+(1, 'admin'),
+(2, 'users');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `activity_logs`
 --
 
@@ -33,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -46,7 +90,8 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (4, 'administrator has login', '2013-10-21 02:40:10', 0, '0'),
 (5, 'administrator has login', '2013-10-21 11:27:28', 0, '0'),
 (6, 'administrator has login', '2013-10-21 11:38:44', 0, '0'),
-(7, 'administrator has login', '2013-10-22 02:47:35', 0, '0');
+(7, 'administrator has login', '2013-10-22 02:47:35', 0, '0'),
+(8, 'administrator has login', '2013-10-22 07:16:15', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -186,26 +231,37 @@ CREATE TABLE IF NOT EXISTS `company` (
   `company_owner_id` int(11) NOT NULL,
   `registered_business_name` varchar(80) NOT NULL,
   `sub_domain` varchar(15) NOT NULL,
-  `trace_name` int(80) NOT NULL,
-  `business_address` int(80) NOT NULL,
-  `city` int(80) NOT NULL,
-  `zipcode` int(80) NOT NULL,
-  `organization_type` int(80) NOT NULL,
-  `industy` int(80) NOT NULL,
-  `business_phone` int(80) NOT NULL,
-  `extension` int(80) NOT NULL,
-  `mobile_number` int(80) NOT NULL,
-  `fax` int(80) NOT NULL,
-  `tin` int(80) NOT NULL,
-  `rdo_code` int(80) NOT NULL,
-  `sss_id` int(80) NOT NULL,
-  `hdmf` int(80) NOT NULL,
-  `phil_health` int(80) NOT NULL,
-  `business_category` int(80) NOT NULL,
-  `status` enum('active','inactive') NOT NULL,
+  `trade_name` varchar(100) NOT NULL,
+  `business_address` varchar(180) NOT NULL,
+  `city` varchar(80) NOT NULL,
+  `zipcode` varchar(80) NOT NULL,
+  `organization_type` varchar(80) NOT NULL,
+  `industry` varchar(80) NOT NULL,
+  `business_phone` varchar(80) NOT NULL,
+  `extension` varchar(80) NOT NULL,
+  `mobile_number` varchar(80) NOT NULL,
+  `fax` varchar(80) NOT NULL,
+  `tin` varchar(80) NOT NULL,
+  `rdo_code` varchar(80) NOT NULL,
+  `sss_id` varchar(80) NOT NULL,
+  `hdmf` varchar(80) NOT NULL,
+  `phil_health` varchar(80) NOT NULL,
+  `business_category` varchar(80) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`company_id`, `company_owner_id`, `registered_business_name`, `sub_domain`, `trade_name`, `business_address`, `city`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
+(1, 1, 'techgrowth global', '', '', 'c', 'd', '', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
+(2, 1, 'hirota paint industries', '', '', 'c', 'd', '', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
+(3, 3, 'jack lending services', '', '', 'c', 'd', '', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
+(4, 3, 'qualfong', '', '', 'qualfong', 'qualfong', '', 'qualfong', 'qualfong', 'qualfong', 'qualfong', 'qualfong', 'qualfong', '', '', '', '', '', '', 'Active', '0'),
+(5, 3, 'qualfong', '', '', 'qualfong', 'qualfong', '', 'qualfong', 'qualfong', 'qualfong', 'qualfong', 'qualfong', 'qualfong', '', '', '', '', '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -228,41 +284,16 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `company_owner`
 --
 
 INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `email_address`, `password`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `date`, `status`, `deleted`) VALUES
-(1, 'Joe Mercado', 'j.m@techgrowthglobal.com', '', 'Cebu', 'Street ', 'Cebu City', 6000, 1234857485, 'philippines', '2013-10-18 01:06:25', 'Active', '0'),
-(2, 'Julian Tan', 'j.t@julian.com', '', 'Australia', 'Sydney', 'Australia', 6001, 1234857485, 'Australia', '2013-10-19 00:08:10', 'Inactive', '1'),
-(3, 'Juan Dela Cruz', 'juan_dela@text.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(4, 'michi', 'arkitson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(5, 'Juan Dela Cruz', 'arkitson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(6, 'heheh', 'arkitdson@gmail.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(7, 'we234e', 'tes234324223423434t@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(8, 'we234e', 'adsfsfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(9, 'we234e', 'adssfsfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(10, 'we234e', 'adssfsfssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(11, 'we234e', 'adsssdfsfssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(12, 'we234e', 'adsssdfsdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(13, 'we234e', 'adsssdfsfdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(14, 'we234e', 'adsssdfsffdsffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(15, 'we234e', 'adsssdfsffdsbffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(16, 'we234e', 'adsssdfsffdssdfbffssdfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(17, 'we234e', 'adsssdfsffdssdfbffssddfsfdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(18, 'sfsf', 'sdfsdf@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(19, 'megan', 'fox@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(20, 'megan', 'fox@yahodo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(21, 'megansd', 'fomegansdx@yahodo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(22, 'safsf', 'sdfsdf@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(23, 'safsffsdf', 'sdfsdsdff@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(24, 'users234', 'tewtew@yahoo.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(25, 'sdfsdf', 'sdfs323df@test.com', '', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(26, 'obama', 'obama@yahoo.com', '12345678', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(27, 'atan', 'atan@yahoo.com', 'atanatan', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
-(28, 'tetew', 'j.m2@techgrowthglobal.com', 'tetew233', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1');
+(1, 'Joe Mercado', 'admin@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
+(2, 'tetew@yahoo.com', 'tetew@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
+(3, 'tetew@yahoo.com', 'tete4w@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -344,7 +375,9 @@ CREATE TABLE IF NOT EXISTS `earnings` (
 
 CREATE TABLE IF NOT EXISTS `employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `rank_id` int(11) NOT NULL,
   `dept_id` int(11) NOT NULL,
@@ -845,7 +878,7 @@ CREATE TABLE IF NOT EXISTS `konsum_admin` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`konsum_admin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `konsum_admin`
