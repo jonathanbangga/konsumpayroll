@@ -179,6 +179,78 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<div class="jedit_compform" title="Update Company Information">
+		
+		<div id="error" class="ihide"><?php echo validation_errors("<span>","</span><br />");?></div>
+		<?php echo form_open("admin/company_setup/add",array("class"=>"company_reg"));?>
+			<table>
+				<tbody>
+				<tr>
+					<td style="width:155px">Owner</td>
+					<td>
+						<input type="text" id="ucomp_id" name="ucompid" />
+						<select name="owner" style="padding:5px;">
+							<option value="">Please select owner</option>
+							<?php 
+								if($owners){
+									foreach($owners as $rows){
+										echo "<option value=\"{$rows->company_owner_id}\">{$rows->owner_name}</option>";
+									}
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+				  <td >Registered Business Name:</td>
+				  <td><input type="text" value="<?php echo set_value('reg_business_name'); ?>" name="ureg_business_name"  id="ureg_business_name"class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Trade Name: </td>
+				  <td><input type="text" value="<?php echo set_value('trade_name'); ?>" name="utrade_name" id="utrade_name" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Business Address:</td>
+				  <td><input type="text" value="<?php echo set_value('business_address'); ?>" name="ubusiness_address" id="ubusiness_address" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>City: </td>
+				  <td><input type="text" value="<?php echo set_value('city'); ?>" name="ucity" id="ucity" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Zip Code:</td>
+				  <td><input type="text" value="<?php echo set_value('zip_code'); ?>" name="uzip_code" id="uzip_code" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Organization Type:</td>
+				  <td><input type="text" value="<?php echo set_value('org_type'); ?>" name="uorg_type" id="uorg_type" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Industry: </td>
+				  <td><input type="text" value="<?php echo set_value('industry'); ?>" name="uindustry" id="uindustry"  class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Business Phone:</td>
+				  <td><input type="text" value="<?php echo set_value('business_phone'); ?>" name="ubusiness_phone" id="ubusiness_phone" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Extension: </td>
+				  <td><input type="text" value="<?php echo set_value('extension'); ?>" name="uextension" id="uextension"  class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Mobile Numer:</td>
+				  <td><input type="text" value="<?php echo set_value('mobile_no'); ?>" name="umobile_no"  id="umobile_no" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Fax: </td>
+				  <td><input type="text" value="<?php echo set_value('fax'); ?>" name="ufax" id="ufax" class="txtfield"></td>
+				</tr>
+				</tbody>
+			</table>
+			<input type="submit" name="update" value="UPDATE" class="btn">
+		<?php echo form_close();?>
+		</div>
 	</div>
 	<!-- end popups -->
 	
@@ -187,5 +259,6 @@
 		kpay.admin.company.add_company();
 		kpay.admin.company.delete_company("/admin/company_setup/delete","<?php echo itoken_cookie();?>");
 		kpay.admin.company.show_view("/admin/company_setup/status","<?php echo itoken_cookie();?>");
+		kpay.admin.company.update_company("/admin/company_setup/status","<?php echo itoken_cookie();?>");
 		});
 	</script>

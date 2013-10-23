@@ -105,6 +105,43 @@ class Company_setup extends CI_Controller {
 				break;
 				case "update":
 				
+					if($this->input->post('submit')) {
+						$this->form_validation->set_rules("owner","Owner","required|trim|xss_clean");
+						$this->form_validation->set_rules("reg_business_name","Registration Business Name","required|trim|xss_clean");
+						$this->form_validation->set_rules("trade_name","trade name","required|trim|xss_clean");
+						$this->form_validation->set_rules("business_address","business address","required|trim|xss_clean");
+						$this->form_validation->set_rules("city","city","required|trim|xss_clean");
+						$this->form_validation->set_rules("zip_code","zip","required|trim|xss_clean");
+						$this->form_validation->set_rules("org_type","org type","trim|xss_clean");
+						$this->form_validation->set_rules("industry","industry","trim|xss_clean");
+						$this->form_validation->set_rules("business_phone","business phone","required|trim|xss_clean");
+						$this->form_validation->set_rules("extension","extension","trim|xss_clean");
+						$this->form_validation->set_rules("mobile_no","mobile no","required|trim|xss_clean");
+						$this->form_validation->set_rules("fax","fax","trim|xss_clean");
+						if($this->form_validation->run() == FALSE) {
+						
+						} else {
+							$fields = array(
+										"company_owner_id"	=> $this->db->escape_str($this->input->post("uowner")),
+										"registered_business_name" => $this->db->escape_str($this->input->post("ureg_business_name")),
+										"trade_name"		=> $this->db->escape_str($this->input->post("utrade_name")),
+										"business_address"	=> $this->db->escape_str($this->input->post("ubusiness_address")),
+										"city"				=> $this->db->escape_str($this->input->post("ucity")),
+										"zipcode"			=> $this->db->escape_str($this->input->post("uzip_code")),
+										"organization_type"	=> $this->db->escape_str($this->input->post("uorg_type")),
+										"industry"			=> $this->db->escape_str($this->input->post("uindustry")),
+										"business_phone"	=> $this->db->escape_str($this->input->post("ubusiness_phone")),
+										"extension"			=> $this->db->escape_str($this->input->post("uextension")),
+										"mobile_number"		=> $this->db->escape_str($this->input->post("umobile_no")),
+										"fax"				=> $this->db->escape_str($this->input->post("ufax")),
+										"status"			=> "Active",
+										"deleted"			=> "0"
+									);
+							$comp_ids = $this->company_setup->update("company",$fields);	
+							create_comp_directory($comp_ids);
+						}
+					}
+				
 				break;
 			endswitch;
 		}else{
