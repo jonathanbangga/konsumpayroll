@@ -18,6 +18,78 @@ var kpay = {
 						var h = jQuery("#error").html();
 						alert(h);
 					}
+				},
+				delete_company: function(urls,token){ 
+					jQuery(document).on("click", ".jcomp_delete", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var fid = el.attr("set_id");
+						jQuery(".option_alert").empty().html("Are you sure you want to delete this company?");
+						jQuery(".option_alert").dialog({
+							resizable: false,
+							height: 150,
+							width:"320",
+							modal: true,
+							dialogClass: 'transparent',
+							buttons: {
+								"Yes": function () {
+									jQuery.post(urls,{"delete":'true',"id":fid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(re){
+										jQuery(".option_alert").dialog('close');
+										alert("You have successfully updated");
+										window.location.href = "/admin/company_setup/add";
+										
+									});
+								},
+								"No": function () {
+									 jQuery(".option_alert").dialog('close');
+								}
+							}
+						});
+					});
+				},
+				show_view: function(urls,token){
+					jQuery(document).on("click", ".jcomp_view", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var fid = el.attr("set_id"); 
+						jQuery.post(urls,
+							{
+								"type": "company_view",
+								"update": "true",
+								"id": fid,
+								"ZGlldmlyZ2luamM": jQuery.cookie(token)
+							},
+							function (json) {
+								var res = jQuery.parseJSON(json);  
+								jQuery("#jregname").empty().text(res.registered_business_name);
+								jQuery("#jowner").empty().text(res.owner_name);
+								jQuery("#jtradename").empty().text(res.trade_name);
+								jQuery("#jbus_add").empty().text(res.business_address);
+								jQuery("#jcity").empty().text(res.city);
+								jQuery("#jzip").empty().text(res.zipcode);
+								jQuery("#jorg").empty().text(res.organization_type);
+								jQuery("#jind").empty().text(res.industry);
+								jQuery("#jbpno").empty().text(res.business_phone);
+								jQuery("#jext").empty().text(res.extension);
+								jQuery("#jmob").empty().text(res.mobile_number);
+								jQuery("#jfax").empty().text(res.fax);
+								jQuery(".view_company").dialog(
+									{	
+										draggable:false,
+										resizable: false,
+										height: 'auto',
+										width:"320",
+										modal: true,
+										dialogClass: 'transparent',
+										buttons:{
+											"Close": function(){
+												jQuery(".view_company").dialog('close');
+											}
+										}
+									
+									});
+							});
+					});
 				}
 			},
 			userz: {
@@ -276,7 +348,13 @@ window.alert = function(msg){
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,
+	   width:'320',
 	   dialogClass:'transparent',
+		buttons: {
+			'Close': function() {
+				$( this ).dialog( "close" );
+			}
+		},
 	   open : function() {
 		   jQuery('.source_error').dialog("option", "title" ,"Warning");
 	   },
