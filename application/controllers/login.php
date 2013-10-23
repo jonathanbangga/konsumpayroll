@@ -6,8 +6,6 @@ class Login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('account_model');
-		$this->load->helper('form');
-		$this->load->helper('url');
 	}
 
 	public function index(){
@@ -26,6 +24,10 @@ class Login extends CI_Controller {
 			// if account exist
 			if($sql->num_rows()>0){
 				$a = $sql->row();
+				$newdata = array(
+                   'account_id'  => $a->account_id
+				);
+				$this->session->set_userdata($newdata);
 				redirect('/admin/dashboard');
 			}else{
 				redirect('/login/admin');
@@ -37,6 +39,10 @@ class Login extends CI_Controller {
 			// if account exist
 			if($sql->num_rows()>0){
 				$a = $sql->row();
+				$newdata = array(
+                   'account_id'  => $a->account_id
+				);
+				$this->session->set_userdata($newdata);
 				redirect('/konsum/hr/employee');
 			}else{
 				redirect('/');
