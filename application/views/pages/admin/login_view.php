@@ -1,5 +1,5 @@
 <html>
-<?php echo form_open("login/validate_admin_login");?>
+<?php echo form_open("login/validate_login/1");?>
 <table>
 	<tr>
 		<td colspan="2" style="text-align: center;">
