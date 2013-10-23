@@ -42,8 +42,11 @@ $route['default_controller'] = "Login";
 $route['404_override'] = '';
 
 
+#jc
+$route['login/validate_login'] = "login/validate_login";
 $route['admin/(:any)'] = "admin/$1";
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
