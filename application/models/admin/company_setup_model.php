@@ -35,7 +35,7 @@ class Company_setup_model extends CI_Model {
 	}
 	
 	public function company_info($comp_id){
-		$query = $this->db->query("SELECT co.owner_name,c.registered_business_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
+		$query = $this->db->query("SELECT c.company_id,co.owner_name,c.registered_business_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
 								c.industry,c.business_phone,c.extension,c.mobile_number,c.fax FROM company c 
 								LEFT JOIN company_owner co on co.company_owner_id = c.company_owner_id WHERE 
 								c.company_id='{$this->db->escape_str($comp_id)}' AND c.status='Active' AND c.deleted='0'");

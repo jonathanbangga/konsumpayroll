@@ -106,6 +106,7 @@ var kpay = {
 							function (json) {
 								var res = jQuery.parseJSON(json);  
 								jQuery("#ureg_business_name").empty().val(res.registered_business_name);
+								jQuery("#ucomp_id").empty().val(res.company_id);
 								jQuery("#jowner").empty().val(res.owner_name);
 								jQuery("#utrade_name").empty().val(res.trade_name);
 								jQuery("#ubusiness_address").empty().val(res.business_address);
