@@ -16,8 +16,8 @@
 				  <td><?php echo $all_comp->registered_business_name;?></td>
 				  <td>&nbsp;</td>
 				  <td>
-					  <a href="#" class="btn btn-action">VIEW</a> 
-					  <a href="#" class="btn btn-gray btn-action">EDIT</a> 
+					  <a href="#" class="btn btn-action jcomp_view" set_id="<?php echo $all_comp->company_id;?>">VIEW</a> 
+					  <a href="#" class="btn btn-gray btn-action jcomp_edit" set_id="<?php echo $all_comp->company_id;?>">EDIT</a> 
 					  <a href="#" class="btn btn-red btn-action jcomp_delete" set_id="<?php echo $all_comp->company_id;?>">DELETE</a>
 				  </td>
 				</tr>
@@ -27,7 +27,7 @@
 	   ?>
       </tbody>
 	</table>
-	
+	<div id="paginative"><?php echo $pagi;?></div>
 	<!-- end company list -->
 	
 	
@@ -96,12 +96,96 @@
 		</tr>
 		</tbody>
 	</table>
-	
-	
 	<input type="submit" name="submit" value="ADD" class="btn">
 	<?php echo form_close();?>
+	
+	<!-- for popups -->
+	<div class="ihide">
+		<div class="view_company" title="Company profile">
+			<table>
+				<tbody>
+					<tr>
+						<td style="width:130px">Owner</td>
+						<td>
+							<div id="jowner"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Business Name:</td>
+						<td>
+							<div id="jregname"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Trade Name:</td>
+						<td>
+							<div id="jtradename"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Business Address:</td>
+						<td>
+							<div id="jbus_add"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>City:</td>
+						<td>
+							<div id="jcity"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Zip Code:</td>
+						<td>
+							<div id="jzip"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Organization Type:</td>
+						<td>
+							<div id="jorg"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Industry:</td>
+						<td>
+							<div id="jind"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Business Phone:</td>
+						<td>
+							<div id="jbpno"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Extension:</td>
+						<td>
+							<div id="jext"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Mobile Numer:</td>
+						<td>
+							<div id="jmob"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>Fax:</td>
+						<td>
+							<div id="jfax"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- end popups -->
+	
 	<script type="text/javascript">
 		jQuery(function(){
 		kpay.admin.company.add_company();
+		kpay.admin.company.delete_company("/admin/company_setup/delete","<?php echo itoken_cookie();?>");
+		kpay.admin.company.show_view("/admin/company_setup/update","<?php echo itoken_cookie();?>");
 		});
 	</script>

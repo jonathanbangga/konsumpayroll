@@ -23,3 +23,22 @@
 		return $row;
 	}
 	
+	/**
+	*  	creates a folder of every company 
+	*  	@param int id
+	*	@returns object 
+	**/
+	function create_comp_directory($id){
+		$CI =& get_instance();
+		$dir = "uploads/companies/";
+		if($id !=""){
+			if(!is_dir($dir.$id)) {
+				$folder = array("folder"=>$id,"logo"=>$id."/logo","emp"=>$id."/employee");
+				foreach($folder as $key){				
+					mkdir($dir.$key,0755,true);
+				}
+			}	
+		}else{
+			return false;
+		}
+	}
