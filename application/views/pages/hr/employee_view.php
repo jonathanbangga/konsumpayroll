@@ -129,6 +129,7 @@
 						'position_id':position_id,
 						'username':username,
 						'password':password,
+						'confirmpass':confirmpass,
 						'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
 						'save':'true'
 						},success: function(data) {

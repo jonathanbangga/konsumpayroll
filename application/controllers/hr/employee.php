@@ -27,20 +27,19 @@
 		/**
 		 * index page
 		 */
-		public function index($var1="",$var2="") {
+		public function index() {
 			$data['page_title'] = "Employee's Account";		
-
-			echo $var1+$var2;
 			
 			if($this->input->is_ajax_request()) {
 				if($this->input->post('save')){
-					$this->form_validation->set_rules('company_id', 'Company ID', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('rank_id', 'Rank ID', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('dept_id', 'Department ID', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('company_id', 'Company', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('rank_id', 'Rank', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('dept_id', 'Department', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('location_id', 'Location', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('fname', 'Firstname', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('mname', 'Middlename', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('lname', 'Lastname', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('emailaddress', 'Email Address', 'trim|required|xss_clean|valid_email');
 					$this->form_validation->set_rules('dob', 'Date of birth', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('marital_status', 'Marital Status', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('address', 'Address', 'trim|required|xss_clean');
@@ -52,6 +51,11 @@
 					$this->form_validation->set_rules('emergency_contact_person', 'Emergency Contact Person', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('emergency_contact_number', 'Emergency Contact Number', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('position_id', 'Position ID', 'trim|required|xss_clean');
+					
+					$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|matches[confirmpass]|min_length[8]|max_length[12]');
+					$this->form_validation->set_rules('permission', 'Permission', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('payroll_group_id', 'Payroll Group', 'trim|required|xss_clean');
 					
 					if ($this->form_validation->run()==true){
 						$company_id = $this->input->post('company_id');
