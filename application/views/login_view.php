@@ -1,5 +1,5 @@
 <html>
-<form action="/login/validate_login" method="post">
+<?php echo form_open("login/validate_login");?>
 <table>
 	<tr>
 		<td colspan="2" style="text-align: center;">
@@ -18,5 +18,5 @@
 	</tr>
 </table>
 
-</form>
+<?php echo form_close();?>
 </html>

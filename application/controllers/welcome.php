@@ -1,7 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
 
+<<<<<<< HEAD
+class Welcome extends CI_Controller {
+	
+	public function __construct() {
+		parent::__construct();;
+	}
+
+	public function test(){
+		echo "hello";
+=======
 	/**
 	 * Index Page for this controller.
 	 *
@@ -25,8 +34,11 @@ class Welcome extends CI_Controller {
 	
 	public function test($a,$b){
 		echo $a+$b;
+>>>>>>> ffdc59abc5f683ceaeb48d0edcacd562ab63872b
 	}
+	
+	
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file login.php */
+/* Location: ./application/controllers/login.php */
