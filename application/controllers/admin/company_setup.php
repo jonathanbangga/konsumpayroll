@@ -93,7 +93,7 @@ class Company_setup extends CI_Controller {
 		}
 	}
 	
-	public function update(){
+	public function status(){
 		$type = $this->input->post("type");
 		if($type) {
 			switch($type):

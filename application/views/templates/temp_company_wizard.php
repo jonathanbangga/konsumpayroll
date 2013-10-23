@@ -45,7 +45,7 @@
     <!-- BODY START -->
     <aside id="side-menu" class="left">
       <!-- SIDE-MENU START -->
-      <?php print $this->load->view($company_wizards_menu);?>
+      <?php print $this->load->view($sidebar_menu);?>
       <!-- SIDE-MENU END -->
     </aside>
     <div class="rbox left">

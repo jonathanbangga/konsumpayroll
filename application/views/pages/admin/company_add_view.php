@@ -186,6 +186,6 @@
 		jQuery(function(){
 		kpay.admin.company.add_company();
 		kpay.admin.company.delete_company("/admin/company_setup/delete","<?php echo itoken_cookie();?>");
-		kpay.admin.company.show_view("/admin/company_setup/update","<?php echo itoken_cookie();?>");
+		kpay.admin.company.show_view("/admin/company_setup/status","<?php echo itoken_cookie();?>");
 		});
 	</script>

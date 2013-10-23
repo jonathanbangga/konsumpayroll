@@ -14,13 +14,14 @@
 		 * @var string
 		 */
 		var $theme;
-		
+		var $menu;
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
 			$this->theme = $this->config->item('temp_company_wizard');
+			$this->menu = "content_holders/hr_menu";
 		}
 		
 		/**
@@ -28,6 +29,7 @@
 		 */
 		public function index() {
 			$data['page_title'] = "Company Information";			
+			$data['sidebar_menu'] = $this->menu;
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/company_information_view', $data);
 		}

@@ -42,3 +42,20 @@
 			return false;
 		}
 	}
+	
+	function photo_upload($path="./uploads/",$max_size= 100,$max_width=1024,$max_height=768){
+		$CI =& get_instance();
+		$config['upload_path'] = $path;
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']	= $max_size;
+		$config['max_width']  = $max_width;
+		$config['max_height']  = $max_height;
+		$CI->load->library('upload', $config);
+		if ( ! $CI->upload->do_upload()) {
+			$error = array("status"=>"0",'error' => $CI->upload->display_errors());
+			return $error;
+		} else {
+			$data = array("status"=>"1",'upload_data' => $CI->upload->data());
+			return $data;
+		}
+	}
