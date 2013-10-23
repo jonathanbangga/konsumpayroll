@@ -80,7 +80,7 @@ $autoload['helper'] = array('url','form','language','activity_logs_helper','glob
 |
 */
 
-$autoload['config'] = array('konsumpayroll_templates','konsum_auth');
+$autoload['config'] = array('konsumpayroll_templates');
 
 
 /*

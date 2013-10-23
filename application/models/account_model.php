@@ -4,7 +4,6 @@ class Account_model extends CI_Model {
 
     function __construct(){
         parent::__construct();
-		$this->load->database();
     }
 	
 	public function get_account($user,$pass,$account_type){
