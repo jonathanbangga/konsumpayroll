@@ -1,5 +1,5 @@
 <html>
-<?php echo form_open("login/validate_user_login");?>
+<?php echo form_open("login/validate_admin_login");?>
 <table>
 	<tr>
 		<td colspan="2" style="text-align: center;">
@@ -7,7 +7,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>Payroll Cloud ID:</td><td><input type="text" name="user" /></td>
+		<td>Email</td><td><input type="text" name="user" /></td>
 	</tr>
 	<tr>
 		<td>Password:</td><td><input type="password" name="pass" /></td>

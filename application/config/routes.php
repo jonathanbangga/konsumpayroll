@@ -38,13 +38,13 @@
 |
 */
 
-$route['default_controller'] = "Login";
+$route['default_controller'] = "login";
 $route['404_override'] = '';
 
 
 #jc
-$route['login/validate_login'] = "login/validate_login";
 $route['admin/(:any)'] = "admin/$1";
+$route['login/(:any)'] = "login/$1";
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
 
 
