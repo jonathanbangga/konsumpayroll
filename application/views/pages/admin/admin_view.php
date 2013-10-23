@@ -58,7 +58,7 @@
 	</div>
 	
 	<div class="edit_users_reg jshowupdate ihide" title="Edit Admin User">
-		<?php echo form_open("admin/users/add_admin_users",array("class"=>"jaddusers","onsubmit"=>"return kpay.admin.userz.update_admin_user_form('/admin/users/update_admin_users/','".itoken_cookie()."');"));?>
+		<?php echo form_open("admin/users/add_admin_users",array("class"=>"jaddusers_update","onsubmit"=>"return kpay.admin.userz.update_admin_user_form('/admin/users/update_admin_users/','".itoken_cookie()."');"));?>
 		<table>
 			<tbody>
 				<tr>
@@ -101,6 +101,9 @@
 	<div class="ihide">
 		<div class="success_add" title="Successfull Save">
 			<p>Success you have added a user</p>
+		</div>
+		<div class="success_update" title="Successfull">
+			<p>Success you have updated admin user</p>
 		</div>
 	</div>
 	<!-- end lightbox success -->

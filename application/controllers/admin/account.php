@@ -24,6 +24,11 @@ class Account extends CI_Controller {
 		$data['page_title'] = "Account";
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/account_view', $data);	
+		//echo "test";
+	}
+	
+	public function test($a,$b){
+		echo $a+$b;
 	}
 	
 }

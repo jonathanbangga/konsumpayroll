@@ -52,7 +52,8 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('Layout','konsumpay_auth','database','session','form_validation','pagination');
+#$autoload['libraries'] = array('Layout','konsumpay_auth','database','session','form_validation','pagination'); 
+$autoload['libraries'] = array('Layout','database','session','form_validation','pagination');
 
 
 /*
@@ -64,7 +65,7 @@ $autoload['libraries'] = array('Layout','konsumpay_auth','database','session','f
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','language','activity_logs_helper','global_helper');
+$autoload['helper'] = array('url','form','language','activity_logs_helper','global_helper'); 
 
 
 /*
@@ -96,7 +97,7 @@ $autoload['config'] = array('konsumpayroll_templates','konsum_auth');
 |
 */
 
-$autoload['language'] = array("activity");
+$autoload['language'] = array("activity"); 
 
 
 /*

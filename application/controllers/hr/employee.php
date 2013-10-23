@@ -27,8 +27,10 @@
 		/**
 		 * index page
 		 */
-		public function index() {
-			$data['page_title'] = "Employee's Account";			
+		public function index($var1="",$var2="") {
+			$data['page_title'] = "Employee's Account";		
+
+			echo $var1+$var2;
 			
 			if($this->input->is_ajax_request()) {
 				if($this->input->post('save')){
@@ -116,6 +118,10 @@
 			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/employee_view', $data);
+		}
+		
+		public function test($a,$b){
+			echo $a+$b;
 		}
 	
 	}

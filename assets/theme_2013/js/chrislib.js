@@ -46,7 +46,76 @@ var kpay = {
 							}
 						}
 					});return false;
-				},				
+				},	
+				update_user: function(urls,token){
+					jQuery(document).on("click",".juser_edit",function(e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var getid= el.attr("set_id");
+						jQuery(".jshowupdate").dialog();
+						jQuery("form.jaddusers_update")[0].reset();
+						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
+							var jres = jQuery.parseJSON(ret);
+							jQuery("input[id^='edit_owner']").val(jres.owner_name);
+							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
+							jQuery("input[id^='edit_email']").val(jres.email_address);
+							jQuery("input[id^='edit_old_email']").val(jres.email_address);
+							jQuery("input[id^='edit_pass']").val();
+							jQuery("input[id^='edit_cpass']").val();
+						});
+					});
+				},
+				update_user_form: function(urls,token) {
+					$.ajax({
+					url:urls,
+					type: "POST",
+					data:{
+						'edit_id':jQuery("input[id^='edit_owner_id']").val(),
+						'edit_name':jQuery("input[id^='edit_owner']").val(),
+						'edit_email':jQuery("input[id^='edit_email']").val(),
+						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
+						'edit_pass':jQuery("input[id^='edit_pass']").val(),
+						'edit_cpass':jQuery("input[id^='edit_cpass']").val(),
+						'ZGlldmlyZ2luamM':jQuery.cookie(token),
+						'update':'true'
+						},success: function(data) {
+							var status = jQuery.parseJSON(data);
+							if(status.success == '1') {
+								jQuery(".success_update").dialog({width: 'auto',Maxwidth:750,close: function() {
+								window.location.href ="/admin/users/all_admin"; 
+								}});
+								return false;
+							} else {
+								alert(status.error_msg);
+								return false;
+							}
+						}
+					});
+					return false;
+				},
+				delete_users: function(urls,token) {		
+					jQuery(document).on("click",".juser_del",function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						var ids = el.attr("set_id");
+						jQuery(".option_alert").html("Are you sure you want to delete this user?");
+						jQuery(".option_alert").dialog({
+							resizable: false,
+							height: 150,
+							modal: true,
+							buttons: {
+							"Yes": function () {
+								jQuery("#jcomp_"+ids).remove();
+								jQuery.post(urls,{"admin_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
+								jQuery(".option_alert").dialog("close");
+							},
+							No: function () {
+								jQuery(".option_alert").dialog("close");
+							}
+							}
+						});						
+					});
+				},
 				add_users_admin: function(urls,token) {
 				 	$.ajax({
 					url:urls,
@@ -74,13 +143,13 @@ var kpay = {
 						}
 					});return false;
 				},
-				update_admin_user: function(urls,token){
-				
+				update_admin_user: function(urls,token){		
 					jQuery(document).on("click",".edit_admin",function(e) {
 						e.preventDefault();
 						var el = jQuery(this);
 						var getid= el.attr("set_id");
 						jQuery(".edit_users_reg").dialog();
+						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
 							jQuery("input[id^='edit_name']").val(jres.name);
@@ -112,9 +181,8 @@ var kpay = {
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
 							if(status.success == '1') {
-								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
-								//	window.location.href ="/admin/users/all_admin";
-
+								jQuery(".success_update").dialog({width: 'auto',Maxwidth:750,close: function() {
+								window.location.href ="/admin/users/all_admin"; 
 								}});
 								return false;
 							} else {
@@ -156,6 +224,39 @@ var kpay = {
 						});						
 					});
 				},
+				delete_user: function(urls,token){				
+					jQuery(document).on("click",".juser_del",function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						var ids = el.attr("set_id");
+						jQuery(".option_alert").html("Are you sure you want to delete this user?");
+						jQuery(".option_alert").dialog({
+							resizable: false,
+							height: 150,
+							modal: true,
+							buttons: {
+							"Yes": function () {
+								jQuery("#jcomp_"+ids).remove();
+								jQuery(".option_alert").dialog("close");
+								jQuery.post(urls,{
+								'delete':true,
+								'user_id':ids,
+								'ZGlldmlyZ2luamM':jQuery.cookie(token),
+								},function(d){
+									alert("User has been deleted");
+									jQuery(".option_alert").dialog("close");
+									jQuery(".admin_list_id"+ids).hide('slow',function(){
+										window.location.href ="/admin/users/all_admin/";
+									});
+								});
+							},
+							No: function () {
+								jQuery(".option_alert").dialog("close");
+							}
+							}
+						});						
+					});
+				},
 				show_add_form: function(){
 					jQuery(document).on('click',"#jlight_adduser",function(e){
 						e.preventDefault();
@@ -168,9 +269,8 @@ var kpay = {
 
 // overwrite comments
 window.alert = function(msg){
-
-   //jQuery(".source_error");
-   jQuery(".source_error").html(msg).dialog({
+   jQuery(".source_error").html(msg);
+   jQuery(".source_error").dialog({
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,

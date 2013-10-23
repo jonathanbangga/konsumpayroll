@@ -35,13 +35,13 @@
 			$admin_login = $this->_CI->uri->segment(2);
 			$verify_comp_name = $this->verify_company_name($this->_CI->uri->segment(1));
 			
-			if($verify_comp_name){
+			/*if($verify_comp_name){
 				$var = "";
 			}else if ($group=='logout' || ($group=='admin' && $admin_login=='login') || ($group=='owner' && $admin_login=='login')) {
 				$var = "";
 			}else if ($group != 'login' && $group) {
 				$this->allow($group,'/');
-			}
+			}*/
 	    }
 		
 		/** 

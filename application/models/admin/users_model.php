@@ -18,21 +18,30 @@ class Users_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function fetch_activity_logs($limit,$start){
+	public function users_list($limit,$start){
 		$this->db->limit($limit,$start);
+		$this->db->where(array("status"=>"Active","deleted"=>"0"));
 		$query = $this->db->get("company_owner");
 		$result = $query->result();
 		$query->free_result();
 		return $result;
 	}
 	
-	public function count_activity_logs(){
-		$val = $this->db->count_all("company_owner");
-		return $val;
+	public function users_count_list(){
+		$query 	= $this->db->query("SELECT COUNT(*) as val from company_owner WHERE status='Active' and deleted = '0'");
+		$row	= $query->num_rows();
+		$res 	= $query->row();
+		$query->free_result();
+		return $row ? $res->val : 0;
 	}
 	
 	public function add_all_user($fields) {
 		return $this->db->insert("company_owner",$fields);
+	}
+	
+	public function disable_user($fields,$owner_id){
+		$this->db->where("company_owner_id",$this->db->escape_str($owner_id));
+		return $this->db->update("company_owner",$fields);
 	}
 	
 	public function select_admin_user($id){
@@ -46,8 +55,24 @@ class Users_model extends CI_Model {
 		}
 	}
 	
+	public function select_user($id){
+		if(is_numeric($id)){
+			$query = $this->db->get_where("company_owner",array("company_owner_id"=>$id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	
 	public function add_all_admin($fields) {
 		return $this->db->insert("konsum_admin",$fields);
+	}
+	
+	public function update_admin_user($fields,$id) {
+		$this->db->where("konsum_admin_id",$this->db->escape_str($id));
+		return $this->db->update("konsum_admin",$fields);
 	}
 	
 	public function add_data_fields($database,$fields){
@@ -73,8 +98,11 @@ class Users_model extends CI_Model {
 	}
 
 	public function count_admin(){
-		$val = $this->db->count_all("konsum_admin");
-		return $val;
+		$query 	= $this->db->query("SELECT COUNT(*) as val from konsum_admin WHERE status='Active' and deleted = '0'");
+		$row	= $query->num_rows();
+		$res 	= $query->row();
+		$query->free_result();
+		return $row ? $res->val : 0;
 	}
 	
 }

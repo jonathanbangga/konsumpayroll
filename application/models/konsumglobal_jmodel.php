@@ -51,7 +51,7 @@
 		 * @return data result
 		 */
 		public function display_data($table_name){
-			$this->db->where('status','active');
+			$this->db->where('status','Active');
 			$query = $this->db->get($this->db->dbprefix($table_name));
 			$result = $query->result();
 			$query->free_result();
