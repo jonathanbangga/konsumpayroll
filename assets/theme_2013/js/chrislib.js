@@ -90,6 +90,59 @@ var kpay = {
 									});
 							});
 					});
+				},
+				update_company: function(urls,token) {
+					jQuery(document).on("click", ".jcomp_edit", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var sid = el.attr("set_id");
+						jQuery.post(urls,
+							{
+								"type": "company_view",
+								"update": "true",
+								"id": sid,
+								"ZGlldmlyZ2luamM": jQuery.cookie(token)
+							},
+							function (json) {
+								var res = jQuery.parseJSON(json);  
+								jQuery("#ureg_business_name").empty().val(res.registered_business_name);
+								jQuery("#jowner").empty().val(res.owner_name);
+								jQuery("#utrade_name").empty().val(res.trade_name);
+								jQuery("#ubusiness_address").empty().val(res.business_address);
+								jQuery("#ucity").empty().val(res.city);
+								jQuery("#uzip_code").empty().val(res.zipcode);
+								jQuery("#uorg_type").empty().val(res.organization_type);
+								jQuery("#uindustry").empty().val(res.industry);
+								jQuery("#ubusiness_phone").empty().val(res.business_phone);
+								jQuery("#uextension").empty().val(res.extension);
+								jQuery("#umobile_no").empty().val(res.mobile_number);
+								jQuery("#fax").empty().val(res.fax);
+								jQuery(".jedit_compform").dialog(
+									{	
+										draggable:false,
+										resizable: false,
+										height: 'auto',
+										width:"320",
+										modal: true,
+										dialogClass: 'transparent',
+										buttons:{
+											"Close": function(){
+												jQuery(".jedit_compform").dialog('close');
+											}
+										}
+									
+									});
+							});
+						
+						jQuery(".jedit_compform").dialog({
+							draggable: false,
+							resizable: false,
+							height: 'auto',
+							width: "320",
+							modal: true,
+							dialogClass: 'transparent'
+						});
+					});
 				}
 			},
 			userz: {
