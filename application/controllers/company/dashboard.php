@@ -17,7 +17,8 @@
 		 * Theme options - default theme
 		 * @var string
 		 */
-		var $theme;
+		protected $theme;
+		protected $sidebar_menu;
 		
 		/**
 		 * Constructor
@@ -25,6 +26,8 @@
 		public function __construct() {
 			parent::__construct();
 			$this->theme = $this->config->item('temp_company_wizard');
+			$this->sidebar_menu = 'content_holders/hr_menu';
+			$this->authentication->check_if_logged_in();
 		}
 	
 		/**
@@ -34,6 +37,7 @@
 		{		
 			$data['page_title'] = "Dashboard";
 			$this->layout->set_layout($this->theme);	
+			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->view('pages/company/dashboard_view', $data);
 		}
 		
