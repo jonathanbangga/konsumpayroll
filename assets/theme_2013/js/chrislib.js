@@ -61,7 +61,7 @@ var kpay = {
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#jregname").empty().text(res.registered_business_name);
+								jQuery("#jregname").empty().text(res.company_name);
 								jQuery("#jowner").empty().text(res.owner_name);
 								jQuery("#jtradename").empty().text(res.trade_name);
 								jQuery("#jbus_add").empty().text(res.business_address);
@@ -91,6 +91,33 @@ var kpay = {
 							});
 					});
 				},
+				update_company_form: function(urls,token){
+					jQuery.post(urls,
+						{
+							"type": "company_view",
+							"update": "true",
+							"id": sid,
+							"ureg_business_name":jQuery("#ureg_business_name").val(),
+							"jowner":jQuery("select[name='jowner']").val(),
+							"ucomp_id":jQuery("#ucomp_id").val(),
+							"utrade_name":jQuery("#utrade_name").val(),
+							"ubusiness_address":jQuery("#ubusiness_address").val(),
+							"ucity":jQuery("#ucity").val(),
+							"uzip_code":jQuery("#uzip_code").val(),
+							"uorg_type":jQuery("#uorg_type").val(),
+							"uindustry":jQuery("#uindustry").val(),
+							"ubusiness_phone":jQuery("#ubusiness_phone").val(),
+							"uextension":jQuery("#uextension").val(),
+							"umobile_no":jQuery("#umobile_no").val(),
+							"ufax":jQuery("#ufax").val(),
+							"ZGlldmlyZ2luamM": jQuery.cookie(token)
+						},
+						function (json) {
+							console.log(json);
+							return false;
+						});
+						return false;
+				},
 				update_company: function(urls,token) {
 					jQuery(document).on("click", ".jcomp_edit", function (e) {
 						e.preventDefault();
@@ -105,8 +132,8 @@ var kpay = {
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#ureg_business_name").empty().val(res.registered_business_name);
-								jQuery("select[name='owner']").empty().val(res.company_owner_id);
+								jQuery("#ureg_business_name").empty().val(res.company_name);
+								jQuery("select[name='jowner']").val(res.company_owner_id);
 								jQuery("#ucomp_id").empty().val(res.company_id);
 								jQuery("#jowner").empty().val(res.owner_name);
 								jQuery("#utrade_name").empty().val(res.trade_name);
@@ -118,7 +145,7 @@ var kpay = {
 								jQuery("#ubusiness_phone").empty().val(res.business_phone);
 								jQuery("#uextension").empty().val(res.extension);
 								jQuery("#umobile_no").empty().val(res.mobile_number);
-								jQuery("#fax").empty().val(res.fax);
+								jQuery("#ufax").empty().val(res.fax);
 								jQuery(".jedit_compform").dialog(
 									{	
 										draggable:false,
@@ -388,6 +415,26 @@ var kpay = {
 						e.preventDefault();
 						jQuery("form.jaddusers")[0].reset();
 						jQuery(".jreg").dialog();
+					});
+				}
+			},
+			subdomain: {
+				select_company: function(urls,token){
+					jQuery(document).on('change','#company',function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						var vl = el.val();
+						jQuery("input[name='subdomain']").empty();
+						if(vl !=""){
+							jQuery.post(urls,
+							{
+							"company":vl,
+							"ZGlldmlyZ2luamM": jQuery.cookie(token)
+							},function(json){
+								var res = jQuery.parseJSON(json);
+								jQuery("input[name='subdomain']").val(res.sub_domain);
+							});
+						}
 					});
 				}
 			}

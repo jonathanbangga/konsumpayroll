@@ -1,31 +1,37 @@
-<a href="#" id="jlight_adduser" class="btn right">ADD  USER</a>
+
 	<h1><?php echo $page_title;?></h1>
-	<table class="tbl jusers_all">
-		<tbody>
-			<tr>
-			  <th style="width:165px;">Name</th>
-			  <th style="width:165px">Username</th>
-			  <th style="width:260px">Action</th>
-			</tr>
-			<?php 
-			if($client_user) {
-				foreach($client_user as $all_user): ?>
-				<tr class="admin_list_id<?php echo $all_user->konsum_admin_id;?>">
-					<td class="own_name"><?php echo $all_user->name;?></td>
-					<td><?php echo $all_user->username;?></td>
-					<td>
-						<a href="#" class="btn btn-normal btn-action change_pass_admin" id="view_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">CHANGE PASSWORD</a> 
-						<a href="#" class="btn btn-gray btn-action edit_admin" id="edit_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">EDIT</a> 
-						<a href="#" class="btn btn-red btn-action del_admin" id="del_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">DELETE</a>
-					</td>
-				</tr>
-			<?php	
-				endforeach;
-			}
-			?>	
-		</tbody>
-	</table>
-	<div class="paginative"><?php echo $pagi;?></div>
+	<div class="main-content">
+		<div class="tbl-wrap">
+			<table class="tbl jusers_all">
+				<tbody>
+					<tr>
+						<th style="width:165px;">Name</th>
+						<th style="width:165px">Username</th>
+						<th style="width:285px">Action</th>
+					</tr>
+					<?php 
+					if($client_user) {
+						foreach($client_user as $all_user): ?>
+						<tr class="admin_list_id<?php echo $all_user->konsum_admin_id;?>">
+							<td class="own_name"><?php echo $all_user->name;?></td>
+							<td><?php echo $all_user->username;?></td>
+							<td>
+								<a href="#" class="btn btn-normal btn-action change_pass_admin" id="view_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">CHANGE PASSWORD</a> 
+								<a href="#" class="btn btn-gray btn-action edit_admin" id="edit_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">EDIT</a> 
+								<a href="#" class="btn btn-red btn-action del_admin" id="del_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">DELETE</a>
+							</td>
+						</tr>
+					<?php	
+						endforeach;
+					}
+					?>	
+				</tbody>
+			</table>
+		</div>
+		<div class="paginative"><?php echo $pagi;?></div>
+		<a href="#" id="jlight_adduser" class="btn">ADD  USER</a>
+	</div>
+	
 	<!-- for registration lightbox -->
 	<div class="create_users_reg jreg ihide" title="Add User">
 		<?php echo form_open("admin/users/add_admin_users",array("class"=>"jaddusers","onsubmit"=>"return kpay.admin.userz.add_users_admin('/admin/users/add_admin_users/','".itoken_cookie()."');"));?>

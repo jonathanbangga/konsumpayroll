@@ -1,18 +1,32 @@
-<a href="#" id="jlight_adduser" class="btn right">ADD  USER</a>
+
 <h1><?php echo $page_title;?></h1>
+<div class="main-content">
+<div class="tbl-wrap">
 <table class="tbl jusers_all">
 	<tbody>
 		<tr>
-			<th style="width: 213px;">Name</th>
-			<th style="width: 363px;">Company Name</th>
-			<th style="width: 215px;">Action</th>
+            <th style="width:165px;">Name</th>
+            <th style="width:165px">Company Name</th>
+            <th style="width:225px">Action</th>
 		</tr>
 		<?php 
 		if($client_user) {
 			foreach($client_user as $all_user): ?>
 			<tr id="jcomp_<?php echo $all_user->company_owner_id;?>">
 				<td class="own_name"><?php echo $all_user->owner_name;?></td>
-				<td></td>
+				<td>
+					<ul class="complist">
+					<?php
+						$all_companies = $this->users_model->owners_company_list($all_user->company_owner_id);
+						if($all_companies){
+							foreach($all_companies as $comp_list): ?>
+							<li><span><?php echo $comp_list->company_name;?></span></li>
+					<?php
+							endforeach;
+						}
+					?>
+					</ul>
+				</td>
 				<td>
 					<a href="#" class="btn cbtnadd juser_view"  id="user_view_<?php echo $all_user->company_owner_id;?>"  set_id="<?php echo $all_user->company_owner_id;?>">VIEW</a> 
 					<a href="#" class="btn btn-gray btn-action juser_edit" id="user_edit_<?php echo $all_user->company_owner_id;?>" set_id="<?php echo $all_user->company_owner_id;?>">EDIT</a> 
@@ -25,7 +39,10 @@
 		?>	
 	</tbody>
 </table>
+</div>
 <div class="paginative"><?php echo $pagi;?></div>
+<a href="#" id="jlight_adduser" class="btn">ADD  USER</a>
+</div>
 <!-- for registration lightbox -->
 <div class="create_users_reg jreg ihide" title="Add User">
 	<?php echo form_open("admin/users/add_users",array("class"=>"jaddusers","onsubmit"=>"return kpay.admin.userz.add_users('/admin/users/add_users/','".itoken_cookie()."');"));?>

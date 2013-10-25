@@ -35,8 +35,8 @@ class Company_setup_model extends CI_Model {
 	}
 	
 	public function company_info($comp_id){
-		$query = $this->db->query("SELECT c.company_id,co.company_owner_id,co.owner_name,c.registered_business_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
-								c.industry,c.business_phone,c.extension,c.mobile_number,c.fax FROM company c 
+		$query = $this->db->query("SELECT c.company_id,co.company_owner_id,co.owner_name,c.company_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
+								c.industry,c.business_phone,c.extension,c.mobile_number,c.fax,c.sub_domain FROM company c 
 								LEFT JOIN company_owner co on co.company_owner_id = c.company_owner_id WHERE 
 								c.company_id='{$this->db->escape_str($comp_id)}' AND c.status='Active' AND c.deleted='0'");
 		$rows = $query->row();
@@ -60,6 +60,30 @@ class Company_setup_model extends CI_Model {
 		$query->free_result();
 		return $row ? $res->val : 0;
 	}
+	
+	public function all_company() {
+		$query 	= $this->db->get_where("company",array("status"=>"Active","deleted"=>"0"));
+		$result	= $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
+	public function exist_company($company_name) {
+		$query = $this->db->get_where("company",array("status"=>"Active","deleted"=>"0","company_name"=>$this->db->escape_str($company_name)));
+		$row	= $query->row();
+		$query->free_result();
+		return $row;
+	}
+	
+	public function update_exist_company($company_name,$old_company_name) {
+		$sql = "SELECT * FROM company where status = 'Active' AND deleted='0' AND company_name = '".$this->db->escape_str($company_name)."'
+				AND NOT company_name = '".$this->db->escape_str($old_company_name)."'";
+		$query = $this->db->query($sql);
+		$row	= $query->row();
+		$query->free_result();
+		return $row;
+	}
+	
 }
 
 /* End of file Company_setup_model.php */

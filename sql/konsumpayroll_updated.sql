@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2013 at 08:05 AM
+-- Generation Time: Oct 25, 2013 at 08:44 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -268,8 +268,8 @@ INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `c
 (26, 4, '0000-00-00 00:00:00', 'sdfsdf', 0, '888888888', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
 (27, 1, '0000-00-00 00:00:00', '33333', 0, '', '3333333333', '', '33333333333333', '33333333333333', '33333333333', '33333333333333', '3333333333', '33333333333', '3333333333', '33333333333', '3333333333333333333', '', '', '', '', '', '', 'Inactive', '0'),
 (28, 1, '0000-00-00 00:00:00', 'vbbbbbbbbbbb', 0, 'sdf', 'bbbbbbbbbb', '', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbbb', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbbbbbbbbbbbbbbbb', '23123123', '', '', '', '', '', '', '', 'Inactive', '0'),
-(29, 1, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
-(30, 3, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
+(29, 1, '0000-00-00 00:00:00', 'a', 0, '', 'b', '', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
+(30, 3, '0000-00-00 00:00:00', '33333t', 0, '', '33333t', '', '33333y', 'bbbbbbbu', 'ei', 'qualfongo', 'go', '33333333333[', '3333333333pp', '787878[', '23434uu', '', '', '', '', '', '', 'Active', '0'),
 (31, 1, '0000-00-00 00:00:00', '1', 0, '', '2', '', '33333', '4', '5', '6', '78', '8', '9', '10', '11', '', '', '', '', '', '', 'Active', '0');
 
 -- --------------------------------------------------------
@@ -385,9 +385,8 @@ CREATE TABLE IF NOT EXISTS `earnings` (
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `rank_id` int(11) NOT NULL,
@@ -411,8 +410,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `position_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `emp_id` (`emp_id`)
+  PRIMARY KEY (`emp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1463,16 +1461,6 @@ CREATE TABLE IF NOT EXISTS `workday` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`workday_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `user_credentials` (` emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

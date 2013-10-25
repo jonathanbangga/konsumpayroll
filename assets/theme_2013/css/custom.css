@@ -19,3 +19,11 @@
 .ihide{display:none;}
 
 .error_zone{display:block;}
+.complist{
+	list-style-type:none;
+}
+.complist li {
+    display: block;
+    text-align: left;
+    width: 100%;
+}

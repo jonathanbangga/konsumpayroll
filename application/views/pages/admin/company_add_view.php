@@ -1,35 +1,38 @@
 	<h1><?php echo $page_title;?></h1>
-	
-	<!-- company list -->
-	<table class="tbl">
-        <tbody>
-		<tr>
-          <th style="width:165px;">Company Name</th>
-          <th style="width:165px">Sub Domain</th>
-          <th style="width:210px">Actions</th>
-        </tr>
-		<?php 
-			if($companies) { 
-				foreach($companies as $all_comp) :
-		?>
-				<tr class="jdel_wrap" id="jcomplist_<?php echo $all_comp->company_id;?>">
-				  <td><?php echo $all_comp->registered_business_name;?></td>
-				  <td>&nbsp;</td>
-				  <td>
-					  <a href="#" class="btn btn-action jcomp_view" set_id="<?php echo $all_comp->company_id;?>">VIEW</a> 
-					  <a href="#" class="btn btn-gray btn-action jcomp_edit" set_id="<?php echo $all_comp->company_id;?>">EDIT</a> 
-					  <a href="#" class="btn btn-red btn-action jcomp_delete" set_id="<?php echo $all_comp->company_id;?>">DELETE</a>
-				  </td>
+	<div class="main-content">
+		<div class="tbl-wrap">
+			<!-- company list -->
+			<table class="tbl">
+				<tbody>
+				<tr>
+				  <th style="width:165px;">Company Name</th>
+				  <th style="width:165px">Sub Domain</th>
+				  <th style="width:285px">Actions</th>
+		
 				</tr>
-       <?php
-				endforeach;
-			}
-	   ?>
-      </tbody>
-	</table>
-	<div id="paginative"><?php echo $pagi;?></div>
+				<?php 
+					if($companies) { 
+						foreach($companies as $all_comp) :
+				?>
+						<tr class="jdel_wrap" id="jcomplist_<?php echo $all_comp->company_id;?>">
+						  <td><?php echo $all_comp->company_name;?></td>
+						  <td><?php echo $all_comp->sub_domain;?></td>
+						  <td>
+							  <a href="#" class="btn btn-action jcomp_view" set_id="<?php echo $all_comp->company_id;?>">VIEW</a> 
+							  <a href="/admin/company_setup/edit/<?php echo $all_comp->company_id;?>" class="btn btn-gray btn-action jcomp_edit2" set_id="<?php echo $all_comp->company_id;?>">EDIT</a> 
+							  <a href="#" class="btn btn-red btn-action jcomp_delete" set_id="<?php echo $all_comp->company_id;?>">DELETE</a>
+						  </td>
+						</tr>
+			   <?php
+						endforeach;
+					}
+			   ?>
+			  </tbody>
+			</table>
+			<div id="paginative"><?php echo $pagi;?></div>
+		</div>	
 	<!-- end company list -->
-	
+	</div>
 	
 	<div id="error" class="ihide"><?php echo validation_errors("<span>","</span><br />");?></div>
 	<?php echo form_open("admin/company_setup/add",array("class"=>"company_reg"));?>
@@ -51,7 +54,7 @@
 			</td>
 		</tr>
 		<tr>
-		  <td >Registered Business Name:</td>
+		  <td>Company Name:</td>
 		  <td><input type="text" value="<?php echo set_value('reg_business_name'); ?>" name="reg_business_name" class="txtfield"></td>
 		</tr>
 		<tr>
@@ -111,7 +114,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Business Name:</td>
+						<td>Company Name:</td>
 						<td>
 							<div id="jregname"></div>
 						</td>
@@ -183,14 +186,14 @@
 		<div class="jedit_compform" title="Update Company Information">
 		
 		<div id="error" class="ihide"><?php echo validation_errors("<span>","</span><br />");?></div>
-		<?php echo form_open("admin/company_setup/add",array("class"=>"company_reg"));?>
+		<?php echo form_open("admin/company_setup/status",array("class"=>"company_reg","onsubmit"=>"return kpay.admin.company.update_company('/admin/company_setup/status',".itoken_cookie().")"));?>
 			<table>
 				<tbody>
 				<tr>
 					<td style="width:155px">Owner</td>
 					<td>
-						<input type="text" id="ucomp_id" name="ucompid" />
-						<select name="owner" style="padding:5px;">
+						<input type="hidden" id="ucomp_id" name="ucompid" />
+						<select name="jowner" style="padding:5px;">
 							<option value="">Please select owner</option>
 							<?php 
 								if($owners){
@@ -203,7 +206,7 @@
 					</td>
 				</tr>
 				<tr>
-				  <td >Registered Business Name:</td>
+				  <td>Company Name:</td>
 				  <td><input type="text" value="<?php echo set_value('reg_business_name'); ?>" name="ureg_business_name"  id="ureg_business_name"class="txtfield"></td>
 				</tr>
 				<tr>

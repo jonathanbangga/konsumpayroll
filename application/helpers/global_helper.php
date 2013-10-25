@@ -33,7 +33,7 @@
 		$dir = "uploads/companies/";
 		if($id !=""){
 			if(!is_dir($dir.$id)) {
-				$folder = array("folder"=>$id,"logo"=>$id."/logo","emp"=>$id."/employee");
+				$folder = array("folder"=>$id);
 				foreach($folder as $key){				
 					mkdir($dir.$key,0755,true);
 				}
