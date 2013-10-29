@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['temp_company_wizard'] = 'temp_company_wizard';
+$config['default'] = 'default_template';
 $config['temp_admin'] = 'temp_admin';
 
 
