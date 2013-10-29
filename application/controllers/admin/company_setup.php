@@ -121,7 +121,8 @@ class Company_setup extends CI_Controller {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules("jowner","Owner","required|trim|xss_clean");
 				$this->form_validation->set_rules("ucompid","id","required|trim|xss_clean");
-				$this->form_validation->set_rules("company_name","Registration Business Name","required|trim|xss_clean|callback_company_check");
+				$this->form_validation->set_rules("company_name","Registration Business Name","required|trim|xss_clean|callback_update_company_check");
+				$this->form_validation->set_rules("old_company_name","Old company","required|trim|xss_clean");
 				$this->form_validation->set_rules("utrade_name","trade name","required|trim|xss_clean");
 				$this->form_validation->set_rules("ubusiness_address","business address","required|trim|xss_clean");
 				$this->form_validation->set_rules("ucity","city","required|trim|xss_clean");
@@ -176,7 +177,8 @@ class Company_setup extends CI_Controller {
 	}
 	
 	public function update_company_check($str){
-		$res = $this->company_setup->exist_company($str);
+		$oname = $this->input->post('old_company_name');	
+		$res = $this->company_setup->update_exist_company($str,$oname);
 		if($res) {
 			$this->form_validation->set_message("update_company_check","Company is already been used");
 			return false;

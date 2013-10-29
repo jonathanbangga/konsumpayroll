@@ -28,7 +28,9 @@
 				</tr>
 				<tr>
 				  <td>Company Name:</td>
-				  <td><input type="text" value="<?php echo $company_info->company_name;?>" name="company_name"  id="company_name"class="txtfield"></td>
+				  <td>
+				  <input type="hidden" value="<?php echo $company_info->company_name;?>" name="old_company_name"  id="company_name"class="txtfield">
+				  <input type="text" value="<?php echo $company_info->company_name;?>" name="company_name"  id="company_name"class="txtfield"></td>
 				</tr>
 				<tr>
 				  <td>Trade Name: </td>
