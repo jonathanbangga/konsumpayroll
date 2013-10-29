@@ -5,7 +5,7 @@
 	echo $this->session->flashdata("success");
 	?>
 		<div class="tbl-wrap">
-<?php echo form_open("admin/company_setup/edit/".$this->uri->segment(4),array("class"=>"company_reg","onsubmit"=>"return kpay.admin.company.update_company('/admin/company_setup/status',".itoken_cookie().")"));?>
+<?php echo form_open("admin/company_setup/edit/".$this->uri->segment(4),array("class"=>"company_reg","onsubmit"=>"return kpay.admin.company.update_company('/admin/company_setup/status','".itoken_cookie()."')"));?>
 			<table>
 				<tbody>
 				<tr>
@@ -33,8 +33,12 @@
 				  <input type="text" value="<?php echo $company_info->company_name;?>" name="company_name"  id="company_name"class="txtfield"></td>
 				</tr>
 				<tr>
-				  <td>Trade Name: </td>
-				  <td><input type="text" value="<?php echo $company_info->trade_name;?>" name="utrade_name" id="utrade_name" class="txtfield"></td>
+				  <td>Subscription Date: </td>
+				  <td><input type="text" value="<?php echo idates_only($company_info->subscription_date);?>" name="usubscription_date" id="usubscription_date" class="txtfield"></td>
+				</tr>
+				<tr>
+				  <td>Number of Employess: </td>
+				  <td><input type="text" value="<?php echo $company_info->number_of_employees;?>" name="uno_employee" id="uno_employee"  class="txtfield"></td>
 				</tr>
 				<tr>
 				  <td>Business Address:</td>
@@ -49,20 +53,16 @@
 				  <td><input type="text" value="<?php echo $company_info->zipcode;?>" name="uzip_code" id="uzip_code" class="txtfield"></td>
 				</tr>
 				<tr>
-				  <td>Organization Type:</td>
-				  <td><input type="text" value="<?php echo $company_info->organization_type;?>" name="uorg_type" id="uorg_type" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Industry: </td>
-				  <td><input type="text" value="<?php echo $company_info->industry;?>" name="uindustry" id="uindustry"  class="txtfield"></td>
+				  <td>Email Address:</td>
+				  <td><input type="text" value="<?php echo $company_info->email_address;?>" name="uemail" id="uemail" class="txtfield"></td>
 				</tr>
 				<tr>
 				  <td>Business Phone:</td>
 				  <td><input type="text" value="<?php echo $company_info->business_phone;?>" name="ubusiness_phone" id="ubusiness_phone" class="txtfield"></td>
 				</tr>
 				<tr>
-				  <td>Extension: </td>
-				  <td><input type="text" value="<?php echo $company_info->extension;?>" name="uextension" id="uextension"  class="txtfield"></td>
+				  <td>Province: </td>
+				  <td><input type="text" value="<?php echo $company_info->province;?>" name="uprovince" id="uprovince"  class="txtfield"></td>
 				</tr>
 				<tr>
 				  <td>Mobile Numer:</td>

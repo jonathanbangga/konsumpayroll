@@ -59,3 +59,7 @@
 			return $data;
 		}
 	}
+	
+	function date_today(){
+		return date("Y-m-d");
+	}

@@ -14,6 +14,7 @@ class Login extends CI_Controller {
 		$user = $this->input->post('user');
 		$pass = $this->input->post('pass');
 		$this->authentication->validate_login($user,$pass,$account_type); 
+	
 	}
 	
 	public function admin(){

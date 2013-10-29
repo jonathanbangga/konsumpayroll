@@ -43,6 +43,10 @@
 		return date("Y-m-d H:i:s");
 	}
 	
+	function idates_only($str){
+		return date("Y-m-d",strtotime($str));
+	}
+	
 	function p($array) {
 		echo "<pre>";
 		print_r($array);
