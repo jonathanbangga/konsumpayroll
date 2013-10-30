@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Company Approvers Controller
+ * Government Registration Controller
  *
  * @category Controller
  * @version 1.0
  * @author Christopher Cuizon <christophercuizons@gmail.com>
  */
-	class Company extends CI_Controller {
+	class Government_registration extends CI_Controller {
 		
 		/**
 		 * Theme options - default theme
@@ -15,56 +15,29 @@
 		 */
 		var $theme;
 		var $menu;
+		var $sidebar_menu;
+		
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('default');
-			$this->menu = "content_holders/hr_company_sidebar_menu";
-			$this->load->model("hr/company_model","company");
-		}
-		
-		/**
-		 * index page
-		 */
-		public function setup() {
-			$data['page_title'] = "Company Information";			
-			$data['sidebar_menu'] = $this->menu;
-			$data['company_info'] = subdomain_checker();
-			if($this->input->post('submit')){
-				
-			}
-			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/company_information_view', $data);
-		}
-		
-		public function approvers(){
-			$data['page_title'] = "Company Approvers";	
-			$data['sidebar_menu'] = $this->menu;			
-			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/company_approvers_view', $data);	
+			$this->theme = $this->config->item('default');		
+			$this->menu = 'content_holders/company_menu';	
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->load->model("company/company_model","company");
 		}
 		
 		
-		public function company_principal(){
-			$data['page_title'] = "Company Principal";	
-			$data['sidebar_menu'] = $this->menu;
-			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/company_principal_view', $data);	
-		}
-		
-		public function cost_center(){
-			$data['page_title'] = "Cost Center";
-			$data['sidebar_menu'] = $this->menu;			
-			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/cost_center_view', $data);		
-		}		
-		
-		public function gov_registration(){
-			$valid_domain = subdomain_checker() ? subdomain_checker()->company_id : false;
-			$data['page_title'] = "Government Registration";
-			$data['sidebar_menu'] = $this->menu;					
+		public function edit(){
+			$valid_domain = $this->uri->segment(4);
+			if(mod_is_mycompany(0,$valid_domain) == false){
+				redirect("company/dashboard");
+				return false;
+			}	
+			$data['page_title'] = "Government Registration";			
+			$data['sidebar_menu'] = $this->sidebar_menu;
+			$data['page_title'] = "Government Registration";		
 			$data['company_info'] =  $this->company->get_government_registration($valid_domain);
 			$data['error']	= "";
 			$data['category'] = array("regular","non-regular","household","probie");
@@ -88,30 +61,30 @@
 								"category"	=> $this->db->escape_str($this->input->post('category')),
 								"status"	=> "Active",
 								"deleted"	=> "0"
-							);
-						
+							);			
 					if($check_add_update){	
 						$this->company->gov_update($fields,$valid_domain);
 						$this->session->set_flashdata("success","Successfully updated");
-						$value = sprintf(lang("added_company"),"administrator");
-						add_activity($value,$valid_domain);
-					}else{
-						$fields["company_id"] = $this->db->escape_str($valid_domain);
-						$this->company->gov_save($fields);
-						$this->session->set_flashdata("success","Successfully added");
 						$value = sprintf(lang("updated_company"),"administrator");
 						add_activity($value,$valid_domain);
+					}else{
+						#$fields["company_id"] = $this->db->escape_str($valid_domain);
+						#$this->company->gov_save($fields);
+						#$this->session->set_flashdata("success","Successfully added");
+						#$value = sprintf(lang("updated_company"),"administrator");
+						#add_activity($value,$valid_domain);	
 					}	
-					
-					redirect("/".$this->uri->uri_string());
-					
+					redirect("/".$this->uri->uri_string());	
 				}
 			}
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/government_registration_view', $data);			
+			$this->layout->view('pages/company/government_registration_view', $data);				
 		}
+		
+		
+	
 	
 	}
 
-/* End of file company_approvers.php */
-/* Location: ./application/controllers/company_approvers.php */
+/* End of file Government_registration.php */
+/* Location: ./application/controllers/company/Government_registration.php */

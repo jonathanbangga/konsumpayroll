@@ -1,4 +1,4 @@
-        <?php echo form_open("/".$this->uri->segment(1)."/hr/company/gov_registration");?>
+        <?php echo form_open("/company/government_registration/edit/".$this->uri->segment(4));?>
 		<?php echo $error;
 			echo $this->session->flashdata("success");
 		?>

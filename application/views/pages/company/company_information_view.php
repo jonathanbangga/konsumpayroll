@@ -1,5 +1,10 @@
- <!-- MAIN-CONTENT START -->
+	<!-- MAIN-CONTENT START -->
+		<?php echo form_open("company/company_setup/add");?>
+		<?php 
+			echo $errors;
+		?>	
         <div class="tbl-wrap">
+	
           <!-- TBL-WRAP START -->
           <table>
             <tr>
@@ -24,22 +29,24 @@
             </tr>
             <tr>
               <td>Organization Type:</td>
-              <td><input class="txtfield" name="organization_type" type="text" value="<?php echo $company_info ? $company_info->organization_type : "";?>" ></td>
+              <td>
+				<input type="radio" value="government" name="organization_type">Government
+				<input type="radio" value="private" name="organization_type">Private
+				<input type="radio" value="non-profit organization" name="organization_type">Non-profit organization
+			  
+			  </td>
             </tr>
             <tr>
               <td>Industry: </td>
               <td><input class="txtfield" name="industry" type="text" value="<?php echo $company_info ? $company_info->industry : "";?>" ></td>
             </tr>
             <tr>
-              <td>Business Phone:</td>
+              <td>Office Phone:</td>
               <td><input class="txtfield" name="business_phone" type="text" value="<?php echo $company_info ? $company_info->business_phone : "";?>" ></td>
             </tr>
+            
             <tr>
-              <td>Extension: </td>
-              <td><input class="txtfield" name="extension" type="text" value="<?php echo $company_info ? $company_info->extension : "";?>" ></td>
-            </tr>
-            <tr>
-              <td>Mobile Numer:</td>
+              <td>Mobile Phone:</td>
               <td><input class="txtfield" name="mobile_number" type="text" value="<?php echo $company_info ? $company_info->mobile_number : "";?>" ></td>
             </tr>
             <tr>
@@ -49,5 +56,6 @@
           </table>
           <!-- TBL-WRAP END -->
         </div>
-		<input type="submit" name="edit" class="btn" value="Save"/>
-        <!-- MAIN-CONTENT END -->
+		<input type="submit" name="next" class="btn" value="Next"/>
+		<?php echo form_close();?>
+	<!-- MAIN-CONTENT END -->
