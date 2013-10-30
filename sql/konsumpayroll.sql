@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2013 at 08:05 AM
+-- Generation Time: Oct 30, 2013 at 07:20 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -91,7 +91,14 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (5, 'administrator has login', '2013-10-21 11:27:28', 0, '0'),
 (6, 'administrator has login', '2013-10-21 11:38:44', 0, '0'),
 (7, 'administrator has login', '2013-10-22 02:47:35', 0, '0'),
-(8, 'administrator has login', '2013-10-22 07:16:15', 0, '0');
+(8, 'administrator has login', '2013-10-22 07:16:15', 0, '0'),
+(9, 'administrator has added a company', '2013-10-30 03:54:26', 4, '0'),
+(10, 'administrator has added a company', '2013-10-30 04:05:47', 4, '0'),
+(11, 'administrator has added a company', '2013-10-30 04:17:20', 4, '0'),
+(12, 'administrator has added a company', '2013-10-30 04:19:43', 4, '0'),
+(13, 'administrator has added a company', '2013-10-30 05:45:18', 4, '0'),
+(14, 'administrator has added a company', '2013-10-30 05:45:26', 4, '0'),
+(15, 'administrator has added a company', '2013-10-30 05:47:29', 4, '0');
 
 -- --------------------------------------------------------
 
@@ -237,6 +244,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `email_address` varchar(100) NOT NULL,
   `business_address` varchar(180) NOT NULL,
   `city` varchar(80) NOT NULL,
+  `province` varchar(100) NOT NULL,
   `zipcode` varchar(80) NOT NULL,
   `organization_type` varchar(80) NOT NULL,
   `industry` varchar(80) NOT NULL,
@@ -253,24 +261,21 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
-(21, 3, '0000-00-00 00:00:00', 'a', 0, 'techgrowthgloba', 'b', '', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
-(22, 1, '0000-00-00 00:00:00', 'b', 0, 'hirotapaintssss', 'dfsdfsdf', '', 'f', 'sdfasdf', 'asf', 'asdf', 'df', 'asdfasdf', 'asfas', 'fasf', 'asdf', '', '', '', '', '', '', 'Active', '0'),
-(23, 1, '0000-00-00 00:00:00', 'bbbbbbb', 0, '', 'bbbbb', '', 'bbbbbb', 'bbbbbbb', 'bbbbb', 'bbbbbbbbbbbbb', 'bbbbbbb', 'bbbbb', 'bbbbb', 'bbbbbbbbb', 'bbbbbbb', '', '', '', '', '', '', 'Inactive', '0'),
-(24, 3, '0000-00-00 00:00:00', 'sdfsdf', 0, 'sdsfdsf', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(25, 1, '0000-00-00 00:00:00', 'sdfsdf', 0, 'dsfsdf', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(26, 4, '0000-00-00 00:00:00', 'sdfsdf', 0, '888888888', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(27, 1, '0000-00-00 00:00:00', '33333', 0, '', '3333333333', '', '33333333333333', '33333333333333', '33333333333', '33333333333333', '3333333333', '33333333333', '3333333333', '33333333333', '3333333333333333333', '', '', '', '', '', '', 'Inactive', '0'),
-(28, 1, '0000-00-00 00:00:00', 'vbbbbbbbbbbb', 0, 'sdf', 'bbbbbbbbbb', '', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbbb', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbbbbbbbbbbbbbbbb', '23123123', '', '', '', '', '', '', '', 'Inactive', '0'),
-(29, 1, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
-(30, 3, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
-(31, 1, '0000-00-00 00:00:00', '1', 0, '', '2', '', '33333', '4', '5', '6', '78', '8', '9', '10', '11', '', '', '', '', '', '', 'Active', '0');
+INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `province`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
+(1, 1, '2013-10-29 00:00:00', 'techgrowthglobal', 444, 'techgrowthgloba', '', 'chris@chris.com', '33333', 'bbbbbbb', 'ga', 'ha', '', '', '123123', '', '123123123', '12312312', '', '', '', '', '', '', 'Active', '0'),
+(2, 0, '0000-00-00 00:00:00', 'tetew', 0, '', 'a', '', 'b', 'c', '', 'd', 'government', 'e', 'f', '', 'g', 'h', '', '', '', '', '', '', 'Active', '0'),
+(3, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
+(4, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
+(5, 0, '0000-00-00 00:00:00', 'bbbbbbb', 0, '', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'government', 'bbbbbbbbbbbbb', 'bbbbbbbbb', '', 'bbbbbbbbbbbb', 'bbbbbbbbbbbbbbbb', '', '', '', '', '', '', 'Active', '0'),
+(6, 0, '0000-00-00 00:00:00', 'a', 0, '', 'b', '', 'c', 'd', '', 'e', 'private', 'f', 'g', '', 'h', 'i', '', '', '', '', '', '', 'Active', '0'),
+(7, 0, '0000-00-00 00:00:00', 'c', 0, '', 'c', '', 'c', 'c', '', 'c', 'government', 'c', 'c', '', 'c', 'c', '', '', '', '', '', '', 'Active', '0'),
+(8, 0, '0000-00-00 00:00:00', 'test', 0, '', 'test3', '', 'test3', 'test3', '', 'test3', 'private', 'test3', 'test3', '', 'test3', 'test3test3', '', '', '', '', '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -303,8 +308,8 @@ INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `email_address`, 
 (1, 'Joe Mercado', 'admin@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
 (2, 'tetew@yahoo.com', 'tetew@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
 (3, 'tetew@yahoo.com', 'tete4w@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
-(4, 'hehes', 'hehes@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
-(5, 'bbbbbbbb', 'bbbbbbbbb@yahoo.com', '810247419084c82d03809fc886fedaad', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0');
+(4, 'hehes', 'hehes@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
+(5, 'bbbbbbbb', 'bbbbbbbbb@yahoo.com', '810247419084c82d03809fc886fedaad', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1');
 
 -- --------------------------------------------------------
 
@@ -385,17 +390,16 @@ CREATE TABLE IF NOT EXISTS `earnings` (
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `rank_id` int(11) NOT NULL,
   `dept_id` int(11) NOT NULL,
   `location_id` int(11) NOT NULL,
-  `lname` varchar(80) NOT NULL,
-  `fname` varchar(80) NOT NULL,
-  `mname` varchar(80) NOT NULL,
+  `last_name` varchar(80) NOT NULL,
+  `first_name` varchar(80) NOT NULL,
+  `middle_name` varchar(80) NOT NULL,
   `dob` date NOT NULL,
   `gender` enum('Male','Female') NOT NULL,
   `marital_status` enum('Married','Single','Widow','Divorce') NOT NULL,
@@ -411,8 +415,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `position_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `emp_id` (`emp_id`)
+  PRIMARY KEY (`emp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -729,8 +732,8 @@ CREATE TABLE IF NOT EXISTS `expense_type` (
 
 CREATE TABLE IF NOT EXISTS `government_registration` (
   `government_registration_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tin` int(11) NOT NULL,
-  `rdo_code` int(11) NOT NULL,
+  `tin` varchar(100) NOT NULL,
+  `rdo_code` varchar(100) NOT NULL,
   `sss_id` varchar(50) NOT NULL,
   `hdmf` varchar(50) NOT NULL,
   `phil_health` varchar(50) NOT NULL,
@@ -739,7 +742,15 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`government_registration_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `government_registration`
+--
+
+INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `category`, `company_id`, `status`, `deleted`) VALUES
+(1, 'a333333333333333333', 'f33333333', 'sdf', 'sdf', 'df', 'probie', 1, 'Active', '0'),
+(2, 'a', 'b', 'c', 'd', '123123555555555', 'household', 4, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1328,24 +1339,6 @@ CREATE TABLE IF NOT EXISTS `time_sheet` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_credentials`
---
-
-CREATE TABLE IF NOT EXISTS `user_credentials` (
-  ` emp_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payroll_cloud_id` int(11) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `access_level` varchar(50) NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `payroll_group_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (` emp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `withholding_tax`
 --
 
@@ -1463,16 +1456,6 @@ CREATE TABLE IF NOT EXISTS `workday` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`workday_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `user_credentials` (` emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
