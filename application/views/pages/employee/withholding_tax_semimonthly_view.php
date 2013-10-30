@@ -29,7 +29,7 @@
 		<?php 		
 				}
 			}else{
-				print $this->config->item('msg_empty');
+				print msg_empty();
 			}
 		?>
 	</table>
@@ -64,7 +64,7 @@
 		<?php 		
 				}
 			}else{
-				print $this->config->item('msg_empty');
+				print msg_empty();
 			}
 		?>
 	</table>

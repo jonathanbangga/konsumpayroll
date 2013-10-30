@@ -22,5 +22,3 @@ $config['konsum_profile_menu'] = array("My Profile"=>"a","Payroll"=>"b");
 
 $config['admin_tbl'] = 'konsum_admin';
 $config['owner_tbl'] = 'company_owner';
-
-$config['msg_empty'] = 'No items on this table yet.';

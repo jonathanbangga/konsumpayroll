@@ -78,3 +78,12 @@
 		return $num_rows ? $rows : false;
 	}
 	
+	/**
+	 * Message Empty String
+	 * Enter description here ...
+	 */
+	function msg_empty(){
+		$msg_emp = "No items on this table yet.";
+		return $msg_emp;
+	}
+	
