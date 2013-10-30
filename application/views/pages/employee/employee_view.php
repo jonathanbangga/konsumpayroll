@@ -3,8 +3,8 @@
 	print $this->session->userdata('account_id')."<br /><br />"; 
 	if($employee_list != NULL){
 		foreach($employee_list as $row){
-			$fname = ucwords($row->fname);
-			$lname = ucwords($row->lname);
+			$fname = ucwords($row->first_name);
+			$lname = ucwords($row->last_name);
 			print "<p>{$fname} {$lname} <a href=''>edit</a> <a href='javascript:void(0);' class='delBtn_user' attr_userid={$row->account_id} attr_username='{$fname} {$lname}'>delete</a></p>";
 		}
 	}
