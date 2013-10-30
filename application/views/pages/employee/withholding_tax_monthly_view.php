@@ -28,6 +28,8 @@
 			</tr>
 		<?php 		
 				}
+			}else{
+				print $this->config->item('msg_empty');
 			}
 		?>
 	</table>
@@ -61,6 +63,8 @@
 			</tr>
 		<?php 		
 				}
+			}else{
+				print $this->config->item('msg_empty');
 			}
 		?>
 	</table>

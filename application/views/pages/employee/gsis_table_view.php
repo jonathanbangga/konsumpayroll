@@ -20,6 +20,8 @@
 			</tr>
 		<?php 		
 				}
+			}else{
+				print $this->config->item('msg_empty');
 			}
 		?>
 	</table>

@@ -21,7 +21,7 @@
 		  				print "<option value='{$row->rank_id}' name='rank_id' ".set_select('rank_id', $row->rank_id).">".ucwords($row->rank_name)."</option>";
 	  				endforeach;
 		  		}else{
-		  			print "<option value='' name='rank_id'>There are no ranks found</option>";
+		  			print "<option value='' name='rank_id'>{$this->config->item('msg_empty')}</option>";
 		  		}
 		  	?>
 	</select>
@@ -35,7 +35,7 @@
 		  				print "<option value='{$row->dept_id}' name='dept_id' ".set_select('dept_id', $row->dept_id).">".ucwords($row->department_name)."</option>";
 	  				endforeach;
 		  		}else{
-		  			print "<option value='' name='dept_id'>No department</option>";
+		  			print "<option value='' name='dept_id'>{$this->config->item('msg_empty')}</option>";
 		  		}
 		  	?>
 	</select>
@@ -49,7 +49,7 @@
 		  				print "<option value='{$row->location_id}' name='location_id' ".set_select('location_id', $row->location_id).">".ucwords($row->location_name)."</option>";
 	  				endforeach;
 		  		}else{
-		  			print "<option value='' name='location_id'>No location</option>";
+		  			print "<option value='' name='location_id'>{$this->config->item('msg_empty')}</option>";
 		  		}
 		  	?>
 	</select>
