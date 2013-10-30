@@ -20,8 +20,11 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
+			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
+			
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';
 		}
 		
 		/**
@@ -29,7 +32,7 @@
 		 */
 		public function index() {
 			$data['page_title'] = "Employee's Account";		
-			
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			if($this->input->is_ajax_request()) {
 				if($this->input->post('save')){
 					$this->form_validation->set_rules('company_id', 'Company', 'trim|required|xss_clean');
