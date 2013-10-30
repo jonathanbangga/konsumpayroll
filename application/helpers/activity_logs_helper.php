@@ -18,6 +18,7 @@
 					"company_id"=> $CI->db->escape_str($company_id)
 			);
 		$CI->db->insert("activity_logs",$fields);	
+		return $CI->db->insert_id();
 	}
 
 	/**
@@ -43,12 +44,24 @@
 		return date("Y-m-d H:i:s");
 	}
 	
+	function idates_only($str){
+		return date("Y-m-d",strtotime($str));
+	}
+	
 	function p($array) {
 		echo "<pre>";
 		print_r($array);
 		echo "</pre>";	
 	}
 	
+	/**
+	*	init pagination
+	*	@param string uri
+	*	@param int $total_rowss
+	*	@param int $per_page
+	*	@param int $segment
+	*	@return object
+	*/
 	function init_pagination($uri,$total_rows,$per_page=10,$segment=4){
        $ci                          =& get_instance();
        $config['per_page']          = $per_page;

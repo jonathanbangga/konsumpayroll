@@ -17,14 +17,18 @@
 		 * Theme options - default theme
 		 * @var string
 		 */
-		var $theme;
-		
+		protected $theme;
+		protected $sidebar_menu;
+		var $menu;
+		var $sidebar;
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
+			$this->theme = $this->config->item('default');
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';	
 		}
 	
 		/**
@@ -32,8 +36,10 @@
 		 */
 		public function index()
 		{		
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			$data['page_title'] = "Dashboard";
 			$this->layout->set_layout($this->theme);	
+			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->view('pages/company/dashboard_view', $data);
 		}
 		

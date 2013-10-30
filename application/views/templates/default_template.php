@@ -38,19 +38,24 @@
       	<?php print $this->load->view($header_panel);?>
       <!-- HEADER-PANEL END -->
     </section>
-		<?php print $this->load->view($main_menu)?>
+		<nav id="menu">
+		<?php print $this->load->view($this->menu)?>
+		</nav>
     <!-- HEADER END -->
   </header>
   <section id="body">
     <!-- BODY START -->
     <aside id="side-menu" class="left">
       <!-- SIDE-MENU START -->
-      <?php print $this->load->view($company_wizards_menu);?>
+      <?php print $this->load->view($sidebar_menu);?>
       <!-- SIDE-MENU END -->
     </aside>
     <div class="rbox left">
       <!-- RBOX START -->
+	    <h1><?php echo $page_title;?></h1>
+		<div class="main-content">
 		<?php print $layout_contents;?>
+		</div>
       <!-- RBOX END -->
     </div>
     <div class="clearB"></div>

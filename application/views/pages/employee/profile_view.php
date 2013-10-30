@@ -1,5 +1,5 @@
+<div class="tbl-wrap">
 <?php print form_open('','onsubmit="return validateEmployee()"');?>
-	<h1><?php print $page_title;?></h1>
 	<p>Last Name <input type="text" id="lname" name="lname" value="<?php print $my_profile->lname;?>" /></p>
 	<p>First Name <input type="text" id="fname" name="fname" value="<?php print $my_profile->fname;?>" /></p>
 	<p>Middle Name <input type="text" id="mname" name="mname" value="<?php print $my_profile->mname;?>" /></p>
@@ -104,5 +104,5 @@
 		})
 		
 	</script>
-		
 </form>
+</div>

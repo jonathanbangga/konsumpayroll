@@ -43,7 +43,9 @@ $route['404_override'] = '';
 
 
 #jc
+$route['owner/(:any)'] = "owner/$1";
 $route['admin/(:any)'] = "admin/$1";
+$route['company/(:any)'] = "company/$1";
 $route['login/(:any)'] = "login/$1";
 $route['([A-Za-z0-9_.])+/(:any)'] = "$2";
 

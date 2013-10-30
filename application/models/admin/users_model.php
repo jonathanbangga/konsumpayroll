@@ -110,6 +110,18 @@ class Users_model extends CI_Model {
 		return $row ? $res->val : 0;
 	}
 	
+	public function owners_company_list($company_owner_id){
+		$where_array = array(
+						"company_owner_id"	=> $this->db->escape_str($company_owner_id),
+						"status"	=> "Active",
+						"deleted"	=> "0"
+						);
+		$query = $this->db->get_where("company",$where_array);
+		$result = $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
 }
 
 /* End of file Admin_model.php */

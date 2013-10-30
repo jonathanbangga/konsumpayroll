@@ -41,33 +41,43 @@ class Company_setup extends CI_Controller {
 		$data['owners']		= $this->company_setup->display_owners(); # for dropdowns 
 		$data['companies'] 	= $this->company_setup->fetch_company($config["per_page"],$pagi_url);	
 		$data['pagi'] = $this->pagination->create_links();
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/admin/company_add_view', $data);	
+	}
+	
+	public function add_company(){
 		if($this->input->post('submit')) {
 			$this->form_validation->set_rules("owner","Owner","required|trim|xss_clean");
 			$this->form_validation->set_rules("reg_business_name","Registration Business Name","required|trim|xss_clean");
-			$this->form_validation->set_rules("trade_name","trade name","required|trim|xss_clean");
-			$this->form_validation->set_rules("business_address","business address","required|trim|xss_clean");
-			$this->form_validation->set_rules("city","city","required|trim|xss_clean");
-			$this->form_validation->set_rules("zip_code","zip","required|trim|xss_clean");
-			$this->form_validation->set_rules("org_type","org type","trim|xss_clean");
-			$this->form_validation->set_rules("industry","industry","trim|xss_clean");
+			$this->form_validation->set_rules("subscription_date","Subscription Date","required|trim|xss_clean");
+			$this->form_validation->set_rules("no_employees","No of employees","required|trim|xss_clean|numeric");
+			$this->form_validation->set_rules("email_add","email","required|trim|xss_clean|valid_email");
+			#$this->form_validation->set_rules("trade_name","trade name","required|trim|xss_clean");
 			$this->form_validation->set_rules("business_phone","business phone","required|trim|xss_clean");
-			$this->form_validation->set_rules("extension","extension","trim|xss_clean");
 			$this->form_validation->set_rules("mobile_no","mobile no","required|trim|xss_clean");
 			$this->form_validation->set_rules("fax","fax","trim|xss_clean");
+			$this->form_validation->set_rules("business_address","business address","required|trim|xss_clean");
+			$this->form_validation->set_rules("city","city","trim|xss_clean");
+			$this->form_validation->set_rules("province","Province","trim|xss_clean");
+			$this->form_validation->set_rules("zip_code","zip","trim|xss_clean");
+			#$this->form_validation->set_rules("org_type","org type","trim|xss_clean");
+			#$this->form_validation->set_rules("industry","industry","trim|xss_clean");	
+			$this->form_validation->set_rules("extension","extension","trim|xss_clean");
 			if($this->form_validation->run() == FALSE) {
-			
+				echo json_encode(array("success"=>"false","error"=>validation_errors("<span class='errors'>","</span>")));
 			} else {
 				$fields = array(
 							"company_owner_id"	=> $this->db->escape_str($this->input->post("owner")),
-							"registered_business_name" => $this->db->escape_str($this->input->post("reg_business_name")),
-							"trade_name"		=> $this->db->escape_str($this->input->post("trade_name")),
+							"company_name" 		=> $this->db->escape_str($this->input->post("reg_business_name")),
+							"subscription_date"	=> $this->db->escape_str($this->input->post("subscription_date")),
+							"number_of_employees" => $this->db->escape_str($this->input->post("no_employees")),
+							"email_address"		=> $this->db->escape_str($this->input->post("email_add")),
 							"business_address"	=> $this->db->escape_str($this->input->post("business_address")),
 							"city"				=> $this->db->escape_str($this->input->post("city")),
 							"zipcode"			=> $this->db->escape_str($this->input->post("zip_code")),
-							"organization_type"	=> $this->db->escape_str($this->input->post("org_type")),
-							"industry"			=> $this->db->escape_str($this->input->post("industry")),
+							"subscription_date"	=> $this->db->escape_str($this->input->post("subscription_date")),
+							"province"			=> $this->db->escape_str($this->input->post("province")),
 							"business_phone"	=> $this->db->escape_str($this->input->post("business_phone")),
-							"extension"			=> $this->db->escape_str($this->input->post("extension")),
 							"mobile_number"		=> $this->db->escape_str($this->input->post("mobile_no")),
 							"fax"				=> $this->db->escape_str($this->input->post("fax")),
 							"status"			=> "Active",
@@ -75,11 +85,11 @@ class Company_setup extends CI_Controller {
 						);
 				$comp_ids = $this->company_setup->save_fields("company",$fields);	
 				create_comp_directory($comp_ids);
+				echo json_encode(array("success"=>"true","error"=>""));
 			}
 		}
-		$this->layout->set_layout($this->theme);	
-		$this->layout->view('pages/admin/company_add_view', $data);	
 	}
+	
 	
 	public function delete(){
 		if($this->input->post("delete")) {
@@ -93,7 +103,7 @@ class Company_setup extends CI_Controller {
 		}
 	}
 	
-	public function update(){
+	public function status(){
 		$type = $this->input->post("type");
 		if($type) {
 			switch($type):
@@ -104,11 +114,87 @@ class Company_setup extends CI_Controller {
 					}
 				break;
 				case "update":
-				
+					
 				break;
 			endswitch;
 		}else{
 			return false;
+		}
+	}
+	
+	public function edit(){
+		$data['page_title'] = "Edit";
+		if(is_numeric($this->uri->segment(4))){
+			$data['company_info'] = $this->company_setup->company_info($this->uri->segment(4));
+			$data['owners']	= $this->company_setup->display_owners(); # for dropdowns
+			$data['error'] = "";
+			if($this->input->post('update')) {
+				$this->form_validation->set_rules("jowner","Owner","required|trim|xss_clean");
+				$this->form_validation->set_rules("ucompid","id","required|trim|xss_clean");
+				$this->form_validation->set_rules("company_name","Registration Business Name","required|trim|xss_clean|callback_update_company_check");
+				$this->form_validation->set_rules("old_company_name","Old company","required|trim|xss_clean");
+				$this->form_validation->set_rules("uemail","email","required|trim|xss_clean|valid_email");
+				$this->form_validation->set_rules("usubscription_date","Subscription Date","required|trim|xss_clean");
+				$this->form_validation->set_rules("uno_employee","Number of employess","trim|xss_clean");
+				$this->form_validation->set_rules("uprovince","Province","trim|xss_clean");
+				$this->form_validation->set_rules("ubusiness_address","business address","required|trim|xss_clean");
+				$this->form_validation->set_rules("ucity","city","required|trim|xss_clean");
+				$this->form_validation->set_rules("uzip_code","zip","required|trim|xss_clean");
+				$this->form_validation->set_rules("ubusiness_phone","business phone","required|trim|xss_clean");
+				$this->form_validation->set_rules("uextension","extension","trim|xss_clean");
+				$this->form_validation->set_rules("umobile_no","mobile no","required|trim|xss_clean");
+				$this->form_validation->set_rules("ufax","fax","trim|xss_clean");
+				if($this->form_validation->run() == FALSE) {
+					$data['error'] = validation_errors("<span class='errors'>","</span>");
+				} else {
+					$comp_id = $this->db->escape_str($this->input->post('ucompid'));
+					$fields = array(
+								"company_owner_id"	=> $this->db->escape_str($this->input->post("jowner")),
+								"company_name" 		=> $this->db->escape_str($this->input->post("company_name")),
+								"subscription_date"	=> $this->db->escape_str($this->input->post("usubscription_date")),
+								"business_address"	=> $this->db->escape_str($this->input->post("ubusiness_address")),
+								"city"				=> $this->db->escape_str($this->input->post("ucity")),
+								"zipcode"			=> $this->db->escape_str($this->input->post("uzip_code")),
+								"email_address"		=> $this->db->escape_str($this->input->post("uemail")),
+								"industry"			=> $this->db->escape_str($this->input->post("uindustry")),
+								"business_phone"	=> $this->db->escape_str($this->input->post("ubusiness_phone")),
+								"province"			=> $this->db->escape_str($this->input->post("uprovince")),
+								"mobile_number"		=> $this->db->escape_str($this->input->post("umobile_no")),
+								"fax"				=> $this->db->escape_str($this->input->post("ufax")),
+								"status"			=> "Active",
+								"deleted"			=> "0"
+							);		
+					$comp_ids = $this->company_setup->update_fields("company",$fields,$comp_id);	
+					$this->session->set_flashdata("success","You have successfully updated company");
+				}
+			}
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/admin/edit_company_view', $data);	
+		}else{
+			show_404();
+		}
+	}
+	
+	public function company_check($str){
+		$res = $this->company_setup->exist_company($str);
+		if($res) {
+			$this->form_validation->set_message("company_check","Company is already been used");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	
+	
+	public function update_company_check($str){
+		$oname = $this->input->post('old_company_name');	
+		$res = $this->company_setup->update_exist_company($str,$oname);
+		if($res) {
+			$this->form_validation->set_message("update_company_check","Company is already been used");
+			return false;
+		}else{
+			return true;
 		}
 	}
 	

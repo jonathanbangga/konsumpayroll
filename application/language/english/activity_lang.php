@@ -7,7 +7,8 @@
 
 # Global Login
 $lang['last_login'] = "%s has login";
-
+$lang['added_company'] = "%s has added a company";
+$lang['updated_company'] = "%s has added a company";
 # hr
 
 # employee

@@ -1,3 +1,4 @@
+<div class="tbl-wrap">
 <?php
 	print $this->session->userdata('account_id')."<br /><br />"; 
 	if($employee_list != NULL){
@@ -9,7 +10,6 @@
 	}
 ?>
 <?php print form_open('','onsubmit="return validateEmployee()"');?>
-	<h1>Add Employee</h1>
 	<div class="successContBox" style="display:none;"><?php print $this->session->flashdata('message');?></div>
 	company_id<input type="text" id="company_id" name="company_id" /> <br />
 	Rank
@@ -336,3 +336,4 @@
 <br />
 <br />
 <br />
+</div>

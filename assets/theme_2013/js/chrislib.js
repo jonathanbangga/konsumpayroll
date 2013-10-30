@@ -36,8 +36,7 @@ var kpay = {
 									jQuery.post(urls,{"delete":'true',"id":fid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(re){
 										jQuery(".option_alert").dialog('close');
 										alert("You have successfully updated");
-										window.location.href = "/admin/company_setup/add";
-										
+										window.location.href = "/admin/company_setup/add";		
 									});
 								},
 								"No": function () {
@@ -61,19 +60,93 @@ var kpay = {
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#jregname").empty().text(res.registered_business_name);
+								jQuery("#jregname").empty().text(res.company_name);
 								jQuery("#jowner").empty().text(res.owner_name);
-								jQuery("#jtradename").empty().text(res.trade_name);
+								jQuery("#jsubscription_date").empty().text(res.subscription_date);
+								jQuery("#jno_employee").empty().text(res.number_of_employees);
 								jQuery("#jbus_add").empty().text(res.business_address);
+								jQuery("#jemail").empty().text(res.email_address);
 								jQuery("#jcity").empty().text(res.city);
 								jQuery("#jzip").empty().text(res.zipcode);
-								jQuery("#jorg").empty().text(res.organization_type);
-								jQuery("#jind").empty().text(res.industry);
+								jQuery("#jorg").empty().text(res.organization_type);	
 								jQuery("#jbpno").empty().text(res.business_phone);
 								jQuery("#jext").empty().text(res.extension);
 								jQuery("#jmob").empty().text(res.mobile_number);
 								jQuery("#jfax").empty().text(res.fax);
+								jQuery("#jprovince").empty().text(res.province);
 								jQuery(".view_company").dialog(
+									{	
+										draggable:false,
+										resizable: false,
+										height: 'auto',
+										width:"auto",
+										modal: true,
+										dialogClass: 'transparent',
+										buttons:{
+											"Close": function(){
+												jQuery(".view_company").dialog('close');
+											}
+										}
+									});
+							});
+					});
+				},
+				update_company_form: function(urls,token){
+					jQuery.post(urls,
+						{
+							"type": "company_view",
+							"update": "true",
+							"id": sid,
+							"ureg_business_name":jQuery("#ureg_business_name").val(),
+							"jowner":jQuery("select[name='jowner']").val(),
+							"ucomp_id":jQuery("#ucomp_id").val(),
+							"utrade_name":jQuery("#utrade_name").val(),
+							"ubusiness_address":jQuery("#ubusiness_address").val(),
+							"ucity":jQuery("#ucity").val(),
+							"uzip_code":jQuery("#uzip_code").val(),
+							"uorg_type":jQuery("#uorg_type").val(),
+							"uindustry":jQuery("#uindustry").val(),
+							"ubusiness_phone":jQuery("#ubusiness_phone").val(),
+							"uextension":jQuery("#uextension").val(),
+							"umobile_no":jQuery("#umobile_no").val(),
+							"ufax":jQuery("#ufax").val(),
+							"ZGlldmlyZ2luamM": jQuery.cookie(token)
+						},
+						function (json) {
+							console.log(json);
+							return false;
+						});
+						return false;
+				},
+				update_company: function(urls,token) {
+					jQuery(document).on("click", ".jcomp_edit", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var sid = el.attr("set_id");
+						jQuery.post(urls,
+							{
+								"type": "company_view",
+								"update": "true",
+								"id": sid,
+								"ZGlldmlyZ2luamM": jQuery.cookie(token)
+							},
+							function (json) {
+								var res = jQuery.parseJSON(json);  
+								jQuery("#ureg_business_name").empty().val(res.company_name);
+								jQuery("select[name='jowner']").val(res.company_owner_id);
+								jQuery("#ucomp_id").empty().val(res.company_id);
+								jQuery("#jowner").empty().val(res.owner_name);
+								jQuery("#utrade_name").empty().val(res.trade_name);
+								jQuery("#ubusiness_address").empty().val(res.business_address);
+								jQuery("#ucity").empty().val(res.city);
+								jQuery("#uzip_code").empty().val(res.zipcode);
+								jQuery("#uorg_type").empty().val(res.organization_type);
+								jQuery("#uindustry").empty().val(res.industry);
+								jQuery("#ubusiness_phone").empty().val(res.business_phone);
+								jQuery("#uextension").empty().val(res.extension);
+								jQuery("#umobile_no").empty().val(res.mobile_number);
+								jQuery("#ufax").empty().val(res.fax);
+								jQuery(".jedit_compform").dialog(
 									{	
 										draggable:false,
 										resizable: false,
@@ -83,13 +156,63 @@ var kpay = {
 										dialogClass: 'transparent',
 										buttons:{
 											"Close": function(){
-												jQuery(".view_company").dialog('close');
+												jQuery(".jedit_compform").dialog('close');
 											}
 										}
-									
 									});
 							});
+						jQuery(".jedit_compform").dialog({
+							draggable: false,
+							resizable: false,
+							height: 'auto',
+							width: "320",
+							modal: true,
+							dialogClass: 'transparent'
+						});
 					});
+				},
+				popup_add_company: function(){
+					jQuery(document).on("click","#jlight_addcompany",function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						jQuery(".jpop_container").dialog({
+							draggable: false,
+							resizable: false,
+							height: 'auto',
+							width: "320",
+							modal: true,
+							dialogClass: 'transparent'
+						});
+					});
+				},
+				form_add_company: function(urls,token){
+					var fields = {
+							"reg_business_name":jQuery("input[name='reg_business_name']").val(),
+							"owner":			jQuery("select[name='owner']").val(),
+							"subscription_date":jQuery("input[name='subscription_date']").val(),
+							"no_employees":		jQuery("input[name='no_employees']").val(),
+							"email_add":		jQuery("input[name='email_add']").val(),
+							"business_phone":	jQuery("input[name='business_phone']").val(),
+							"mobile_no":	jQuery("input[name='mobile_no']").val(),
+							"fax":			jQuery("input[name='fax']").val(),
+							"business_address":jQuery("input[name='business_address']").val(),
+							"city":			jQuery("input[name='city']").val(),
+							"province":		jQuery("input[name='province']").val(),
+							"zip_code":		jQuery("input[name='zip_code']").val(),
+							"ZGlldmlyZ2luamM":jQuery.cookie(token),
+							"submit":"true"
+							};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);
+						if(res.success == 'false')
+						{
+							alert(res.error);
+						}else{
+							
+						}
+					});
+
+					return false;
 				}
 			},
 			userz: {
@@ -337,6 +460,26 @@ var kpay = {
 						jQuery(".jreg").dialog();
 					});
 				}
+			},
+			subdomain: {
+				select_company: function(urls,token){
+					jQuery(document).on('change','#company',function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						var vl = el.val();
+						jQuery("input[name='subdomain']").empty();
+						if(vl !=""){
+							jQuery.post(urls,
+							{
+							"company":vl,
+							"ZGlldmlyZ2luamM": jQuery.cookie(token)
+							},function(json){
+								var res = jQuery.parseJSON(json);
+								jQuery("input[name='subdomain']").val(res.sub_domain);
+							});
+						}
+					});
+				}
 			}
 		}
 };
@@ -348,7 +491,12 @@ window.alert = function(msg){
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,
+<<<<<<< HEAD
 	   width:'inherit',
+=======
+	   width:'auto',
+	   minWidth:'400',
+>>>>>>> 03836bd6f54f48d29321bc9632e767eb36486400
 	   dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
