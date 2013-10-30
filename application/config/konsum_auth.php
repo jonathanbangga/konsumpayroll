@@ -17,5 +17,8 @@ $config['konsum_groups'] = array(
 	'user' 	 		 => 5,
 	'anonymous' 	 => 20);
 
+#$config['konsum_profile_menu'] = array("a"=>"My Profile","b"=>"Payroll");
+$config['konsum_profile_menu'] = array("My Profile"=>"a","Payroll"=>"b");
+
 $config['admin_tbl'] = 'konsum_admin';
 $config['owner_tbl'] = 'company_owner';
