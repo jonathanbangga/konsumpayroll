@@ -39,23 +39,25 @@
 					$this->form_validation->set_rules('fname', 'Firstname', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('mname', 'Middlename', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('lname', 'Lastname', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('emailaddress', 'Email Address', 'trim|required|xss_clean|valid_email');
+					$this->form_validation->set_rules('emailaddress', 'Email Address', 'trim|required|xss_clean|valid_email|is_unique[accounts.email]');
 					$this->form_validation->set_rules('dob', 'Date of birth', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('marital_status', 'Marital Status', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('address', 'Address', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('contact_no', 'Contact Number', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('mobile_no', 'Mobile Number', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('home_no', 'Home Number', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('tin', 'TIN', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('sss', 'SSS', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('phil_health', 'PhilHealth', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('gsis', 'GSIS', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('hdmf', 'HDMF', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('emergency_contact_person', 'Emergency Contact Person', 'trim|required|xss_clean');
 					$this->form_validation->set_rules('emergency_contact_number', 'Emergency Contact Number', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('position_id', 'Position ID', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('position_id', 'Position', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('payroll_group_id', 'Payroll Group', 'trim|required|xss_clean');
 					
-					$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|is_unique[accounts.payroll_cloud_id]');
 					$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|matches[confirmpass]|min_length[8]|max_length[12]');
 					$this->form_validation->set_rules('permission', 'Permission', 'trim|required|xss_clean');
-					$this->form_validation->set_rules('payroll_group_id', 'Payroll Group', 'trim|required|xss_clean');
 					
 					if ($this->form_validation->run()==true){
 						$company_id = $this->input->post('company_id');
@@ -65,19 +67,28 @@
 						$fname = $this->input->post('fname');
 						$mname = $this->input->post('mname');
 						$lname = $this->input->post('lname');
+						$emailaddress = $this->input->post('emailaddress');
 						$dob = $this->input->post('dob');
 						$marital_status = $this->input->post('marital_status');
 						$address = $this->input->post('address');
-						$contact_no = $this->input->post('contact_no');
+						$mobile_no = $this->input->post('mobile_no');
+						$home_no = $this->input->post('home_no');
 						$tin = $this->input->post('tin');
 						$sss = $this->input->post('sss');
 						$phil_health = $this->input->post('phil_health');
 						$gsis = $this->input->post('gsis');
+						$hdmf = $this->input->post('hdmf');
 						$emergency_contact_person = $this->input->post('emergency_contact_person');
 						$emergency_contact_number = $this->input->post('emergency_contact_number');
 						$position_id = $this->input->post('position_id');
+						$payroll_group_id = $this->input->post('payroll_group_id');
+						
+						$username = $this->input->post('username');
+						$password = md5($this->input->post('password'));
+						$permission = $this->input->post('permission');
 						
 						$emp_id = $this->jmodel->maxid('emp_id','employee');
+						$account_id = $this->jmodel->maxid('account_id','accounts');
 						
 						$insert_employee = array(
 							'emp_id' => $emp_id,
@@ -91,24 +102,41 @@
 							'dob' => $dob,
 							'marital_status' => $marital_status,
 							'address' => $address,
-							'contact_no' => $contact_no,
+							'mobile_no' => $mobile_no,
+							'home_no' => $home_no,
 							'tin' => $tin,
 							'sss' => $sss,
 							'phil_health' => $phil_health,
 							'gsis' => $gsis,
-							'emergency_contact_number' => $emergency_contact_person,
+							'hdmf' => $hdmf,
+							'emergency_contact_person' => $emergency_contact_person,
 							'emergency_contact_number' => $emergency_contact_number,
-							'position_id' => $position_id
+							'position_id' => $position_id,
+							'permission_id' => $permission,
+							'payroll_group_id' => $payroll_group_id,
+							'account_id' => $account_id,
+							'status' => 'Active'
+						);
+						
+						$insert_account = array(
+							'account_id' => $account_id,
+							'payroll_cloud_id' => $username,
+							'password' => $password,
+							'account_type_id' => 1,
+							'email' => $emailaddress,
+							'deleted' => 0
 						);
 						
 						$insert_employee = $this->jmodel->insert_data('employee',$insert_employee);
-						if($insert_employee){
-							#$this->session->set_flashdata('message', '<h1>Successfully saved</h1>');
-							#redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+						$insert_account = $this->jmodel->insert_data('accounts',$insert_account);
+						
+						if($insert_employee && $insert_account){
 							echo json_encode(array("success"=>"1","error_msg"=>""));
 							return false;
 						}else{
-							$errors = "Database error found.";
+							$error = "Database error found.";
+							echo json_encode(array("success"=>"0","error_msg"=>$error));
+							return false;
 						}
 					}else{
 						$error = validation_errors('<span class="error_zone">','</span>');
@@ -119,13 +147,33 @@
 			}
 			
 			$data['employee_list'] = $this->jmodel->display_data('employee');
+			$data['rank'] = $this->jmodel->display_data('rank');
+			$data['dept'] = $this->jmodel->display_data('department');
+			$data['location'] = $this->jmodel->display_data('location');
+			$data['position'] = $this->jmodel->display_data('position');
+			$data['payroll_group'] = $this->jmodel->display_data('payroll_group');
+			$data['permission'] = $this->jmodel->display_data('permission');
 			
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/employee_view', $data);
+			$this->layout->view('pages/employee/employee_view', $data);
 		}
 		
-		public function test($a,$b){
-			echo $a+$b;
+		public function delete_user(){
+			if($this->input->is_ajax_request()) {
+				$user_id = $this->input->post('user_id');
+				$delete_employee = $this->jmodel->delete_data('employee','account_id',$user_id);
+				$delete_account = $this->jmodel->delete_data('accounts','account_id',$user_id);
+				if($delete_employee && $delete_account){
+					echo json_encode(array("success"=>"1","error_msg"=>""));
+					return false;
+				}else{
+					$error = "Database error";
+					echo json_encode(array("success"=>"0","error_msg"=>$error));
+					return false;
+				}
+			}else{
+				show_404();
+			}
 		}
 	
 	}

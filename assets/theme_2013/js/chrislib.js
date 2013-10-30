@@ -348,7 +348,7 @@ window.alert = function(msg){
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,
-	   width:'320',
+	   width:'inherit',
 	   dialogClass:'transparent',
 		buttons: {
 			'Close': function() {

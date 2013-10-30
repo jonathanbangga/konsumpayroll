@@ -2,6 +2,7 @@
 
 $config['temp_company_wizard'] = 'temp_company_wizard';
 $config['temp_admin'] = 'temp_admin';
+$config['temp_employee'] = 'temp_employee';
 
 
 

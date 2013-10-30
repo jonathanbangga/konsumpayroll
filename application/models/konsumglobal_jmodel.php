@@ -58,6 +58,63 @@
 			return $result;
 		}
 		
+		/**
+		 * Delete data information
+		 * @param tble_name
+		 * @param field_name
+		 * @param field_val
+		 * @return true
+		 */
+		public function delete_data($tble_name,$field_name,$field_val){
+			$this->db->where($field_name,$this->db->escape_like_str($field_val));
+			$this->db->delete($tble_name);
+			return true;
+		}
+		
+		/**
+		 * Update data value
+		 * @param tble_name
+		 * @param data_update
+		 * @param field_val
+		 * @param field_name
+		 * @return boolean Returns true if query has a data value otherwise false
+		 */
+		public function update_data($tble_name,$data_update,$field_val,$field_name){
+			$this->db->where($field_name,$this->db->escape_like_str($field_val));
+			$query = $this->db->update($this->db->dbprefix($tble_name),$data_update);
+			
+			if($query){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Display data where
+		 * @param table_name
+		 * @return data result
+		 */
+		public function display_data_where($table_name,$where_field,$where_val){
+			$this->db->where($where_field,$where_val);
+			$query = $this->db->get($this->db->dbprefix($table_name));
+			$result = $query->row();
+			$query->free_result();
+			return $result;
+		}
+		
+		/**
+		 * Display data where for listing result
+		 * @param table_name
+		 * @return data result
+		 */
+		public function display_data_where_result($table_name,$data){
+			$query = $this->db->get_where($table_name, $data);
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}
+		
 	}
 	
 /* End of file konsumglobal_jmodel.php */
