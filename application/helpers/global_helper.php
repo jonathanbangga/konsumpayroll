@@ -63,3 +63,18 @@
 	function date_today(){
 		return date("Y-m-d");
 	}
+	
+	/**
+	*	Check subdomains for validaty
+	*	@return object
+	*/
+	function subdomain_checker(){
+		$CI =& get_instance();
+		$subdomain = trim($CI->db->escape_str($CI->uri->segment(1)));
+		$query = $CI->db->get_where("company",array("sub_domain"=>$subdomain,"status"=>"Active","deleted"=>"0"));
+		$num_rows = $query->num_rows();
+		$rows = $query->row();
+		$query->free_result();
+		return $num_rows ? $rows : false;
+	}
+	

@@ -38,7 +38,9 @@
       	<?php print $this->load->view($header_panel);?>
       <!-- HEADER-PANEL END -->
     </section>
-		<?php print $this->load->view($main_menu)?>
+		<nav id="menu">
+		<?php print $this->load->view($this->menu)?>
+		</nav>
     <!-- HEADER END -->
   </header>
   <section id="body">

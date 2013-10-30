@@ -19,15 +19,16 @@
 		 */
 		protected $theme;
 		protected $sidebar_menu;
-		
+		var $menu;
+		var $sidebar;
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
-			$this->sidebar_menu = 'content_holders/hr_menu';
-			$this->authentication->check_if_logged_in();
+			$this->theme = $this->config->item('default');
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';	
 		}
 	
 		/**
@@ -35,6 +36,7 @@
 		 */
 		public function index()
 		{		
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			$data['page_title'] = "Dashboard";
 			$this->layout->set_layout($this->theme);	
 			$data['sidebar_menu'] = $this->sidebar_menu;

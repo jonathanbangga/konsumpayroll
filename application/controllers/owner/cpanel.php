@@ -18,14 +18,15 @@
 		 * @var string
 		 */
 		var $theme;
-		
+		var $menu;
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
+			$this->theme = $this->config->item('default');
 			$this->load->model('owner/owner_model','owner_model');
+			$this->menu = "content_holders/hr_company_sidebar_menu";
 		}
 	
 		/**
@@ -33,9 +34,8 @@
 		 */
 		public function index(){
 			$data['page_title'] = "Welcome";
-			
-			$data['company_list'] = $this->owner_model->company_list($this->session->userdata('account_id'));
-			
+			$data['sidebar_menu'] = $this->menu;
+			$data['company_list'] = $this->owner_model->company_list($this->session->userdata('account_id'));	
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/owner/cpanel_view', $data);
 		}
