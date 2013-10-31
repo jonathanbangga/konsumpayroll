@@ -20,10 +20,13 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_employee');
+			$this->theme = $this->config->item('default');
 			$this->load->model('employee_model','employee');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->emp_id = $this->uri->segment(5);
+			
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';
 		}
 		
 		/**
@@ -31,6 +34,7 @@
 		 */
 		public function index() {
 			$data['page_title'] = "My Profile";
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			$employee_id = $this->emp_id;
 			$data['my_profile'] = $this->employee->my_profile($employee_id);
 			

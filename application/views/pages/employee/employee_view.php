@@ -29,7 +29,7 @@
 	Department 
 	<select id="dept_id" name="dept_id">
 		  <option value="" selected="selected">Please select Department</option>
-		  	<?php 
+		  	<?php
 		  		if($dept!=NULL){
 		  			foreach($dept as $row):
 		  				print "<option value='{$row->dept_id}' name='dept_id' ".set_select('dept_id', $row->dept_id).">".ucwords($row->department_name)."</option>";

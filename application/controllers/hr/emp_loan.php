@@ -20,11 +20,14 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
+			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee_model','employee');
 			$this->company_id = 1;
 			$this->emp_id = 3;
+			
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';
 		}
 		
 		/**
@@ -32,7 +35,7 @@
 		 */
 		public function index() {
 			$data['page_title'] = "Loans";
-			
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			$data['loan'] = $this->employee->loans($this->company_id,$this->emp_id);
 			
 			$this->layout->set_layout($this->theme);	

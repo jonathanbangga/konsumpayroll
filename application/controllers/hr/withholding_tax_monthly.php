@@ -21,10 +21,13 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('temp_company_wizard');
+			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee_model','employee');
 			$this->company_id = 1;
+			
+			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->menu = 'content_holders/company_menu';
 		}
 		
 		/**
@@ -38,6 +41,7 @@
 			$withholding_tax_status = array('company_id'=>$this->company_id,'tax_type'=>'Monthly');
 			$data['withholding_tax_status'] = $this->jmodel->display_data_where_result('withholding_tax_status',$withholding_tax_status);
 			
+			$data['sidebar_menu'] =$this->sidebar_menu;
 			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/employee/withholding_tax_monthly_view', $data);
 		}
