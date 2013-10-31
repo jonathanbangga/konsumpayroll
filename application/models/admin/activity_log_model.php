@@ -18,23 +18,36 @@ class Activity_log_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	/**
+	 * 
+	 * Fetch activity logs as well as preparation for pagination purposes
+	 * @param int $limit
+	 * @param int $start
+	 * @return object
+	 * @example $this->activity->fetch_activity_logs(0,1)
+	 */
 	public function fetch_activity_logs($limit,$start){
-		$this->db->limit($limit,$start);
-		$query = $this->db->get("activity_logs");
-		
-		$result = $query->result();
-		$query->free_result();
-		return $result;
+		if(is_numeric($limit) || is_numeric($start)){
+			$this->db->limit($limit,$start);
+			$query = $this->db->get("activity_logs");
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}else{
+			return false;
+		}
 	}
 	
+	/**
+	 * 
+	 * get all overall value for activity logs
+	 * @return integer
+	 */
 	public function count_activity_logs(){
 		$val = $this->db->count_all("activity_logs");
 		return $val;
 	}
 
-	
-	
-	
 }
 
 /* End of file Admin_model.php */

@@ -16,33 +16,14 @@
               <td>1</td>
               <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
             </tr>
-            <tr>
-              <td>09-45692871</td>
-              <td>Violet Ann Reyes Zanoria</td>
-              <td>4</td>
-              <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
-            </tr>
-            <tr>
-              <td>09-09090987</td>
-              <td>Allan Villaon Vergara</td>
-              <td>1</td>
-              <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
-            </tr>
-            <tr>
-              <td>09-45692871</td>
-              <td>Violet Ann Reyes Zanoria</td>
-              <td>4</td>
-              <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
-            </tr>
           </table>
           <!-- TBL-WRAP END -->
         </div>
         <input class="btn" name="" type="button" value="ADD APPROVER">
-		
 		<div class="jpop_approvers">
 			<?php 
 				echo form_open("",array("class"=>"we"));
-				echo validation_errors();
+				echo validation_errors("<span class='error_zone'>","</span>");
 			?>
 			<table>
 				<tbody>
@@ -69,6 +50,10 @@
 					<tr>
 					  <td>Contact No: </td>
 					  <td><input type="text"  name="contact_no" class="txtfield"></td>
+					</tr>
+					<tr>
+					  <td>Username: </td>
+					  <td><input type="text"  name="username" class="txtfield"></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>

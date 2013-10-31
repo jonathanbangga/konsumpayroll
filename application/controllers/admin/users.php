@@ -217,6 +217,10 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * Delete users 
+	 */
 	public function delete_user() {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('delete')) {
@@ -252,6 +256,12 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * CAll backs on updating users email 
+	 * @param int $str (email address)
+	 * @return callbacks
+	 */
 	public function update_user_email_check($str){
 		$old_email = $this->input->post('edit_old_email');
 		$query = $this->db->query("SELECT * from company_owner WHERE email_address ='{$this->db->escape_str($str)}' AND NOT email_address = '{$old_email}'");
@@ -264,6 +274,12 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * admin email checks
+	 * @param string $str
+	 * @return callbacks
+	 */
 	public function admin_email_check($str){
 		$old_email = $this->input->post("edit_old_email");
 		$query = $this->db->query("SELECT * from konsum_admin WHERE email_address ='{$this->db->escape_str($str)}' AND NOT email_address = '{$old_email}'");
@@ -276,6 +292,12 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * Callbacks Checks admin usersname
+	 * @param string $str
+	 * @return callbacks
+	 */
 	public function admin_username_update_check($str){
 		$old_username = $this->input->post("edit_username_old");
 		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}' AND NOT username='{$old_username}'");
@@ -288,6 +310,12 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * 
+	 * Checks admin username
+	 * @param string $str
+	 * @return callbacks
+	 */
 	public function admin_username_check($str){
 		$old_username = $this->input->post("edit_username_old");
 		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}'");
@@ -300,7 +328,6 @@ class Users extends CI_Controller {
 		}
 	}
 	
-
 }
 
 /* End of file dashboard.php */

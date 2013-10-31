@@ -23,17 +23,38 @@ class Company_setup_model extends CI_Model {
 		return $row;
 	}
 	
+	/**
+	 * 
+	 * Saves the fields global style
+	 * @param string $database
+	 * @param array $fields
+	 * @return int
+	 */
 	public function save_fields($database,$fields){
 		$this->db->insert($database,$fields);
 		return $this->db->insert_id();
 	}
 	
+	/**
+	 * 
+	 * Updates the fields global style
+	 * @param string $database
+	 * @param array $fields
+	 * @param int $company_id
+	 * @return int
+	 */
 	public function update_fields($database,$fields,$company_id) {
 		$this->db->where("company_id",$this->db->escape_str($company_id));
 		$this->db->update($database,$fields);
 		return $this->db->insert_id();
 	}
 	
+	/**
+	 * 
+	 * Get company_info
+	 * @param int $comp_id
+	 * @return object
+	 */
 	public function company_info($comp_id){
 		$query = $this->db->query("SELECT c.company_id,co.company_owner_id,co.owner_name,c.company_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
 								c.province,c.number_of_employees,c.subscription_date,c.province,c.email_address,
@@ -45,6 +66,13 @@ class Company_setup_model extends CI_Model {
 		return $rows;
 	}
 	
+	/**
+	 * 
+	 * Fetch company
+	 * @param int $limit
+	 * @param int $offset
+	 * @return boject
+	 */
 	public function fetch_company($limit,$offset) {
 		$this->db->limit($limit,$offset);
 		$this->db->where(array("status"=>"Active","deleted"=>"0"));
@@ -54,6 +82,11 @@ class Company_setup_model extends CI_Model {
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * Counts company usage for pagination purposes
+	 * @return integer
+	 */
 	public function count_company() {
 		$query 	= $this->db->query("SELECT COUNT(*) as val from company WHERE status='Active' and deleted = '0'");
 		$row	= $query->num_rows();
@@ -62,6 +95,11 @@ class Company_setup_model extends CI_Model {
 		return $row ? $res->val : 0;
 	}
 	
+	/**
+	 * 
+	 * Displays all company
+	 * @return object
+	 */
 	public function all_company() {
 		$query 	= $this->db->get_where("company",array("status"=>"Active","deleted"=>"0"));
 		$result	= $query->result();
@@ -69,6 +107,12 @@ class Company_setup_model extends CI_Model {
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * Check if the company exisst
+	 * @param string $company_name
+	 * @return object
+	 */
 	public function exist_company($company_name) {
 		$query = $this->db->get_where("company",array("status"=>"Active","deleted"=>"0","company_name"=>$this->db->escape_str($company_name)));
 		$row	= $query->row();
@@ -76,6 +120,13 @@ class Company_setup_model extends CI_Model {
 		return $row;
 	}
 	
+	/**
+	 * 
+	 * Update existing company
+	 * @param string $company_name
+	 * @param string $old_company_name
+	 * @return object
+	 */
 	public function update_exist_company($company_name,$old_company_name) {
 		$sql = "SELECT * FROM company where status = 'Active' AND deleted='0' AND company_name = '".$this->db->escape_str($company_name)."'
 				AND NOT company_name = '".$this->db->escape_str($old_company_name)."'";
