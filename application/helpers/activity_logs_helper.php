@@ -6,9 +6,10 @@
 */
 	
 	/**
-	*	Adds activity for all actions
+	*	Adds activity logs for all actions 
 	*	@param string $name
 	*	@param int $company_id
+	*	@return integer
 	*/
 	function add_activity($name,$company_id){
 		$CI =& get_instance();
@@ -31,23 +32,48 @@
 		return $dates;
 	}	
 	
+	/**
+	 * Checks the dates and time
+	 * @param date $date
+	 * @return dates
+	 */
 	function idates_time($date) {
 		$dates = date("Y-m-d H:i:s",strtotime($date));
 		return $dates;
 	}
 	
+	/**
+	 * defines the time only to example 9:59:02 pm
+	 * @param time $time
+	 * @return dates
+	 */
 	function time_only($time){
 		return date("H:i:s a",strtotime($time));
 	}
 	
+	/**
+	 * Checks dates now
+	 * @return dates
+	 */
 	function idates_now() {
 		return date("Y-m-d H:i:s");
 	}
 	
+	/**
+	 * checks the date on Y-m-d format only
+	 * @param date $str
+	 * @return dates
+	 */
 	function idates_only($str){
 		return date("Y-m-d",strtotime($str));
 	}
 	
+	/**
+	 * This is the shortcut for the pre functionalities because so taas hehe
+	 * @param object $array
+	 * @example p(array("b","c","d"));
+	 * @return object
+	 */
 	function p($array) {
 		echo "<pre>";
 		print_r($array);

@@ -5,16 +5,30 @@
 *	Usage  : Use for all
 */
 	
+	/**
+	 * Defines csrf token name for global purposes only 
+	 * @return csrf_token_name
+	 */
 	function itoken_name(){
 		$CI =& get_instance();
 		return $CI->config->item('csrf_token_name');
 	}
 	
+	/**
+	 * Defines the csrf cookie name
+	 * @return csrf_cookie_name
+	 * @example itoken_cookie() or javascript 
+	 * @uses jQuery.token("< ? php echo itoken_cookie(); ? >");
+	 */
 	function itoken_cookie(){
 		$CI =& get_instance();
 		return $CI->config->item('csrf_cookie_name');
 	}
 
+	/**
+	 * Checks users is admin
+	 * @return object
+	 */
 	function check_user_admin(){
 		$CI =& get_instance();
 		$id = $CI->session->userdata('account_id');
@@ -43,6 +57,14 @@
 		}
 	}
 	
+	/**
+	 * Photo upload for helper only
+	 * @param string $path
+	 * @param int $max_size
+	 * @param int $max_width
+	 * @param int $max_height
+	 * @return object
+	 */
 	function photo_upload($path="./uploads/",$max_size= 100,$max_width=1024,$max_height=768){
 		$CI =& get_instance();
 		$config['upload_path'] = $path;
@@ -60,6 +82,10 @@
 		}
 	}
 	
+	/**
+	 * Checks the date today
+	 * @return date
+	 */
 	function date_today(){
 		return date("Y-m-d");
 	}
