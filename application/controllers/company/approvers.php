@@ -40,74 +40,81 @@
 			$data['error']	= "";
 			$data['category'] = array("regular","non-regular","household","probie");
 			$data['approvers_list'] = $this->approvers->fetch_approvers_users($valid_domain);	
-			
-				if($this->input->post('submit')){
-					$this->form_validation->set_rules("lname","Last name","required|trim|xss_clean");
-					$this->form_validation->set_rules("fname","First name","required|trim|xss_clean");
-					$this->form_validation->set_rules("mname","Middle name","required|trim|xss_clean");
-					$this->form_validation->set_rules("position","Position","trim|xss_clean");
-					$this->form_validation->set_rules("contact_no","Business phone","trim|xss_clean");
-					$this->form_validation->set_rules("email","Email","required|valid_email|trim|is_unique[accounts.email]|xss_clean");
-					$this->form_validation->set_rules("username","username","required|trim|is_unique[accounts.payroll_cloud_id]|xss_clean");
-					if($this->form_validation->run() == false){
-						$data['error'] = validation_errors("<span class='errors'>","</span>");
-					}else{
-	
-						/**=========== for accounts ===========**/
-						$account_fields = array(
-									"payroll_cloud_id" => $this->db->escape_str($this->input->post('username')),
-									"password"		=> md5(idates_now()),
-									"email"			=> $this->db->escape_str($this->input->post('email')),
-									"account_type_id" => 3
-								);	
-						$account_id = $this->approvers->save_fields("accounts",$account_fields);
-						/**=========== for ranks assign ===========**/
-						$rank_fields = array(
-									"rank_name"		=> "",
-									"company_id"	=> $valid_domain,
-									"status"		=> "Active",
-									"deleted"		=> "0"
-								);
-						$rank_id = $this->approvers->save_fields("rank",$rank_fields);
-						/**=========== for department assign ===========**/
-						$dept_fields = array(
-									"company_id"	=> $valid_domain,
-									"status"		=> "Active",
-									"deleted"		=> "0"
-								);
-						$dep_id = $this->approvers->save_fields("department",$dept_fields);
-						/**=========== for location assign ===========**/
-						$location_fields = array(
-									"company_id"	=> $valid_domain,
-									"status"		=> "Active",
-									"deleted"		=> "0"
-								);
-						$location_id = $this->approvers->save_fields("location",$location_fields);
-						/**=========== for employee assign ===========**/
-						if($account_id) {
-							$fields = array(
-								"last_name" 	=> $this->db->escape_str($this->input->post('lname')),
-								"first_name" 	=> $this->db->escape_str($this->input->post('fname')),
-								"middle_name"	=> $this->db->escape_str($this->input->post('mname')),
-								"account_id"	=> $this->db->escape_str($account_id),
-								"contact_no"	=> $this->db->escape_str($this->input->post('contact_no')),
-								"rank_id"		=> $rank_id,
-								"dept_id"		=> $dep_id,
-								"location_id"	=> $location_id,
-								"company_id"	=> $valid_domain
-								);
-							$emp_id = $this->approvers->save_fields("employee",$fields);						
-						/**=========== for assigning company heads ===========**/
-							$assign_company_heads = array(
-										"company_id" 	=> $valid_domain,
-										"emp_id"		=> $emp_id,
-										"user_created"	=> idates_now(),
+				if($this->input->is_ajax_request()){
+					if($this->input->post('submit')){
+						$this->form_validation->set_rules("lname","Last name","required|trim|xss_clean");
+						$this->form_validation->set_rules("fname","First name","required|trim|xss_clean");
+						$this->form_validation->set_rules("mname","Middle name","required|trim|xss_clean");
+						$this->form_validation->set_rules("position","Position","trim|xss_clean");
+						$this->form_validation->set_rules("contact_no","Business phone","trim|xss_clean");
+						$this->form_validation->set_rules("email","Email","required|valid_email|trim|is_unique[accounts.email]|xss_clean");
+						$this->form_validation->set_rules("username","username","min_length[8]|max_length[36]required|trim|is_unique[accounts.payroll_cloud_id]|xss_clean");
+						if($this->form_validation->run() == false){
+							$data['error'] = array("success"=>"0","error"=>validation_errors("<span class='errors'>","</span>"));
+							echo json_encode($data['error']);
+							return false;
+						}else{
+		
+							/**=========== for accounts ===========**/
+							$account_fields = array(
+										"payroll_cloud_id" => $this->db->escape_str($this->input->post('username')),
+										"password"		=> md5(idates_now()),
+										"email"			=> $this->db->escape_str($this->input->post('email')),
+										"account_type_id" => 3
+									);	
+							$account_id = $this->approvers->save_fields("accounts",$account_fields);
+							/**=========== for ranks assign ===========**/
+							$rank_fields = array(
+										"rank_name"		=> "",
+										"company_id"	=> $valid_domain,
 										"status"		=> "Active",
 										"deleted"		=> "0"
 									);
-							$com_head_id = $this->approvers->save_fields("assign_company_head",$assign_company_heads);	
-						}
-					} 
+							$rank_id = $this->approvers->save_fields("rank",$rank_fields);
+							/**=========== for department assign ===========**/
+							$dept_fields = array(
+										"company_id"	=> $valid_domain,
+										"status"		=> "Active",
+										"deleted"		=> "0"
+									);
+							$dep_id = $this->approvers->save_fields("department",$dept_fields);
+							/**=========== for location assign ===========**/
+							$location_fields = array(
+										"company_id"	=> $valid_domain,
+										"status"		=> "Active",
+										"deleted"		=> "0"
+									);
+							$location_id = $this->approvers->save_fields("location",$location_fields);
+							/**=========== for employee assign ===========**/
+							if($account_id) {
+								$fields = array(
+									"last_name" 	=> $this->db->escape_str($this->input->post('lname')),
+									"first_name" 	=> $this->db->escape_str($this->input->post('fname')),
+									"middle_name"	=> $this->db->escape_str($this->input->post('mname')),
+									"account_id"	=> $this->db->escape_str($account_id),
+									"contact_no"	=> $this->db->escape_str($this->input->post('contact_no')),
+									"rank_id"		=> $rank_id,
+									"dept_id"		=> $dep_id,
+									"location_id"	=> $location_id,
+									"company_id"	=> $valid_domain
+									);
+								$emp_id = $this->approvers->save_fields("employee",$fields);						
+							/**=========== for assigning company heads ===========**/
+								$assign_company_heads = array(
+											"company_id" 	=> $valid_domain,
+											"emp_id"		=> $emp_id,
+											"user_created"	=> idates_now(),
+											"status"		=> "Active",
+											"deleted"		=> "0"
+										);
+								$com_head_id = $this->approvers->save_fields("assign_company_head",$assign_company_heads);
+
+								$data['error'] = array("success"=>"1","error"=>"");
+								echo json_encode($data['error']);
+								return false;
+							}
+						} 
+					}
 				}
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/company/company_approvers_view', $data);				
