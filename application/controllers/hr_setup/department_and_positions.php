@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Department_positions extends CI_Controller {
+class Department_and_positions extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
@@ -14,10 +14,10 @@ class Department_positions extends CI_Controller {
 	}
 
 	public function index(){
-		$data['page_title'] = "Department and Positions";
+		$data['page_title'] = "Department & Positions";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
-		$this->layout->view('pages/hr_setup/department_positions_view',$data);
+		$this->layout->view('pages/hr_setup/department_and_positions_view',$data);
 	}
 
 	
