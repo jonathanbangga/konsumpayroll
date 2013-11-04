@@ -1,5 +1,4 @@
  <!-- RBOX START -->
-      <h1>Job Grade</h1>
      <div class="main-content">
        <!-- MAIN-CONTENT START -->
      <p>Add all your levels for approvers. This is used for leave approval/entitlement. </p>
