@@ -1,5 +1,4 @@
 <!-- RBOX START -->
-      <h1>Leaves</h1>
       <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>Lorem Ipsum Bungot Unsa Ibutang Diri</p>

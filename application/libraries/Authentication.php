@@ -33,7 +33,7 @@ class Authentication {
                    'account_id'  => $a->account_id
 				);
 				$this->ci->session->set_userdata($newdata);
-				redirect('/konsum/company/dashboard');
+				redirect('/company/dashboard');
 			}else{
 				redirect('/');
 			}	
