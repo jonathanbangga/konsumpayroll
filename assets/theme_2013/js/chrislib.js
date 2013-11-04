@@ -1,4 +1,16 @@
 var kpay = {
+		overall:{
+			show_pops: function(classhere){
+				jQuery(classhere).dialog({
+					draggable: false,
+					resizable: false,
+					height: 'auto',
+					width: "auto",
+					modal: true,
+					dialogClass: 'transparent'
+				});
+			}
+		},
 		hr: {
 			company_sidebar: function(){ // 
 				jQuery(".jsidebar a").each(function(e){
@@ -17,7 +29,7 @@ var kpay = {
 				// for pop up
 					jQuery(document).on("click", ".jpop_approver", function (e) {
 						e.preventDefault();
-						jQuery(".jpop_approvers").dialog({
+						/* jQuery(".jpop_approvers").dialog({
 							draggable: false,
 							resizable: false,
 							height: 'auto',
@@ -25,7 +37,8 @@ var kpay = {
 							modal: true,
 							dialogClass: 'transparent'
 
-						});
+						}); */
+						kpay.overall.show_pops(".jpop_approvers");
 					});
 				// closing pop up approver
 					jQuery(document).on("click", ".jcancel", function (e) {

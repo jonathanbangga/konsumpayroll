@@ -83,7 +83,7 @@
 	}
 	
 	/**
-	 * Checks the date today
+	 * Checks the date today  
 	 * @return date
 	 */
 	function date_today(){
@@ -91,7 +91,7 @@
 	}
 	
 	/**
-	*	Check subdomains for validaty
+	*	Check subdomains for validaties 
 	*	@return object
 	*/
 	function subdomain_checker(){
@@ -106,7 +106,7 @@
 	
 	/**
 	 * Message Empty String
-	 * Enter description here ...
+	 * @return string
 	 */
 	function msg_empty(){
 		$msg_emp = "No items on this table yet.";

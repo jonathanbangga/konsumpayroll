@@ -32,8 +32,7 @@
 						<option value="">Please select</option>
 						<?php 
 							foreach($category as $categories):
-							$iselect = ( $company_info &&  $company_info->category && $company_info->category ==$categories) ? 'selected="selected"' : '';
-							
+							$iselect = ( $company_info &&  $company_info->category && $company_info->category ==$categories) ? 'selected="selected"' : '';				
 							echo "<option value=\"{$categories}\" {$iselect}>{$categories}</option>";
 							endforeach;
 						?>

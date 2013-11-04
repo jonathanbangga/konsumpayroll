@@ -97,7 +97,7 @@
 					$query_accounts = $this->db->update("accounts",$fields,array("account_id"=>$this->db->escape_str($account_id)));			
 					# end updated accounts deleted
 					# update assign company heads to deleted = 1
-					$where = array("account_id"=>$this->db->escape_str($emp_row->emp_id));
+					$where = array("emp_id"=>$this->db->escape_str($emp_row->emp_id));
 					$this->db->update("assign_company_head",$fields,$where);
 					return $this->db->affected_rows();
 					# end update assign company heads to deleted

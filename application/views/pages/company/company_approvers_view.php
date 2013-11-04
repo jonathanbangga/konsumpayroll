@@ -25,16 +25,14 @@
             </tr>
 		<?php 		
 			endforeach;
-		}else{
+		} else {
 		?>
 			<tr>
-              <td colspan="3"><?php echo msg_empty();?></td>
+              <td colspan="4"><?php echo msg_empty();?></td>
             </tr>
-		
 		<?php 
 		}
-		?>
-           
+		?>  
           </table>
           <!-- TBL-WRAP END -->
         </div>
@@ -96,8 +94,7 @@
 	<!-- MAIN-CONTENT END -->
 	<script type="text/javascript">
 		jQuery(function(){
-			//kpay.owner.approvers.popup_approver();
-
+			kpay.owner.approvers.popup_approver();
 			kpay.owner.approvers.delete_approver('/company/approvers/remove_company_approver/','<?php echo itoken_cookie();?>',"Are you sure you want to delete this user?");
 		});
 	</script>
