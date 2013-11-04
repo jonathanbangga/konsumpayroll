@@ -1,4 +1,16 @@
 var kpay = {
+		overall:{
+			show_pops: function(classhere){
+				jQuery(classhere).dialog({
+					draggable: false,
+					resizable: false,
+					height: 'auto',
+					width: "auto",
+					modal: true,
+					dialogClass: 'transparent'
+				});
+			}
+		},
 		hr: {
 			company_sidebar: function(){ // 
 				jQuery(".jsidebar a").each(function(e){
@@ -9,6 +21,64 @@ var kpay = {
 						return false;
 					}
 				});
+			}
+		},
+		owner: {
+			approvers: {
+				popup_approver: function(){
+				// for pop up
+					jQuery(document).on("click", ".jpop_approver", function (e) {
+						e.preventDefault();
+						/* jQuery(".jpop_approvers").dialog({
+							draggable: false,
+							resizable: false,
+							height: 'auto',
+							width: "auto",
+							modal: true,
+							dialogClass: 'transparent'
+
+						}); */
+						kpay.overall.show_pops(".jpop_approvers");
+					});
+				// closing pop up approver
+					jQuery(document).on("click", ".jcancel", function (e) {
+						e.preventDefault();
+						jQuery(".jpop_approvers").dialog("close");
+					});
+				},
+				delete_approver: function(urls,token,message){
+					jQuery(document).on("click", ".jdel_approvers", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var unique_id = el.attr("account_id");
+						jQuery(".opt_selection").empty().html(message);
+						jQuery(".opt_selection").dialog({
+							resizable: false,
+							draggable: false,
+							height: 150,
+							modal: true,
+							width: '320',
+							maxWidth: '600',
+							buttons: {
+								"Yes": function () {
+									jQuery("#jwrap_"+unique_id).remove();
+									jQuery(".opt_selection").dialog("close");
+									jQuery.post(urls,{"account_id":unique_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
+										var result = jQuery.parseJSON(json);
+										if(result.success == 'false'){
+											alert('error');
+										}else{
+											alert('success');
+										}
+									});
+								},
+								No: function () {
+									jQuery(".opt_selection").dialog("close");
+								}
+							}
+						});
+					});
+				}
 			}
 		},
 		admin: {
@@ -232,7 +302,6 @@ var kpay = {
 							if(status.success == '1') {
 								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
 									window.location.href ="/admin/users/all_users";
-
 								}});
 								return false;
 							} else {
@@ -275,8 +344,7 @@ var kpay = {
 						'update':'true'
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
-							if(status.success == '1') {
-								
+							if(status.success == '1') {						
 								jQuery(".success_updated").dialog({width: 'auto',Maxwidth:750,close: function() {
 								window.location.href ="/admin/users/all_users"; 
 								}});
@@ -329,7 +397,6 @@ var kpay = {
 							if(status.success == '1') {
 								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
 									window.location.href ="/admin/users/all_admin";
-
 								}});
 								return false;
 							} else {

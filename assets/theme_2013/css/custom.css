@@ -30,3 +30,6 @@ span.errors{
 	display:block;
 }
 
+.error {
+    color: #BA3F3F;
+}
