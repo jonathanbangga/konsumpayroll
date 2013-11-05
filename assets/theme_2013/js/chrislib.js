@@ -95,7 +95,7 @@ var kpay = {
 									jQuery(".opt_selection").dialog("close");
 									jQuery.post(urls,{"account_id":unique_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
 										var result = jQuery.parseJSON(json);
-										if(result.success == 'false'){
+										if(result.success == '0'){
 											alert('error');
 										}else{
 											alert('success');
@@ -111,19 +111,10 @@ var kpay = {
 				}
 			},
 			principal:{
-				add_company_principal: function() {
+				show_pop: function() {
 					jQuery(document).on("click","#add_more_principal",function(e){
 						e.preventDefault();
 						var el = jQuery(this);
-						var fields = {
-						"lname":jQuery("input[name='lname']:visible").val(),
-						"fname":jQuery("input[name='fname']:visible").val(),
-						"mname":jQuery("input[name='mname']:visible").val(),
-						"fax":jQuery("input[name='fax']:visible").val(),
-						"email":jQuery("input[name='email']:visible").val(),
-						"contact_no":jQuery("input[name='contact_no']:visible").val(),
-						"username":jQuery("input[name='username']:visible").val()
-						};
 						kpay.overall.show_pops(".add_principal");
 					});
 					jQuery(document).on("click",".add_principal_cancel",function(e){
@@ -131,6 +122,57 @@ var kpay = {
 						var el = jQuery(this);
 						jQuery(".add_principal").dialog('close');
 					});
+				},
+				add_principal: function(urls,token){
+					var fields = {
+						"lname": jQuery("input[name='lname']:visible").val(),
+						"fname": jQuery("input[name='fname']:visible").val(),
+						"mname": jQuery("input[name='mname']:visible").val(),
+						"fax": jQuery("input[name='fax']:visible").val(),
+						"email": jQuery("input[name='email']:visible").val(),
+						"contact_no": jQuery("input[name='contact_no']:visible").val(),
+						"payroll_cloud_id": jQuery("input[name='payroll_cloud_id']:visible").val(),
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"submit": "true"
+					};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+					});	
+					return false;
+				},
+				updated_principal: function(urls,token){
+					var fields = {
+						"lname": jQuery("input[name='lname']:visible").val(),
+						"fname": jQuery("input[name='fname']:visible").val(),
+						"mname": jQuery("input[name='mname']:visible").val(),
+						"fax": jQuery("input[name='fax']:visible").val(),
+						"email": jQuery("input[name='email']:visible").val(),
+						"old_email":jQuery("input[name='old_email']").val(),
+						"contact_no": jQuery("input[name='contact_no']:visible").val(),
+						"payroll_cloud_id": jQuery("input[name='payroll_cloud_id']:visible").val(),
+						"old_payroll_cloud_id": jQuery("input[name='old_payroll_cloud_id']").val(),
+						"company_id":jQuery("input[name='company_id']").val(),
+						"principal_id":jQuery("input[name='cprincipal_id']").val(),
+						"emp_id":jQuery("input[name='emp_id']").val(),
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"update": "true"
+					};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully Updated</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+					});	
+					return false;
 				}
 			}
 		},
