@@ -30,7 +30,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray right" href="/tgg/hr_setup/department_and_positions">CONTINUE</a>
+        <a class="btn btn-gray right" href="/company/hr_setup/department_and_positions">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
@@ -64,14 +64,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/tgg/hr_setup/employment_type/ajax_add_employment_type",
+							url: "/company/hr_setup/employment_type/ajax_add_employment_type",
 							data: {
 								et: et, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							if(ret==1){
-								window.location="/tgg/hr_setup/employment_type";
+								window.location="/company/hr_setup/employment_type";
 							}
 						});
 					}else{
