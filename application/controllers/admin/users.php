@@ -103,12 +103,33 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[12]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
+					
+					
+					// accounts save here
+					$account_field = array(
+								"payroll_cloud_id" 	=> $this->db->escape_str($this->input->post('email_address'))	
+					);
+					$this->users_model->add_data_fields("payroll_system_account",$payroll_system_field);
+					// OWNER SAVE HERE 
 					$fields = array(
-								"owner_name" 	=> $this->db->escape_str($this->input->post('owner_name')),
-								"email_address" => $this->db->escape_str($this->input->post('email_address')),
-								"password"		=> $this->db->escape_str(md5($this->input->post('password')))
+								"owner_name" 		=> $this->db->escape_str($this->input->post('owner_name')),
+								"account_type_id" 	=> 4
 							);
-					$this->users_model->add_all_user($fields);
+					$owner_id = $this->users_model->add_all_user($fields);
+					// PAYROLL SYSTEM ACCOUNT
+					$payroll_system_field = array(
+						"company_owner_id" 	=> $owner_id,
+						"status"			=> "Active"
+					);
+					$this->users_model->add_data_fields("payroll_system_account",$payroll_system_field);
+					// END PAYROLL SYSTEM ACCOUNT
+					// UPDATE  THE USER AND GET 
+					if($owner_id){
+						$update_owner = array("");
+						$this->users_model->update_admin_user("company_owner",$update_owner,array("company_owner_id"=>$this->db->escape_str($owner_id)));
+					}
+					
+					
 					echo json_encode(array("success"=>"1","error_msg"=>""));
 				}else{
 					$error = validation_errors('<span class="error_zone">','</span>');

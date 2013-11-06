@@ -179,7 +179,7 @@ var kpay = {
 				add_costcenter: function(urls,token){
 					var fields = {
 							"cost_center_code":jQuery("input[name='cost_center_code']").val(),
-							"add_desc":	jQuery("textarea[name='add_desc']").val();,
+							"add_desc":	jQuery("textarea[name='add_desc']").val(),
 							"company_id":jQuery("input[name='subscription_date']").val(),
 							"ZGlldmlyZ2luamM":jQuery.cookie(token),
 							"submit":"true"
