@@ -99,37 +99,37 @@ class Users extends CI_Controller {
 		if($this->input->is_ajax_request()){
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('owner_name','Owner name','xss_clean|trim|required');
-				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|callback_email_check');
-				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[12]');
+				$this->form_validation->set_rules('email_address','Email Address','xss_clean|is_unique[accounts.email]|valid_email|trim|required');
+				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[32]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
-					
-					
-					// accounts save here
-					$account_field = array(
-								"payroll_cloud_id" 	=> $this->db->escape_str($this->input->post('email_address'))	
-					);
-					$this->users_model->add_data_fields("payroll_system_account",$payroll_system_field);
-					// OWNER SAVE HERE 
-					$fields = array(
-								"owner_name" 		=> $this->db->escape_str($this->input->post('owner_name')),
-								"account_type_id" 	=> 4
-							);
-					$owner_id = $this->users_model->add_all_user($fields);
-					// PAYROLL SYSTEM ACCOUNT
-					$payroll_system_field = array(
-						"company_owner_id" 	=> $owner_id,
-						"status"			=> "Active"
-					);
-					$this->users_model->add_data_fields("payroll_system_account",$payroll_system_field);
-					// END PAYROLL SYSTEM ACCOUNT
-					// UPDATE  THE USER AND GET 
-					if($owner_id){
-						$update_owner = array("");
-						$this->users_model->update_admin_user("company_owner",$update_owner,array("company_owner_id"=>$this->db->escape_str($owner_id)));
-					}
-					
-					
+					$email =  $this->db->escape_str($this->input->post("email_address"));
+					#---------- PAYROLL SYSTEM ACCOUNT ------#
+					$payroll_field = array(
+									"company_owner_email"	=> $email,
+									"status"			=> "Active"
+								);
+					$payroll_system_account_id = $this->users_model->add_data_fields("payroll_system_account",$payroll_field);
+					if($payroll_system_account_id){
+					#---------- ACCOUNT --------------------#
+						$account_field = array(
+									"payroll_cloud_id" 	=> $payroll_system_account_id,
+									"email"				=> $email,
+									"account_type_id"	=> 4,
+									"password"			=> base64_encode(idates_now())	
+							);		
+						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
+					#--------- COMPANY_OWNER --------------#
+						if($account_id){
+							$company_owner_field = array(
+									"owner_name"		=> $this->input->post("owner_name"),
+									"account_id"		=> $account_id,
+									"date"				=> idates_now(),
+									"status"			=> "Active"
+							);		
+							$this->users_model->add_data_fields("company_owner",$company_owner_field);
+						}
+					}		
 					echo json_encode(array("success"=>"1","error_msg"=>""));
 				}else{
 					$error = validation_errors('<span class="error_zone">','</span>');
