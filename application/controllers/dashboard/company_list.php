@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Company_list extends CI_Controller {
 
 	/**
 	 * Theme options - default theme
@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 		$data['page_title'] = "Company List";
 		$this->layout->set_layout($this->theme);	
 		$data['sidebar_menu'] = $this->sidebar_menu;
-		$this->layout->view('pages/dashboard_view', $data);
+		$this->layout->view('pages/dashboard/company_list_view', $data);
 	}
 	
 }

@@ -30,29 +30,17 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="#">BACK</a> <a class="btn btn-gray right" href="#">CONTINUE</a>
+        <a class="btn btn-gray right" href="/tgg/hr_setup/department_and_positions">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
-<div id="add-more-dialog" title="Add more">
-	<div id="et-div">
-		Employment type: 
-		<input type="text" name="employment_type" />
+<div id="add-more-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Enter employment type name: 
+		<input type="text" id="employment_type" name="employment_type" />
 	</div>
 </div>
-<style>
-#add-more-dialog #et-div{
-	margin-top: 15px;
-}
-#add-more-dialog input{
-	height: 25px;
-	margin-top: 12px;
-	width: 160px;
-}
-.ui-dialog-buttonpane{
-	border-top: none;
-}
-</style>
+<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script>
 jQuery(document).ready(function(){
 	// assign employment type
@@ -70,9 +58,25 @@ jQuery(document).ready(function(){
 				effect: "blind"
 			},
 			buttons: {
-				submit: function() {
-					//jQuery( this ).dialog( "close" );
-					console.log('save');
+				save: function() {
+					var et = jQuery("#employment_type").val();
+					if(et!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/tgg/hr_setup/employment_type/ajax_add_employment_type",
+							data: {
+								et: et, 
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							if(ret==1){
+								window.location="/tgg/hr_setup/employment_type";
+							}
+						});
+					}else{
+						alert('Enter employment type');
+					}					
 				}
 			},
 		});

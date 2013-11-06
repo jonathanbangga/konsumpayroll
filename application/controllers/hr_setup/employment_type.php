@@ -25,6 +25,11 @@ class Employment_type extends CI_Controller {
 		$data['et'] = $this->employment_type_model->get_employment_type();
 		$this->layout->view('pages/hr_setup/employment_type_view',$data);
 	}
+	
+	public function ajax_add_employment_type(){
+		$et = $this->input->post('et');
+		echo $this->employment_type_model->add_employment_type($et);
+	}
 
 	
 }
