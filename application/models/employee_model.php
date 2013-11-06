@@ -61,10 +61,10 @@
 		 */
 		public function loans($comp_id,$emp_id){
 			$sql = $this->db->query("
-				SELECT *FROM `loan_payment_history` lph
-				LEFT JOIN loan_type lt ON lph.loan_type_id = lt.loan_type_id
-				WHERE lph.company_id = {$comp_id}
-				AND lph.emp_id = {$emp_id}
+				SELECT *FROM `employee_loans` el
+				LEFT JOIN loan_type lt ON el.loan_type_id = lt.loan_type_id
+				WHERE el.company_id = {$comp_id}
+				AND el.emp_id = {$emp_id}
 			");
 			
 			if($sql->num_rows() > 0){
