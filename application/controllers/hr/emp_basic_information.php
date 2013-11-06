@@ -125,14 +125,12 @@
 							
 						$insert_employee_sql = $this->jmodel->insert_data('employee',$insert_employee);
 						$insert_account_sql = $this->jmodel->insert_data('accounts',$insert_account);
-						
-						if($insert_employee_sql && $insert_account_sql){
-							$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
-							redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
-						}
 					}
-				}
-			//}
+					
+					$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
+					redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+				//}
+			}
 			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_basic_info_view', $data);

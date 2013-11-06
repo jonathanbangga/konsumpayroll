@@ -34,7 +34,7 @@
 	              <td><?php print $row->gender;?></td>
 	              <td><?php print $row->marital_status;?></td>
 	              <td><?php print $row->address;?></td>
-	              <td></td>
+	              <td><?php print $row->home_no;?></td>
 	              <td><?php print $row->tin;?></td>	
 	              <td><?php print $row->sss;?></td>
 	              <td><?php print $row->hdmf;?></td>
