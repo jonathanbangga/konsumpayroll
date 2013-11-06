@@ -68,7 +68,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/tgg/hr_setup/department_and_positions/ajax_get_positions",
+				url: "/company/hr_setup/department_and_positions/ajax_get_positions",
 				data: {
 					dept_id: dept_id,
 					dept_name: dept_name,
@@ -100,14 +100,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/tgg/hr_setup/department_and_positions/ajax_add_department",
+							url: "/company/hr_setup/department_and_positions/ajax_add_department",
 							data: {
 								dept_name: dept_name, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							if(ret==1){
-								window.location="/tgg/hr_setup/department_and_positions";
+								window.location="/company/hr_setup/department_and_positions";
 							}
 						});
 					}else{
@@ -133,7 +133,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/tgg/hr_setup/department_and_positions/ajax_add_position",
+							url: "/company/hr_setup/department_and_positions/ajax_add_position",
 							data: {
 								pos: pos,
 								dept_id: dept_id,
@@ -141,7 +141,7 @@ jQuery(document).ready(function(){
 							}
 						}).done(function(ret){
 							if(ret==1){
-								window.location="/tgg/hr_setup/department_and_positions";
+								window.location="/company/hr_setup/department_and_positions";
 							}
 						});
 					}else{
