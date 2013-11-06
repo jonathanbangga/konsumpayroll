@@ -113,10 +113,10 @@ class Users extends CI_Controller {
 					if($payroll_system_account_id){
 					#---------- ACCOUNT --------------------#
 						$account_field = array(
-									"payroll_cloud_id" 	=> $payroll_system_account_id,
+									"payroll_system_account_id" => $payroll_system_account_id,
 									"email"				=> $email,
 									"account_type_id"	=> 4,
-									"password"			=> base64_encode(idates_now())	
+									"password"			=> $this->input->post("password")
 							);		
 						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
 					#--------- COMPANY_OWNER --------------#
@@ -180,11 +180,11 @@ class Users extends CI_Controller {
 				if($this->form_validation->run() == true) {	
 				
 					$fields = array(
-								"owner_name" 	=> $this->db->escape_str($this->input->post('edit_name')),
-								"email_address" => $this->db->escape_str($this->input->post('edit_email')),
-								"password"		=> $this->db->escape_str(md5($this->input->post('edit_pass')))
+								"owner_name" 	=> $this->db->escape_str($this->input->post('edit_name'))
 							);
 					$this->users_model->update_all_user($fields,$this->input->post('edit_id'));
+					
+					
 					echo json_encode(array("error_msg"=>'',"success"=>"1","value"=>$fields));
 				} else {
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
