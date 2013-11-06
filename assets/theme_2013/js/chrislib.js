@@ -174,6 +174,27 @@ var kpay = {
 					});	
 					return false;
 				}
+			},
+			cost_center:{
+				add_costcenter: function(urls,token){
+					var fields = {
+							"cost_center_code":jQuery("input[name='cost_center_code']").val(),
+							"add_desc":	jQuery("textarea[name='add_desc']").val();,
+							"company_id":jQuery("input[name='subscription_date']").val(),
+							"ZGlldmlyZ2luamM":jQuery.cookie(token),
+							"submit":"true"
+							};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);
+						if(res.success == 'false')
+						{
+							alert(res.error);
+						}else{
+							
+						}
+					});
+					return false;
+				}
 			}
 		},
 		admin: {
