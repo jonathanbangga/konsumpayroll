@@ -105,18 +105,17 @@ class Users_model extends CI_Model {
 	 */
 	public function select_user($id){
 		if(is_numeric($id)){
-			
 			#$query = $this->db->get_where("company_owner",array("company_owner_id"=>$id));
 			$query = $this->db->query(
-			"SELECTco.company_owner_id,co.owner_name,co.mobile,co.country,co.date,co.`status`,co.deleted AS company_deleted,co.account_id,co.address,co.street,
+			"SELECT co.company_owner_id,co.owner_name,co.mobile,co.country,co.date,co.`status`,co.deleted AS company_deleted,co.account_id,co.address,co.street,
 			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.company_owner_email,psa.`status` AS psa_status
 			FROM `company_owner` co
 			LEFT JOIN accounts a on a.account_id = co.account_id 
 			LEFT JOIN payroll_system_account psa on psa.payroll_system_account_id = a.payroll_system_account_id
 			WHERE co.company_owner_id = {$id} AND account_type_id = 4 
-			AND co.`status` = 'Active' AND co.deleted='0' AND a.deleted = '0'
+			AND co.`status` = 'Active' 
+			AND co.deleted='0' AND a.deleted = '0'
 			AND psa.`status`= 'Active'
-			
 			");
 			$row = $query->row();
 			$query->free_result();
@@ -160,7 +159,8 @@ class Users_model extends CI_Model {
 		return $this->db->insert_id(); 
 	}
 	
-	public function update_data_fields($database,$fields){
+	public function update_data_fields($database,$fields,$where){
+		$this->db->where($where);
 		$this->db->update($database,$fields);
 		return $this->db->affected_rows(); 
 	}

@@ -440,8 +440,11 @@ var kpay = {
 							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
 							jQuery("input[id^='edit_email']").val(jres.email);
 							jQuery("input[id^='edit_old_email']").val(jres.email);
+							jQuery("input[id^='edit_account_id']").val(jres.account_id);
+							jQuery("input[id^='edit_payroll_system_account_id']").val(jres.payroll_system_account_id);
 							jQuery("input[id^='edit_pass']").val();
 							jQuery("input[id^='edit_cpass']").val();
+							
 						});
 					});
 				},
@@ -456,6 +459,8 @@ var kpay = {
 						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
 						'edit_pass':jQuery("input[id^='edit_pass']").val(),
 						'edit_cpass':jQuery("input[id^='edit_cpass']").val(),
+						"edit_account_id":jQuery("input[id^='edit_owner']").val(),
+						'edit_payroll_system_account_id':jQuery("input[id^='edit_payroll_system_account_id']").val(),
 						'ZGlldmlyZ2luamM':jQuery.cookie(token),
 						'update':'true'
 						},success: function(data) {
