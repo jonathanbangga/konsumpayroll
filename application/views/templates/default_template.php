@@ -2,7 +2,7 @@
 	$main_menu = "content_holders/main_menu";
 	$company_wizards_menu = "content_holders/company_wizards_menu";
 	$script_library = "content_holders/script_library";
-	$header_panel = "content_holders/header_panel";
+	$header_panel = "content_holders/company_dashboard_header_panel";
 	$main_header = "content_holders/main_header";
 ?>
 <!DOCTYPE HTML>

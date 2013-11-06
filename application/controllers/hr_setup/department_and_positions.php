@@ -9,8 +9,8 @@ class Department_and_positions extends CI_Controller {
 		parent::__construct();
 		// menu and authentication
 		$this->theme = $this->config->item('default');
-		$this->menu = 'content_holders/company_menu';	
-		$this->sidebar_menu = 'content_holders/hr_setup_sidebar_menu';
+		$this->menu = $this->config->item('add_company_menu');
+		$this->sidebar_menu = $this->config->item('add_company_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/department_and_positions_model');	
