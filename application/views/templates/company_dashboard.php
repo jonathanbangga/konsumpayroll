@@ -2,7 +2,7 @@
 	$main_menu = "content_holders/main_menu";
 	$company_wizards_menu = "content_holders/company_wizards_menu";
 	$script_library = "content_holders/script_library";
-	$header_panel = "content_holders/header_panel";
+	$header_panel = "content_holders/company_dashboard_header_panel";
 	$main_header = "content_holders/main_header";
 ?>
 <!DOCTYPE HTML>
@@ -25,41 +25,42 @@
 <body>
 <div class="wrapper">
   <!-- WRAPPER START -->
+
   <header id="header">
     <!-- HEADER START -->
     <section class="header-top">
       <!-- HEADER-TOP START -->
-      	<?php print $this->load->view($main_header);?>
+      <?php print $this->load->view($main_header);?>
       <!-- HEADER-TOP END -->
     </section>
     <section class="header-panel">
       <!-- HEADER-PANEL START -->
-      	<?php print $this->load->view($header_panel);?>
+      <?php print $this->load->view($header_panel);?>
       <!-- HEADER-PANEL END -->
     </section>
-		<nav id="menu">
-		<?php print $this->load->view($this->menu)?>
-		</nav>
+    <nav id="menu">
+      <!-- MENU START -->
+	  <?php print $this->load->view($this->menu)?>
+      <!-- MENU END -->
+    </nav>
     <!-- HEADER END -->
   </header>
   <section id="body">
     <!-- BODY START -->
-    <div class="rbox left">
+    <div class="rbox" style="margin:auto;">
       <!-- RBOX START -->
-	    <h1><?php echo $page_title;?></h1>
-		<div class="main-content">
-		<?php print $layout_contents;?>
-		</div>
+      <h1><?php echo $page_title;?></h1>
+      <div class="main-content">
+        <!-- MAIN-CONTENT START -->
+       <?php print $layout_contents;?>
+        <!-- MAIN-CONTENT END -->
+      </div>
       <!-- RBOX END -->
     </div>
     <div class="clearB"></div>
     <!-- BODY END -->
   </section>
   <!-- WRAPPER END -->
-</div>
-<div class="ihide">
-<div class="source_error" title="Information"></div>
-<div class="opt_selection" title="Warning"></div>
 </div>
 <?php print $this->load->view($script_library);?>
 </body>

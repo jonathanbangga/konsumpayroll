@@ -3,6 +3,7 @@
 $config['default'] = 'default_template';
 $config['temp_admin'] = 'temp_admin';
 $config['temp_employee'] = 'temp_employee';
+$config['login_template'] = 'login_template';
 
 
 

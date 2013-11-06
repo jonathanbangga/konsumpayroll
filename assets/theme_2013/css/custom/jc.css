@@ -1,0 +1,16 @@
+/* dialog box - start */
+.jdialog{
+	display:none;
+}
+.jdialog .inner_div{
+	margin-top: 15px;
+}
+.jdialog input{
+	height: 25px;
+	margin-top: 12px;
+	width: 200px;
+}
+.ui-dialog-buttonpane{
+	border-top: none;
+}
+/* dialog box - end */

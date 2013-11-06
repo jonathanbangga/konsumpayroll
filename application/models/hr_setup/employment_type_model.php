@@ -2,7 +2,7 @@
 
 class Employment_type_model extends CI_Model {
 
-    function __construct(){
+    public function __construct(){
         parent::__construct();
     }
 	
@@ -10,6 +10,18 @@ class Employment_type_model extends CI_Model {
 		return $this->db->query("
 			SELECT *
 			FROM `employment_type`
+		");
+	}
+	
+	public function add_employment_type($et){
+		return $this->db->query("
+			INSERT INTO 
+			`employment_type`(
+				`name`
+			)
+			VALUES(
+				'{$et}'
+			)
 		");
 	}
 		
