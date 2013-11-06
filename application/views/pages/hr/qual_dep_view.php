@@ -120,27 +120,6 @@
 			}
 
 			function dob_datepicker(){
-				/*jQuery(".dob").each(function(e){
-					var size = e + 1;
-					jQuery(".dob"+size).datepicker({
-						changeMonth: true,
-						changeYear: true,
-						dateFormat: 'yy-mm-dd',
-						maxDate: 0,
-						yearRange: "-100:+0"
-					});
-				});
-				
-				var size = jQuery(".dob").length + 1;
-				for(var a = 1;a < size;a++){
-					jQuery(".dob"+a).datepicker({
-						changeMonth: true,
-						changeYear: true,
-						dateFormat: 'yy-mm-dd',
-						maxDate: 0,
-						yearRange: "-100:+0"
-					});
-				}*/
 				jQuery(".dob").datepicker({
 					changeMonth: true,
 					changeYear: true,

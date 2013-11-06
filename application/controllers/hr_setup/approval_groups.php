@@ -7,7 +7,8 @@ class Approval_groups extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->theme = $this->config->item('temp_company_wizard');
+		$this->theme = $this->config->item('default');
+		$this->menu = 'content_holders/company_menu';	
 		$this->sidebar_menu = 'content_holders/hr_setup_sidebar_menu';
 		$this->authentication->check_if_logged_in();
 	}

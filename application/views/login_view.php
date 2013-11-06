@@ -1,22 +1,19 @@
-<html>
 <?php echo form_open("login/validate_login/2");?>
-<table>
-	<tr>
-		<td colspan="2" style="text-align: center;">
-			<img src="/assets/theme_2013/images/img-logo2.jpg" />
-		</td>
-	</tr>
-	<tr>
-		<td>Payroll Cloud ID:</td><td><input type="text" name="user" /></td>
-	</tr>
-	<tr>
-		<td>Password:</td><td><input type="password" name="pass" /></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><input type="submit" value="login" /></td>
-	</tr>
+<div class="logo3">
+      <!-- LOGO3 START -->
+      <img src="/assets/theme_2013/images/img-logo3.png" alt=" ">
+      <!-- LOGO3 END -->
+    </div>
+    <table style="width:180px" class="marginA">
+  <tr>
+    <td colspan="2"><input class="txtfield input-bungot" name="user" type="text" placeholder="Email"></td>
+    </tr>
+  <tr>
+    <td colspan="2"><input class="txtfield input-bungot" name="pass" type="password" placeholder="Password"></td>
+    </tr>
+  <tr>
+    <td><a class="forgot-password" href="#">Forgot Password?</a></td>
+    <td class="txtright"><input class="btn btn-blue" type="submit" value="LOGIN"></td>
+  </tr>
 </table>
-
 <?php echo form_close();?>
-</html>

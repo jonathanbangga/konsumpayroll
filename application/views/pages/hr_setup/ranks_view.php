@@ -1,5 +1,4 @@
 <!-- RBOX START -->
-      <h1>Ranks</h1>
      <div class="main-content">
        <!-- MAIN-CONTENT START -->
      <p>The rank that you define here is assigned to the employees you create and is used to determine the leave entitlement</p>

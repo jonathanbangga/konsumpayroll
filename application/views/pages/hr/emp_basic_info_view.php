@@ -1,4 +1,6 @@
-<div class="tbl-wrap">
+<?php print form_open('','onsubmit="return validateForm()"');?>
+<div class="tbl-wrap">	
+		  <div class="successContBox ihide"><?php print $this->session->flashdata('message');?></div>
           <!-- TBL-WRAP START -->
           <table style="width:2155px;" class="tbl emp_conList">
             <tbody><tr>
@@ -46,86 +48,81 @@
           <!-- TBL-WRAP END -->
         </div>
         <div>
-        	<a href="javascript:void(0);" class="btn left" onclick="addNewEmp();">DELETE</a>
-        	<a href="javascript:void(0);" class="btn right" onclick="addNewEmp();">ADD ROW</a>
+        	<input type="submit" class="btn left" value="DELETE" onclick="javascript:return false;"/>
+        	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
+        	<input type="submit" name="add" class="btn right" value="SAVE" />
         	<div class="clearB"></div>
         </div>
-        <div class="new_employee_contBox ihide" title="Add New Employee">
-        	<table>
-            <tbody><tr>
-              <td style="width:155px">Registered Business Name:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Trade Name: </td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Business Address:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>City: </td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Zip Code:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Organization Type:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Industry: </td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Business Phone:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Extension: </td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Mobile Numer:</td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-            <tr>
-              <td>Fax: </td>
-              <td><input type="text" value="Sample" name="" class="txtfield"></td>
-            </tr>
-          </tbody></table>
-        </div>
+<?php print form_close();?>
         <script>
-        	function addNewEmp(){
-        		/* jQuery(".new_employee_contBox").dialog({
-        			width: 'inherit',
-					draggable: false,
-					modal: true,
-					minWidth:'400',
-					dialogClass:'transparent'
-            	}); */
-
+        	function addNewEmp(size){
             	var tbl = "<tr>";
 		        tbl += "<td></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='uname[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='last_name[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='first_name[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='middle_name[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='dob[]' class='txtfield dob' id='dob"+size+"'></td>";
+		        tbl += "<td><select class='txtselect select-medium' name='gender[]'><option value='Male <?php echo set_select('gender[]', 'Male'); ?>'>Male</option><option value='Female <?php echo set_select('gender[]', 'Female'); ?>'>Female</option></select></td>";
+		        tbl += "<td><select class='txtselect select-medium' name='marital_status[]'><option value='Married <?php echo set_select('marital_status[]', 'Married'); ?>'>Married</option><option value='Single <?php echo set_select('marital_status[]', 'Single'); ?>'>Single</option><option value='Widow <?php echo set_select('marital_status[]', 'Widow'); ?>'>Widow</option><option value='Divorce <?php echo set_select('marital_status[]', 'Divorce'); ?>'>Divorce</option></select></td>";
+		        tbl += "<td><input type='text' name='address[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='contact_no[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='tin[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='sss[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='hdmf[]' class='txtfield'></td>";
+		        tbl += "<td><input type='text' name='no_dependents' class='txtfield'></td>";
 	            tbl += "</tr>";
 		              
 	              // alert(tbl);
 	              jQuery(".emp_conList").append(tbl);
 			}
+
+        	function addRowBtn(){
+				jQuery(".addRowBtn").click(function(){
+					var size = jQuery(".dob").length + 1;
+					addNewEmp(size);
+					dob_datepicker();
+				});
+            }
+            
+			function validateForm(){
+				jQuery(".emp_conList tr input:text").each(function(){
+        	        var _this = jQuery(this);
+        	        var txtfield = _this.val();
+        	        if(txtfield == ""){
+        	            _this.addClass("emp_str");
+        	        }else{
+        	        	_this.removeClass("emp_str");
+        	        }
+        	    });
+        	    
+				if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
+        	    	return false;
+        	    }
+			}
+
+			function dob_datepicker(){
+				jQuery(".dob").datepicker({
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'yy-mm-dd',
+					maxDate: 0,
+					yearRange: "-100:+0"
+				});
+			}
+
+			function _successContBox(){
+				var successContBox = jQuery.trim(jQuery(".successContBox").text());
+				if(successContBox != ""){
+				    jQuery(".successContBox").css("display","block");
+				    setTimeout(function(){
+				        jQuery(".successContBox").fadeOut('100');
+				    },3000);
+				}
+			}
+			
+			jQuery(function(){
+				addRowBtn();
+				_successContBox();
+			});
         </script>

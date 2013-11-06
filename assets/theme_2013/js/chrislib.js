@@ -1,4 +1,32 @@
 var kpay = {
+		overall:{
+			show_pops: function(classhere){
+				jQuery(classhere).dialog({
+					draggable: false,
+					resizable: false,
+					height: 'auto',
+					width: "auto",
+					modal: true,
+					dialogClass: 'transparent'
+				});
+			},
+			show_success: function(classhere) {
+				jQuery(classhere).dialog({
+					draggable: false,
+					resizable: false,
+					height: 'auto',
+					width: "auto",
+					modal: true,
+					dialogClass: 'transparent',
+					buttons: {
+						'Close': function() {
+							jQuery(this).dialog("close");
+							location.reload();
+						}
+					}
+				});
+			}
+		},
 		hr: {
 			company_sidebar: function(){ // 
 				jQuery(".jsidebar a").each(function(e){
@@ -9,6 +37,164 @@ var kpay = {
 						return false;
 					}
 				});
+			}
+		},
+		owner: {
+			approvers: {
+				popup_approver: function(){
+				// for pop up
+					jQuery(document).on("click", ".jpop_approver", function (e) {
+						e.preventDefault();
+						kpay.overall.show_pops(".jpop_approvers");
+					});
+				// closing pop up approver
+					jQuery(document).on("click", ".jcancel", function (e) {
+						e.preventDefault();
+						jQuery(".jpop_approvers").dialog("close");
+					});
+				},
+				save_approver: function(urls,token){
+					var fields = {
+									"lname":jQuery("input[name='lname']:visible").val(),
+									"fname":jQuery("input[name='fname']:visible").val(),
+									"mname":jQuery("input[name='mname']:visible").val(),
+									"fax":jQuery("input[name='fax']:visible").val(),
+									"email":jQuery("input[name='email']:visible").val(),
+									"contact_no":jQuery("input[name='contact_no']:visible").val(),
+									"username":jQuery("input[name='username']:visible").val(),
+									"ZGlldmlyZ2luamM": jQuery.cookie(token),
+									"submit":"true"
+								};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+					});	
+					return false;
+				},
+				delete_approver: function(urls,token,message){
+					jQuery(document).on("click", ".jdel_approvers", function (e) {
+						e.preventDefault();
+						var el = jQuery(this);
+						var unique_id = el.attr("account_id");
+						jQuery(".opt_selection").empty().html(message);
+						jQuery(".opt_selection").dialog({
+							resizable: false,
+							draggable: false,
+							height: 150,
+							modal: true,
+							width: '320',
+							maxWidth: '600',
+							buttons: {
+								"Yes": function () {
+									jQuery("#jwrap_"+unique_id).remove();
+									jQuery(".opt_selection").dialog("close");
+									jQuery.post(urls,{"account_id":unique_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
+										var result = jQuery.parseJSON(json);
+										if(result.success == '0'){
+											alert('error');
+										}else{
+											alert('success');
+										}
+									});
+								},
+								No: function () {
+									jQuery(".opt_selection").dialog("close");
+								}
+							}
+						});
+					});
+				}
+			},
+			principal:{
+				show_pop: function() {
+					jQuery(document).on("click","#add_more_principal",function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						kpay.overall.show_pops(".add_principal");
+					});
+					jQuery(document).on("click",".add_principal_cancel",function(e){
+						e.preventDefault();
+						var el = jQuery(this);
+						jQuery(".add_principal").dialog('close');
+					});
+				},
+				add_principal: function(urls,token){
+					var fields = {
+						"lname": jQuery("input[name='lname']:visible").val(),
+						"fname": jQuery("input[name='fname']:visible").val(),
+						"mname": jQuery("input[name='mname']:visible").val(),
+						"fax": jQuery("input[name='fax']:visible").val(),
+						"email": jQuery("input[name='email']:visible").val(),
+						"contact_no": jQuery("input[name='contact_no']:visible").val(),
+						"payroll_cloud_id": jQuery("input[name='payroll_cloud_id']:visible").val(),
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"submit": "true"
+					};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+					});	
+					return false;
+				},
+				updated_principal: function(urls,token){
+					var fields = {
+						"lname": jQuery("input[name='lname']:visible").val(),
+						"fname": jQuery("input[name='fname']:visible").val(),
+						"mname": jQuery("input[name='mname']:visible").val(),
+						"fax": jQuery("input[name='fax']:visible").val(),
+						"email": jQuery("input[name='email']:visible").val(),
+						"old_email":jQuery("input[name='old_email']").val(),
+						"contact_no": jQuery("input[name='contact_no']:visible").val(),
+						"payroll_cloud_id": jQuery("input[name='payroll_cloud_id']:visible").val(),
+						"old_payroll_cloud_id": jQuery("input[name='old_payroll_cloud_id']").val(),
+						"company_id":jQuery("input[name='company_id']").val(),
+						"principal_id":jQuery("input[name='cprincipal_id']").val(),
+						"emp_id":jQuery("input[name='emp_id']").val(),
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"update": "true"
+					};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully Updated</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+					});	
+					return false;
+				}
+			},
+			cost_center:{
+				add_costcenter: function(urls,token){
+					var fields = {
+							"cost_center_code":jQuery("input[name='cost_center_code']").val(),
+							"add_desc":	jQuery("textarea[name='add_desc']").val(),
+							"company_id":jQuery("input[name='subscription_date']").val(),
+							"ZGlldmlyZ2luamM":jQuery.cookie(token),
+							"submit":"true"
+							};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);
+						if(res.success == 'false')
+						{
+							alert(res.error);
+						}else{
+							
+						}
+					});
+					return false;
+				}
 			}
 		},
 		admin: {
@@ -232,7 +418,6 @@ var kpay = {
 							if(status.success == '1') {
 								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
 									window.location.href ="/admin/users/all_users";
-
 								}});
 								return false;
 							} else {
@@ -275,8 +460,7 @@ var kpay = {
 						'update':'true'
 						},success: function(data) {
 							var status = jQuery.parseJSON(data);
-							if(status.success == '1') {
-								
+							if(status.success == '1') {						
 								jQuery(".success_updated").dialog({width: 'auto',Maxwidth:750,close: function() {
 								window.location.href ="/admin/users/all_users"; 
 								}});
@@ -329,7 +513,6 @@ var kpay = {
 							if(status.success == '1') {
 								jQuery(".success_add").dialog({width: 'auto',Maxwidth:750,close: function() {
 									window.location.href ="/admin/users/all_admin";
-
 								}});
 								return false;
 							} else {

@@ -1,5 +1,4 @@
  <!-- RBOX START -->
-      <h1>Approval Groups</h1>
       <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>Create an approval group and assign approver for each approval group. Leaves, overtime, timesheet or expenses<br>

@@ -1,13 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Login extends CI_Controller {
+
+	protected $theme;
 	
 	public function __construct() {
 		parent::__construct();
+		$this->theme = $this->config->item('login_template');
 	}
 
 	public function index(){
-		$this->load->view('login_view');
+		$data['page_title'] = "Login";
+		$this->layout->set_layout($this->theme);
+		$this->layout->view('login_view',$data);
 	}
 	
 	public function validate_login($account_type){

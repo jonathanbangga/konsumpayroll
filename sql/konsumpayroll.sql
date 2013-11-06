@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2013 at 08:05 AM
+-- Generation Time: Nov 04, 2013 at 07:25 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -34,15 +34,35 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `email` varchar(100) NOT NULL,
   `deleted` int(11) NOT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `password`, `account_type_id`, `email`, `deleted`) VALUES
-(1, '10-010055', 'tech123', 2, '', 0),
-(2, 'admin', 'tech123', 1, 'admin@yahoo.com', 0);
+(1, 'admin@yahoo.com', '25d55ad283aa400af464c76d713c07ad', 1, 'test@yahoo.com', 0),
+(2, '12344444', '6865fbdfbe2766f57525a5f08af67caf', 3, 'christophercuizons@gmail.com', 0),
+(3, '2313', 'db1aa2306aaaabad9e79d897bd1eacd7', 3, 'we@we.com', 0),
+(4, 'bbbbb', 'a0d9b987a6e281152f1c7cccda9d8d7a', 3, 'bbbbbbbbb@yahoo.com', 0),
+(5, '12323', '6e80e69878c5567561b848a97f71a602', 3, 'passi342@yahoo.com', 0),
+(6, '111112222222222', '54bc7972c022803749d49d25b651b733', 3, 'we@yahoo.com', 1),
+(7, '32344', 'f791894e991923f42ec5496ec7c06b94', 3, 'christopherc3uizons@gmail.com', 1),
+(8, 'ttews', 'c94c10fd471a66eb4d2997d45685b019', 3, 's@yahoo.com', 0),
+(9, 'ttews333333333333', '9e038a1a06741e6b989fdda16fb74932', 3, 'ttews@asdfs.com', 1),
+(10, 'a34324324234', '634167807a461f028ffb35572ed055aa', 3, 'asdf@yhaoo.ocm', 0),
+(11, 'a343243242343', '9e8c660fa0952aac5fa1871199e1afc1', 3, 'asdf4@yhaoo.ocm', 0),
+(12, 'a3432432423443', '35f589ebcb3d387740da404fbef55101', 3, 'asd4f4@yhaoo.ocm', 0),
+(13, '434234234234', '061d148b64a3afb106f445f1a1968860', 3, 'bbbbbbbbb4@yahoo.com', 0),
+(14, '31233333333333333', '98b5772357f341522bf6c318c2878d28', 3, 'we12313@we.com', 0),
+(15, '312333333333343333', '137c9240bcefbbbd7f8d03af705b8bd4', 3, 'we123313@we.com', 1),
+(16, 'dfdfdfdf', 'd6be7ced44d978b875505cb368fdee3e', 3, 's431@yahoo.com', 1),
+(17, '3123343333333343333', '5a48259c09916887589c5e27d85d45fb', 3, 'we123312313@we.com', 0),
+(18, '31233343333333343333', '08bce7b6352a74fad6ab505fb3a62254', 3, 'we1235312313@we.com', 0),
+(19, 'dfdfd3fdf', 'c7911658bd555bcd8c0d2a580f49e223', 3, 's4331@yahoo.com', 1),
+(20, '3123334344333333343333', '08dbc40d4d8477a6534509565f5996a5', 3, 'we123531342313@we.com', 1),
+(21, '123123123', '855ed802e7ae615a571d3d3a91b2aa29', 3, 'a412323sdf@yhaoo.ocm', 0),
+(22, '324jjjjjjjjjjjjjjjj33333333', 'd32ca68ed2f19086924a914713d393ef', 3, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb@jkldsf.com', 0);
 
 -- --------------------------------------------------------
 
@@ -54,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `account_type` (
   `account_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`account_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `account_type`
@@ -62,7 +82,9 @@ CREATE TABLE IF NOT EXISTS `account_type` (
 
 INSERT INTO `account_type` (`account_type_id`, `name`) VALUES
 (1, 'admin'),
-(2, 'users');
+(2, 'employee'),
+(3, 'hr'),
+(4, 'owner');
 
 -- --------------------------------------------------------
 
@@ -77,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -91,7 +113,24 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (5, 'administrator has login', '2013-10-21 11:27:28', 0, '0'),
 (6, 'administrator has login', '2013-10-21 11:38:44', 0, '0'),
 (7, 'administrator has login', '2013-10-22 02:47:35', 0, '0'),
-(8, 'administrator has login', '2013-10-22 07:16:15', 0, '0');
+(8, 'administrator has login', '2013-10-22 07:16:15', 0, '0'),
+(9, 'administrator has added a company', '2013-10-30 03:54:26', 4, '0'),
+(10, 'administrator has added a company', '2013-10-30 04:05:47', 4, '0'),
+(11, 'administrator has added a company', '2013-10-30 04:17:20', 4, '0'),
+(12, 'administrator has added a company', '2013-10-30 04:19:43', 4, '0'),
+(13, 'administrator has added a company', '2013-10-30 05:45:18', 4, '0'),
+(14, 'administrator has added a company', '2013-10-30 05:45:26', 4, '0'),
+(15, 'administrator has added a company', '2013-10-30 05:47:29', 4, '0'),
+(16, 'administrator has added a company', '2013-11-04 02:51:07', 9, '0'),
+(17, 'administrator has added a company', '2013-11-04 02:51:37', 9, '0'),
+(18, 'administrator has added a company', '2013-11-04 02:52:11', 9, '0'),
+(19, 'administrator has added a company', '2013-11-04 02:52:26', 9, '0'),
+(20, 'administrator has added a company', '2013-11-04 02:52:38', 9, '0'),
+(21, 'administrator has added a company', '2013-11-04 02:53:02', 9, '0'),
+(22, 'administrator has added a company', '2013-11-04 02:53:10', 9, '0'),
+(23, 'administrator has added a company', '2013-11-04 02:53:19', 9, '0'),
+(24, 'administrator has added a company', '2013-11-04 02:54:01', 9, '0'),
+(25, 'administrator has added a company', '2013-11-04 02:54:27', 9, '0');
 
 -- --------------------------------------------------------
 
@@ -104,8 +143,8 @@ CREATE TABLE IF NOT EXISTS `allowances` (
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `allowance_type` varchar(50) NOT NULL,
-  `taxable` decimal(10,0) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
+  `taxable` decimal(10,2) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`allowance_id`)
@@ -177,7 +216,32 @@ CREATE TABLE IF NOT EXISTS `assign_company_head` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`assign_company_head_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `assign_company_head`
+--
+
+INSERT INTO `assign_company_head` (`assign_company_head_id`, `company_id`, `emp_id`, `user_created`, `status`, `deleted`) VALUES
+(1, 8, 4, '2013-10-30 09:56:46', 'Active', '0'),
+(2, 8, 5, '2013-10-31 03:00:46', 'Active', '0'),
+(3, 8, 6, '2013-10-31 06:41:06', 'Active', '0'),
+(4, 8, 7, '2013-10-31 07:50:21', 'Active', '0'),
+(5, 8, 8, '2013-10-31 07:58:47', 'Active', '0'),
+(6, 9, 9, '2013-11-04 02:55:12', 'Active', '1'),
+(7, 9, 10, '2013-11-04 03:00:54', 'Active', '0'),
+(8, 9, 11, '2013-11-04 03:01:11', 'Active', '1'),
+(9, 9, 12, '2013-11-04 05:57:05', 'Active', '0'),
+(10, 9, 13, '2013-11-04 05:58:10', 'Active', '0'),
+(11, 9, 14, '2013-11-04 05:59:01', 'Active', '0'),
+(12, 9, 15, '2013-11-04 05:59:23', 'Active', '0'),
+(13, 9, 16, '2013-11-04 06:06:40', 'Active', '0'),
+(14, 9, 17, '2013-11-04 06:09:24', 'Active', '1'),
+(15, 9, 18, '2013-11-04 06:10:35', 'Active', '1'),
+(16, 9, 19, '2013-11-04 06:10:46', 'Active', '0'),
+(17, 9, 20, '2013-11-04 06:12:20', 'Active', '0'),
+(18, 9, 21, '2013-11-04 06:14:03', 'Active', '1'),
+(19, 9, 22, '2013-11-04 06:14:20', 'Active', '1');
 
 -- --------------------------------------------------------
 
@@ -188,8 +252,8 @@ CREATE TABLE IF NOT EXISTS `assign_company_head` (
 CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `basic_pay_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
-  `current_basic_pay` decimal(10,0) NOT NULL,
-  `new_basic_pay` decimal(10,0) NOT NULL,
+  `current_basic_pay` decimal(10,2) NOT NULL,
+  `new_basic_pay` decimal(10,2) NOT NULL,
   `effective_date` datetime NOT NULL,
   `adjustment_date` datetime NOT NULL,
   `reasons` text NOT NULL,
@@ -210,10 +274,10 @@ CREATE TABLE IF NOT EXISTS `commision` (
   `project` enum('reguar','non-regular','probie','project based') NOT NULL,
   `location` varchar(150) NOT NULL,
   `commision_type` varchar(50) NOT NULL,
-  `rate` decimal(10,0) NOT NULL,
-  `withholding_tax_rate` decimal(10,0) NOT NULL,
-  `sales_amount` decimal(10,0) NOT NULL,
-  `commision_amount` decimal(10,0) NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
+  `withholding_tax_rate` decimal(10,2) NOT NULL,
+  `sales_amount` decimal(10,2) NOT NULL,
+  `commision_amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -237,6 +301,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `email_address` varchar(100) NOT NULL,
   `business_address` varchar(180) NOT NULL,
   `city` varchar(80) NOT NULL,
+  `province` varchar(100) NOT NULL,
   `zipcode` varchar(80) NOT NULL,
   `organization_type` varchar(80) NOT NULL,
   `industry` varchar(80) NOT NULL,
@@ -253,24 +318,22 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
-(21, 3, '0000-00-00 00:00:00', 'a', 0, 'techgrowthgloba', 'b', '', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', '', '', '', '', '', '', 'Active', '0'),
-(22, 1, '0000-00-00 00:00:00', 'b', 0, 'hirotapaintssss', 'dfsdfsdf', '', 'f', 'sdfasdf', 'asf', 'asdf', 'df', 'asdfasdf', 'asfas', 'fasf', 'asdf', '', '', '', '', '', '', 'Active', '0'),
-(23, 1, '0000-00-00 00:00:00', 'bbbbbbb', 0, '', 'bbbbb', '', 'bbbbbb', 'bbbbbbb', 'bbbbb', 'bbbbbbbbbbbbb', 'bbbbbbb', 'bbbbb', 'bbbbb', 'bbbbbbbbb', 'bbbbbbb', '', '', '', '', '', '', 'Inactive', '0'),
-(24, 3, '0000-00-00 00:00:00', 'sdfsdf', 0, 'sdsfdsf', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(25, 1, '0000-00-00 00:00:00', 'sdfsdf', 0, 'dsfsdf', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(26, 4, '0000-00-00 00:00:00', 'sdfsdf', 0, '888888888', 'dsfdsfdsf', '', 'dsfsdf', 'dfsdfdsfds', 'fdsfsdf', 'sdfsdfs', 'fsfs', 'dfsdfsdf', 'sdfdsfds', 'fsdfsdf', 'sdfsdf', '', '', '', '', '', '', 'Inactive', '0'),
-(27, 1, '0000-00-00 00:00:00', '33333', 0, '', '3333333333', '', '33333333333333', '33333333333333', '33333333333', '33333333333333', '3333333333', '33333333333', '3333333333', '33333333333', '3333333333333333333', '', '', '', '', '', '', 'Inactive', '0'),
-(28, 1, '0000-00-00 00:00:00', 'vbbbbbbbbbbb', 0, 'sdf', 'bbbbbbbbbb', '', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbbb', 'bbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbb', 'bbbbbbbbbbbbbbbb', 'bbbbbbbbbbbbbbbbbbbbbbbb', '23123123', '', '', '', '', '', '', '', 'Inactive', '0'),
-(29, 1, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
-(30, 3, '0000-00-00 00:00:00', '33333', 0, '', '33333', '', '33333', 'bbbbbbb', 'e', 'qualfong', 'g', '33333333333', '3333333333', '787878', '3333333333333333333', '', '', '', '', '', '', 'Active', '0'),
-(31, 1, '0000-00-00 00:00:00', '1', 0, '', '2', '', '33333', '4', '5', '6', '78', '8', '9', '10', '11', '', '', '', '', '', '', 'Active', '0');
+INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `province`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
+(1, 1, '2013-10-29 00:00:00', 'techgrowthglobal', 444, 'techgrowthgloba', '', 'chris@chris.com', '33333', 'bbbbbbb', 'ga', 'ha', '', '', '123123', '', '123123123', '12312312', '', '', '', '', '', '', 'Active', '0'),
+(2, 0, '0000-00-00 00:00:00', 'tetew', 0, '', 'a', '', 'b', 'c', '', 'd', 'government', 'e', 'f', '', 'g', 'h', '', '', '', '', '', '', 'Active', '0'),
+(3, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
+(4, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
+(5, 0, '0000-00-00 00:00:00', 'bbbbbbb', 0, '', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'government', 'bbbbbbbbbbbbb', 'bbbbbbbbb', '', 'bbbbbbbbbbbb', 'bbbbbbbbbbbbbbbb', '', '', '', '', '', '', 'Active', '0'),
+(6, 0, '0000-00-00 00:00:00', 'a', 0, '', 'b', '', 'c', 'd', '', 'e', 'private', 'f', 'g', '', 'h', 'i', '', '', '', '', '', '', 'Active', '0'),
+(7, 0, '0000-00-00 00:00:00', 'c', 0, '', 'c', '', 'c', 'c', '', 'c', 'government', 'c', 'c', '', 'c', 'c', '', '', '', '', '', '', 'Active', '0'),
+(8, 0, '0000-00-00 00:00:00', 'test', 0, '', 'test3', '', 'test3', 'test3', '', 'test3', 'private', 'test3', 'test3', '', 'test3', 'test3test3', '', '', '', '', '', '', 'Active', '0'),
+(9, 0, '0000-00-00 00:00:00', 'tetews', 0, '', 'tetews', '', 'tetews', 'tetews', '', '6000', 'government', 'tetews', 'tetewstetews', '', 'tetews', '123123', '', '', '', '', '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -303,8 +366,30 @@ INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `email_address`, 
 (1, 'Joe Mercado', 'admin@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
 (2, 'tetew@yahoo.com', 'tetew@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
 (3, 'tetew@yahoo.com', 'tete4w@yahoo.com', 'eb3b13cdb927f798301c8eba5ad5bba7', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
-(4, 'hehes', 'hehes@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0'),
-(5, 'bbbbbbbb', 'bbbbbbbbb@yahoo.com', '810247419084c82d03809fc886fedaad', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Active', '0');
+(4, 'hehes', 'hehes@yahoo.com', '42ed400e44fc7f6aea284d9c2fe9ca24', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1'),
+(5, 'bbbbbbbb', 'bbbbbbbbb@yahoo.com', '810247419084c82d03809fc886fedaad', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 'Inactive', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_principal`
+--
+
+CREATE TABLE IF NOT EXISTS `company_principal` (
+  `company_principal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`company_principal_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `company_principal`
+--
+
+INSERT INTO `company_principal` (`company_principal_id`, `emp_id`, `company_id`, `status`, `deleted`) VALUES
+(1, 23, 9, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -358,7 +443,33 @@ CREATE TABLE IF NOT EXISTS `department` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`dept_id`, `company_id`, `department_name`, `status`, `deleted`) VALUES
+(1, 2, 'hr management', 'Active', '0'),
+(2, 8, '', 'Active', '0'),
+(3, 8, '', 'Active', '0'),
+(4, 8, '', 'Active', '0'),
+(5, 8, '', 'Active', '0'),
+(6, 8, '', 'Active', '0'),
+(7, 9, '', 'Active', '0'),
+(8, 9, '', 'Active', '0'),
+(9, 9, '', 'Active', '0'),
+(10, 9, '', 'Active', '0'),
+(11, 9, '', 'Active', '0'),
+(12, 9, '', 'Active', '0'),
+(13, 9, '', 'Active', '0'),
+(14, 9, '', 'Active', '0'),
+(15, 9, '', 'Active', '0'),
+(16, 9, '', 'Active', '0'),
+(17, 9, '', 'Active', '0'),
+(18, 9, '', 'Active', '0'),
+(19, 9, '', 'Active', '0'),
+(20, 9, '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -370,8 +481,8 @@ CREATE TABLE IF NOT EXISTS `earnings` (
   `earning_id` int(11) NOT NULL AUTO_INCREMENT,
   `earning_name` varchar(80) NOT NULL,
   `taxable` enum('Yes','No') NOT NULL,
-  `max_non_taxable_amount_per_month` decimal(10,0) NOT NULL,
-  `withholding_tax_rate` decimal(10,0) NOT NULL,
+  `max_non_taxable_amount_per_month` decimal(10,2) NOT NULL,
+  `withholding_tax_rate` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -385,24 +496,27 @@ CREATE TABLE IF NOT EXISTS `earnings` (
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `rank_id` int(11) NOT NULL,
   `dept_id` int(11) NOT NULL,
   `location_id` int(11) NOT NULL,
-  `lname` varchar(80) NOT NULL,
-  `fname` varchar(80) NOT NULL,
-  `mname` varchar(80) NOT NULL,
+  `last_name` varchar(80) NOT NULL,
+  `first_name` varchar(80) NOT NULL,
+  `middle_name` varchar(80) NOT NULL,
   `dob` date NOT NULL,
   `gender` enum('Male','Female') NOT NULL,
   `marital_status` enum('Married','Single','Widow','Divorce') NOT NULL,
   `address` text NOT NULL,
   `contact_no` varchar(80) NOT NULL,
+  `mobile_no` varchar(50) NOT NULL,
+  `home_no` varchar(50) NOT NULL,
   `photo` text NOT NULL,
   `tin` varchar(80) NOT NULL,
+  `hdmf` varchar(80) NOT NULL,
   `sss` varchar(80) NOT NULL,
   `phil_health` varchar(80) NOT NULL,
   `gsis` varchar(80) NOT NULL,
@@ -411,9 +525,37 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `position_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `emp_id` (`emp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`emp_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`emp_id`, `account_id`, `payroll_group_id`, `permission_id`, `company_id`, `rank_id`, `dept_id`, `location_id`, `last_name`, `first_name`, `middle_name`, `dob`, `gender`, `marital_status`, `address`, `contact_no`, `mobile_no`, `home_no`, `photo`, `tin`, `hdmf`, `sss`, `phil_health`, `gsis`, `emergency_contact_person`, `emergency_contact_number`, `position_id`, `status`, `deleted`) VALUES
+(1, 1, 1, 1, 2, 1, 1, 1, 'c', 'a', 'b', '2013-10-30', 'Male', 'Single', 'cebu city', '', '13123123', '1111111', '', '231', 'hhh', 'sss', 'hhh', 'ggg', '12', '4', 1, 'Active', '0'),
+(2, 0, 0, 0, 0, 0, 0, 0, 'test', '22222', '222222222222', '0000-00-00', 'Male', 'Married', '', '222222222222222222222222', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(3, 0, 0, 0, 0, 0, 0, 0, 'test', 'tetew@yahoo.com', 'tetew@yahoo.com', '0000-00-00', 'Male', 'Married', '', 'tetew@yahoo.com', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(4, 2, 0, 0, 8, 2, 2, 2, 'a', 'b', 'c', '0000-00-00', 'Male', 'Married', '', '12344444', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(5, 3, 0, 0, 8, 3, 3, 3, 'a', 'b', 'c', '0000-00-00', 'Male', 'Married', '', '1231', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(6, 4, 0, 0, 8, 4, 4, 4, 'b', 'bb', 'bbbbbbbb', '0000-00-00', 'Male', 'Married', '', 'bbbbbbbbbbb', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(7, 5, 0, 0, 8, 5, 5, 5, 'x', 'cv', 'vc', '0000-00-00', 'Male', 'Married', '', '123213', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(8, 6, 0, 0, 8, 6, 6, 6, 'tetew', 'tetew', 'tetew', '0000-00-00', 'Male', 'Married', '', '111111111111111', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(9, 7, 0, 0, 9, 7, 7, 7, 'tetetw', 'sfsdfsd', 'fsdfsdfsdf', '0000-00-00', 'Male', 'Married', '', '1231231', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(10, 8, 0, 0, 9, 8, 8, 8, 'c', 'c', 'df', '0000-00-00', 'Male', 'Married', '', '12323', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(11, 9, 0, 0, 9, 9, 9, 9, 'ttews', 'ttews', 'ttews', '0000-00-00', 'Male', 'Married', '', '123123123', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(12, 10, 0, 0, 9, 10, 10, 10, 'alan1s2asdasdf', 'a', 'a', '0000-00-00', 'Male', 'Married', '', 'a', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(13, 11, 0, 0, 9, 11, 11, 11, 'alan1s2asdasdf', 'a', 'a', '0000-00-00', 'Male', 'Married', '', 'a', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(14, 12, 0, 0, 9, 12, 12, 12, 'alan1s2asdasdf', 'a', 'a', '0000-00-00', 'Male', 'Married', '', 'a', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(15, 13, 0, 0, 9, 13, 13, 13, 'b', 'bbbbbbbbbbb', 'bbbbbbbbbbb', '0000-00-00', 'Male', 'Married', '', '2323', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(16, 14, 0, 0, 9, 14, 14, 14, 'asf', 'sdfsdfsf', 'dsfsdfs', '0000-00-00', 'Male', 'Married', '', '123123', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(17, 15, 0, 0, 9, 15, 15, 15, 'asf', 'sdfsdfsf', 'dsfsdfs', '0000-00-00', 'Male', 'Married', '', '123123', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(18, 16, 0, 0, 9, 16, 16, 16, 'sfasdfas', 'asf', 'sdfsdfds', '0000-00-00', 'Male', 'Married', '', '1323', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(19, 17, 0, 0, 9, 17, 17, 17, 'asf', 'sdfsdfsf', 'dsfsdfs', '0000-00-00', 'Male', 'Married', '', '123123', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(20, 18, 0, 0, 9, 18, 18, 18, 'asf', 'sdfsdfsf', 'dsfsdfs', '0000-00-00', 'Male', 'Married', '', '123123', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0'),
+(21, 19, 0, 0, 9, 19, 19, 19, 'sfasdfas', 'asf', 'sdfsdfds', '0000-00-00', 'Male', 'Married', '', '1323', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(22, 20, 0, 0, 9, 20, 20, 20, 'asfhaha', 'sdfsdfsfhah', 'dsfsdfsahah', '0000-00-00', 'Male', 'Married', '', '123123ahah', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '1'),
+(23, 22, 0, 0, 9, 0, 0, 0, 'bbbbbbbbbbbbbbb', 'bbbbbbbbbbbbbbbbb', 'bbbbbbbbbbbbbbbbbb', '0000-00-00', 'Male', 'Married', '', '12312323', '', '', '', '', '', '', '', '', '', '', 0, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -427,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `employee_deductions` (
   `emp_id` int(11) NOT NULL,
   `deducation_type` varchar(80) NOT NULL,
   `recurring` varchar(80) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `valid_from` date NOT NULL,
   `valid_until` date NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -446,9 +588,9 @@ CREATE TABLE IF NOT EXISTS `employee_earnings` (
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `minimum_wage_earner` varchar(80) NOT NULL,
-  `statutory_min_wage` decimal(10,0) NOT NULL,
+  `statutory_min_wage` decimal(10,2) NOT NULL,
   `entitled_to_basic_pay` varchar(80) NOT NULL,
-  `basic_pay_amount` decimal(10,0) NOT NULL,
+  `basic_pay_amount` decimal(10,2) NOT NULL,
   `pay_rate_type` enum('Month','Half Month') NOT NULL,
   `timesheet_required` enum('Yes','No') NOT NULL,
   `entitled_to_overtime` enum('Yes','No') NOT NULL,
@@ -474,7 +616,7 @@ CREATE TABLE IF NOT EXISTS `employee_fixed_allowances` (
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `allowance_type` varchar(80) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`fixed_allowance_id`)
@@ -512,12 +654,12 @@ CREATE TABLE IF NOT EXISTS `employee_loans` (
   `loan_no` int(11) NOT NULL,
   `loan_type` enum('SSS Salary Loan','Company Loan','Philhealth Loan','Pagibig Loan') NOT NULL,
   `date_granted` date NOT NULL,
-  `principal` decimal(10,0) NOT NULL,
-  `terms` decimal(10,0) NOT NULL,
-  `interest_rates` decimal(10,0) NOT NULL,
-  `penalty_rates` decimal(10,0) NOT NULL,
-  `beginning_balance` decimal(10,0) NOT NULL,
-  `monthly_amortization` decimal(10,0) NOT NULL,
+  `principal` decimal(10,2) NOT NULL,
+  `terms` decimal(10,2) NOT NULL,
+  `interest_rates` decimal(10,2) NOT NULL,
+  `penalty_rates` decimal(10,2) NOT NULL,
+  `beginning_balance` decimal(10,2) NOT NULL,
+  `monthly_amortization` decimal(10,2) NOT NULL,
   `loan_type_status` enum('New','Existing') NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -577,7 +719,7 @@ CREATE TABLE IF NOT EXISTS `employee_schedule` (
   `emp_id` int(11) NOT NULL,
   `loan_type` varchar(80) NOT NULL,
   `date_granted` date NOT NULL,
-  `principal` decimal(10,0) NOT NULL,
+  `principal` decimal(10,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`schedule_id`)
@@ -693,8 +835,8 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `emp_id` int(11) NOT NULL,
   `expense_type` varchar(100) NOT NULL,
   `project` enum('regular','non-regular') NOT NULL,
-  `min` decimal(10,0) NOT NULL,
-  `max` decimal(10,0) NOT NULL,
+  `min` decimal(10,2) NOT NULL,
+  `max` decimal(10,2) NOT NULL,
   `expense_date` date NOT NULL,
   `amount` date NOT NULL,
   `company_id` int(11) NOT NULL,
@@ -712,9 +854,9 @@ CREATE TABLE IF NOT EXISTS `expenses` (
 CREATE TABLE IF NOT EXISTS `expense_type` (
   `expense_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `expense_type_name` varchar(80) NOT NULL,
-  `minimum_amount` decimal(10,0) NOT NULL,
-  `maximum_amount` decimal(10,0) NOT NULL,
-  `require_receipt` decimal(10,0) NOT NULL,
+  `minimum_amount` decimal(10,2) NOT NULL,
+  `maximum_amount` decimal(10,2) NOT NULL,
+  `require_receipt` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -729,8 +871,8 @@ CREATE TABLE IF NOT EXISTS `expense_type` (
 
 CREATE TABLE IF NOT EXISTS `government_registration` (
   `government_registration_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tin` int(11) NOT NULL,
-  `rdo_code` int(11) NOT NULL,
+  `tin` varchar(100) NOT NULL,
+  `rdo_code` varchar(100) NOT NULL,
   `sss_id` varchar(50) NOT NULL,
   `hdmf` varchar(50) NOT NULL,
   `phil_health` varchar(50) NOT NULL,
@@ -739,7 +881,16 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`government_registration_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `government_registration`
+--
+
+INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `category`, `company_id`, `status`, `deleted`) VALUES
+(1, 'a333333333333333333', 'f33333333', 'sdf', 'sdf', 'df', 'probie', 1, 'Active', '0'),
+(2, 'a', 'b', 'c', 'd', '123123555555555', 'household', 4, 'Active', '0'),
+(3, '4a', '5b', '6c', '7d', '8e', 'probie', 9, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -751,9 +902,9 @@ CREATE TABLE IF NOT EXISTS `gsis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `type_of_insurance_coverage` varchar(100) NOT NULL,
-  `personal_share_life` decimal(10,0) NOT NULL,
-  `personal_share_retirement` decimal(10,0) NOT NULL,
-  `gov_share_life` decimal(10,0) NOT NULL,
+  `personal_share_life` decimal(10,2) NOT NULL,
+  `personal_share_retirement` decimal(10,2) NOT NULL,
+  `gov_share_life` decimal(10,2) NOT NULL,
   `gov_share_retirement` varchar(50) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -769,11 +920,11 @@ CREATE TABLE IF NOT EXISTS `gsis` (
 CREATE TABLE IF NOT EXISTS `hdmf` (
   `hdmf_id` int(11) NOT NULL AUTO_INCREMENT,
   `salary_bracket_id` int(11) NOT NULL,
-  `range_of_compensation_from` decimal(10,0) NOT NULL,
-  `range_of_compensation_to` decimal(10,0) NOT NULL,
-  `monthly_salary_credit` decimal(10,0) NOT NULL,
-  `employer_contribution1` decimal(10,0) NOT NULL,
-  `employee_contribution2` decimal(10,0) NOT NULL,
+  `range_of_compensation_from` decimal(10,2) NOT NULL,
+  `range_of_compensation_to` decimal(10,2) NOT NULL,
+  `monthly_salary_credit` decimal(10,2) NOT NULL,
+  `employer_contribution1` decimal(10,2) NOT NULL,
+  `employee_contribution2` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -810,8 +961,8 @@ CREATE TABLE IF NOT EXISTS `holiday_premium` (
   `emp_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `hours_type` enum('rest day','holiday') NOT NULL,
-  `rate` decimal(10,0) NOT NULL,
-  `no_of_hours` decimal(10,0) NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
+  `no_of_hours` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL
@@ -827,7 +978,7 @@ CREATE TABLE IF NOT EXISTS `hours_type` (
   `hour_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` enum('0','1') NOT NULL,
   `hour_type_name` varchar(80) NOT NULL,
-  `pay_rate` decimal(10,0) NOT NULL,
+  `pay_rate` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`hour_type_id`)
@@ -844,12 +995,12 @@ CREATE TABLE IF NOT EXISTS `hours_worked` (
   `hour_type_id` int(11) NOT NULL,
   `source` varchar(50) NOT NULL,
   `emp_id` int(11) NOT NULL,
-  `hours_required_regular` decimal(10,0) NOT NULL,
-  `hours_required_holiday` decimal(10,0) NOT NULL,
-  `hours_worked_regular` decimal(10,0) NOT NULL,
-  `hours_worked_holiday` decimal(10,0) NOT NULL,
-  `tardiness` decimal(10,0) NOT NULL,
-  `undertime` decimal(10,0) NOT NULL,
+  `hours_required_regular` decimal(10,2) NOT NULL,
+  `hours_required_holiday` decimal(10,2) NOT NULL,
+  `hours_worked_regular` decimal(10,2) NOT NULL,
+  `hours_worked_holiday` decimal(10,2) NOT NULL,
+  `tardiness` decimal(10,2) NOT NULL,
+  `undertime` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `overtime_id` int(11) NOT NULL,
@@ -950,7 +1101,7 @@ CREATE TABLE IF NOT EXISTS `loans_deductions` (
   `loan_type` varchar(100) NOT NULL,
   `principal_due` date NOT NULL,
   `interest_due` date NOT NULL,
-  `penalty` decimal(10,0) NOT NULL,
+  `penalty` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -967,7 +1118,7 @@ CREATE TABLE IF NOT EXISTS `loans_other_deductions` (
   `loans_other_deductions_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `deducation_type` varchar(100) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -985,7 +1136,7 @@ CREATE TABLE IF NOT EXISTS `loan_payment_history` (
   `emp_id` int(11) NOT NULL,
   `loan_type` varchar(80) NOT NULL,
   `date_granted` date NOT NULL,
-  `principal` decimal(10,0) NOT NULL,
+  `principal` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1022,7 +1173,33 @@ CREATE TABLE IF NOT EXISTS `location` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`location_id`, `project_id`, `location_name`, `description`, `company_id`, `status`, `deleted`) VALUES
+(1, 3, 'ramos street', 'oh yeah', 2, 'Active', '0'),
+(2, 0, '', '', 8, 'Active', '0'),
+(3, 0, '', '', 8, 'Active', '0'),
+(4, 0, '', '', 8, 'Active', '0'),
+(5, 0, '', '', 8, 'Active', '0'),
+(6, 0, '', '', 8, 'Active', '0'),
+(7, 0, '', '', 9, 'Active', '0'),
+(8, 0, '', '', 9, 'Active', '0'),
+(9, 0, '', '', 9, 'Active', '0'),
+(10, 0, '', '', 9, 'Active', '0'),
+(11, 0, '', '', 9, 'Active', '0'),
+(12, 0, '', '', 9, 'Active', '0'),
+(13, 0, '', '', 9, 'Active', '0'),
+(14, 0, '', '', 9, 'Active', '0'),
+(15, 0, '', '', 9, 'Active', '0'),
+(16, 0, '', '', 9, 'Active', '0'),
+(17, 0, '', '', 9, 'Active', '0'),
+(18, 0, '', '', 9, 'Active', '0'),
+(19, 0, '', '', 9, 'Active', '0'),
+(20, 0, '', '', 9, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1052,8 +1229,8 @@ CREATE TABLE IF NOT EXISTS `other_earnings` (
   `other_earnings_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `earning_type` varchar(50) NOT NULL,
-  `withholding_tax_rate` decimal(10,0) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
+  `withholding_tax_rate` decimal(10,2) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1071,7 +1248,7 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `emp_id` int(11) NOT NULL,
   `overtime_date` date NOT NULL,
   `overtime_type_id` varchar(100) NOT NULL,
-  `rate` decimal(10,0) NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
   `project` varchar(100) NOT NULL,
   `project_location` varchar(150) NOT NULL,
   `start_time` time NOT NULL,
@@ -1093,8 +1270,8 @@ CREATE TABLE IF NOT EXISTS `overtime` (
 CREATE TABLE IF NOT EXISTS `overtime_type` (
   `overtime_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `overtime_type_name` varchar(80) NOT NULL,
-  `pay_rate` decimal(10,0) NOT NULL,
-  `ot_rate` decimal(10,0) NOT NULL,
+  `pay_rate` decimal(10,2) NOT NULL,
+  `ot_rate` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1125,12 +1302,19 @@ CREATE TABLE IF NOT EXISTS `payroll_approver` (
 CREATE TABLE IF NOT EXISTS `payroll_group` (
   `payroll_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `payroll_group_name` varchar(100) NOT NULL,
-  `minimum_net_pay` decimal(10,0) NOT NULL,
+  `minimum_net_pay` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`payroll_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `payroll_group`
+--
+
+INSERT INTO `payroll_group` (`payroll_group_id`, `payroll_group_name`, `minimum_net_pay`, `company_id`, `status`, `deleted`) VALUES
+(1, 'konsum hrs', 4000.00, 2, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1176,7 +1360,14 @@ CREATE TABLE IF NOT EXISTS `permission` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`permission_id`, `permission_type_name`, `company_id`, `status`, `deleted`) VALUES
+(1, 'hr only', 2, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1186,12 +1377,12 @@ CREATE TABLE IF NOT EXISTS `permission` (
 
 CREATE TABLE IF NOT EXISTS `phil_health` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `salary_bracket` decimal(10,0) NOT NULL,
-  `range_of_compensation_from` decimal(10,0) NOT NULL,
-  `range_of_compensation_to` decimal(10,0) NOT NULL,
-  `monthly_salary_credit` decimal(10,0) NOT NULL,
-  `employer_contribution1` decimal(10,0) NOT NULL,
-  `employer_contribution2` decimal(10,0) NOT NULL,
+  `salary_bracket` decimal(10,2) NOT NULL,
+  `range_of_compensation_from` decimal(10,2) NOT NULL,
+  `range_of_compensation_to` decimal(10,2) NOT NULL,
+  `monthly_salary_credit` decimal(10,2) NOT NULL,
+  `employer_contribution1` decimal(10,2) NOT NULL,
+  `employer_contribution2` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1211,9 +1402,9 @@ CREATE TABLE IF NOT EXISTS `piece_rate` (
   `location` varchar(150) NOT NULL,
   `date` datetime NOT NULL,
   `piece_rate_type` varchar(50) NOT NULL,
-  `rate` decimal(10,0) NOT NULL,
-  `units_produced` decimal(10,0) NOT NULL,
-  `piece_rate_amount` decimal(10,0) NOT NULL,
+  `rate` decimal(10,2) NOT NULL,
+  `units_produced` decimal(10,2) NOT NULL,
+  `piece_rate_amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1233,7 +1424,14 @@ CREATE TABLE IF NOT EXISTS `position` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `position`
+--
+
+INSERT INTO `position` (`position_id`, `position_name`, `company_id`, `status`, `deleted`) VALUES
+(1, 'human rights', 2, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1265,7 +1463,33 @@ CREATE TABLE IF NOT EXISTS `rank` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`rank_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `rank`
+--
+
+INSERT INTO `rank` (`rank_id`, `rank_name`, `description`, `company_id`, `status`, `deleted`) VALUES
+(1, 'hr', 'hr ni siya oh yeha', 2, 'Active', '0'),
+(2, '', '', 8, 'Active', '0'),
+(3, '', '', 8, 'Active', '0'),
+(4, '', '', 8, 'Active', '0'),
+(5, '', '', 8, 'Active', '0'),
+(6, '', '', 8, 'Active', '0'),
+(7, '', '', 9, 'Active', '0'),
+(8, '', '', 9, 'Active', '0'),
+(9, '', '', 9, 'Active', '0'),
+(10, '', '', 9, 'Active', '0'),
+(11, '', '', 9, 'Active', '0'),
+(12, '', '', 9, 'Active', '0'),
+(13, '', '', 9, 'Active', '0'),
+(14, '', '', 9, 'Active', '0'),
+(15, '', '', 9, 'Active', '0'),
+(16, '', '', 9, 'Active', '0'),
+(17, '', '', 9, 'Active', '0'),
+(18, '', '', 9, 'Active', '0'),
+(19, '', '', 9, 'Active', '0'),
+(20, '', '', 9, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1291,13 +1515,13 @@ CREATE TABLE IF NOT EXISTS `rest_day` (
 
 CREATE TABLE IF NOT EXISTS `sss` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `salary_brackets` decimal(10,0) NOT NULL,
-  `range_compensation_from` decimal(10,0) NOT NULL,
-  `range_compensation_to` decimal(10,0) NOT NULL,
-  `monthly_salary_credit` decimal(10,0) NOT NULL,
-  `employer_monthly_contribution_ss` decimal(10,0) NOT NULL,
-  `employer_monthly_contribution_ec` decimal(10,0) NOT NULL,
-  `employee_ss` decimal(10,0) NOT NULL,
+  `salary_brackets` decimal(10,2) NOT NULL,
+  `range_compensation_from` decimal(10,2) NOT NULL,
+  `range_compensation_to` decimal(10,2) NOT NULL,
+  `monthly_salary_credit` decimal(10,2) NOT NULL,
+  `employer_monthly_contribution_ss` decimal(10,2) NOT NULL,
+  `employer_monthly_contribution_ec` decimal(10,2) NOT NULL,
+  `employee_ss` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1323,24 +1547,6 @@ CREATE TABLE IF NOT EXISTS `time_sheet` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`time_sheet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_credentials`
---
-
-CREATE TABLE IF NOT EXISTS `user_credentials` (
-  ` emp_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payroll_cloud_id` int(11) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `access_level` varchar(50) NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `payroll_group_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (` emp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1463,16 +1669,6 @@ CREATE TABLE IF NOT EXISTS `workday` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`workday_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `user_credentials` (` emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
