@@ -37,8 +37,61 @@
           <!-- TBL-WRAP END -->
         </div>
         <input class="btn jpop_approver" name="" type="button" value="ADD APPROVER">
-        <div class="ihides">
+        <div class="ihide">
 		<div class="jpop_approvers" title="Add Approver">
+			<?php 
+				echo form_open("",array("class"=>"we","onsubmit"=>"return kpay.owner.approvers.save_approver('/company/approvers/edit/{$this->uri->segment(4)}','".itoken_cookie()."');"));
+				echo validation_errors("<span class='error_zone'>","</span>");
+			?>
+			<table>
+				<tbody>
+					<tr>
+					  <td style="width:155px">Last Name:</td>
+					  <td><input type="text" value="" name="lname" class="txtfield">					  
+					  </td>
+					</tr>
+					<tr>
+					  <td>First Name: </td>
+					  <td><input type="text"  name="fname" class="txtfield">					 
+					  </td>
+					</tr>
+					<tr>
+					  <td>Middle Name: </td>
+					  <td><input type="text"  name="mname" class="txtfield">					  
+					  </td>
+					</tr>
+					<tr>
+					  <td>Fax: </td>
+					  <td><input type="text"  name="fax" class="txtfield">					  
+					  </td>
+					</tr>
+					<tr>
+					  <td>Email: </td>
+					  <td><input type="text"  name="email" class="txtfield">					  
+					  </td>
+					</tr>
+					<tr>
+					  <td>Contact No: </td>
+					  <td><input type="text"  name="contact_no" class="txtfield">
+					  </td>
+					</tr>
+					<tr>
+					  <td>Username: </td>
+					  <td><input type="text"  name="username" class="txtfield">
+					  </td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" value="Save" name="submit" class="btn">
+						<input type="button" value="Cancel" name="cancel" class="btn jcancel">
+						</td>
+					</tr>
+			  </tbody>
+			</table>
+			<?php echo form_close();?>
+		</div>
+		<!--  edit here  -->
+		<div class="jpop_edit_approvers ihide" title="EDIT Approver">
 			<?php 
 				echo form_open("",array("class"=>"we"));
 				echo validation_errors("<span class='error_zone'>","</span>");
@@ -90,6 +143,7 @@
 			</table>
 			<?php echo form_close();?>
 		</div>
+		<!-- edit here lightbox -->
 		</div>
 	<!-- MAIN-CONTENT END -->
 	<script type="text/javascript">
