@@ -66,7 +66,24 @@
 
 		
 		public function add_cost_center(){
-		
+			if($this->input->post("add")){
+				$this->form_validation->set_rules("cost_center_code","Cost Center Code","required|trim|xss_clean");
+				$this->form_validation->set_rules("add_desc","Description","required|trim|xss_clean");				
+				if($this->form_validation->run() == false) {
+					 $data['error'] = validation_errors("<span class='error_zone'>",'</span>');
+					 echo json_encode(array("success"=>"0","error"=>$data['error']));
+					 return false;
+				} else {	
+					$account_fields = array(
+									"cost_center_code" 	=> $this->db->escape_str($this->input->post('cost_center_code')),
+									"description"		=> $this->db->escape_str($this->input->post('add_desc')),
+									"status"			=> 'Active',
+									"deleted" 	=> '0'
+								);	
+					$account_id = $this->cost_center->save_fields("cost_center",$account_fields);
+					
+				}
+			}
 		}
 		
 	}

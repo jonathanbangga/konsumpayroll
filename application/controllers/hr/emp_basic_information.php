@@ -54,9 +54,9 @@
 				$this->form_validation->set_rules('hdmf', 'HDMF', 'trim|required|xss_clean');
 				$this->form_validation->set_rules('no_dependents', 'Number of Dependents', 'trim|required|xss_clean');
 				
-				if ($this->form_validation->run()==true){
+				//if ($this->form_validation->run()==true){
 					foreach($this->input->post('uname') as $key=>$val){
-						$company_id = "";
+						$company_id = $this->company_id;
 						$rank_id = "";
 						$dept_id = "";
 						$location_id = "";
@@ -123,16 +123,17 @@
 							'deleted' => 0
 						);
 							
-						$insert_employee = $this->jmodel->insert_data('employee',$insert_employee);
-						$insert_account = $this->jmodel->insert_data('accounts',$insert_account);
+						$insert_employee_sql = $this->jmodel->insert_data('employee',$insert_employee);
+						$insert_account_sql = $this->jmodel->insert_data('accounts',$insert_account);
 						
-						if($insert_employee && $insert_account){
+						if($insert_employee_sql && $insert_account_sql){
 							$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
 							redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
 						}
 					}
 				}
-			}
+			//}
+			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_basic_info_view', $data);
 		}

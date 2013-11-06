@@ -52,7 +52,8 @@ class Users_model extends CI_Model {
 	 * @return boolean
 	 */
 	public function add_all_user($fields) {
-		return $this->db->insert("company_owner",$fields);
+		$this->db->insert("company_owner",$fields);
+		return $this->db->insert_id();
 	}
 	
 	/**
@@ -114,7 +115,6 @@ class Users_model extends CI_Model {
 	}
 	
 	/**
-	 * 
 	 * Add all admin
 	 * @param array $fields
 	 * @return integer
@@ -125,7 +125,6 @@ class Users_model extends CI_Model {
 	}
 	
 	/**
-	 * 
 	 * Updates admin users
 	 * @param array $fields
 	 * @param int $id
@@ -147,6 +146,11 @@ class Users_model extends CI_Model {
 	public function add_data_fields($database,$fields){
 		$this->db->insert($database,$fields);
 		return $this->db->insert_id(); 
+	}
+	
+	public function update_data_fields($database,$fields){
+		$this->db->update($database,$fields);
+		return $this->db->affected_rows(); 
 	}
 	
 	/**
