@@ -45,7 +45,7 @@ var kpay = {
 				// for pop up
 					jQuery(document).on("click", ".jpop_approver", function (e) {
 						e.preventDefault();
-						kpay.overall.show_pops(".jpop_approvers");
+						kpay.overall.show_pops(".jpop_approvers");	
 					});
 				// closing pop up approver
 					jQuery(document).on("click", ".jcancel", function (e) {
@@ -432,16 +432,19 @@ var kpay = {
 						e.preventDefault();
 						var el = jQuery(this);
 						var getid= el.attr("set_id");
-						jQuery(".jshowupdate").dialog();
+						kpay.overall.show_pops(".jshowupdate");
 						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
 							jQuery("input[name='edit_owner']").val(jres.owner_name);
 							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
-							jQuery("input[id^='edit_email']").val(jres.email_address);
-							jQuery("input[id^='edit_old_email']").val(jres.email_address);
+							jQuery("input[id^='edit_email']").val(jres.email);
+							jQuery("input[id^='edit_old_email']").val(jres.email);
+							jQuery("input[id^='edit_account_id']").val(jres.account_id);
+							jQuery("input[id^='edit_payroll_system_account_id']").val(jres.payroll_system_account_id);
 							jQuery("input[id^='edit_pass']").val();
 							jQuery("input[id^='edit_cpass']").val();
+							
 						});
 					});
 				},
@@ -456,6 +459,8 @@ var kpay = {
 						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
 						'edit_pass':jQuery("input[id^='edit_pass']").val(),
 						'edit_cpass':jQuery("input[id^='edit_cpass']").val(),
+						"edit_account_id":jQuery("input[id^='edit_owner']").val(),
+						'edit_payroll_system_account_id':jQuery("input[id^='edit_payroll_system_account_id']").val(),
 						'ZGlldmlyZ2luamM':jQuery.cookie(token),
 						'update':'true'
 						},success: function(data) {

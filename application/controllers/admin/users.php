@@ -113,10 +113,10 @@ class Users extends CI_Controller {
 					if($payroll_system_account_id){
 					#---------- ACCOUNT --------------------#
 						$account_field = array(
-									"payroll_cloud_id" 	=> $payroll_system_account_id,
+									"payroll_system_account_id" => $payroll_system_account_id,
 									"email"				=> $email,
 									"account_type_id"	=> 4,
-									"password"			=> base64_encode(idates_now())	
+									"password"			=> $this->input->post("password")
 							);		
 						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
 					#--------- COMPANY_OWNER --------------#
@@ -176,15 +176,29 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_update_user_email_check');
 				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
 				$this->form_validation->set_rules('edit_pass','Password','xss_clean|trim|required|matches[edit_cpass]|min_length[8]|max_length[18]');
-				$this->form_validation->set_rules('edit_cpass','Confirm Password','xss_clean|trim|required'); 
+				$this->form_validation->set_rules('edit_cpass','Confirm Password','xss_clean|trim|required');
+				$this->form_validation->set_rules('edit_account_id','Account ID','xss_clean|trim|required'); 
+				$this->form_validation->set_rules('edit_payroll_system_account_id','Edit Payroll ID','xss_clean|trim|required'); 
 				if($this->form_validation->run() == true) {	
-				
+					// UPDATE ACCOUNTS
 					$fields = array(
-								"owner_name" 	=> $this->db->escape_str($this->input->post('edit_name')),
-								"email_address" => $this->db->escape_str($this->input->post('edit_email')),
-								"password"		=> $this->db->escape_str(md5($this->input->post('edit_pass')))
+								"email"			=> $this->input->post('edit_email'),
+								"password"		=> $this->db->escape_str(md5($this->input->post("edit_pass")))
 							);
-					$this->users_model->update_all_user($fields,$this->input->post('edit_id'));
+					$this->users_model->update_data_fields("accounts",$fields,array("account_id"=>$this->input->post('edit_account_id')));
+					// UPDATE PAYROLL SYSTEM ACCOUNT
+					$payroll_field = array(
+								"company_owner_email" => $this->input->post('edit_email'),
+								"status"		=> "Active"
+							);
+					$where_payroll_field = array("payroll_system_account_id"=>$this->input->post('edit_payroll_system_account_id'));
+					$this->users_model->update_data_fields("payroll_system_account",$payroll_field,$where_payroll_field);
+					// UPDATE COMPANY OWNER NAME
+					$company_owner_field = array(
+								"owner_name"	=> $this->input->post("edit_name")
+							);
+					$where_company = array("account_id"=>$this->input->post('edit_account_id'));
+					$this->users_model->update_data_fields("company_owner",$company_owner_field,$where_company);
 					echo json_encode(array("error_msg"=>'',"success"=>"1","value"=>$fields));
 				} else {
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
@@ -285,7 +299,7 @@ class Users extends CI_Controller {
 	 */
 	public function update_user_email_check($str){
 		$old_email = $this->input->post('edit_old_email');
-		$query = $this->db->query("SELECT * from company_owner WHERE email_address ='{$this->db->escape_str($str)}' AND NOT email_address = '{$old_email}'");
+		$query = $this->db->query("SELECT * from accounts WHERE email ='{$this->db->escape_str($str)}' AND NOT email = '{$old_email}'");
 		$row = $query->row();
 		if($row){
 			$this->form_validation->set_message("update_user_email_check","The email address is already in use");

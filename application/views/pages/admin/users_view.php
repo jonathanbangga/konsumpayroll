@@ -78,9 +78,11 @@
 				<tr>
 					<td style="width:155px">Name:</td>
 					<td>
+					<input type="hidden" name="account_id" id="edit_account_id" value="" readonly="readonly"/>
 					<input type="hidden"  readonly="readonly"  value="" name="edit_owner_id" id="edit_owner_id" class="txtfield">
+					<input type="hidden" name="account_id" id="edit_account_id" value="" readonly="readonly"/>
 					<input type="text"  value="" name="edit_owner" id="edit_owner" class="txtfield">
-					
+					<input type="hidden"  value="" name="edit_payroll_system_account_id" id="edit_payroll_system_account_id" class="txtfield">
 					</td>
 				</tr>
 				<tr>
