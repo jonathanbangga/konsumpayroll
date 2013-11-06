@@ -18,10 +18,7 @@
 
 .ihide{display:none;}
 
-<<<<<<< HEAD
 .error_zone{display:block;padding-bottom: 5px;}
-=======
-.error_zone{display:block;}
 .complist{
 	list-style-type:none;
 }
@@ -33,4 +30,3 @@
 span.errors{
 	display:block;
 }
->>>>>>> 03836bd6f54f48d29321bc9632e767eb36486400

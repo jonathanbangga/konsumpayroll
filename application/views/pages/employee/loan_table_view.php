@@ -15,11 +15,11 @@
 		?>
 			<tr>
 				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->loan_type_name;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;">Loan Number</td>
+				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->loan_no;?></td>
 				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->date_granted;?></td>
 				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->principal;?></td>
 				<td style="padding:10px;border:1px solid #bcbcbc;">Loan Balance</td>
-				<td style="padding:10px;border:1px solid #bcbcbc;">Monthly Amortazation</td>
+				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->monthly_amortization;?></td>
 				<td style="padding:10px;border:1px solid #bcbcbc;">Details</td>
 			</tr>
 		<?php 		
