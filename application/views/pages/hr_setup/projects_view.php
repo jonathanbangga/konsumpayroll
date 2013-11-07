@@ -33,7 +33,7 @@
           </table>
           <!-- TBL-WRAP END -->
         </div>
-        <a class="btn" href="#">ADD APPROVER</a>
+        <a class="btn" href="#">ADD PROJECT</a>
         <!-- MAIN-CONTENT END -->
       </div>
       <div class="footer-grp-btn">
