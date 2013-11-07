@@ -491,7 +491,7 @@ var kpay = {
 							buttons: {
 							"Yes": function () {
 								jQuery("#jcomp_"+ids).remove();
-								jQuery.post(urls,{"admin_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
+								jQuery.post(urls,{"company_owner_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
 								jQuery(".option_alert").dialog("close");
 							},
 							No: function () {
@@ -537,11 +537,11 @@ var kpay = {
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
 							jQuery("input[id^='edit_name']").val(jres.name);
-							jQuery("input[id^='edit_id']").val(jres.konsum_admin_id);
-							jQuery("input[id^='edit_email']").val(jres.email_address);
-							jQuery("input[id^='edit_old_email']").val(jres.email_address);
-							jQuery("input[id^='edit_username']").val(jres.username);
-							jQuery("input[id^='edit_username_old']").val(jres.username);
+							jQuery("input[id^='accounts_id']").val(jres.account_id);
+							jQuery("input[id^='edit_email']").val(jres.email);
+							jQuery("input[id^='edit_old_email']").val(jres.email);
+							jQuery("input[id^='edit_username']").val(jres.payroll_cloud_id);
+							jQuery("input[id^='edit_username_old']").val(jres.payroll_cloud_id);
 							jQuery("input[id^='edit_password']").val();
 							jQuery("input[id^='edit_cpassword']").val();
 						});
@@ -552,7 +552,7 @@ var kpay = {
 					url:urls,
 					type: "POST",
 					data:{
-						'edit_id':jQuery("input[name='id']").val(),
+						'accounts_id':jQuery("input[name='accounts_id']").val(),
 						'edit_name':jQuery("input[name='name']:visible").val(),
 						'edit_email':jQuery("input[name='email_address']:visible").val(),
 						'edit_username':jQuery("input[name='username']:visible").val(),

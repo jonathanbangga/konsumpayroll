@@ -14,7 +14,7 @@
 						foreach($client_user as $all_user): ?>
 						<tr class="admin_list_id<?php echo $all_user->konsum_admin_id;?>">
 							<td class="own_name"><?php echo $all_user->name;?></td>
-							<td><?php echo $all_user->username;?></td>
+							<td><?php echo $all_user->payroll_cloud_id;?></td>
 							<td>
 								<a href="#" class="btn btn-normal btn-action change_pass_admin" id="view_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">CHANGE PASSWORD</a> 
 								<a href="#" class="btn btn-gray btn-action edit_admin" id="edit_<?php echo $all_user->konsum_admin_id;?>" set_id="<?php echo $all_user->konsum_admin_id;?>">EDIT</a> 
@@ -71,7 +71,7 @@
 					<td style="width:155px">Name:</td>
 					<td>
 					<input type="text"  value="<?php echo set_value("name");?>" name="name" class="txtfield" id="edit_name">
-					<input type="hidden" readonly="readonly" value="<?php echo set_value("id");?>" name="id" class="txtfield" id="edit_id">
+					<input type="hidden" readonly="readonly" value="<?php echo set_value("id");?>" name="accounts_id" class="txtfield" id="accounts_id">
 					</td>
 				</tr>
 				<tr>
