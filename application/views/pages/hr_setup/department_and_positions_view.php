@@ -35,7 +35,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="#">BACK</a> <a class="btn btn-gray right" href="#">CONTINUE</a>
+        <a class="btn btn-gray left" href="/company/hr_setup/employment_type">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/approval_groups">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
@@ -51,6 +51,13 @@
 	<div class="inner_div">
 		Enter position: 
 		<input type="text" id="position" name="position" />
+	</div>
+</div>
+
+
+<div class="jdialog" id="no-pos-alert" title="Notice">
+	<div class="inner_div">
+		No positions for this department
 	</div>
 </div>
 
@@ -78,7 +85,18 @@ jQuery(document).ready(function(){
 				if(ret!=""){
 					jQuery("#deptnpos").append(ret);
 				}else{
-					alert("No positions for this department")
+					jQuery("#no-pos-alert").dialog({
+						modal: true,
+						show: {
+							effect: "blind"
+						},
+						buttons: {
+							'add position': function() {
+								jQuery( this ).dialog( "close" );
+								add_position(dept_id);
+							}
+						}
+					});
 					obj.removeProp("checked");
 				}
 			});
@@ -114,12 +132,16 @@ jQuery(document).ready(function(){
 						alert('Enter department name');
 					}	
 				}
-			},
+			}
 		});
 	});
 	// add more position
 	jQuery(document).on("click",".add-more-pos",function(){
-		var obj = jQuery(this);
+		var dept_id = jQuery(this).parents(".li_dept").find(".dept_id").val();
+		add_position(dept_id);
+	});
+	// add position script
+	function add_position(dept_id){
 		jQuery("#add-more-position-dialog").dialog({
 			modal: true,
 			show: {
@@ -128,7 +150,6 @@ jQuery(document).ready(function(){
 			buttons: {
 				save: function() {
 					var pos = jQuery("#position").val();
-					var dept_id = obj.parents(".li_dept").find(".dept_id").val();
 					if(pos!=""){
 						// ajax call
 						jQuery.ajax({
@@ -148,8 +169,8 @@ jQuery(document).ready(function(){
 						alert('Enter position');
 					}	
 				}
-			},
+			}
 		});
-	});
+	}
 });
 </script>
