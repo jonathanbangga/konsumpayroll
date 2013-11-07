@@ -17,10 +17,7 @@
 }
 
 .ihide{display:none;}
-<<<<<<< HEAD
 
-=======
->>>>>>> 87e36c96b30b0886a1395dfc7becf6e425d24c64
 .error_zone{display:block;padding-bottom: 5px;}
 .complist{
 	list-style-type:none;
@@ -33,10 +30,8 @@
 span.errors{
 	display:block;
 }
-<<<<<<< HEAD
-=======
 
 .error {
     color: #BA3F3F;
 }
->>>>>>> 87e36c96b30b0886a1395dfc7becf6e425d24c64
+

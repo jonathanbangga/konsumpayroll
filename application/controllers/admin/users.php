@@ -104,7 +104,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
 					$email =  $this->db->escape_str($this->input->post("email_address"));
-					#---------- PAYROLL SYSTEM ACCOUNT ------#
+					#---------- PAYROLL SYSTEM ACCOUNT -----#
 					$payroll_field = array(
 									"company_owner_email"	=> $email,
 									"status"			=> "Active"
@@ -119,7 +119,7 @@ class Users extends CI_Controller {
 									"password"			=> $this->input->post("password")
 							);		
 						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
-					#--------- COMPANY_OWNER --------------#
+					#--------- COMPANY_OWNER ---------------#
 						if($account_id){
 							$company_owner_field = array(
 									"owner_name"		=> $this->input->post("owner_name"),
@@ -266,6 +266,13 @@ class Users extends CI_Controller {
 								"deleted" => "1"
 							);
 					$this->users_model->disable_user($fields,$this->input->post('admin_id'));
+					$check_user = $this->users_model->single_company_owner($this->input->post('admin_id'));
+					if($check_user){	
+						$fields_accounts = array(
+								"deleted"=>"1"
+							);	
+						$this->users_model->update_all_user("accounts",$fields_accounts,array("account_id"=>$check_user->account_id));
+					}
 				}else{
 					echo validation_errors();
 				}
@@ -324,6 +331,74 @@ class Users extends CI_Controller {
 			return false;
 		}else{
 			return true;
+		}
+	}
+	public function add_owners(){
+		if($this->input->post('add_owner')){
+			$this->form_validation->set_rules('owners_name[]',"Owners name","required|callback_check_owners_name|trim|xss_clean|callback_check_owners_name");
+			$this->form_validation->set_rules('owners_email[]',"Email address","required|trim|xss_clean|callback_check_owners_email");
+			if($this->form_validation->run() == false){
+				echo validation_errors();
+			}else{
+				foreach($this->input->post('owners_name') as $key=>$val):
+				$owners_name =  $val;
+				$owners_current_email  =  $this->input->post('owners_email');
+				$owners_email = $owners_current_email[$key];		
+				// save the company owner
+				$this->users_model->save_owners($owners_name,$owners_email);
+				endforeach;
+			}	
+		}
+	}
+	
+	/**
+	 * CAllback on adding a user on OWNER
+	 * @return callbacks checking files
+	 */
+	public function check_owners_name() {
+		$flag = "";
+		foreach($this->input->post('owners_name') as $key=>$val):
+			if($val == "") $flag++;
+		endforeach;
+		if($flag ==""){
+			return true;
+		}else{
+			$this->form_validation->set_message("check_owners_name","The Owners name field is required.");
+			return false;
+		}
+	}
+	
+	/**
+	 * CALLBACK ADDING OWNERS EMAIL CHECKING IF EMAILS ALREADY IN USED OR NOT
+	 * @return callback
+	 */
+	public function check_owners_email(){
+		$old_email = $this->input->post('edit_old_email');
+		$flag = "";
+		$flag_exist_email = "";
+		foreach($this->input->post('owners_email') as $key=>$val):
+			if($val != ""){
+				$query = $this->db->query("SELECT * from accounts WHERE email ='{$this->db->escape_str($val)}'");
+				$row = $query->num_rows();
+				$query->free_result();
+				if($row){
+					$flag_exist_email++;
+				}
+			}else{
+				$flag++;
+			} 
+		endforeach;
+		if($flag > 0){
+			$this->form_validation->set_message("check_owners_email","The Email Address is requireds.");
+			return false;
+		}
+		if($flag_exist_email > 0){
+			$this->form_validation->set_message("check_owners_email","The Email Address is already in used.");
+			return false;
+		}
+		
+		if($flag =="" && $flag_exist_email ==""){
+			return TRUE;
 		}
 	}
 	

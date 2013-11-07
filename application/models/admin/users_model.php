@@ -80,6 +80,7 @@ class Users_model extends CI_Model {
 		return $this->db->update("company_owner",$fields);
 	}
 	
+	
 	/**
 	 * 
 	 * Select admin users
@@ -219,6 +220,56 @@ class Users_model extends CI_Model {
 		$result = $query->result();
 		$query->free_result();
 		return $result;
+	}
+	
+	/**
+	 * Checks the comapny owner individual data
+	 * @param int $company_owner_id
+	 */
+	public function single_company_owner($company_owner_id){
+		$where_array = array(
+						"company_owner_id"	=> $this->db->escape_str($company_owner_id),
+						"status"	=> "Active",
+						"deleted"	=> "0"
+						);
+		$query = $this->db->get_where("company",$where_array);
+		$result = $query->row();
+		$query->free_result();
+		return $result;
+	}
+	
+	public function save_owners($owners_name,$email_address){
+		$owners_name = $this->db->escape_str($owners_name);
+		$email =  $this->db->escape_str($email_address);
+		#---------- PAYROLL SYSTEM ACCOUNT -----#
+		$payroll_field = array(
+						"company_owner_email"	=> $email,
+						"status"			=> "Active"
+					);
+		$payroll_system_account_id = $this->add_data_fields("payroll_system_account",$payroll_field);
+		if($payroll_system_account_id){
+		#---------- ACCOUNT --------------------#
+			$account_field = array(
+						"payroll_system_account_id" => $payroll_system_account_id,
+						"email"				=> $email,
+						"account_type_id"	=> 4,
+						"password"			=> md5(idates_now())
+				);		
+			$account_id = $this->add_data_fields("accounts",$account_field);	
+		#--------- COMPANY_OWNER ---------------#
+			if($account_id){
+				$company_owner_field = array(
+						"owner_name"		=> $owners_name,
+						"account_id"		=> $account_id,
+						"date"				=> idates_now(),
+						"status"			=> "Active"
+				);		
+				$this->add_data_fields("company_owner",$company_owner_field);
+			}
+			return TRUE;
+		}else{
+			return FALSE;
+		}
 	}
 	
 }
