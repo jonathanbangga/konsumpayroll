@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2013 at 06:10 AM
+-- Generation Time: Nov 11, 2013 at 06:15 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -164,6 +164,28 @@ CREATE TABLE IF NOT EXISTS `allowance_type` (
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`allowance_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approval_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `approval_groups` (
+  `approval_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  PRIMARY KEY (`approval_group_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `approval_groups`
+--
+
+INSERT INTO `approval_groups` (`approval_group_id`, `name`, `emp_id`, `level`) VALUES
+(1, 'Accounting', 4, 1),
+(2, 'HR', 5, 2);
 
 -- --------------------------------------------------------
 
