@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2013 at 06:15 AM
+-- Generation Time: Nov 11, 2013 at 06:19 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -1480,6 +1480,7 @@ CREATE TABLE IF NOT EXISTS `piece_rate` (
 
 CREATE TABLE IF NOT EXISTS `position` (
   `position_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dept_id` int(11) NOT NULL,
   `position_name` varchar(100) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -1491,8 +1492,8 @@ CREATE TABLE IF NOT EXISTS `position` (
 -- Dumping data for table `position`
 --
 
-INSERT INTO `position` (`position_id`, `position_name`, `company_id`, `status`, `deleted`) VALUES
-(1, 'human rights', 2, 'Active', '0');
+INSERT INTO `position` (`position_id`, `dept_id`, `position_name`, `company_id`, `status`, `deleted`) VALUES
+(1, 0, 'human rights', 2, 'Active', '0');
 
 -- --------------------------------------------------------
 
