@@ -1,15 +1,18 @@
 	<!-- MAIN-CONTENT START -->
-		<?php echo form_open("company/company_setup/add");?>
-		<?php 
-			echo $errors;
-		?>	
+		<?php echo form_open("company/company_setup/company_information/index");?>
+		<div class="error_message">
+		<?php  echo $errors; ?>	
+		</div>
+		
         <div class="tbl-wrap">
 	
           <!-- TBL-WRAP START -->
           <table>
             <tr>
               <td style="width:155px">Registered Business Name:</td>
-              <td><input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" ></td>
+              <td><input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" >
+              	<input type="hidden" name="subdomain" value=""/>
+              </td>
             </tr>
             <tr>
               <td>Trade Name: </td>
@@ -59,3 +62,19 @@
 		<input type="submit" name="next" class="btn" value="Next"/>
 		<?php echo form_close();?>
 	<!-- MAIN-CONTENT END -->
+	
+	<script type="text/javascript">
+		// CREATE SUB DOMAIN
+		function create_subdomain(){
+			jQuery("input[name='company_name']").keyup(function(){
+			    var v = jQuery.trim(jQuery(this).val());
+			    var clean = v.replace(/\s/g, '');
+			        
+			    jQuery("input[name='subdomain']").val(clean);
+			});
+		}
+
+		jQuery(function(){
+			create_subdomain();
+		});
+	</script>

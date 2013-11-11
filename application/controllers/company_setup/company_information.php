@@ -7,7 +7,7 @@
  * @version 1.0
  * @author Christopher Cuizon <christophercuizons@gmail.com>
  */
-	class Company_setup extends CI_Controller {
+	class Company_information extends CI_Controller {
 		
 		/**
 		 * Theme options - default theme
@@ -31,14 +31,15 @@
 		/**
 		 * index page
 		 */
-		public function add() {
+		public function index() {
 			$data['page_title'] = "Company Information";			
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$data['company_info'] = subdomain_checker();
 			$data['errors']	= "";
 			if($this->input->post('next')){
 				
-				$this->form_validation->set_rules("company_name","Company name","required|trim|xss_clean");
+				$this->form_validation->set_rules("company_name","Company name","required|trim|xss_clean|is_unique[company.company_name]");
+				$this->form_validation->set_rules("subdomain","subdomain","required|trim|xss_clean|is_unique[company.sub_domain]");
 				$this->form_validation->set_rules("trade_name","Trade Name","required|trim|xss_clean");
 				$this->form_validation->set_rules("business_address","Business address","required|trim|xss_clean");
 				$this->form_validation->set_rules("city","hdmf id","required|trim|xss_clean");
@@ -47,7 +48,7 @@
 				$this->form_validation->set_rules("industry","organization type","trim|xss_clean");
 				$this->form_validation->set_rules("business_phone","organization type","trim|xss_clean");
 				$this->form_validation->set_rules("mobile_number","organization type","trim|xss_clean");
-				$this->form_validation->set_rules("fax","organization type","trim|xss_clean");
+				$this->form_validation->set_rules("fax","organization type","trim|xss_clean");	
 				if($this->form_validation->run() == false){
 					$data['errors'] = validation_errors("<span class='errors'>","</span>");
 				}else{
@@ -61,22 +62,30 @@
 								"industry"		=> $this->db->escape_str($this->input->post("industry")),
 								"business_phone"=> $this->db->escape_str($this->input->post("business_phone")),
 								"mobile_number"	=> $this->db->escape_str($this->input->post("mobile_number")),
-								"fax"			=>$this->db->escape_str($this->input->post("fax")),
+								"fax"			=> $this->db->escape_str($this->input->post("fax")),
+								"sub_domain"	=> $this->db->escape_str($this->input->post('subdomain')),
+								"subscription_date" => idates_now(),
 								"deleted"		=> "0",
 								"status"		=> "Active"
 							);
 					
 					$company_id = $this->company->add_company($fields);
 					create_comp_directory($company_id);
-					if($company_id){
+					
+					if($company_id){	
+						$this->session->set_userdata("company_id",$company_id);
 						redirect("/company/government_registration/edit/".$company_id);
 					}
 				}
 			}
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/company/company_information_view', $data);
+			$this->layout->view('pages/company_setup/company_information_view', $data);
 		}
 		
+	
+		public function test5(){
+			p($this->session->all_userdata());
+		}
 		
 		public function edit() {
 			$data['page_title'] = "Company Information";			
@@ -122,7 +131,7 @@
 				}
 			}
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/company/company_information_view', $data);
+			$this->layout->view('pages/company_setup/company_information_view', $data);
 		}
 		
 		

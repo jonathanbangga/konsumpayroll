@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2013 at 08:55 AM
+-- Generation Time: Nov 11, 2013 at 06:10 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -33,19 +33,24 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `password` varchar(100) NOT NULL,
   `account_type_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `user_type_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_account_id`, `password`, `account_type_id`, `email`, `deleted`) VALUES
-(1, '', 1, '12345678', 4, 'joe@techgrowthglobal.com', '0'),
-(2, '', 2, 'madonna mendoza', 4, 'madonna.mendoza@techgrowthglobal.com', '0'),
-(3, '', 3, 'Tech1234', 4, 'joja@montalban.com.au', '0'),
-(4, '', 4, '25d55ad283aa400af464c76d713c07ad', 4, 'chriscuizon@techgrowthglobal.com', '0');
+INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_account_id`, `password`, `account_type_id`, `email`, `user_type_id`, `deleted`) VALUES
+(1, 'admin', 0, '0192023a7bbd73250516f069df18b500', 1, 'admins@yahoo.com', 1, '1'),
+(2, 'useradmin', 0, 'b433ce675b32a824e24d762ca0fa1ba9', 1, 'useradmin@yahoo.com', 1, '1'),
+(3, 'admin@yahoo.com', 0, '3325b3371681e9381a2c8610f34aaae7', 1, 'admin@yahoo.com', 1, '0'),
+(4, 'salve', 0, 'tech123', 1, 'admin@yahoo.com', 1, '0'),
+(5, 'asdfasdfadsfs', 0, '83ba7db888d55c9508b3b767657c3dd1', 1, 'admin@yahoo.com', 1, '0'),
+(6, 'christopher1234', 0, '722dbdbcdb464911233308733930b2fb', 1, 'christophercuizons12@gmail.com', 1, '0'),
+(7, 'usrs', 12, 'tech123', 2, 'haha@yahoo.com', 2, '1'),
+(8, '', 13, '6c4a929b186cf184a08397492e62e742', 2, 'haha@yahoo.com', 2, '0');
 
 -- --------------------------------------------------------
 
@@ -65,9 +70,7 @@ CREATE TABLE IF NOT EXISTS `account_type` (
 
 INSERT INTO `account_type` (`account_type_id`, `name`) VALUES
 (1, 'admin'),
-(2, 'employee'),
-(3, 'hr'),
-(4, 'owner');
+(2, 'user');
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -113,7 +116,17 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (22, 'administrator has added a company', '2013-11-04 02:53:10', 9, '0'),
 (23, 'administrator has added a company', '2013-11-04 02:53:19', 9, '0'),
 (24, 'administrator has added a company', '2013-11-04 02:54:01', 9, '0'),
-(25, 'administrator has added a company', '2013-11-04 02:54:27', 9, '0');
+(25, 'administrator has added a company', '2013-11-04 02:54:27', 9, '0'),
+(26, 'administrator has added a company', '2013-11-11 04:27:40', 4, '0'),
+(27, 'administrator has added a company', '2013-11-11 04:29:14', 4, '0'),
+(28, 'administrator has added a company', '2013-11-11 04:29:22', 4, '0'),
+(29, 'administrator has added a company', '2013-11-11 04:29:33', 4, '0'),
+(30, 'administrator has added a company', '2013-11-11 04:33:13', 4, '0'),
+(31, 'administrator has added a company', '2013-11-11 04:33:15', 4, '0'),
+(32, 'administrator has added a company', '2013-11-11 04:33:39', 4, '0'),
+(33, 'administrator has added a company', '2013-11-11 06:07:19', 4, '0'),
+(34, 'administrator has added a company', '2013-11-11 06:08:29', 4, '0'),
+(35, 'administrator has added a company', '2013-11-11 06:08:33', 4, '0');
 
 -- --------------------------------------------------------
 
@@ -325,22 +338,17 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `company`
 --
 
 INSERT INTO `company` (`company_id`, `company_owner_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `province`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `status`, `deleted`) VALUES
-(1, 1, '2013-10-29 00:00:00', 'techgrowthglobal', 444, 'techgrowthgloba', '', 'chris@chris.com', '33333', 'bbbbbbb', 'ga', 'ha', '', '', '123123', '', '123123123', '12312312', '', '', '', '', '', '', 'Active', '0'),
-(2, 0, '0000-00-00 00:00:00', 'tetew', 0, '', 'a', '', 'b', 'c', '', 'd', 'government', 'e', 'f', '', 'g', 'h', '', '', '', '', '', '', 'Active', '0'),
-(3, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
-(4, 0, '0000-00-00 00:00:00', 'hehehe', 0, '', 'hehehe', '', '33333', 'sfsdf', '', '12323', 'non-profit organization', 'tetew', '12321313', '', '414123', '23123', '', '', '', '', '', '', 'Active', '0'),
-(5, 0, '0000-00-00 00:00:00', 'bbbbbbb', 0, '', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'bbbbbbbbbb', '', 'bbbbbbbbbbb', 'government', 'bbbbbbbbbbbbb', 'bbbbbbbbb', '', 'bbbbbbbbbbbb', 'bbbbbbbbbbbbbbbb', '', '', '', '', '', '', 'Active', '0'),
-(6, 0, '0000-00-00 00:00:00', 'a', 0, '', 'b', '', 'c', 'd', '', 'e', 'private', 'f', 'g', '', 'h', 'i', '', '', '', '', '', '', 'Active', '0'),
-(7, 0, '0000-00-00 00:00:00', 'c', 0, '', 'c', '', 'c', 'c', '', 'c', 'government', 'c', 'c', '', 'c', 'c', '', '', '', '', '', '', 'Active', '0'),
-(8, 0, '0000-00-00 00:00:00', 'test', 0, '', 'test3', '', 'test3', 'test3', '', 'test3', 'private', 'test3', 'test3', '', 'test3', 'test3test3', '', '', '', '', '', '', 'Active', '0'),
-(9, 0, '0000-00-00 00:00:00', 'tetews', 0, '', 'tetews', '', 'tetews', 'tetews', '', '6000', 'government', 'tetews', 'tetewstetews', '', 'tetews', '123123', '', '', '', '', '', '', 'Active', '0');
+(1, 12, '2013-11-07 00:00:00', 'a', 123, '8', '', 'chris@chris.com', 'ramos cebu', 'cebu', 'fuente', '6000', '', '', '1', '', '2', '3', '', '', '', '', '', '', 'Active', '0'),
+(2, 0, '0000-00-00 00:00:00', 'techgrowthglobal', 0, '', 'tech growth global', '', 'ramos cebu', 'philippines', '', '6000', 'private', 'industry', '12345689', '', '019283923', '123123123', '', '', '', '', '', '', 'Active', '0'),
+(3, 0, '0000-00-00 00:00:00', 'hirota', 0, 'hirota', 'hirota tradename', '', 'paints', 'cebu', '', '6000', 'government', 'design', '4242', '', '97', '33', '', '', '', '', '', '', 'Active', '0'),
+(4, 0, '2013-11-11 04:10:46', 'test', 0, 'test', 'sdfsdfs', '', 'test3', 'd', '', '6000', 'private', 'g', 'h', '', '019283923', 'asdfa', '', '', '', '', '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -362,17 +370,26 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
   `deleted` enum('0','1') NOT NULL,
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`company_owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `company_owner`
 --
 
 INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `date`, `status`, `deleted`, `account_id`) VALUES
-(1, 'joe mercado', '', '', '', 0, 0, '', '2013-11-06 07:55:43', 'Active', '0', 1),
-(2, 'madonna mendoza', '', '', '', 0, 0, '', '2013-11-06 07:56:04', 'Active', '0', 2),
-(3, 'Joja montalban', '', '', '', 0, 0, '', '2013-11-06 07:56:33', 'Active', '1', 3),
-(4, 'Christopher Cuizon 3rd', '', '', '', 0, 0, '', '2013-11-06 07:59:16', 'Active', '0', 4);
+(1, 'christopher cuizon', '', '', '', 0, 0, '', '2013-11-07 05:49:32', 'Inactive', '1', 1),
+(2, 'madonna mendoza', '', '', '', 0, 0, '', '2013-11-07 05:49:32', 'Inactive', '1', 2),
+(3, 'jonathan bangga', '', '', '', 0, 0, '', '2013-11-07 05:49:32', 'Inactive', '1', 3),
+(4, 'reyneil lato', '', '', '', 0, 0, '', '2013-11-07 05:52:17', 'Inactive', '1', 4),
+(5, 'chris cuizon', '', '', '', 0, 0, '', '2013-11-07 06:07:38', 'Inactive', '1', 5),
+(6, 'christopher cuizon', '', '', '', 0, 0, '', '2013-11-07 06:36:40', 'Inactive', '1', 6),
+(7, 'dsfds', '', '', '', 0, 0, '', '2013-11-07 06:37:31', 'Inactive', '1', 7),
+(8, 'a', '', '', '', 1, 1, '', '2013-11-07 06:38:12', 'Active', '1', 8),
+(9, 'bsdfsdfs', '', '', '', 0, 0, '', '2013-11-07 06:39:53', 'Active', '1', 9),
+(10, 'csdf', '', '', '', 0, 0, '', '2013-11-07 06:39:53', 'Inactive', '1', 10),
+(11, 'ddfsdf', '', '', '', 0, 0, '', '2013-11-07 06:39:53', 'Inactive', '1', 11),
+(12, 'a', '', '', '', 0, 0, '', '2013-11-07 08:24:53', 'Active', '0', 7),
+(13, '888888', '', '', '', 0, 0, '', '2013-11-07 08:27:04', 'Active', '0', 8);
 
 -- --------------------------------------------------------
 
@@ -482,34 +499,15 @@ CREATE TABLE IF NOT EXISTS `department` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `department`
 --
 
 INSERT INTO `department` (`dept_id`, `company_id`, `department_name`, `status`, `deleted`) VALUES
-(1, 2, 'hr management', 'Active', '0'),
-(2, 8, '', 'Active', '0'),
-(3, 8, '', 'Active', '0'),
-(4, 8, '', 'Active', '0'),
-(5, 8, '', 'Active', '0'),
-(6, 8, '', 'Active', '0'),
-(7, 9, '', 'Active', '0'),
-(8, 9, '', 'Active', '0'),
-(9, 9, '', 'Active', '0'),
-(10, 9, '', 'Active', '0'),
-(11, 9, '', 'Active', '0'),
-(12, 9, '', 'Active', '0'),
-(13, 9, '', 'Active', '0'),
-(14, 9, '', 'Active', '0'),
-(15, 9, '', 'Active', '0'),
-(16, 9, '', 'Active', '0'),
-(17, 9, '', 'Active', '0'),
-(18, 9, '', 'Active', '0'),
-(19, 9, '', 'Active', '0'),
-(20, 9, '', 'Active', '0'),
-(21, 8, '', 'Active', '0');
+(2, 8, 'hr departmnet', 'Active', '0'),
+(22, 0, 'sdf', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -551,7 +549,6 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `gender` enum('Male','Female') NOT NULL,
   `marital_status` enum('Married','Single','Widow','Divorce') NOT NULL,
   `address` text NOT NULL,
-  `contact_no` varchar(80) NOT NULL,
   `mobile_no` varchar(50) NOT NULL,
   `home_no` varchar(50) NOT NULL,
   `photo` text NOT NULL,
@@ -891,7 +888,7 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`government_registration_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `government_registration`
@@ -899,8 +896,8 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
 
 INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `category`, `company_id`, `status`, `deleted`) VALUES
 (1, 'a333333333333333333', 'f33333333', 'sdf', 'sdf', 'df', 'probie', 1, 'Active', '0'),
-(2, 'a', 'b', 'c', 'd', '123123555555555', 'household', 4, 'Active', '0'),
-(3, '4a', '5b', '6c', '7d', '8e', 'probie', 9, 'Active', '0');
+(3, '4a', '5b', '6c', '7d', '8e', 'probie', 9, 'Active', '0'),
+(4, '4a', '3', '3', '4', '5', 'regular', 4, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1043,23 +1040,22 @@ CREATE TABLE IF NOT EXISTS `job_grade` (
 
 CREATE TABLE IF NOT EXISTS `konsum_admin` (
   `konsum_admin_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(80) NOT NULL,
-  `password` varchar(32) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `email_address` varchar(50) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`konsum_admin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `konsum_admin`
 --
 
-INSERT INTO `konsum_admin` (`konsum_admin_id`, `username`, `password`, `name`, `email_address`, `status`, `deleted`) VALUES
-(1, 'admin2@yahoo.com', '5a44f2a5fa68d733eb67a68abbed0212', 'christopher cuizons', 'admin@yahoo.com', 'Active', '1'),
-(10, 'joechristian', '541d98adec241e382bbcba5e1bd21f38', 'joechristian', 'joechristian@yahoo.com', 'Active', '0'),
-(17, 'adminski', 'a9ff35f112077fe1c04c45e990ada51d', 'adminski', 'adminski@yahoo.com', 'Active', '0');
+INSERT INTO `konsum_admin` (`konsum_admin_id`, `account_id`, `name`, `status`, `deleted`) VALUES
+(1, 1, 'admins', 'Inactive', '1'),
+(2, 2, 'useradmin', 'Inactive', '1'),
+(5, 5, 'adsfad', 'Active', '0'),
+(6, 6, 'christopher cuizon12', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1338,17 +1334,26 @@ CREATE TABLE IF NOT EXISTS `payroll_system_account` (
   `company_owner_email` varchar(200) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`payroll_system_account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `payroll_system_account`
 --
 
 INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `company_owner_email`, `status`) VALUES
-(1, 'joe@techgrowthglobal.com', 'Active'),
-(2, 'madonna.mendoza@techgrowthglobal.com', 'Active'),
-(3, 'joja@montalban.com.au', 'Active'),
-(4, 'chriscuizon@techgrowthglobal.com', 'Active');
+(1, 'christopher.cuizon@techgrowthglobal.com', 'Inactive'),
+(2, 'madonna.mendoza@techgrowthglobal.com', 'Inactive'),
+(3, 'jonathan@banga.com', 'Inactive'),
+(4, 'reyneil@yahoo.com', 'Inactive'),
+(5, 'jonathan@banga.com', 'Inactive'),
+(6, 'christopher.cuizon@techgrowthglobal.com', 'Inactive'),
+(7, '34christopher.cuizon@techgrowthglobal.com', 'Inactive'),
+(8, 'haha@yahoo.com', 'Active'),
+(9, 'd@yaooo.com', 'Active'),
+(10, 'df2323@yahoo.com', 'Inactive'),
+(11, '23434234@yahoo.com', 'Inactive'),
+(12, 'haha@yahoo.com', 'Inactive'),
+(13, 'haha@yahoo.com', 'Active');
 
 -- --------------------------------------------------------
 
@@ -1583,6 +1588,29 @@ CREATE TABLE IF NOT EXISTS `time_sheet` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`time_sheet_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_type`
+--
+
+CREATE TABLE IF NOT EXISTS `user_type` (
+  `user_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_type` varchar(115) NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `user_type`
+--
+
+INSERT INTO `user_type` (`user_type_id`, `user_type`, `deleted`) VALUES
+(1, 'admin', '0'),
+(2, 'owner', '0'),
+(3, 'hr', '0'),
+(4, 'accountant', '0');
 
 -- --------------------------------------------------------
 

@@ -28,13 +28,13 @@
 			$this->load->model("company/company_model","company");
 		}
 		
-		
-		public function edit(){
-			$valid_domain = $this->uri->segment(4);
-			if(mod_is_mycompany(0,$valid_domain) == false){
+		public function index(){
+			$valid_domain = $this->session->userdata("company_id");	
+			if($valid_domain == false){
 				redirect("company/dashboard");
 				return false;
 			}	
+			$data['errors'] = "";
 			$data['page_title'] = "Government Registration";			
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$data['page_title'] = "Government Registration";		
@@ -43,14 +43,14 @@
 			$data['category'] = array("regular","non-regular","household","probie");
 			$check_add_update = $this->company->gov_info($valid_domain);
 			if($this->input->post('save')) {
-				$this->form_validation->set_rules("tin","tin id","required|trim|xss_clean");
-				$this->form_validation->set_rules("rdo","rdo id","required|trim|xss_clean");
-				$this->form_validation->set_rules("sss_id","sss id","required|trim|xss_clean");
-				$this->form_validation->set_rules("hdmf_id","hdmf id","required|trim|xss_clean");
-				$this->form_validation->set_rules("philhealth_id","philhealth id","required|trim|xss_clean");
+				$this->form_validation->set_rules("tin","tin id","required|trim|xss_clean|is_unique[company.tin]");
+				$this->form_validation->set_rules("rdo","rdo id","required|trim|xss_clean|is_unique[company.rdo_code]");
+				$this->form_validation->set_rules("sss_id","sss id","required|trim|xss_clean|is_unique[company.sss_id]");
+				$this->form_validation->set_rules("hdmf_id","hdmf id","required|trim|xss_clean|is_unique[company.hdmf]");
+				$this->form_validation->set_rules("philhealth_id","philhealth id","required|trim|xss_clean|is_unique[company.phil_health]");
 				$this->form_validation->set_rules("category","category id","required|trim|xss_clean");
 				if($this->form_validation->run() == false) {
-					$data['error'] = validation_errors("<span class='errors'>","</span>");
+					$data['errors'] = validation_errors("<span class='errors'>","</span>");
 				} else {
 					$fields = array(
 								"tin"		=> $this->db->escape_str($this->input->post('tin')),
@@ -78,12 +78,9 @@
 				}
 			}
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/company/government_registration_view', $data);				
+			$this->layout->view('pages/company_setup/government_registration_view', $data);
 		}
 		
-		
-	
-	
 	}
 
 /* End of file Government_registration.php */

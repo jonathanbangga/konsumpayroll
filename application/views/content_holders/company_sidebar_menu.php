@@ -4,9 +4,9 @@
 		
 	?>
 	 <ul class="jsidebar">
-        <li><?php echo anchor("/".$this->uri->segment(1)."/company_setup/".$check_edit_status,"Company Information");?></li>
-        <li><?php echo anchor("/".$this->uri->segment(1)."/government_registration/edit/".$uri_company_id,"Government Registrations");?></li>
-        <li><?php echo anchor("/".$this->uri->segment(1)."/approvers/edit/".$uri_company_id,"Company Approvers");?></li>
-        <li><?php echo anchor("/".$this->uri->segment(1)."/principal/edit/".$uri_company_id,"Company Principal");?></li>
-        <li><?php echo anchor("/".$this->uri->segment(1)."/cost_center/edit/".$uri_company_id,"Cost Center");?></li>
+        <li><?php echo anchor("/company/company_setup/company_information/","Company Information");?></li>
+        <li><?php echo anchor("/company/company_setup/government_registration/","Government Registrations");?></li>
+        <li><?php echo anchor("/company/company_setup/approvers/","Company Approvers");?></li>
+        <li><?php echo anchor("/company/company_setup/principal/","Company Principal");?></li>
+        <li><?php echo anchor("/company/company_setup/cost_center/","Cost Center");?></li>
       </ul>
