@@ -29,12 +29,9 @@
 		}
 		
 		
-		public function edit(){
-			$valid_domain = $this->uri->segment(4);
-			if(mod_is_mycompany(0,$valid_domain) == false){
-				redirect("company/dashboard");
-				return false;
-			}	
+		public function index(){
+			$valid_domain = $this->session->userdata("company_id");
+			
 			$data['page_title'] = "Company Approvers";			
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$data['error']	= "";
@@ -92,7 +89,7 @@
 									"first_name" 	=> $this->db->escape_str($this->input->post('fname')),
 									"middle_name"	=> $this->db->escape_str($this->input->post('mname')),
 									"account_id"	=> $this->db->escape_str($account_id),
-									"contact_no"	=> $this->db->escape_str($this->input->post('contact_no')),
+									"mobile_no"	=> $this->db->escape_str($this->input->post('contact_no')),
 									"rank_id"		=> $rank_id,
 									"dept_id"		=> $dep_id,
 									"location_id"	=> $location_id,
@@ -117,7 +114,7 @@
 					}
 				}
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/company/company_approvers_view', $data);				
+			$this->layout->view('pages/company_setup/company_approvers_view', $data);				
 		}
 		
 		public function remove_company_approver(){
