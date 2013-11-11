@@ -16,6 +16,7 @@ class Company_list extends CI_Controller {
 		$this->theme = $this->config->item('company_dashboard');
 		$this->menu = $this->config->item('company_dashboard_menu');
 		$this->authentication->check_if_logged_in();		
+		$this->load->model("company/company_model","company");
 	}
 
 	/**
@@ -25,6 +26,10 @@ class Company_list extends CI_Controller {
 		$data['page_title'] = "Company List";
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/dashboard/company_list_view', $data);
+	}
+	
+	public function we(){
+	p($this->session->all_userdata());
 	}
 	
 }

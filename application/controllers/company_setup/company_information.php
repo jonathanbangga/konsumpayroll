@@ -68,13 +68,21 @@
 								"deleted"		=> "0",
 								"status"		=> "Active"
 							);
-					
+								
 					$company_id = $this->company->add_company($fields);
+					
+					
 					create_comp_directory($company_id);
 					
 					if($company_id){	
+						
+						$save_assign = array(
+								"company_id" => $company_id,
+								"payroll_system_account_id" => $this->session->userdata("psa_id")
+							);	
+						$this->company->save_fields("assigned_company",$save_assign);
 						$this->session->set_userdata("company_id",$company_id);
-						redirect("/company/government_registration/edit/".$company_id);
+						redirect("/company/company_setup/government_registration");
 					}
 				}
 			}
@@ -126,7 +134,8 @@
 					
 					$company_id = $this->company->add_company($fields);
 					if($company_id){
-						redirect("/company/government_registration/edit/".$company_id);
+						
+					
 					}
 				}
 			}
