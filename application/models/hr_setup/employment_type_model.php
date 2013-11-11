@@ -10,6 +10,15 @@ class Employment_type_model extends CI_Model {
 		return $this->db->query("
 			SELECT *
 			FROM `employment_type`
+			WHERE `company_id` = 0
+		");
+	}
+	
+	public function get_assigned_employment_type(){
+		return $this->db->query("
+			SELECT *
+			FROM `employment_type`
+			WHERE `company_id` != 0
 		");
 	}
 	
@@ -22,6 +31,15 @@ class Employment_type_model extends CI_Model {
 			VALUES(
 				'{$et}'
 			)
+		");
+	}
+	
+	public function update_employment_type($company_id,$emp_type_id){
+		$et = implode(",",$emp_type_id);
+		return $this->db->query("
+			UPDATE `employment_type`
+			SET `company_id` = {$company_id}
+			WHERE `emp_type_id` IN ({$et})
 		");
 	}
 		

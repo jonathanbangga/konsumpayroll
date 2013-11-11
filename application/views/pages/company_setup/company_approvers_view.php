@@ -6,7 +6,9 @@
           <table class="tbl">
             <tr>
               <th>Employee Number</th>
-              <th style="width:170px">Name</th>
+              <th style="width:170px">First Name</th>
+              <th style="width:170px">Middle Name</th>
+              <th style="width:170px">Last Name</th>
               <th>Level</th>
               <th style="width:160px">Action</th>
             </tr>
@@ -14,10 +16,12 @@
 		if($approvers_list){
 			foreach($approvers_list as $list):
 		?>
-             <tr id="jwrap_<?php echo $list->account_id?>">
-              <td><?php echo $list->payroll_cloud_id;?></td>
-              <td><?php echo $list->first_name." ".$list->last_name;?></td>
-              <td><?php echo $list->first_name." ".$list->last_name;?></td>
+			<tr id="jwrap_<?php echo $list->account_id?>">
+			<td><?php echo $list->payroll_cloud_id;?></td>
+			<td><?php echo $list->first_name." ".$list->first_name;?></td>
+			<td><?php echo $list->first_name." ".$list->middle_name;?></td>
+			<td><?php echo $list->first_name." ".$list->last_name;?></td>
+			<td>&nbsp;</td>
               <td>
 	              <a class="btn btn-gray btn-action jedit_approvers" href="#" account_id="<?php echo $list->account_id?>" comp_id="<?php echo $this->uri->segment(4);?>">EDIT</a> 
 	              <a class="btn btn-red btn-action jdel_approvers" href="#" account_id="<?php echo $list->account_id?>" comp_id="<?php echo $this->uri->segment(4);?>" >DELETE</a>
@@ -28,7 +32,7 @@
 		} else {
 		?>
 			<tr>
-              <td colspan="4"><?php echo msg_empty();?></td>
+              <td colspan="4" class="noyet"><?php echo msg_empty();?></td>
             </tr>
 		<?php 
 		}
@@ -40,7 +44,7 @@
         <div class="ihide">
 		<div class="jpop_approvers" title="Add Approver">
 			<?php 
-				echo form_open("",array("class"=>"we","onsubmit"=>"return kpay.owner.approvers.save_approver('/company/approvers/edit/{$this->uri->segment(4)}','".itoken_cookie()."');"));
+				echo form_open("",array("class"=>"we","onsubmit"=>"return kpay.owner.approvers.save_approver('/company/company_setup/approvers/index/','".itoken_cookie()."');"));
 				echo validation_errors("<span class='error_zone'>","</span>");
 			?>
 			<table>
@@ -147,8 +151,41 @@
 		</div>
 	<!-- MAIN-CONTENT END -->
 	<script type="text/javascript">
+		function create_approvers(){
+			var html = '<tr class="new_approvers">';
+			html +='<td>';
+			html +='    <input type="text" name="emp_id" class="emp_fields">';
+			html +='</td>';
+			html +='<td>';
+			html +='    <input type="text" name="first_name" class="emp_fields">';
+			html +='</td>';
+			html +='<td>';
+			html +='    <input type="text" name="middle_name" class="emp_fields">';
+			html +=' </td>';
+			html +=' <td>';
+			html +='     <input type="text" name="last_name" class="emp_fields">';
+			html +='</td>';
+			html +=' <td>';
+			html +='    <input type="text" name="level" class="input_level">';
+			html +='</td>';
+			html +=' <td>';
+			html +='    <a class="btn btn-gray btn-action jedit_approvers" href="#" account_id="10" comp_id="">EDIT</a>';
+			html +='     <a class="btn btn-red btn-action jdel_approvers" href="#" account_id="10" comp_id="">DELETE</a>';
+			html +=' </td>';
+			html +='</tr>';
+		}
+
+		function show_approver_fields(){
+			jQuery(document).on("click",".jpop_approver",function(e){
+				e.preventDefault();
+				   var html =  create_approvers();
+				   jQuery(".tbl").append(html);
+			});
+		}
+	
 		jQuery(function(){
-			kpay.owner.approvers.popup_approver();
+			//kpay.owner.approvers.popup_approver();
+			show_approver_fields();
 			kpay.owner.approvers.delete_approver('/company/approvers/remove_company_approver/','<?php echo itoken_cookie();?>',"Are you sure you want to delete this user?");
 		});
 	</script>

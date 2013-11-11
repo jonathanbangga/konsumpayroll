@@ -93,6 +93,17 @@
 				return false;
 			}
 		}
+		
+		/**
+		 * save from database
+		 * Enter description here ...
+		 * @param unknown_type $database
+		 * @param unknown_type $fields
+		 */
+		public function save_fields($database,$fields){
+			$this->db->insert($database,$fields);
+			return $this->db->insert_id();
+		}
 	}
 
 /* End of file Company_model.php */
