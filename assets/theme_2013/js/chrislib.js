@@ -176,17 +176,16 @@ var kpay = {
 				}
 			},
 			cost_center:{
-				add_costcenter: function(urls,token){
+				add_costcenter: function(urls,token,center_code,description){
 					var fields = {
-							"cost_center_code":jQuery("input[name='cost_center_code']").val(),
-							"add_desc":	jQuery("textarea[name='add_desc']").val(),
-							"company_id":jQuery("input[name='subscription_date']").val(),
+							"cost_center_code[]":center_code,
+							"cost_center_description":description,
 							"ZGlldmlyZ2luamM":jQuery.cookie(token),
 							"submit":"true"
 							};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
-						if(res.success == 'false')
+						if(res.success == 0)
 						{
 							alert(res.error);
 						}else{
@@ -671,6 +670,38 @@ var kpay = {
 			}
 		}
 };
+
+// global functions 
+// returns array fields like input[name='empid[]'] 
+function array_fields(field){
+	var object_data = [];
+		jQuery(field).each(function(a,b){
+			object_data.push(jQuery(this).val());  
+		});
+	return object_data;	
+}
+// ADD ERROR TO YOUR FIELDS
+function ierror_field(fields){
+	jQuery(fields).each(function(e){
+		var el = jQuery(this);
+		if(el.val() == ""){
+			jQuery(this).addClass('emp_str');
+		}else{
+			jQuery(this).removeClass('emp_str');
+		}
+	});
+}
+// MARK ERROR
+function ierror_mark(fields){
+	var codered = 0;
+	jQuery(fields).each(function(){
+		if(jQuery(this).hasClass("emp_str")){
+			codered++;
+		}
+	});
+	return codered;
+}
+
 
 // overwrite comments
 window.alert = function(msg){

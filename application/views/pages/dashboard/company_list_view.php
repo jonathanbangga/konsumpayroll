@@ -12,4 +12,4 @@
             </tr>
           </table>
         </div>
-        <a href="/company/hr_setup/employment_type" class="btn">ADD COMPANY</a>
+        <a href="/company/company_setup/company_information/" class="btn">ADD COMPANY</a>

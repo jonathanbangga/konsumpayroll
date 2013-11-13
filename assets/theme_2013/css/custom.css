@@ -35,3 +35,28 @@ span.errors{
     color: #BA3F3F;
 }
 
+/** fields **/
+
+.emp_fields,.cost_inputs{
+padding:5px;
+}
+
+
+.input_level {
+    width: 30px;
+	padding:5px;
+}
+
+.btn.append_prin_del{
+	width: 138px;
+	
+}
+/** end fields **/
+/*** cost center **/
+.btn.cost_append_del{
+width: 125px;
+}
+.ccode{
+width:90px;
+}
+/** end cost center **/

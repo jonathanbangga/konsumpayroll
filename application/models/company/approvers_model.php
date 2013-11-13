@@ -47,11 +47,18 @@
 		 */
 		public function fetch_approvers_users($comp_id){
 			if(is_numeric($comp_id)){
-				$q = $this->db->query("SELECT * from employee e 
+				$q_old = $this->db->query("SELECT * from employee e 
 									LEFT JOIN accounts a on a.account_id = e.account_id 
 									LEFT JOIN assign_company_head ach  on ach.emp_id = e.emp_id 
 									WHERE ach.company_id ={$this->db->escape_str($comp_id)} AND e.status = 'Active' and e.deleted = '0' AND 
 									ach.status = 'Active' and ach.deleted='0'");
+				$q = $this->db->query("SELECT DISTINCT * FROM company_approvers ca 
+										LEFT JOIN employee e on e.account_id = ca.account_id
+										LEFT JOIN accounts a on a.account_id = e.account_id
+										WHERE ca.company_id = {$this->db->escape_str($comp_id)} and ca.deleted = '0' 
+										AND e.deleted = '0' AND a.deleted = '0' ORDER BY ca.level DESC
+										");
+				
 				$result	 = $q->result();
 				$q->free_result();
 				return $result;
@@ -97,8 +104,8 @@
 					$query_accounts = $this->db->update("accounts",$fields,array("account_id"=>$this->db->escape_str($account_id)));			
 					# end updated accounts deleted
 					# update assign company heads to deleted = 1
-					$where = array("emp_id"=>$this->db->escape_str($emp_row->emp_id));
-					$this->db->update("assign_company_head",$fields,$where);
+					$where = array("account_id"=>$this->db->escape_str($account_id),"company_id"=>$this->db->escape_str($emp_row->company_id));
+					$this->db->update("company_approvers",$fields,$where);
 					return $this->db->affected_rows();
 					# end update assign company heads to deleted
 				} else {

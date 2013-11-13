@@ -55,9 +55,7 @@
     <div class="rbox left">
       <!-- RBOX START -->
 	    <h1><?php echo $page_title;?></h1>
-		<div class="main-content">
 		<?php print $layout_contents;?>
-		</div>
       <!-- RBOX END -->
     </div>
     <div class="clearB"></div>
