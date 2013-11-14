@@ -15,8 +15,9 @@ class Company_list extends CI_Controller {
 		parent::__construct();
 		$this->theme = $this->config->item('company_dashboard');
 		$this->menu = $this->config->item('company_dashboard_menu');
-		$this->authentication->check_if_logged_in();		
-		$this->load->model("company/company_model","company");
+		$this->authentication->check_if_logged_in();
+		
+		$this->load->model("dashboard/company_list_model");
 	}
 
 	/**
@@ -24,7 +25,9 @@ class Company_list extends CI_Controller {
 	 */
 	public function index(){		
 		$data['page_title'] = "Company List";
-		$this->layout->set_layout($this->theme);	
+		$this->layout->set_layout($this->theme);
+
+		$data['company'] = $this->company_list_model->get_company(); 
 		$this->layout->view('pages/dashboard/company_list_view', $data);
 	}
 	

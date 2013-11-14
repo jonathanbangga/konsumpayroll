@@ -21,6 +21,15 @@
 			?>
           </select>
           <select id="area2" class="txtselect select-employement-type right" multiple="multiple" name="">
+			<?php
+			if($aet->num_rows()>0){
+				foreach($aet->result() as $row){
+				?>
+					<option value="<?php echo $row->emp_type_id; ?>"><?php echo $row->name; ?></option>
+				<?php
+				}
+			}
+			?>
           </select>
           <!-- EMPLOYMENT-TYPE-WRAP END -->
           <div class="clearB">
@@ -45,10 +54,44 @@
 jQuery(document).ready(function(){
 	// assign employment type
 	jQuery("#arrow-right").click(function(){
-		jQuery("#area1 option:selected").appendTo("#area2")
+		var et = new Array();
+		var i= 0;
+		jQuery("#area1 option:selected").each(function(){
+			et[i] = jQuery(this).val();
+			i++;
+		});
+		var cid = 6	; // company id
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			data: {
+				cid: cid,
+				et: et,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		});
+		jQuery("#area1 option:selected").appendTo("#area2");
 	});
 	jQuery("#arrow-left").click(function(){
-		jQuery("#area2 option:selected").appendTo("#area1")
+		var et = new Array();
+		var i= 0;
+		jQuery("#area2 option:selected").each(function(){
+			et[i] = jQuery(this).val();
+			i++;
+		});
+		var cid = 0	; // company id
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			data: {
+				cid: cid,
+				et: et,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		});
+		jQuery("#area2 option:selected").appendTo("#area1");
 	});
 	// add more
 	jQuery("#add-more").click(function(){
