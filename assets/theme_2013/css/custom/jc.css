@@ -14,3 +14,11 @@
 	border-top: none;
 }
 /* dialog box - end */
+/* highlight message - start */
+.highlight_message{
+	background-color: #D7F3BD;
+    display: inline-block;
+    margin-bottom: 11px;
+    padding: 8px
+}
+/* highlight message - end */

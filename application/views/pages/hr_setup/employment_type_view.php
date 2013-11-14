@@ -1,3 +1,4 @@
+<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>Move employment type from left to right those that are applicable to your company. If there are employment <br>
@@ -50,8 +51,13 @@
 	</div>
 </div>
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 <script>
 jQuery(document).ready(function(){
+
+	// load highlight message script
+	redirect_highlight_message();
+
 	// assign employment type
 	jQuery("#arrow-right").click(function(){
 		var et = new Array();
@@ -60,7 +66,7 @@ jQuery(document).ready(function(){
 			et[i] = jQuery(this).val();
 			i++;
 		});
-		var cid = 6	; // company id
+		var cid = <?php echo $comp_id; ?>; // company id
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
@@ -71,6 +77,7 @@ jQuery(document).ready(function(){
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});
+		highlight_message("Changes saved!");
 		jQuery("#area1 option:selected").appendTo("#area2");
 	});
 	jQuery("#arrow-left").click(function(){
@@ -91,6 +98,7 @@ jQuery(document).ready(function(){
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});
+		highlight_message("Changes saved!");
 		jQuery("#area2 option:selected").appendTo("#area1");
 	});
 	// add more
@@ -114,6 +122,7 @@ jQuery(document).ready(function(){
 							}
 						}).done(function(ret){
 							if(ret==1){
+								jQuery.cookie("msg", "New employee type had been saved!");
 								window.location="/company/hr_setup/employment_type";
 							}
 						});
