@@ -80,7 +80,8 @@ var kpay = {
 					jQuery(document).on("click", ".jdel_approvers", function (e) {
 						e.preventDefault();
 						var el = jQuery(this);
-						var unique_id = el.attr("account_id");
+						var unique_id = el.attr("acid");
+						var act_id = el.attr("account_id");
 						jQuery(".opt_selection").empty().html(message);
 						jQuery(".opt_selection").dialog({
 							resizable: false,
@@ -93,12 +94,13 @@ var kpay = {
 								"Yes": function () {
 									jQuery("#jwrap_"+unique_id).remove();
 									jQuery(".opt_selection").dialog("close");
-									jQuery.post(urls,{"account_id":unique_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
+									jQuery.post(urls,{"account_id":act_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
 										var result = jQuery.parseJSON(json);
 										if(result.success == '0'){
-											alert('error');
+											alert(result.error);
 										}else{
-											alert('success');
+										jQuery(".success_messages").empty().html("<p>You have Successfully deleted company approver</p>");
+										kpay.overall.show_success(".success_messages");
 										}
 									});
 								},
@@ -123,6 +125,8 @@ var kpay = {
 							jQuery("input[id^='edit_mname']").empty().val(results.approvers.middle_name);
 							jQuery("input[id^='edit_lname']").empty().val(results.approvers.last_name);
 							jQuery("input[id^='edit_email']").empty().val(results.approvers.email);
+							jQuery("input[id^='old_edit_email']").empty().val(results.approvers.email);
+							jQuery("input[id^='edit_mobile']").empty().val(results.approvers.mobile_no);
 							jQuery("input[id^='edit_level']").empty().val(results.approvers.level);
 							kpay.overall.show_pops(".jpop_edit_approvers");	
 						}else{
@@ -137,6 +141,8 @@ var kpay = {
 					var mname	=jQuery("input[id^='edit_mname']").val();
 					var lname	=jQuery("input[id^='edit_lname']").val();
 					var email	=jQuery("input[id^='edit_email']").val();
+					var mobile	=jQuery("input[id^='edit_mobile']").val();
+					var old_email =jQuery("input[id^='old_edit_email']").val(); 
 					var level	=jQuery("input[id^='edit_level']").val();
 					jQuery.post(urls,{
 						"edit_company_id":comp_id,
@@ -145,17 +151,40 @@ var kpay = {
 						"edit_mname":mname,
 						"edit_lname":lname,
 						"edit_email":email,
+						"old_edit_email":old_email,
+						"edit_mobile":mobile,
 						"edit_level":level,
 						"ZGlldmlyZ2luamM": jQuery.cookie(token)
 					},function(res){
 						var results = jQuery.parseJSON(res);
 						console.log(results);
 						if(results.success == "1"){
-							
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated company approvers</p>");
+							kpay.overall.show_success(".success_messages");
 						}else{
 							alert(results.error);
 						}
 					});
+				},
+				add_approvers: function(urls,token,emp_id,first_name,middle_name,last_name,level){
+					jQuery.post(urls,{
+						"emp_id[]":emp_id,
+						"first_name[]":first_name,
+						"middle_name[]":middle_name,
+						"last_name[]":last_name,
+						"level[]":level,
+						"approver_save":'true',
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated company approvers</p>");
+							kpay.overall.show_success(".success_messages");
+						}else{
+							alert(results.error);
+						}
+					});
+					return false;
 				}
 			},
 			principal:{

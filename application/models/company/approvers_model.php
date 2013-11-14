@@ -36,7 +36,7 @@
 		 */
 		public function update_fields($table,$fields,$where_array){
 			$this->db->where($where_array);
-			$this->db->insert($table,$fields);
+			$this->db->update($table,$fields);
 			return $this->db->affected_rows();
 		}
 		
@@ -115,6 +115,29 @@
 				return false;
 			}
 		}
+		
+		/**
+		 * Checks approvers account
+		 * @param int $company_id
+		 * @param int $account_id
+		 * @return object
+		 */
+		public function check_approvers_account($company_id,$account_id){
+			if(is_numeric($company_id) && is_numeric($account_id)){
+			$sql = "SELECT a.account_id,e.emp_id,e.first_name,e.middle_name,e.last_name,a.email,e.company_id,e.mobile_no,ca.level
+					FROM accounts a
+					LEFT JOIN employee e on e.account_id = a.account_id
+					LEFT JOIN company_approvers ca on a.account_id = ca.account_id
+					WHERE e.company_id = {$company_id} AND a.account_id = {$account_id}";
+				$query = $this->db->query($sql);
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
 	}
 /* End of file Approvers_model.php */
 /* Location: ./application/controllers/company/Approvers_model.php */
