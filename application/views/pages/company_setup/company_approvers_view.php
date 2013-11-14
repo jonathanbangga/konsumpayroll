@@ -28,8 +28,8 @@
 			<td><?php echo $list->last_name;?></td>
 			<td><?php echo $list->level;?></td>
               <td>
-	              <a class="btn btn-gray btn-action jedit_approvers" href="#" account_id="<?php echo $list->account_id?>" comp_id="<?php echo $this->uri->segment(4);?>">EDIT</a> 
-	              <a class="btn btn-red btn-action jdel_approvers" href="#" account_id="<?php echo $list->account_id?>" comp_id="<?php echo $this->uri->segment(4);?>" >DELETE</a>
+	              <a class="btn btn-gray btn-action jedit_approvers" href="#" account_id="<?php echo base64_encode($list->account_id);?>" comp_id="<?php echo base64_encode($this->company_id);?>">EDIT</a> 
+	              <a class="btn btn-red btn-action jdel_approvers" href="#" account_id="<?php echo base64_encode($list->account_id);?>" comp_id="<?php echo base64_encode($this->company_id);?>" >DELETE</a>
               </td>
             </tr>
 		<?php 		
@@ -59,44 +59,44 @@
 		<!--  edit here  -->
 		<div class="jpop_edit_approvers ihide" title="EDIT Approver">
 			<?php 
-				echo form_open("",array("class"=>"we"));
-				echo validation_errors("<span class='error_zone'>","</span>");
+				echo form_open("/company/company_setup/approvers/edit_approvers",array("class"=>"jform_approvers","onsubmit"=>"return approvers_edits();"));
 			?>
 			<table>
 				<tbody>
-					<tr>
-					  <td style="width:155px">Last Name:</td>
-					  <td><input type="text" value="" name="lname" class="txtfield">					  
-					  </td>
+					<tr class="ihide">
+					<td>
+						<input type="text" name="edit_company_id" id="edit_company_id" readonly="readonly" />
+						<input type="text" name="edit_account_id" id="edit_account_id" readonly="readonly" />
+					</td>
 					</tr>
 					<tr>
 					  <td>First Name: </td>
-					  <td><input type="text"  name="fname" class="txtfield">					 
+					  <td><input type="text" id="edit_fname" name="edit_fname" class="txtfield">					 
+					  </td>
+					</tr>
+					<tr>
+					  <td style="width:155px">Last Name:</td>
+					  <td><input type="text" value="" id="edit_lname" name="edit_lname" class="txtfield">					  
 					  </td>
 					</tr>
 					<tr>
 					  <td>Middle Name: </td>
-					  <td><input type="text"  name="mname" class="txtfield">					  
-					  </td>
-					</tr>
-					<tr>
-					  <td>Fax: </td>
-					  <td><input type="text"  name="fax" class="txtfield">					  
+					  <td><input type="text"  id="edit_mname"  name="edit_mname" class="txtfield">					  
 					  </td>
 					</tr>
 					<tr>
 					  <td>Email: </td>
-					  <td><input type="text"  name="email" class="txtfield">					  
+					  <td><input type="text"  id="edit_email"  name="edit_email" class="txtfield">					  
 					  </td>
 					</tr>
 					<tr>
-					  <td>Contact No: </td>
-					  <td><input type="text"  name="contact_no" class="txtfield">
+					  <td>Mobile No: </td>
+					  <td><input type="text"  id="edit_mobile"  name="edit_mobile" class="txtfield">
 					  </td>
 					</tr>
 					<tr>
-					  <td>Username: </td>
-					  <td><input type="text"  name="username" class="txtfield">
+					  <td>Level: </td>
+					  <td><input type="text"  id="edit_level"  name="edit_level" class="txtfield">
 					  </td>
 					</tr>
 					<tr>
@@ -113,6 +113,7 @@
 		</div>
 	<!-- MAIN-CONTENT END -->
 	<script type="text/javascript">
+		var itokens = "<?php echo itoken_cookie();?>";
 		function create_approvers(){
 			var html = '<tr class="new_approvers">';
 				html +='<td>';
@@ -146,10 +147,29 @@
 				   jQuery(".tbl").append(html);
 			});
 		}
+
+		function get_approvers(){
+			jQuery(document).on("click",".jedit_approvers",function(e){
+			    e.preventDefault();
+			    var el = jQuery(this);
+			    var company_id = el.attr("comp_id");
+			    var account_id = el.attr("account_id");
+			    kpay.owner.approvers.get_approvers('/company/company_setup/approvers/fetch_approvers/',itokens,company_id,account_id);	
+			});
+		}
+
+		// SUBMIT UPDATES
+		function approvers_edits(){
+			kpay.owner.approvers.update_approverscompany('/company/company_setup/approvers/edit_approvers/',itokens);
+			return false;
+		}
+		
 	
 		jQuery(function(){
 			//kpay.owner.approvers.popup_approver();
 			show_approver_fields();
-			kpay.owner.approvers.delete_approver('/company/company_setup/approvers/remove_company_approver/','<?php echo itoken_cookie();?>',"Are you sure you want to delete this user?");
+			kpay.owner.approvers.delete_approver('/company/company_setup/approvers/remove_company_approver/',itokens,"Are you sure you want to delete this user?");
+			get_approvers();
+			
 		});
 	</script>

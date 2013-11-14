@@ -38,11 +38,10 @@
 			}			
 			$data['cost_center_list'] = $this->cost_center->get_cost_center($this->company_id);
 			$data['error'] = "";
-			//if($this->input->is_ajax_request()){
+			if($this->input->is_ajax_request()){
 				if($this->input->post('submit')) {
 					$cost_center_code = $this->input->post('cost_center_code');
-					$cost_center_description = $this->input->post('cost_center_description');
-					
+					$cost_center_description = $this->input->post('cost_center_description');	
 					if($cost_center_code){
 						// CREATES A FORM VALIDATION FOR ARRAY PURPOSES
 						foreach($cost_center_code as $key=>$val):	
@@ -67,13 +66,12 @@
 											);	
 								$account_id = $this->cost_center->save_fields("cost_center",$account_fields);		
 							endforeach;
-							 echo json_encode(array("success"=>"1","error"=>''));
-							 return false;
+							echo json_encode(array("success"=>"1","error"=>''));
+							return false;
 						}
-					
 					}
 				}	
-		//	}
+			}
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$data['page_title'] = "Cost Center";		
 			$this->layout->set_layout($this->theme);	
@@ -81,27 +79,108 @@
 		}
 
 		
-		public function add_cost_center(){
-			if($this->input->post("add")){
-				$this->form_validation->set_rules("cost_center_code","Cost Center Code","required|trim|xss_clean");
-				$this->form_validation->set_rules("add_desc","Description","required|trim|xss_clean");				
-				if($this->form_validation->run() == false) {
-					 $data['error'] = validation_errors("<span class='error_zone'>",'</span>');
-					 echo json_encode(array("success"=>"0","error"=>$data['error']));
-					 return false;
-				} else {	
-					$account_fields = array(
-									"cost_center_code" 	=> $this->db->escape_str($this->input->post('cost_center_code')),
-									"description"		=> $this->db->escape_str($this->input->post('add_desc')),
-									"status"			=> 'Active',
-									"deleted" 	=> '0'
-								);	
-					$account_id = $this->cost_center->save_fields("cost_center",$account_fields);
-					
+		/**
+		 * DELETES COST CENTER WITH THE RIGHT COMPANY ID AND COST CENTER ONLY
+		 */
+		public function delete_cost_center(){
+			if($this->input->is_ajax_request()){
+				if($this->input->post("delete")){
+					$this->form_validation->set_rules("cost_center_id","ID","required|trim|xss_clean");
+					$this->form_validation->set_rules("company_id","company_id","required|trim|xss_clean");
+					if($this->form_validation->run() == false) {
+						 $data['error'] = validation_errors("<span class='error_zone'>",'</span>');
+						 echo json_encode(array("success"=>"0","error"=>$data['error']));
+						 return false;
+					} else {	
+						$account_fields = array(
+										"status"	=> 'InActive',
+										"deleted" 	=> '1'
+						);	
+						$where = array("cost_center_id"	=> $this->db->escape_Str($this->input->post("cost_center_id")));
+						$this->cost_center->update_fields("cost_center",$account_fields,$where);
+						echo json_encode(array("success"=>"1","error"=>''));
+						return true;
+					}
 				}
 			}
 		}
 		
+		public function fetch_cost_center(){
+			if($this->input->is_ajax_request()){
+				$company_id = $this->input->post("company_id");
+				$cost_center_id = $this->input->post("cost_center_id");
+				$fetch = $this->cost_center->row_cost_center($company_id,$cost_center_id);
+				$this->form_validation->set_rules("company_id","Company ID","required|xss_clean");
+				$this->form_validation->set_rules("cost_center_id","Cost Center ID","required|xss_clean");
+				if($this->form_validation->run() == true){
+					if($fetch){
+						echo json_encode(array("success"=>"1","error"=>'',"cost_centers"=>$fetch));
+						return false;
+					}
+				}else{
+					$data['error'] = validation_errors("<span class='error_zone'>",'</span>');
+					echo json_encode(array("success"=>"0","error"=>$data['error'],"cost_centers"=>""));
+					return false;
+				}
+			}else{
+				show_404();
+			}
+		}
+		
+		/**
+		 * UPDATE COST CENTERS for COMPANY ONLY 
+		 */
+		public function update_cost_center(){
+			if($this->input->is_ajax_request()){
+				if($this->input->post("update")){
+					$this->form_validation->set_rules("company_id","Company ID","required|xss_clean");
+					$this->form_validation->set_rules("cost_center_id","Cost Center ID","required|xss_clean");
+					$this->form_validation->set_rules("old_edit_cost_center_code","Old Cost Center ID","required|xss_clean");
+					$this->form_validation->set_rules("cost_center_code","Cost Center Code","required|xss_clean|callback_check_old_cost_code");
+					$this->form_validation->set_rules("description","Description","required|xss_clean");
+					if($this->form_validation->run() == true){
+						$account_fields = array(
+								"cost_center_code" 	=> $this->db->escape_str($this->input->post('cost_center_code')),
+								"description" 		=> $this->input->post('description')
+						);	
+						$where = array(
+								"cost_center_id"	=> $this->db->escape_str($this->input->post("cost_center_id")),
+								"company_id"		=> $this->db->escape_str($this->input->post('company_id'))
+						);
+						$this->cost_center->update_fields("cost_center",$account_fields,$where);
+						echo json_encode(array("success"=>"1","error"=>''));
+						return false;
+					}else{
+						$data['error'] = validation_errors("<span class='error_zone'>",'</span>');
+						echo json_encode(array("success"=>"0","error"=>$data['error']));
+						return false;
+					}
+				}
+			}else{
+				show_404();
+			}
+		}
+		
+		/** CALL BACK ON UPDATE COST CENTER CODE **/
+		
+		/**
+		 * Checks update check cost 
+		 * Enter description here ...
+		 * @param unknown_type $str
+		 * @return boolean
+		 */
+		public function check_old_cost_code($str){
+			$old_edit_id_cost_center = $this->input->post('old_edit_cost_center_code');
+			$row = $this->cost_center->cost_code_update_valid($str,$old_edit_id_cost_center);
+			if($row){
+				$this->form_validation->set_message("check_old_cost_code","Cost Center ID field must contain a unique value.");
+				return false;
+			}else{
+				return true;
+			}
+		}
+		/** END CALLBACK ON UPDATE COST CENTER **/
+	
 	}
 
 /* End of file company_approvers.php */

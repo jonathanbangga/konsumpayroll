@@ -104,6 +104,19 @@
 			$this->db->insert($database,$fields);
 			return $this->db->insert_id();
 		}
+		
+		/**
+		 * Updates databases
+		 * Enter description here ...
+		 * @param unknown_type $database
+		 * @param unknown_type $fields
+		 * @param unknown_type $where
+		 */
+		public function update_fields($database,$fields,$where){
+			$this->db->where($where);
+			$this->db->update($database,$fields);
+			return $this->db->affected_rows();
+		}
 	}
 
 /* End of file Company_model.php */

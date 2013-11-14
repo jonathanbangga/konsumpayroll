@@ -108,6 +108,54 @@ var kpay = {
 							}
 						});
 					});
+				},
+				get_approvers: function(urls,token,company_id,account_id){
+					jQuery.post(urls,{
+						"company_id":company_id,
+						"account_id":account_id,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery("input[id^='edit_company_id']").empty().val(results.approvers.company_id);
+							jQuery("input[id^='edit_account_id']").empty().val(results.approvers.account_id);
+							jQuery("input[id^='edit_fname']").empty().val(results.approvers.first_name);
+							jQuery("input[id^='edit_mname']").empty().val(results.approvers.middle_name);
+							jQuery("input[id^='edit_lname']").empty().val(results.approvers.last_name);
+							jQuery("input[id^='edit_email']").empty().val(results.approvers.email);
+							jQuery("input[id^='edit_level']").empty().val(results.approvers.level);
+							kpay.overall.show_pops(".jpop_edit_approvers");	
+						}else{
+							alert(results.error);
+						}
+					});
+				},
+				update_approverscompany: function(urls,token){
+					var comp_id = jQuery("input[id^='edit_company_id']").val();
+					var account_id = jQuery("input[id^='edit_account_id']").val();
+					var fname	=jQuery("input[id^='edit_fname']").val();
+					var mname	=jQuery("input[id^='edit_mname']").val();
+					var lname	=jQuery("input[id^='edit_lname']").val();
+					var email	=jQuery("input[id^='edit_email']").val();
+					var level	=jQuery("input[id^='edit_level']").val();
+					jQuery.post(urls,{
+						"edit_company_id":comp_id,
+						"edit_account_id":account_id,
+						"edit_fname":fname,
+						"edit_mname":mname,
+						"edit_lname":lname,
+						"edit_email":email,
+						"edit_level":level,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						console.log(results);
+						if(results.success == "1"){
+							
+						}else{
+							alert(results.error);
+						}
+					});
 				}
 			},
 			principal:{
@@ -179,7 +227,7 @@ var kpay = {
 				add_costcenter: function(urls,token,center_code,description){
 					var fields = {
 							"cost_center_code[]":center_code,
-							"cost_center_description":description,
+							"cost_center_description[]":description,
 							"ZGlldmlyZ2luamM":jQuery.cookie(token),
 							"submit":"true"
 							};
@@ -189,10 +237,70 @@ var kpay = {
 						{
 							alert(res.error);
 						}else{
-							
+							jQuery(".success_messages").empty().html("<p>You have Successfully added cost center</p>");
+							kpay.overall.show_success(".success_messages");
 						}
 					});
 					return false;
+				},
+				delete_costcenter: function(urls,token,cost_center_id,company_id){
+					var fields = {
+							"cost_center_id":cost_center_id,
+							"company_id":company_id,
+							"ZGlldmlyZ2luamM":jQuery.cookie(token),
+							"delete":'true'
+							};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);
+						if(res.success == 0)
+						{
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully deleted cost center</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+						
+					});
+					return false;
+				},
+				get_cost_center: function(urls,token,comp_id,cost_id){
+					jQuery.post(urls,{
+						"company_id":comp_id,
+						"cost_center_id":cost_id,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery("input[id^='edit_id_cost_center']").empty().val(results.cost_centers.cost_center_id);
+							jQuery("input[id^='old_edit_cost_center_code']").empty().val(results.cost_centers.cost_center_code);
+							jQuery("#edit_company_id").empty().val(results.cost_centers.company_id);
+							jQuery("input[id^='edit_cost_center_code']").empty().val(results.cost_centers.cost_center_code);
+							jQuery("#edit_desc").empty().val(results.cost_centers.description);
+							kpay.overall.show_pops("#jeditparent_costcenter");
+						}else{
+							alert(results.error);
+						}
+					});
+				},
+				update_cost_center: function(urls,token,comp_id,cost_center_id,cost_center_code,desc,cost_center_id_old){
+					jQuery.post(urls,{
+						"company_id":comp_id,
+						"cost_center_id":cost_center_id,
+						"old_edit_cost_center_code":cost_center_id_old,
+						"cost_center_code":cost_center_code,
+						"description":desc,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"update":"true"
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated cost center</p>");
+							jQuery("#jeditparent_costcenter").dialog('close');
+							kpay.overall.show_success(".success_messages");
+						}else{
+							alert(results.error);
+						}
+					});
 				}
 			}
 		},
@@ -442,8 +550,7 @@ var kpay = {
 							jQuery("input[id^='edit_account_id']").val(jres.account_id);
 							jQuery("input[id^='edit_payroll_system_account_id']").val(jres.payroll_system_account_id);
 							jQuery("input[id^='edit_pass']").val();
-							jQuery("input[id^='edit_cpass']").val();
-							
+							jQuery("input[id^='edit_cpass']").val();	
 						});
 					});
 				},
@@ -702,7 +809,6 @@ function ierror_mark(fields){
 	return codered;
 }
 
-
 // overwrite comments
 window.alert = function(msg){
    jQuery(".source_error").html(msg);
@@ -723,7 +829,11 @@ window.alert = function(msg){
 	   },
 	   overlay: {
    		   opacity: 0
-   	   }
+   	   },
+	   show: {
+			effect: "bounce",
+			duration:'slow'
+		}
    });
 }
 
