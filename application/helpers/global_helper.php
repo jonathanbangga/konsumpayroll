@@ -65,20 +65,43 @@
 	 * @param int $max_height
 	 * @return object
 	 */
-	function photo_upload($path="./uploads/",$max_size= 100,$max_width=1024,$max_height=768){
+	function photo_upload($path="./uploads/",$max_size= 3000,$max_width=3024,$max_height=3000){
 		$CI =& get_instance();
 		$config['upload_path'] = $path;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']	= $max_size;
 		$config['max_width']  = $max_width;
 		$config['max_height']  = $max_height;
+		$config['encrypt_name'] = TRUE;
 		$CI->load->library('upload', $config);
-		if ( ! $CI->upload->do_upload()) {
+		if ( ! $CI->upload->do_upload('upload')) {
 			$error = array("status"=>"0",'error' => $CI->upload->display_errors());
 			return $error;
 		} else {
-			$data = array("status"=>"1",'upload_data' => $CI->upload->data());
+			$data = array("status"=>"1",'error'=>'','upload_data' => $CI->upload->data());
 			return $data;
+		}
+	}
+	
+	/**
+	 * Global remover of photos
+	 * @param string $filename @example(christophercuizon@gmail.com)
+	 * @param int $company_id @example (session company id)
+	 * @param string $path_location @example (i have predefined ./upload/companies but you can change 
+	 * @return boolean
+	 */
+	function remove_photo($filename,$company_id,$path_location="./uploads/companies/"){
+		$upload_path = $path_location."/{$company_id}/";
+		if($filename && $company_id){
+			if(file_exists($upload_path.$filename)){
+				$f = $upload_path.$filename;
+				unlink($f);
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
 		}
 	}
 	

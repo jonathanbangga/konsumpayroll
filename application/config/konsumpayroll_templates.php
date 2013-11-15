@@ -20,6 +20,9 @@ $config['type_owner'] = "2";
 $config['type_hr'] = "3";
 $config['type_accountant'] = "4";
 
+// UPLOAD PATH IMAGE
+$config['upload_companies'] = "./upload/companies";
+
 
 /* End of file konsumpayroll_templates.php */
 /* Location: ./application/config/konsumpayroll_templates.php */

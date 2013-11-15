@@ -117,6 +117,22 @@
 			$this->db->update($database,$fields);
 			return $this->db->affected_rows();
 		}
+		
+		/**
+		 * Update company photos only
+		 * @param int $company_id
+		 * @param string $photo
+		 * @return boolean
+		 */
+		public function update_company_photos($company_id,$photo){
+			if(is_numeric($company_id) && $photo){
+				$photo_where = array("company_id"=>$company_id);
+				$photo_field =array("company_logo"=>$photo); 
+				return $this->update_fields("company",$photo_field,$photo_where);
+			}else{
+				return false;
+			}
+		}
 	}
 
 /* End of file Company_model.php */
