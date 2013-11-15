@@ -136,3 +136,26 @@
 		return $msg_emp;
 	}
 	
+	/**
+	 * DELETES COMPANY SESSION CLEAR THEM OUT
+	 * return VOID
+	 */
+	function delete_company_session(){
+		$CI =& get_instance();
+		return $CI->session->unset_userdata("company_id");
+	}
+	
+	/**
+	 * Image exist available
+	 * @param string $image
+	 */
+	function image_exist($image,$company_id){
+		$no_image = "/assets/theme_2013/images/photo_not_available.png";
+		$image_val = "/uploads/companies/";
+		if($image != ""){
+			return $image_val.$company_id."/".$image;
+		}else{
+			return $no_image;
+		}
+	}
+	

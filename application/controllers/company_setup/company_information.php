@@ -96,7 +96,6 @@
 								}
 							}	
 						}
-						
 					}else{		
 						$company_id = $this->company->add_company($fields);
 						if($company_id){		
