@@ -67,4 +67,11 @@ width: 129px;
 width:200px;
 height:200px;
 }
+
+input.btn[type="submit"] {
+    height: 27.4px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+	font:12px Trebuchet MS",​Arial,​Helvetica,​sans-serif
+}
 /** end cost center **/

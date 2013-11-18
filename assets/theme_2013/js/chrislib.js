@@ -667,7 +667,7 @@ var kpay = {
 						e.preventDefault();
 						var el = jQuery(this);
 						var getid= el.attr("set_id");
-						jQuery(".edit_users_reg").dialog();
+						kpay.overall.show_pops(".edit_users_reg");
 						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
@@ -776,7 +776,7 @@ var kpay = {
 						});						
 					});
 				},
-				show_add_form: function(){
+				show_add_form: function(){ // NOT USED
 					jQuery(document).on('click',"#jlight_adduser",function(e){
 						e.preventDefault();
 						jQuery("form.jaddusers")[0].reset();
@@ -836,6 +836,25 @@ function ierror_mark(fields){
 		}
 	});
 	return codered;
+}
+
+// MARK DUPLICATE
+function ierror_duplicate(fields){
+	var dup = 0;
+	jQuery(fields).each(function(){
+		var first = jQuery(this).val();
+		 jQuery(fields).not(this).each(function(){
+			var el = jQuery(this);
+			var second =el.val();
+			 if(first !="" && second !=""){
+				 if(first == second){
+					 dup++;
+					 el.addClass("emp_str");
+				 }
+			 }
+		});
+	});
+	return dup;
 }
 
 // overwrite comments

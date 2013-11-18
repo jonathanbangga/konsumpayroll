@@ -15,6 +15,7 @@
 <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 <link href="/assets/theme_2013/css/global.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/custom.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="/assets/theme_2013/css/external-css.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/custom-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/theme_2013/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/assets/theme_2013/js/customSelect.jquery.js"></script>
@@ -58,7 +59,11 @@
   </section>
   <!-- WRAPPER END -->
 </div>
-<div class="ihide"><div class="source_error" title="Information"></div><div class="option_alert" title="Warning"></div></div>
+<div class="ihide">
+<div class="source_error" title="Information"></div>
+<div class="option_alert" title="Warning"></div>
+<div class="success_messages" title="Success"></div>
+</div>
 <?php print $this->load->view($script_library);?>
 </body>
 </html>

@@ -26,7 +26,6 @@ class Company_list extends CI_Controller {
 	public function index(){		
 		$data['page_title'] = "Company List";
 		$this->layout->set_layout($this->theme);
-
 		$data['company'] = $this->company_list_model->get_company(); 
 		$this->layout->view('pages/dashboard/company_list_view', $data);
 	}

@@ -9,7 +9,8 @@ class Company_list_model extends CI_Model {
 	public function get_company(){
 		return $this->db->query("
 			SELECT *
-			FROM `company`
+			FROM `company` c
+			
 		");
 	}
 		

@@ -74,7 +74,7 @@
 		$config['max_height']  = $max_height;
 		$config['encrypt_name'] = TRUE;
 		$CI->load->library('upload', $config);
-		if ( ! $CI->upload->do_upload('upload')) {
+		if(!$CI->upload->do_upload('upload')) {
 			$error = array("status"=>"0",'error' => $CI->upload->display_errors());
 			return $error;
 		} else {
@@ -153,7 +153,11 @@
 		$no_image = "/assets/theme_2013/images/photo_not_available.png";
 		$image_val = "/uploads/companies/";
 		if($image != ""){
+			if(file_exists($company_id."/".$image)){
 			return $image_val.$company_id."/".$image;
+			}else{
+				return $no_image;
+			}	
 		}else{
 			return $no_image;
 		}
