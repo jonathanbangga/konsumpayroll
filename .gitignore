@@ -10,3 +10,5 @@ application/logs/*
 
 # jc git ignore
 uploads/companies/*
+application/config.php
+application/database.php
