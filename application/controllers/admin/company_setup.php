@@ -119,11 +119,16 @@ class Company_setup extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * UPDATE PAYROLL SYSTEM ACCOUNT
+	 * VALIDATES ERROR TRAPPING
+	 */
 	public function update_psa(){
 		if($this->input->post('update_psa')){
 			$this->form_validation->set_rules("psa_id","PSA ID","required|is_numeric|trim|xss_clean");
 			$this->form_validation->set_rules("jowner","Owner","required|is_numeric|trim|xss_clean");
 			$this->form_validation->set_rules("psa_name","Name","required|is_numeric|trim|xss_clean");
+			$this->form_validation->set_rules("old_psa_name","Name","required|is_numeric|trim|xss_clean");
 			if($this->form_validation->run() == false){
 					
 			}else{
@@ -131,6 +136,21 @@ class Company_setup extends CI_Controller {
 			}
 		}
 	}
+	
+	/** CALLBACKS FOR UPDATE PSA ***/
+	public function check_psa_name($str){
+		$old_name =  $this->db->escape_str($this->input->post("old_psa_name"));
+		$query = $this->db->query("SELECT * FROM `payroll_system_account` WHERE name = '{$this->db->escape_str($name)}' AND name NOT IN('{$old_name}')");
+		$row = $query->num_rows();
+		if($row){
+			$this->form_validation->set_message("check_psa_name","Name of department already exist");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	/** CALLBACKS FOR END UPDATE PSA **/
+	
 	
 	public function edit(){
 		$data['page_title'] = "Edit";
