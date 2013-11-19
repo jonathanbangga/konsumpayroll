@@ -36,8 +36,7 @@
 			$data['page_title'] = "201 File";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
-			$employee = array('company_id'=>$this->company_id);
-			$data['employee'] = $this->jmodel->display_data_where_result('employee',$employee);
+			$data['employee'] = $this->hr_emp->employee_list($this->company_id);
 			
 			if($this->input->is_ajax_request()) {
 				// view dependents
@@ -54,6 +53,51 @@
 					
 					echo json_encode(array("emp_id"=>$emp_id_row,"name"=>$emp_name,"table"=>$qual_dept_list));
 					return false;
+				}
+				
+				// delete qualified dependent
+				if($this->input->post('delete_dep')){
+					$this->form_validation->set_rules('qual_dep', '', 'trim|required|xss_clean');
+					$this->form_validation->set_rules('emp_id', '', 'trim|required|xss_clean');
+					foreach($this->input->post('qual_dep') as $key=>$val){
+						$this->hr_emp->delete_qual_depent($val,$this->input->post('emp_id'),$this->company_id);
+					}
+					
+					$dep_id = $this->input->post('dep_id');
+					$emp_id = $this->input->post('emp_id');
+					$this->hr_emp->delete_qual_depent($dep_id,$emp_id,$this->company_id);
+					$this->session->set_flashdata('message', '<p class="save_alert">Successfully deleted!</p>');
+					echo json_encode(array("success"=>1));
+					return false;
+				}
+				
+				// get information
+				if($this->input->post('get_information')){
+					$dep_id = $this->input->post('dep_id');
+					$dep_res = $this->hr_emp->dep_res($dep_id,$this->company_id);
+					if($dep_res != FALSE){
+						echo json_encode(array("success"=>1,"dep_id"=>$dep_res->qualified_dependents_id,"name"=>$dep_res->dependents_name,"dob"=>$dep_res->dob));
+						return false;
+					}else{
+						echo json_encode(array("success"=>0));
+						return false;
+					}
+				}
+				
+				// updating information
+				if($this->input->post('update_dep')){
+					$dep_id = $this->input->post('dep_id');
+					$name = $this->input->post('name');
+					$dep_dob = $this->input->post('dep_dob');
+					$update_val_proc = $this->hr_emp->update_qual_dep($dep_id,$name,$dep_dob,$this->company_id);
+					if($update_val_proc){
+						$this->session->set_flashdata('message', '<p class="save_alert">Successfully updated!</p>');
+						echo json_encode(array("success"=>1));
+						return false;
+					}else{
+						echo json_encode(array("success"=>0));
+						return false;
+					}
 				}
 			}
 			
@@ -79,18 +123,6 @@
 					$sql_insert_dept = $this->jmodel->insert_data('employee_qualifid_dependents',$insert_dependents);
 				}
 				$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
-				redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
-			}
-			
-			// delete qualified dependent
-			if($this->input->post('del_dep')){
-				$this->form_validation->set_rules('qual_dep', '', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('emp_id', '', 'trim|required|xss_clean');
-				foreach($this->input->post('qual_dep') as $key=>$val){
-					$this->hr_emp->delete_qual_depent($val,$this->input->post('emp_id'),$this->company_id);
-				}
-				
-				$this->session->set_flashdata('message', '<p class="save_alert">Successfully deleted!</p>');
 				redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
 			}
 			
