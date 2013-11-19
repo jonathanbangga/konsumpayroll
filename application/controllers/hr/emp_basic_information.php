@@ -27,6 +27,8 @@
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
+			
+			$this->authentication->check_if_logged_in();
 		}
 		
 		/**
@@ -36,7 +38,7 @@
 			$data['page_title'] = "Basic Information";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
-			$data['employee'] = $this->hr_emp->view_employee($this->company_id);
+			$data['employee'] = $this->hr_emp->basic_emp_view_all_active_user($this->company_id);
 			
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('uname', 'Username', 'trim|required|xss_clean');
@@ -68,7 +70,7 @@
 						$marital_status = $this->input->post('marital_status')[$key];
 						$address = $this->input->post('address')[$key];
 						$mobile_no = "";
-						$home_no = "";
+						$home_no = $this->input->post('contact_no')[$key];
 						$tin = $this->input->post('tin')[$key];
 						$sss = $this->input->post('sss')[$key];
 						$phil_health = "";
@@ -76,6 +78,7 @@
 						$hdmf = $this->input->post('hdmf')[$key];
 						$emergency_contact_person = "";
 						$emergency_contact_number = "";
+						$no_dependents = $this->input->post('no_dependents')[$key];
 						$position_id = "";
 						$payroll_group_id = "";
 						
@@ -107,6 +110,7 @@
 							'hdmf' => $hdmf,
 							'emergency_contact_person' => $emergency_contact_person,
 							'emergency_contact_number' => $emergency_contact_number,
+							'no_of_dependents' => $no_dependents,
 							'position_id' => $position_id,
 							'permission_id' => $permission,
 							'payroll_group_id' => $payroll_group_id,
@@ -125,14 +129,115 @@
 							
 						$insert_employee_sql = $this->jmodel->insert_data('employee',$insert_employee);
 						$insert_account_sql = $this->jmodel->insert_data('accounts',$insert_account);
-						
-						if($insert_employee_sql && $insert_account_sql){
-							$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
-							redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+					}
+					
+					$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
+					redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+				//}
+			}
+			
+			if($this->input->is_ajax_request()) {
+				// Check Username
+				if($this->input->post('check_uname')){
+					$ajax_uname_val = $this->input->post('uname_val');	
+					foreach($ajax_uname_val as $key=>$val){
+						$validate_uname = $this->hr_emp->validate_name($ajax_uname_val[$key]);
+						if($validate_uname){
+							echo json_encode(array("success"=>1));
+							return false;
+						}else{
+							echo json_encode(array("success"=>0));
+							return false;
 						}
 					}
 				}
-			//}
+				
+				// Delete Employee Information
+				if($this->input->post('del_empDB')){
+					$emp_id = $this->input->post('emp_id');
+					$delete_me = $this->hr_emp->update_basic_emp($emp_id,$this->company_id);
+					
+					if($delete_me){
+						$this->session->set_flashdata('message', '<p class="save_alert">Successfully deleted!</p>');
+						echo json_encode(array("success"=>1));
+						return false;
+					}
+				}
+				
+				// get information
+				if($this->input->post('get_information')){
+					$emp_id = $this->input->post('emp_id');
+					$emp_res = $this->hr_emp->emp_res($emp_id,$this->company_id);
+					if($emp_res != FALSE){
+						echo json_encode(
+							array(
+								"success"=>1,
+								"emp_id"=>$emp_res->emp_id,
+								"last_name"=>$emp_res->last_name,
+								"first_name"=>$emp_res->first_name,
+								"middle_name"=>$emp_res->middle_name,
+								"dob"=>$emp_res->dob,
+								"gender"=>$emp_res->gender,
+								"marital_status"=>$emp_res->marital_status,
+								"address"=>$emp_res->address,
+								"contact_no"=>$emp_res->contact_no,
+								"mobile_no"=>$emp_res->mobile_no,
+								"home_no"=>$emp_res->home_no,
+								"tin"=>$emp_res->tin,
+								"hdmf"=>$emp_res->hdmf,
+								"sss"=>$emp_res->sss,
+								"phil_health"=>$emp_res->phil_health,
+								"gsis"=>$emp_res->gsis,
+								"no_of_dependents"=>$emp_res->no_of_dependents
+							)
+						);
+						return false;
+					}else{
+						echo json_encode(array("success"=>0));
+						return false;
+					}
+				}
+				
+				// updating information
+				if($this->input->post('update_info')){
+					$emp_idEdit = $this->input->post('emp_idEdit');
+					$lastname_edit = $this->input->post('lastname_edit');
+					$firstname_edit = $this->input->post('firstname_edit');
+					$middlename_edit = $this->input->post('middlename_edit');
+					$dob_edit = $this->input->post('dob_edit');
+					$gender_edit = $this->input->post('gender_edit');
+					$marital_status_edit = $this->input->post('marital_status_edit');
+					$address_edit = $this->input->post('address_edit');
+					$contact_no_edit = $this->input->post('contact_no_edit');
+					$tin_edit = $this->input->post('tin_edit');
+					$sss_edit = $this->input->post('sss_edit');
+					$hdmf_edit = $this->input->post('hdmf_edit');
+					$no_qual_dep_edit = $this->input->post('no_qual_dep_edit');
+					
+					$update_array = array(
+						'last_name'=>$lastname_edit,
+						'first_name'=>$firstname_edit,
+						'middle_name'=>$middlename_edit,
+						'dob'=>$dob_edit,
+						'gender'=>$gender_edit,
+						'marital_status'=>$marital_status_edit,
+						'address'=>$address_edit,
+						'contact_no'=>$contact_no_edit,
+						'tin'=>$tin_edit,
+						'sss'=>$sss_edit,
+						'hdmf'=>$hdmf_edit,
+						'no_of_dependents'=>$no_qual_dep_edit
+					);
+					$update_info = $this->jmodel->update_data('employee',$update_array,$emp_idEdit,'emp_id');
+					if($update_info){
+						$this->session->set_flashdata('message', '<p class="save_alert">Successfully updated!</p>');
+						echo json_encode(array("success"=>1));
+						return false;
+					}else{
+						echo json_encode(array("success"=>0));
+					}
+				}
+			}
 			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_basic_info_view', $data);

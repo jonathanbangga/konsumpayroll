@@ -4,20 +4,21 @@
           <!-- TBL-WRAP START -->
           <table style="width:100%" class="tbl">
             <tr>
-              <th></th>
+              <th style="width:50px;"></th>
               <th style="width:130px">Employee Number</th>
               <th>Employee Name</th>
               <th style="width:150px">Details</th>
-              <th style="width:153px">Action</th>
+              <th style="width:170px">Action</th>
             </tr>
             <?php 
             	if($employee != null){
+            		$counter = 1;
             		foreach ($employee as $row){
             			
             ?>
             	<tr>
-	              <td><?php print $row->emp_id;?></td>
-	              <td><?php print $row->emp_id;?></td>
+	              <td><?php print $counter++;?></td>
+	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print ucfirst($row->first_name)." ".ucfirst($row->last_name);?></td>
 	              <td></td>	
 	              <td><a attr_empid = "<?php print $row->emp_id;?>" class="btn btn-gray btn-action view_emp_dep_btn" href="javascript:void(0);">VIEW</a></td>
@@ -32,24 +33,47 @@
 				  <table style="width:100%" class="tbl emp_dept_contList">
 		            <tbody>
 			            <tr>
-			              <th></th>
-			              <th>Line</th>
-			              <th>Dependent's Name</th>
-			              <th style="width:150px">Date of Birth</th>
+			              <th style="width:50px;"></th>
+			              <th style="width:170px;">Dependent's Name</th>
+			              <th style="width:170px">Date of Birth</th>
+			              <th style="width:170px">Action</th>
 			            </tr>
 		            </tbody>
 		          </table>
 		          <br />
-		          <input type="submit" class="btn add_new_dep" value="ADD" name="save_dep" onclick="javascript:return false;">
+		          <input type="submit" class="btn add_new_dep" value="ADD" name="add_dep" onclick="javascript:return false;">
 		          <input type="hidden" value="" name="emp_id" class="emp_idVal" />
 		          <input type="submit" class="btn ihide save_btn" value="SAVE" name="save_dep">
 		          <input type="submit" class="btn ihide del_btn_dep" value="DELETE" name="del_dep">
 	          <?php print form_close();?>
 	        </div>
-          
+          <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this dependent?</div>
           <!-- TBL-WRAP END -->
         </div>
-        <a class="btn" href="#">ADD MORE PRINCIPAL</a>
+        <div class='editCont ihide' title='Edit Information'>
+			  <div class="tbl-wrap">
+          <!-- TBL-WRAP START -->
+          <table width="100%">
+            <tbody><tr>
+              <td style="width:155px">Name:</td>
+              <td>
+              <input type="text" value="" name="" class="txtfield dep_idEdit ihide" />
+              <input type="text" value="" name="" class="txtfield dep_name"></td>
+            </tr>
+            <tr>
+              <td>Date of Birth: </td>
+              <td><input type="text" value="" name="" class="txtfield dep_dob" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+	              <input type="submit" value="Update" name="UPDATE" class="btn updateBtn" />
+              </td>
+            </tr>
+          </tbody></table>
+          <!-- TBL-WRAP END -->
+        </div>
+        </div>
         <!-- MAIN-CONTENT END -->
         <script>
 			function checkCheckBox(){
@@ -59,7 +83,7 @@
 				    jQuery(".del_btn_dep").css("display","inline");
 				}
 			}
-        
+
 	        function clear_tbl(){
 				jQuery(".clear_tbl").each(function(){
 					jQuery(this).remove();
@@ -75,7 +99,7 @@
 			}
 
 	        function add_emp_dependent_form(size){
-				var _form = '<tr class="clear_tbl append_td_dep"><td></td><td></td><td><input name="dept_name[]" type="text" class="txtfield dept_name" id="dept_name'+size+'"></td><td><input type="text" name="dob[]" class="txtfield dob" id="dob'+size+'" readonly="readonly"></td></tr>';
+				var _form = '<tr class="clear_tbl append_td_dep"><td></td><td><input name="dept_name[]" type="text" class="txtfield dept_name" id="dept_name'+size+'"></td><td><input type="text" name="dob[]" class="txtfield dob" id="dob'+size+'" readonly="readonly"></td><td><a href="javascript:void(0);" style="width:127px;" class="btn btn-red btn-action delBtnRow custom_white">DELETE</a></td></tr>';
 				return _form;
 			}
 	        
@@ -113,6 +137,8 @@
                     					});
                     					
                                         check_dep();
+                                        _delete_dependentsDb();
+                                        get_information();
 										return false;
 									}
 							});
@@ -136,6 +162,7 @@
 			        jQuery(".emp_dept_contList tbody").append(dep_form);
 			        jQuery(".save_btn").css("display","inline");
 			        dob_datepicker();
+			        remove_row();
 				});	
 			}
 
@@ -243,11 +270,160 @@
 				    },3000);
 				}
 			}
+
+	        function remove_row(){
+	        	jQuery(".emp_dept_contList tr").each(function(){
+	        	    var _this = jQuery(this);
+	        	    jQuery(this).find(".delBtnRow").on("click", function(){
+	        	        _this.remove();
+	        	        var input_text_size = jQuery("input[name='dept_name[]']").length;
+	        			if(parseInt(input_text_size) == 0) jQuery("input[name='save_dep']").css("display","none");
+	        	    });
+	        	});
+	        }
+
+	        function _delete_dependentsDb(){
+	        	jQuery(".delBtnDb").on("click", function(){
+	        	    var _this = jQuery(this);
+	        	    var _id = _this.attr("attr_no");
+	        	    jQuery(".del_msg").dialog({
+	     		       width: 'inherit',
+	     			   draggable: false,
+	     			   modal: true,
+	     			   width:'auto',
+	     			   minWidth:'400',
+	     			   dialogClass:'transparent',
+	     				buttons: {
+	     				    'Yes': function(){
+	     				    	$.ajax({
+	     							url: window.location.href,
+	     							type: "POST",
+	     							data: {
+	     								'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+	     								'delete_dep':'1',
+	     								'dep_id':_id,
+	     								'emp_id': jQuery.trim(jQuery(".emp_idVal").val())
+	     							},
+	     							success: function(data){
+	     								var status = jQuery.parseJSON(data);
+	     	                          	if(status.success == 1){
+	     	                          		window.location.href = window.location.href;
+	     	                          		$( this ).dialog( "close" );
+	     	                            }else{
+	     	                            	return false;
+	     	                          	}
+	     							}
+	     		        	    });
+	     				    },
+	     					'No': function() {
+	     						$( this ).dialog( "close" );
+	     					}
+	     				},
+	     			   overlay: {
+	     		   		   opacity: 0
+	     		   	   }
+	     		    });
+	        	});
+	        }
+
+	        function get_information(){
+	        	jQuery(".editBtnDb").on("click", function(){
+	        	    var _this = jQuery(this);
+	        	    var dep_id = _this.attr("attr_no");
+	        	    $.ajax({
+						url: window.location.href,
+						type: "POST",
+						data: {
+							'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+							'get_information': '1',
+							'dep_id': dep_id
+						},
+						success: function(data){
+							var status = jQuery.parseJSON(data);
+                          	if(status.success == 1){
+                          		jQuery(".dep_idEdit").val(status.dep_id);
+                              	jQuery(".dep_name").val(status.name);
+                              	jQuery(".dep_dob").val(status.dob);
+                          		jQuery(".editCont").dialog({
+                					width: 'inherit',
+                					draggable: false,
+                					modal: true,
+                					minWidth:'400',
+                					dialogClass:'transparent'
+                              	});
+                          		jQuery(".dep_name, .dep_dob").removeClass("emp_str");
+                          		dob_datepicker();
+                          	}else{
+								alert("- Invalid parameter.");
+								return false;
+    						}
+						}
+	        	    });
+	        	});
+	        }
+
+	        function update_information(){
+	        	jQuery(".updateBtn").on("click", function(){
+		        	var dep_id = jQuery(".dep_idEdit").val()
+	        	    var name = jQuery(".dep_name").val();
+	        	    var dep_dob = jQuery(".dep_dob").val();
+	        	    var error = "";
+	        	    if(jQuery.trim(name) == ""){
+	        	        error = 1;   
+	        	        jQuery(".dep_name").addClass("emp_str");
+	        	    }else{
+	        	        jQuery(".dep_name").removeClass("emp_str");
+	        	    }
+	        	    if(jQuery.trim(dep_dob) == ""){
+	        	        error = 1;
+	        	        jQuery(".dep_dob").addClass("emp_str");
+	        	    }else{
+	        	        jQuery(".dep_dob").removeClass("emp_str");
+	        	    }
+	        	    if(error == 1){
+	        	        return false;
+	        	    }else{
+	        	        // updating infomation
+	        	        $.ajax({
+							url: window.location.href,
+							type: "POST",
+							data: {
+								'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+								'dep_id': dep_id,
+								'name': name,
+								'dep_dob': dep_dob,
+								'update_dep': '1'
+							},
+							success: function(data){
+								var status = jQuery.parseJSON(data);
+ 	                          	if(status.success == 1){
+ 	                          		window.location.href = window.location.href;
+ 	                          		$( this ).dialog( "close" );
+ 	                            }else{
+ 	                            	return false;
+ 	                          	}
+							}
+	        	        });
+	        	    }
+	        	});
+	        }
+
+	        function dob_datepicker(){
+				jQuery(".dep_dob, .dob").datepicker({
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: 'yy-mm-dd',
+					maxDate: 0,
+					yearRange: "-100:+0"
+				});
+			}
 	        
 			jQuery(function(){
 				view_dep();
 				add_new_dep();
 				_successContBox();
+				update_information();
+				dob_datepicker();
 				//check_dep();
 			});
        	</script>

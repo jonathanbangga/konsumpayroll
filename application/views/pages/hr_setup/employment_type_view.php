@@ -50,6 +50,7 @@
 		<input type="text" id="employment_type" name="employment_type" />
 	</div>
 </div>
+
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 <script>

@@ -7,3 +7,8 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
+
+# jc git ignore
+uploads/companies/*
+application/config.php
+application/database.php

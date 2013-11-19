@@ -62,6 +62,22 @@ width:90px;
 .btn-action.makewitdth{
 width: 129px;
 }
+/** end cost center **/
+/* highlight message(jc) - start */
+.highlight_message{
+	background-color: #D7F3BD;
+    display: inline-block;
+    margin-bottom: 11px;
+    padding: 8px
+}
+/* highlight message(jc) - end */
+input,select{
+	height: 25px;
+	padding-left: 5px;
+}
+select{
+	padding-top: 3px;
+}
 
 .list_logos{
 width:200px;
@@ -74,4 +90,4 @@ input.btn[type="submit"] {
     padding-top: 4px;
 	font:12px Trebuchet MS",​Arial,​Helvetica,​sans-serif
 }
-/** end cost center **/
+
