@@ -1,0 +1,21 @@
+[Quick Notes]
+// ajax json
+// javascript (client side) 
+jQuery.ajax({
+	type: "POST",
+	url: "test.php",
+	data: {
+		data1: data1,
+		data2: data2
+	},
+	dataType: 'json'
+}).done(function(ret){
+	// do something
+});
+// PHP (server side)
+$arr = array(
+	"project_name"=>$loc->project_name,
+	"location"=>$loc->location,
+	"description"=>$loc->description
+);
+echo json_encode($arr);
