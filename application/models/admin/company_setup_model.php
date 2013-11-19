@@ -23,6 +23,29 @@ class Company_setup_model extends CI_Model {
 		return $row;
 	}
 	
+	public function display_owners_details($account_id){
+		if(is_numeric($account_id)){
+			$sql = "SELECT co.account_id,psa.payroll_system_account_id,co.owner_name FROM `payroll_system_account` psa
+				LEFT JOIN accounts a on a.payroll_system_account_id = psa.payroll_system_account_id
+				LEFT JOIN company_owner co on co.account_id = a.account_id
+				WHERE co.account_id = $account_id";
+			$q = $this->db->query($sql);
+			$row = $q->row();
+			return $row;
+		}
+	}
+	
+	public function display_owners_options(){
+		$owners = $this->display_owners();
+		$option = "";
+		if($owners){
+			foreach($owners as $key=>$val):
+				if($key)$option .="<option value='{$val->account_id}'>{$val->owner_name}</option>";
+			endforeach;
+		}
+		return $option;
+	}
+	
 	/**
 	 * 
 	 * Saves the fields global style
@@ -56,11 +79,12 @@ class Company_setup_model extends CI_Model {
 	 * @return object
 	 */
 	public function company_info($comp_id){
-		$query = $this->db->query("SELECT c.company_id,co.company_owner_id,co.owner_name,c.company_name,c.trade_name,c.business_address,c.city,c.zipcode,c.organization_type,
-								c.province,c.number_of_employees,c.subscription_date,c.province,c.email_address,
-								c.industry,c.business_phone,c.extension,c.mobile_number,c.fax,c.sub_domain FROM company c 
-								LEFT JOIN company_owner co on co.company_owner_id = c.company_owner_id WHERE 
-								c.company_id='{$this->db->escape_str($comp_id)}' AND c.status='Active' AND c.deleted='0'");
+		$query = $this->db->query(
+			"SELECT * FROM `accounts` a
+			LEFT JOIN company_owner co on a.account_id = co.account_id
+			LEFT JOIN payroll_system_account psa on psa.payroll_system_account_id = a.payroll_system_account_id
+			WHERE a.user_type_id = 2 AND psa.payroll_system_account_id = {$this->db->escape_str($comp_id)}"
+		);
 		$rows = $query->row();
 		$query->free_result();
 		return $rows;
@@ -75,8 +99,8 @@ class Company_setup_model extends CI_Model {
 	 */
 	public function fetch_company($limit,$offset) {
 		$this->db->limit($limit,$offset);
-		$this->db->where(array("status"=>"Active","deleted"=>"0"));
-		$query = $this->db->get("company");
+		$this->db->where(array("status"=>"Active"));
+		$query = $this->db->get("payroll_system_account");
 		$result = $query->result();
 		$query->free_result();
 		return $result;
@@ -88,7 +112,7 @@ class Company_setup_model extends CI_Model {
 	 * @return integer
 	 */
 	public function count_company() {
-		$query 	= $this->db->query("SELECT COUNT(*) as val from company WHERE status='Active' and deleted = '0'");
+		$query 	= $this->db->query("SELECT COUNT(*) as val from payroll_system_account WHERE status='Active'");
 		$row	= $query->num_rows();
 		$res 	= $query->row();
 		$query->free_result();
@@ -102,6 +126,13 @@ class Company_setup_model extends CI_Model {
 	 */
 	public function all_company() {
 		$query 	= $this->db->get_where("company",array("status"=>"Active","deleted"=>"0"));
+		$result	= $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
+	public function fetch_payroll_system_account(){
+		$query 	= $this->db->get_where("payroll_system_account",array("status"=>"Active"));
 		$result	= $query->result();
 		$query->free_result();
 		return $result;
@@ -134,6 +165,21 @@ class Company_setup_model extends CI_Model {
 		$row	= $query->row();
 		$query->free_result();
 		return $row;
+	}
+	
+	/**
+	 * Update payroll account system
+	 * @param string $database
+	 * @param array $fields
+	 * @param array $where
+	 * @return boolean
+	 */
+	public function update_payroll_account_system($database,$fields,$where){
+		if($where){
+			$this->db->where($where);
+			$this->db->update($database,$fields);
+			return $this->db->affected_rows();
+		}
 	}
 	
 }

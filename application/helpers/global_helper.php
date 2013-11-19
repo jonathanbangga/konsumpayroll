@@ -75,7 +75,7 @@
 		$config['encrypt_name'] = TRUE;
 		$CI->load->library('upload', $config);
 		if(!$CI->upload->do_upload('upload')) {
-			$error = array("status"=>"0",'error' => $CI->upload->display_errors());
+			$error = array("status"=>"0",'error' => $CI->upload->display_errors(),'upload_data'=>'');
 			return $error;
 		} else {
 			$data = array("status"=>"1",'error'=>'','upload_data' => $CI->upload->data());
@@ -153,11 +153,7 @@
 		$no_image = "/assets/theme_2013/images/photo_not_available.png";
 		$image_val = "/uploads/companies/";
 		if($image != ""){
-			if(file_exists($company_id."/".$image)){
-			return $image_val.$company_id."/".$image;
-			}else{
-				return $no_image;
-			}	
+			return (file_exists($company_id."/".$image)) ? $image_val.$company_id."/".$image : $no_image;
 		}else{
 			return $no_image;
 		}

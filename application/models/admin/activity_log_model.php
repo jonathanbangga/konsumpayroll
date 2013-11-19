@@ -28,6 +28,7 @@ class Activity_log_model extends CI_Model {
 	 */
 	public function fetch_activity_logs($limit,$start){
 		if(is_numeric($limit) || is_numeric($start)){
+			$this->db->where(array("deleted"=>"0"));
 			$this->db->limit($limit,$start);
 			$query = $this->db->get("activity_logs");
 			$result = $query->result();

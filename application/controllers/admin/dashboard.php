@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->theme = $this->config->item('temp_admin');
+		$this->theme = $this->config->item('temp_admin_dashboard');
 		$this->load->model("admin/activity_log_model","activity_logs");
 		$this->segment_url = 3;
 		$this->num_pagi = 20;

@@ -1,7 +1,5 @@
 
 	<h1><?php echo $page_title;?></h1>
-
-	
 	<div class="main-content">
 	<?php echo form_open("admin/users/add_admin",array("onsubmit"=>"return add_admin_user();","id"=>"add_admin_user"));?>
 		<div class="tbl-wrap">
@@ -37,9 +35,9 @@
 	<?php echo form_close();?>
 	</div>
 	
-	<!-- for registration lightbox -->
+	<!-- for update lightbox -->
 	<div class="edit_users_reg jshowupdate ihide" title="Edit Admin User">
-		<?php echo form_open("admin/users/add_admin_users",array("class"=>"jaddusers_update","onsubmit"=>"return kpay.admin.userz.update_admin_user_form('/admin/users/update_admin_users/','".itoken_cookie()."');"));?>
+		<?php echo form_open("#",array("class"=>"jaddusers_update","onsubmit"=>"return kpay.admin.userz.update_admin_user_form('/admin/users/update_admin_users/','".itoken_cookie()."');"));?>
 		<table>
 			<tbody>
 				<tr>
@@ -79,10 +77,38 @@
 		</table>
 		<?php echo form_close();?>
 	</div>
+	<!--  update password zone -->
+	<div class="jedit_upass ihide" id="jhide_password" title="Change Password">
+		<?php echo form_open("#",array("onsubmit"=>"return ichange_pass();","class"=>"ichange_pass"));?>
+		<table>
+			<tbody>
+				<tr>
+					<td style="width:155px">Username:</td>
+					<td>
+					<input type="hidden" value="" name="editpass_accountid" id="editpass_accountid" class="txtfield" readonly="readonly">
+					<input type="hidden" value="" name="editpass_username_old" id="edit_pass_username" class="txtfield"  readonly="readonly">
+					<input type="text" value="" name="editpass_username" id="editpass_username" class="txtfield"  readonly="readonly"></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" value="" name="editpass_password" class="txtfield" id="editpass_password"></td>
+				</tr>
+				<tr>
+					<td>Confirm Password:</td>
+					<td><input type="password" value="" name="editcpass_password" class="txtfield" id="editcpass_password"></td>
+				</tr>	
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="submit" name="update" value="Update" class="btn">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php echo form_close();?>
+	</div>
 	
-	
-	
-	<!-- end for registration lightbox -->
+	<!--  end update password zone -->
 	<!-- lightbox success -->
 	<div class="ihide">
 		<div class="success_add" title="Successfull Save">
@@ -158,12 +184,74 @@
 		}
 		return false;
 	}
+	// CHANGE PASSWORD
+	function ichange_pass(){
+		var url = "/admin/users/update_change_pass_admin";
+		var fields = {
+			"editpass_accountid":jQuery("input[id^='editpass_accountid']").val(),
+			"editpass_password"	:jQuery("input[id^='editpass_password']").val(),
+			"editcpass_password":jQuery("input[id^='editcpass_password']").val(),
+			"ZGlldmlyZ2luamM": jQuery.cookie(a_token),
+			"update":"true"
+		}
+		jQuery.post(url,fields,function(json){
+			var res = jQuery.parseJSON(json);	
+			if(res.success == '0'){
+				alert(res.error);
+			}else if(res.success == 1){
+				jQuery(".success_messages").empty().html("<p>You have Successfully Updated</p>");
+				kpay.overall.show_success(".success_messages");
+			}
+		});	
+		return false;
+	}
+	// SHOW POPS LIKE 2pops for change password
+	function ipop_change_pass(){
+		jQuery(document).on("click",".change_pass_admin",function(e){
+			e.preventDefault();
+			var el = jQuery(this);
+			var admin_id = el.attr("set_id");
+			var html = "Send Password on Email?";
+			jQuery(".option_alert").html("Send Password on Email?");
+			jQuery(".option_alert").dialog({
+				resizable: false,
+				height: 150,
+				modal: true,
+				buttons: {
+				"Yes": function () {
+					alert(admin_id);
+					/*jQuery.post(urls,{
+						'delete':true,
+						'admin_id':ids,
+						'ZGlldmlyZ2luamM':jQuery.cookie(token),
+					},function(d){
+						alert("User has been deleted");
+						jQuery(".option_alert").dialog("close");
+						jQuery(".admin_list_id"+ids).hide('slow',function(){
+							window.location.href ="/admin/users/all_admin/";
+						});
+					});
+					*/
+				},
+				No: function () {
+					jQuery(".option_alert").dialog("close");
+				}
+				}
+			});						
+			
+			//kpay.overall.show_pops("#jhide_password");
+			//kpay.admin.userz.show_admin_details_pass("/admin/users/show_edit_admin",a_token,admin_id);
+		});
+	}
+	
 	jQuery(function(){
 		append_admin();
 		delete_row_add();
+		ipop_change_pass();
 		//kpay.admin.userz.show_add_form();
-		kpay.admin.userz.delete_admin_user('/admin/users/delete_admin_user',"<?php echo itoken_cookie();?>");
-		kpay.admin.userz.update_admin_user('/admin/users/show_edit_admin',"<?php echo itoken_cookie();?>");
+		kpay.admin.userz.delete_admin_user('/admin/users/delete_admin_user',a_token);
+		kpay.admin.userz.update_admin_user('/admin/users/show_edit_admin',a_token);
+		
 	});
 </script>
 

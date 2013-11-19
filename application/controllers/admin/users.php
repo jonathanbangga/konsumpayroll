@@ -27,6 +27,7 @@ class Users extends CI_Controller {
 		$this->all_user = "/admin/users/all_users/";
 		$this->admin_url = "/admin/users/all_admin";
 		$this->load->helper('email');
+		$this->load->library('parser');
 	}
 
 	public function index()
@@ -191,19 +192,20 @@ class Users extends CI_Controller {
 	public function add_admin(){
 		if($this->input->post('save_user')){
 			$name = $this->input->post('name');
+			$user_name = $this->input->post("username");
 			if($name){
 				foreach($name as $key=>$val):
 					$this->form_validation->set_rules("name[{$key}]","Name","required|trim|xss_clean");
-					$this->form_validation->set_rules("username[{$key}]","Username","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
+					$this->form_validation->set_rules("username[{$key}]","Username","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]|min_length[8]|max_length[20]|alpha_numeric");
 				endforeach;
 				if($this->form_validation->run() == true){
 					foreach($name as  $key=>$val){
 						//ADD FIRST IN ACCOUNT
 						$account_field = array(
-							"payroll_cloud_id" => $val,
+							"payroll_cloud_id" => $user_name[$key],
 							"account_type_id"  => 1, // BECAUSE 1= ADMIN 2= USER ( EMPLOYEE,USER)
 							"user_type_id"	   => 1, // 1=admin 2=owner 3=hr 4=accountant
-							"password"		   => $this->db->escape_str(md5($this->input->post('password'))),
+							"password"		   => md5(idates_now()),
 							"deleted"		   => '0'
 						);	
 						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
@@ -221,6 +223,7 @@ class Users extends CI_Controller {
 				}else{
 					$error = validation_errors('<span class="error_zone">','</span>');
 					echo json_encode(array("success"=>"0","error"=>$error));
+					return false;
 				}
 			}
 		}
@@ -242,19 +245,19 @@ class Users extends CI_Controller {
 					$fields = array(
 								"email"			=> $this->input->post('edit_email'),
 								"password"		=> $this->db->escape_str(md5($this->input->post("edit_pass")))
-							);
+					);
 					$this->users_model->update_data_fields("accounts",$fields,array("account_id"=>$this->input->post('edit_account_id')));
 					// UPDATE PAYROLL SYSTEM ACCOUNT
 					$payroll_field = array(
 								"company_owner_email" => $this->input->post('edit_email'),
 								"status"		=> "Active"
-							);
+					);
 					$where_payroll_field = array("payroll_system_account_id"=>$this->input->post('edit_payroll_system_account_id'));
 					$this->users_model->update_data_fields("payroll_system_account",$payroll_field,$where_payroll_field);
 					// UPDATE COMPANY OWNER NAME
 					$company_owner_field = array(
 								"owner_name"	=> $this->input->post("edit_name")
-							);
+					);
 					$where_company = array("account_id"=>$this->input->post('edit_account_id'));
 					$this->users_model->update_data_fields("company_owner",$company_owner_field,$where_company);
 					echo json_encode(array("error_msg"=>'',"success"=>"1","value"=>$fields));
@@ -273,7 +276,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
 				$this->form_validation->set_rules('accounts_id','Admin id','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_update_check');
-				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required');
+				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_check_email');
 				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim');
 				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
@@ -300,6 +303,86 @@ class Users extends CI_Controller {
 			show_404();
 		}
 	}
+
+	
+	/**
+	 * CALL BACK WHEN UPDATING ADMIN 
+	 * check if email is valid
+	 * @param string $str
+	 */
+	public function check_email($str){
+		$old_email = $this->input->post("edit_old_email");
+		if($old_email !=""){
+			$sql = "SELECT a.account_id,a.payroll_cloud_id,a.email,ka.name
+					FROM `accounts` a
+					LEFT JOIN konsum_admin ka on ka.account_id = a.account_id
+					WHERE a.account_type_id = 1 and a.user_type_id = 1 AND a.email = '{$str}' AND email NOT IN('{$this->db->escape_str($old_email)}')";
+			$query = $this->db->query($sql);
+			$row = $query->row();
+			$query->free_result();
+			if($row){
+				$this->form_validation->set_message("check_email","Email address is already in used");
+				return false;
+			}else{
+				return true;
+			}	
+		}else{
+			$sql = "SELECT a.account_id,a.payroll_cloud_id,a.email
+					FROM `accounts` a WHERE a.email = '{$str}'";
+			$query = $this->db->query($sql);
+			$row = $query->row();
+			$query->free_result();
+			if($row){
+				$this->form_validation->set_message("check_email","Email address is already in used");
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
+	
+	/**
+	 * UPDATE CHANGE PASSWORD ADMIN
+	 * @return json
+	 */
+	public function update_change_pass_admin(){
+		if($this->input->post("update")){
+			$this->form_validation->set_rules("editpass_accountid","Account ID","required|trim|xss_clean|is_numeric");			 
+			if($this->form_validation->run() == true){
+				$this->sendmail_admin_password();
+				echo json_encode(array("error"=>'',"success"=>"1"));	
+				return false;
+			}else{
+				echo json_encode(array("error"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
+				return false;
+			}
+		}
+	}
+	
+	/**
+	 * SENDS EMAIL ON ADMIN RECOVERY
+	 * Enter description here ...
+	 * @param int $id
+	 */
+	public function sendmail_admin_password($id){
+		$this->load->library('email');
+		$details = $this->users_model->get_admin_fulldetails($id);
+		$data['admin_email'] = "website.qa.pro@gmail.com";
+		$data['email'] 	= $details->email;
+		$data['token'] 	= $details->token;
+		$data['page_title'] = "RECOVERY PASSWORD";
+		$data['name'] 	= $details->name;
+		$this->email->from($data['admin_email'], 'Admin Recovery Password');
+		$this->email->to($data['email']);
+		$this->email->cc($data['admin_email']);
+		$this->email->subject($data['page_title']);
+		$email_data = $this->parser->parse("pages/admin/send_recovery_password_view",$data);
+		$this->email->message($email_data);
+		$this->email->send();	
+	}
+	
+	
+	/** END CALLBACK **/
 	
 	/**
 	 * DELETE ADMIN USERS 

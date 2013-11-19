@@ -25,6 +25,18 @@ var kpay = {
 						}
 					}
 				});
+			},
+			ajax_save: function(urls,fields){
+				jQuery.post(urls,fields,function(json){
+					var res = jQuery.parseJSON(json);	
+					if(res.success == '0'){
+						alert(res.error);
+					}else{
+						jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+						kpay.overall.show_success(".success_messages");
+					}
+				});	
+				return false;
 			}
 		},
 		hr: {
@@ -358,7 +370,8 @@ var kpay = {
 									jQuery.post(urls,{"delete":'true',"id":fid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(re){
 										jQuery(".option_alert").dialog('close');
 										alert("You have successfully updated");
-										window.location.href = "/admin/company_setup/add";		
+										window.location.href = "/admin/company_setup/add";	
+										
 									});
 								},
 								"No": function () {
@@ -440,101 +453,33 @@ var kpay = {
 						});
 						return false;
 				},
-				update_company: function(urls,token) {
+				update_department: function(urls,token) {
 					jQuery(document).on("click", ".jcomp_edit", function (e) {
 						e.preventDefault();
 						var el = jQuery(this);
-						var sid = el.attr("set_id");
+						var psa_id = el.attr("psa_id");
 						jQuery.post(urls,
 							{
 								"type": "company_view",
 								"update": "true",
-								"id": sid,
+								"psa_id": psa_id,
 								"ZGlldmlyZ2luamM": jQuery.cookie(token)
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#ureg_business_name").empty().val(res.company_name);
+								jQuery("#psa_name").empty().val(res.name);
 								jQuery("select[name='jowner']").val(res.company_owner_id);
-								jQuery("#ucomp_id").empty().val(res.company_id);
-								jQuery("#jowner").empty().val(res.owner_name);
-								jQuery("#utrade_name").empty().val(res.trade_name);
-								jQuery("#ubusiness_address").empty().val(res.business_address);
-								jQuery("#ucity").empty().val(res.city);
-								jQuery("#uzip_code").empty().val(res.zipcode);
-								jQuery("#uorg_type").empty().val(res.organization_type);
-								jQuery("#uindustry").empty().val(res.industry);
-								jQuery("#ubusiness_phone").empty().val(res.business_phone);
-								jQuery("#uextension").empty().val(res.extension);
-								jQuery("#umobile_no").empty().val(res.mobile_number);
-								jQuery("#ufax").empty().val(res.fax);
-								jQuery(".jedit_compform").dialog(
-									{	
+								jQuery("#psa_id").empty().val(res.payroll_system_account_id);
+								jQuery(".jedit_compform").dialog({	
 										draggable:false,
 										resizable: false,
 										height: 'auto',
 										width:"320",
 										modal: true,
-										dialogClass: 'transparent',
-										buttons:{
-											"Close": function(){
-												jQuery(".jedit_compform").dialog('close');
-											}
-										}
-									});
+										dialogClass: 'transparent'
+								});
 							});
-						jQuery(".jedit_compform").dialog({
-							draggable: false,
-							resizable: false,
-							height: 'auto',
-							width: "320",
-							modal: true,
-							dialogClass: 'transparent'
-						});
 					});
-				},
-				popup_add_company: function(){
-					jQuery(document).on("click","#jlight_addcompany",function(e){
-						e.preventDefault();
-						var el = jQuery(this);
-						jQuery(".jpop_container").dialog({
-							draggable: false,
-							resizable: false,
-							height: 'auto',
-							width: "320",
-							modal: true,
-							dialogClass: 'transparent'
-						});
-					});
-				},
-				form_add_company: function(urls,token){
-					var fields = {
-							"reg_business_name":jQuery("input[name='reg_business_name']").val(),
-							"owner":			jQuery("select[name='owner']").val(),
-							"subscription_date":jQuery("input[name='subscription_date']").val(),
-							"no_employees":		jQuery("input[name='no_employees']").val(),
-							"email_add":		jQuery("input[name='email_add']").val(),
-							"business_phone":	jQuery("input[name='business_phone']").val(),
-							"mobile_no":	jQuery("input[name='mobile_no']").val(),
-							"fax":			jQuery("input[name='fax']").val(),
-							"business_address":jQuery("input[name='business_address']").val(),
-							"city":			jQuery("input[name='city']").val(),
-							"province":		jQuery("input[name='province']").val(),
-							"zip_code":		jQuery("input[name='zip_code']").val(),
-							"ZGlldmlyZ2luamM":jQuery.cookie(token),
-							"submit":"true"
-							};
-					jQuery.post(urls,fields,function(json){
-						var res = jQuery.parseJSON(json);
-						if(res.success == 'false')
-						{
-							alert(res.error);
-						}else{
-							
-						}
-					});
-
-					return false;
 				}
 			},
 			userz: {
@@ -781,6 +726,14 @@ var kpay = {
 						e.preventDefault();
 						jQuery("form.jaddusers")[0].reset();
 						jQuery(".jreg").dialog();
+					});
+				},// update password only
+				show_admin_details_pass: function(urls,token,getid){
+					jQuery("form.ichange_pass")[0].reset();
+					jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
+						var jres = jQuery.parseJSON(ret);
+						jQuery("input[id^='editpass_accountid']").empty().val(jres.account_id);
+						jQuery("input[id^='editpass_username']").empty().val(jres.payroll_cloud_id);
 					});
 				}
 			},

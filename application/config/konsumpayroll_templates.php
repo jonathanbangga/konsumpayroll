@@ -4,8 +4,10 @@
 $config['default'] = 'default_template';
 $config['default_template'] = 'default_template';
 $config['temp_admin'] = 'temp_admin';
+$config['temp_admin_dashboard'] = 'temp_admin_full_width';
 $config['temp_employee'] = 'temp_employee';
 $config['company_dashboard'] = 'company_dashboard';
+
 
 // main menu
 $config['company_dashboard_menu'] = 'content_holders/company_dashboard_menu';

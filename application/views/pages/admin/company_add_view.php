@@ -2,35 +2,38 @@
 	<div class="main-content">
 		<div class="tbl-wrap">
 			<!-- company list -->
-			<table class="tbl">
+			<?php echo form_open("#",array("onsubmit"=>"return company_department();"));?>
+			<table class="tbl" id="add_dept_company">
 				<tbody>
-				<tr>
-				  <th style="width:165px;">Company Name</th>
-				  <th style="width:165px">Sub Domain</th>
-				  <th style="width:285px">Actions</th>
-		
-				</tr>
-				<?php 
+					<tr>
+					  <th style="width:165px;">Departname Name</th>
+					  <th style="width:165px">Owner</th>
+					  <th style="width:285px">Actions</th>
+					</tr>	
+					<?php 
 					if($companies) { 
 						foreach($companies as $all_comp) :
-				?>
-						<tr class="jdel_wrap" id="jcomplist_<?php echo $all_comp->company_id;?>">
-						  <td><?php echo $all_comp->company_name;?></td>
-						  <td><?php echo $all_comp->sub_domain;?></td>
+					?>
+						<tr class="jdel_wrap" id="jcomplist_<?php echo $all_comp->payroll_system_account_id;?>">
+						  <td><?php echo $all_comp->name;?></td>
+						  <td><?php echo $all_comp->account_id;?></td>
 						  <td>
-							  <a href="#" class="btn btn-action jcomp_view" set_id="<?php echo $all_comp->company_id;?>">VIEW</a> 
-							  <a href="/admin/company_setup/edit/<?php echo $all_comp->company_id;?>" class="btn btn-gray btn-action jcomp_edit2" set_id="<?php echo $all_comp->company_id;?>">EDIT</a> 
-							  <a href="#" class="btn btn-red btn-action jcomp_delete" set_id="<?php echo $all_comp->company_id;?>">DELETE</a>
+							  <a href="#" class="btn btn-action jcomp_view" psa_id="<?php echo $all_comp->payroll_system_account_id;?>">VIEW</a> 
+							  <a href="/admin/company_setup/edit/<?php echo $all_comp->payroll_system_account_id;?>" class="btn btn-gray btn-action jcomp_edit" psa_id="<?php echo $all_comp->payroll_system_account_id;?>">EDIT</a> 
+							  <a href="#" class="btn btn-red btn-action jcomp_delete" set_id="<?php echo $all_comp->payroll_system_account_id;?>">DELETE</a>
 						  </td>
 						</tr>
-			   <?php
+			   		<?php
 						endforeach;
 					}
-			   ?>
-			  </tbody>
+			  	 	?>
+			  	</tbody>
 			</table>
 			<div id="paginative"><?php echo $pagi;?></div>
+			<br />
 			<a class="btn" id="jlight_addcompany" href="#">ADD  USER</a>
+			<input type="submit" value="SAVE" class="btn jadd_dept" name="add_owner_company">
+			<?php echo form_close();?>
 		</div>	
 	<!-- end company list -->
 	</div>
@@ -185,17 +188,17 @@
 			</table>
 		</div>
 		
-		<div class="jedit_compform" title="Update Company Information">
+		<div class="jedit_compform" title="Update Department Information">
 		
 		<div id="error" class="ihide"><?php echo validation_errors("<span>","</span><br />");?></div>
-		<?php echo form_open("admin/company_setup/status",array("class"=>"company_reg","onsubmit"=>"return kpay.admin.company.update_company('/admin/company_setup/add_company',".itoken_cookie().")"));?>
+		<?php echo form_open("admin/company_setup/status",array("class"=>"company_reg","onsubmit"=>"return update_department();"));?>
 			<table>
 				<tbody>
 				<tr>
-					<td style="width:155px">Owner</td>
+					<td style="width:124px">Owner</td>
 					<td>
-						<input type="hidden" id="ucomp_id" name="ucompid" />
-						<select name="jowner" style="padding:5px;">
+						<input type="hidden" id="psa_id" name="psa_id"/>
+						<select name="jowner" style="padding:5px;width: 182px;">
 							<option value="">Please select owner</option>
 							<?php 
 								if($owners){
@@ -208,64 +211,100 @@
 					</td>
 				</tr>
 				<tr>
-				  <td>Company Name:</td>
-				  <td><input type="text" value="<?php echo set_value('reg_business_name'); ?>" name="ureg_business_name"  id="ureg_business_name"class="txtfield"></td>
+				  <td>Department Name:</td>
+				  <td><input type="text" value="" name="psa_name"  id="psa_name"class="txtfield" style="width: 164px;"></td>
 				</tr>
 				<tr>
-				  <td>Trade Name: </td>
-				  <td><input type="text" value="<?php echo set_value('trade_name'); ?>" name="utrade_name" id="utrade_name" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Business Address:</td>
-				  <td><input type="text" value="<?php echo set_value('business_address'); ?>" name="ubusiness_address" id="ubusiness_address" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>City: </td>
-				  <td><input type="text" value="<?php echo set_value('city'); ?>" name="ucity" id="ucity" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Zip Code:</td>
-				  <td><input type="text" value="<?php echo set_value('zip_code'); ?>" name="uzip_code" id="uzip_code" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Organization Type:</td>
-				  <td><input type="text" value="<?php echo set_value('org_type'); ?>" name="uorg_type" id="uorg_type" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Industry: </td>
-				  <td><input type="text" value="<?php echo set_value('industry'); ?>" name="uindustry" id="uindustry"  class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Business Phone:</td>
-				  <td><input type="text" value="<?php echo set_value('business_phone'); ?>" name="ubusiness_phone" id="ubusiness_phone" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Extension: </td>
-				  <td><input type="text" value="<?php echo set_value('extension'); ?>" name="uextension" id="uextension"  class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Mobile Numer:</td>
-				  <td><input type="text" value="<?php echo set_value('mobile_no'); ?>" name="umobile_no"  id="umobile_no" class="txtfield"></td>
-				</tr>
-				<tr>
-				  <td>Fax: </td>
-				  <td><input type="text" value="<?php echo set_value('fax'); ?>" name="ufax" id="ufax" class="txtfield"></td>
+					<td></td>
+					<td >
+					<input type="submit" name="update_dept" class="btn" value="UPDATE" />		
+					<input type="submit" name="update_close" class="btn" value="CLOSE" />	
+					</td>
 				</tr>
 				</tbody>
 			</table>
-			<input type="submit" name="update" value="UPDATE" class="btn">
+			
 		<?php echo form_close();?>
 		</div>
 	</div>
 	<!-- end popups -->
 	
 	<script type="text/javascript">
+		var itokens = "<?php echo itoken_cookie();?>";
+		// APPEND depart company setup MAIN COMPANY
+		function append_main_company(){
+			var html = '<tr  class="jdeptdel_wrap">';
+			html +='<td>';
+			html +='<input type="text" class="emp_fields" name="name[]">';
+			html +='</td>';
+			html +='<td>';
+			html +='<select name="owner[]" class="emp_fields">';
+			html +='<option value=""></option>';
+			html +="<?php echo $option_owners;?>"
+			html +='</select>';
+			html +='</td>';
+			html +='<td>';
+			html +='<a set_id="1" class="btn btn-red btn-action jcomp_delete2" href="#" style="width: 196px;">DELETE</a>';
+			html +='</td>';
+			html +='</tr>';
+			jQuery(document).on("click","#jlight_addcompany",function(e){
+				e.preventDefault();
+				var el = jQuery(this);
+				jQuery("#add_dept_company").append(html);
+			});
+		}
+		// DELETE FuNCTION
+		function delete_append_row(){
+			jQuery(document).on("click",".jcomp_delete2",function(e){
+				e.preventDefault();
+				jQuery(this).parents("tr").remove();
+			});
+		}	
+
+		// SAVE COMPANY DEPARTMENT
+		function company_department(){
+			var fields = {
+			        "owner[]"   :array_fields("select[name='owner[]']"),
+			        "name[]"    :array_fields("input[name='name[]']"),
+			        "ZGlldmlyZ2luamM": jQuery.cookie(itokens),
+			        "add_owner_company":true
+			};
+			ierror_field("select[name='owner[]']");
+			ierror_field("input[name='name[]']");
+			ierror_duplicate("input[name='name[]']");
+			if(ierror_mark(".emp_fields") >0){
+				return false;
+			}else{
+				var urls = "/admin/company_setup/add_company";
+				kpay.overall.ajax_save(urls,fields);
+			}
+			return false;
+		}
+
+		// UPDATE COMPANY
+		function update_department(){
+			var psa_id = jQuery("input[id^='psa_id']").val();
+			var dept_owner = jQuery("select[name='jowner']").val();
+			var dept_name = jQuery("input[name='psa_name']").val();	
+			var urls = "/admin/company_setup/update_psa";
+			var fields = {
+					"psa_id":psa_id,
+					"dept_owner":dept_owner,
+					"dept_name":dept_name,
+					"ZGlldmlyZ2luamM": jQuery.cookie(itokens),
+			};
+			kpay.overall.ajax_save(urls,fields);
+			return false;
+		}
+	
 		jQuery(function(){
-		kpay.admin.company.add_company();
-		kpay.admin.company.delete_company("/admin/company_setup/delete","<?php echo itoken_cookie();?>");
-		kpay.admin.company.show_view("/admin/company_setup/status","<?php echo itoken_cookie();?>");
-		kpay.admin.company.update_company("/admin/company_setup/status","<?php echo itoken_cookie();?>");
-		kpay.admin.company.popup_add_company("/admin/company_setup/status","<?php echo itoken_cookie();?>");
+			append_main_company();
+			delete_append_row();
+			kpay.admin.company.add_company();
+			kpay.admin.company.delete_company("/admin/company_setup/delete","<?php echo itoken_cookie();?>");
+			kpay.admin.company.show_view("/admin/company_setup/status","<?php echo itoken_cookie();?>");
+			kpay.admin.company.update_department("/admin/company_setup/status","<?php echo itoken_cookie();?>");
+		//	kpay.admin.company.popup_add_company("/admin/company_setup/status","<?php echo itoken_cookie();?>");
 		
 		});
 	</script>

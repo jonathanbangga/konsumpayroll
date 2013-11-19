@@ -38,6 +38,17 @@
 			}
 		}
 		
+		/**
+		 * GET ADMINS ACCOUNT DETAILS
+		 * get admin account return value
+		 */
+		public function account_admin(){
+			$query = $this->ci->db->get_where("konsum_admin",array("account_id"=>$this->ci->session->userdata("account_id")));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}
+		
 		
 		
 	}
