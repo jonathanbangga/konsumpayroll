@@ -20,7 +20,10 @@
 				  <td><?php echo $row->project_name; ?></td>
 				  <td><?php echo $row->location; ?></td>
 				  <td><?php echo $row->description; ?></td>
-				  <td><a class="btn btn-gray btn-action" href="#">EDIT</a> <a class="btn btn-red btn-action" href="#">DELETE</a></td>
+				  <td>
+				  <a class="btn btn-gray btn-action btn-edit" href="javascript:void(0)">EDIT</a> <a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>.
+				  <input type="hidden" class="loc_id" value="<?php echo $row->location_id; ?>" />
+				  </td>
 				</tr>
 				<?php
 				}
@@ -34,6 +37,7 @@
           <!-- TBL-WRAP END -->
         </div>
         <a class="btn" href="javascript:void(0);" id="add-more">ADD MORE</a>
+		<a href="javascript:void(0);" style="display:none;" id="save" class="btn">SAVE</a>
         <!-- MAIN-CONTENT END -->
       </div>
       <div class="footer-grp-btn">
@@ -74,59 +78,43 @@
 		</p>
 	</div>
 </div>
+
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to delete?: 
+	</div>
+</div>
+
+<div id="location-details-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		<p>
+			Project:<br />
+			<div id="edit_proj"></div>
+		</p>
+		<p>
+			Location:<br />
+			<input type="text" id="edit_loc" name="location">
+		</p>
+		<p>
+			Description:<br />
+			<input type="text" id="edit_desc" name="description">
+		</p>
+	</div>
+</div>
 	  
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 <script>
+jQuery(document).ready(function(){
+
 	// load highlight message script
 	redirect_highlight_message();
 	// add more
-	jQuery("#add-more").click(function(){
-		/*
-		jQuery("#add-more-dialog").dialog({
-			modal: true,
-			show: {
-				effect: "blind"
-			},
-			buttons: {
-				save: function() {
-					var proj = jQuery("#project").val();
-					var loc = jQuery("#location").val();
-					var desc = jQuery("#description").val();
-					var error = "";
-					error = (proj=="0")?"Select Project":"";
-					if(error!=""){
-						alert(error);
-					}else{
-						if(proj!=""){
-							// ajax call
-							jQuery.ajax({
-								type: "POST",
-								url: "/company/hr_setup/locations/ajax_project_location",
-								data: {
-									proj: proj, 
-									loc: loc,
-									desc: desc,
-									<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-								}
-							}).done(function(ret){
-								if(ret==1){
-									jQuery.cookie("msg", "New project had been saved!");
-									window.location="/company/hr_setup/locations";
-								}
-							});
-						}else{
-							alert('Enter employment type');
-						}
-					}					
-				}
-			},
-		});
-		*/						
+	jQuery("#add-more").click(function(){					
 		str = ''+
 			'<tr>'+
 				'<td>'+
-					'<select id="project" style="width: 80px;">'+
+					'<select class="project" style="width: 80px;">'+
 						'<option value="0">--select--</option>'+
 						<?php
 						$str = "";
@@ -137,15 +125,151 @@
 						'<?php echo $str; ?>'+
 					'</select>'+
 				'</td>'+
-				'<td><input type="text" name="location" id="location"></td>'+
-				'<td><input type="text" name="description" id="description"></td>'+
+				'<td><input type="text" name="location" class="location"></td>'+
+				'<td><input type="text" name="description" class="description"></td>'+
 				'<td><a href="javascript:void();" class="btn btn-red btn-action btn-remove">REMOVE</a></td>'+
 			'</tr>';
 		jQuery("#save").show();
 		jQuery(".tbl tbody").append(str);
 	});
-	// remove location
+	// save location
+	jQuery(document).on("click","#save",function(){
+		var proj = new Array();
+		var empty = false;
+		jQuery(".project").each(function(index){
+			if(jQuery(this).val()=="0"){
+				empty = true;
+			}
+			proj[index] = jQuery(this).val();
+		});
+		var loc = new Array();
+		jQuery(".location").each(function(index){
+			loc[index] = jQuery(this).val();
+		});
+		var desc = new Array();
+		jQuery(".description").each(function(index){
+			desc[index] = jQuery(this).val();
+		});
+		var error = "";
+		error = (empty==true)?"Some project are left empty":"";
+		if(error!=""){
+			alert(error);
+		}else{
+			if(proj!=""){
+				// ajax call
+				jQuery.ajax({
+					type: "POST",
+					url: "/company/hr_setup/locations/ajax_project_location",
+					data: {
+						proj: proj, 
+						loc: loc,
+						desc: desc,
+						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+					}
+				}).done(function(ret){
+						jQuery.cookie("msg", "New project location has been saved!");
+						window.location="/company/hr_setup/locations";
+				});
+			}else{
+				alert('Enter employment type');
+			}
+		}
+	});
+	// remove location row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
+		if(jQuery(".project").length==0){
+			jQuery("#save").hide();
+		}
 	});
+	// delete location
+	jQuery(".btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var loc_id = obj.parents("tr").find(".loc_id").val();
+					if(loc_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/locations/ajax_delete_project_location",
+							data: {
+								loc_id: loc_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "A project location has been deleted");
+							window.location="/company/hr_setup/locations";
+						});
+					}else{
+						alert('Location Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	// edit location
+	jQuery(".btn-edit").click(function(){
+		var obj = jQuery(this);
+		var loc_id = obj.parents("tr").find(".loc_id").val();
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/company/hr_setup/locations/ajax_get_project_location",
+			data: {
+				loc_id: loc_id,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			},
+			dataType: 'json'
+		}).done(function(ret){
+			//jQuery.cookie("msg", "A project location has been deleted");
+			//window.location="/company/hr_setup/locations";
+			jQuery("#edit_proj").html(ret.project_name);
+			jQuery("#edit_loc").val(ret.location);
+			jQuery("#edit_desc").val(ret.description);
+			jQuery("#location-details-dialog").dialog({
+				modal: true,
+				show: {
+					effect: "blind"
+				},
+				buttons: {
+					'update': function() {
+						var loc = jQuery("#edit_loc").val();
+						var desc = jQuery("#edit_desc").val();
+						//var loc_id = obj.parents("tr").find(".loc_id").val();
+						if(loc_id!=""){
+							// ajax call
+							jQuery.ajax({
+								type: "POST",
+								url: "/company/hr_setup/locations/ajax_update_project_location",
+								data: {
+									loc_id: loc_id,
+									loc: loc,
+									desc: desc,
+									<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+								}
+							}).done(function(ret){
+								if(ret==1){
+									jQuery.cookie("msg", "Project location has been updated");
+									window.location="/company/hr_setup/locations";
+								}
+							});
+						}else{
+							alert('Location Id is missing');
+						}			
+					}
+				}
+			});
+		});
+	});
+
+});
 </script>

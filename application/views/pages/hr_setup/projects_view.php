@@ -114,9 +114,12 @@ jQuery(document).ready(function(){
 			}
 		}	
 	});
-	// remove project field
+	// remove project row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
+		if(jQuery(".project").length==0){
+			jQuery("#save").hide();
+		}
 	});
 	// delete project
 	jQuery(".btn-delete").click(function(){
@@ -143,7 +146,7 @@ jQuery(document).ready(function(){
 								window.location="/company/hr_setup/projects";
 						});
 					}else{
-						alert('Enter employment type');
+						alert('Project Id is missing');
 					}					
 				},
 				'no': function() {

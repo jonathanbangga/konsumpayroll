@@ -31,7 +31,36 @@ class Locations extends CI_Controller {
 		$proj = $this->input->post('proj');
 		$loc = $this->input->post('loc');
 		$desc = $this->input->post('desc');
-		echo $this->locations_model->add_project_location($proj,$loc,$desc,$this->comp_id);
+		foreach($proj as $index=>$val){
+			$this->locations_model->add_project_location($val,$loc[$index],$desc[$index],$this->comp_id);
+		}
+	}
+	
+	public function ajax_delete_project_location(){
+		$loc_id = $this->input->post('loc_id');
+		$this->locations_model->delete_project_location($loc_id,$this->comp_id);
+		redirect('/company/hr_setup/projects');
+	}
+	
+	public function ajax_get_project_location(){
+		$loc_id = $this->input->post('loc_id');
+		$loc_sql = $this->locations_model->get_locations($this->comp_id,$loc_id);
+		if($loc_sql->num_rows()>0){
+		$loc = $loc_sql->row();
+				$arr = array(
+					"project_name"=>$loc->project_name,
+					"location"=>$loc->location,
+					"description"=>$loc->description
+				);
+			echo json_encode($arr);
+		}
+	}
+	
+	public function ajax_update_project_location(){
+		$loc_id = $this->input->post('loc_id');
+		$loc = $this->input->post('loc');
+		$desc = $this->input->post('desc');
+		echo $this->locations_model->update_project_location($loc,$desc,$loc_id,$this->comp_id);
 	}
 	
 }

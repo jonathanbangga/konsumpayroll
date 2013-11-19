@@ -6,12 +6,14 @@ class Locations_model extends CI_Model {
         parent::__construct();
     }
 	
-	public function get_locations($company_id){
+	public function get_locations($company_id,$location_id=""){
+		$location_str = ($location_id!="")?"AND l.`location_id` = {$location_id}":"";
 		return $this->db->query("
 			SELECT *
 			FROM `location` AS l
 			LEFT JOIN `project` AS p ON ( l.`project_id` = p.`project_id` ) 
 			WHERE l.`company_id` = {$company_id}
+			{$location_str}
 		");
 	}
 	
@@ -24,7 +26,7 @@ class Locations_model extends CI_Model {
 	}
 	
 	public function add_project_location($project_id,$location,$description,$company_id){
-		return $this->db->query("
+		$this->db->query("
 			INSERT INTO 
 			`location` (
 				`project_id`,
@@ -38,6 +40,25 @@ class Locations_model extends CI_Model {
 				'{$description}',
 				{$company_id}
 			)
+		");
+	}
+	
+	public function delete_project_location($location_id,$company_id){
+		$this->db->query("
+			DELETE 
+			FROM `location`
+			WHERE `location_id` = {$location_id}
+			AND `company_id` = {$company_id}
+		");
+	}
+	
+	public function update_project_location($location,$description,$location_id,$company_id){
+		return $this->db->query("
+			UPDATE `location`
+			SET `location` = '{$location}',
+				`description` = '{$description}'
+			WHERE `location_id` = {$location_id}
+			AND `company_id` = {$company_id}
 		");
 	}
 	

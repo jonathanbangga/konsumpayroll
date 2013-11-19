@@ -172,20 +172,24 @@ jQuery(document).ready(function(){
 			buttons: {
 				'save': function() {
 					var name = jQuery("#app_pro").val();
-					// ajax call
-					jQuery.ajax({
-						type: "POST",
-						url: "/company/hr_setup/approval_groups/ajax_add_approval_process",
-						data: {
-							name: name, 
-							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-						}
-					}).done(function(ret){
-						if(ret==1){
-							jQuery.cookie("msg", "New approval process had been saved!");
-							window.location="/company/hr_setup/approval_groups";
-						}
-					});
+					if(name!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/approval_groups/ajax_add_approval_process",
+							data: {
+								name: name, 
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							if(ret==1){
+								jQuery.cookie("msg", "New approval process had been saved!");
+								window.location="/company/hr_setup/approval_groups";
+							}
+						});
+					}else{
+						alert("Approval process is empty");
+					}
 				}
 			}
 		});
