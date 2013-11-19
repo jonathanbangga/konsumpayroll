@@ -1,15 +1,20 @@
 	<!-- MAIN-CONTENT START -->
-		<?php echo form_open("company/company_setup/add");?>
-		<?php 
-			echo $errors;
-		?>	
+		<?php echo form_open_multipart("company/company_setup/company_information/index");?>
+		<div class="error_message ihide" id="error_sections_reg">
+		<?php  echo $errors; ?>	
+		</div>
+		
         <div class="tbl-wrap">
 	
           <!-- TBL-WRAP START -->
           <table>
             <tr>
               <td style="width:155px">Registered Business Name:</td>
-              <td><input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" ></td>
+              <td>
+              	<input class="txtfield" name="old_company_name" type="hidden" value="<?php echo $company_info ? $company_info->company_name : "";?>" >
+              	<input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" >
+              	<input type="hidden" name="subdomain" status="<?php echo $this->company_id;?>" value="<?php echo  $company_info ? $company_info->sub_domain : '';?>"/>
+              </td>
             </tr>
             <tr>
               <td>Trade Name: </td>
@@ -30,10 +35,15 @@
             <tr>
               <td>Organization Type:</td>
               <td>
-				<input type="radio" value="government" name="organization_type">Government
-				<input type="radio" value="private" name="organization_type">Private
-				<input type="radio" value="non-profit organization" name="organization_type">Non-profit organization
-			  
+				<?php 
+					$select_org_type = $company_info ? $company_info->organization_type : "";
+					$org_type_selection = array("government","private","non-profit organization");
+					foreach($org_type_selection as $otypekey=>$otypeval):
+					
+					$state_check = $select_org_type == $otypeval ? "checked=\"checked\"": '';
+					echo "&nbsp;<input type=\"radio\" value=\"{$otypeval}\" name=\"organization_type\" {$state_check}> ".$otypeval;
+					endforeach;
+				?>
 			  </td>
             </tr>
             <tr>
@@ -53,9 +63,44 @@
               <td>Fax: </td>
               <td><input class="txtfield" name="fax" type="text" value="<?php echo $company_info ? $company_info->fax : "";?>" ></td>
             </tr>
+            <tr>
+              <td>Logo: </td>
+              <td>
+              <input type="hidden" name="upload_image" value="<?php echo $company_info ? $company_info->company_logo : ''?>" />
+              <input class="txtfields cssupload" name="upload" type="file" value="" >
+              	
+              </td>
+            </tr>
           </table>
           <!-- TBL-WRAP END -->
         </div>
 		<input type="submit" name="next" class="btn" value="Next"/>
 		<?php echo form_close();?>
 	<!-- MAIN-CONTENT END -->
+	
+	<script type="text/javascript">
+		// CREATE SUB DOMAIN
+		function create_subdomain(){
+			jQuery("input[name='company_name']").keyup(function(){
+			    var v = jQuery.trim(jQuery(this).val());
+			    var clean = v.replace(/\s/g, '');
+				var check_add_update = jQuery("input[name='subdomain']").attr("status");
+			    	jQuery("input[name='subdomain']").val(clean);
+			});
+		}
+
+		// CHECK ERRORS ON SUBMISSION
+		function have_error(){
+			var error = jQuery.trim(jQuery("#error_sections_reg").text());
+			if(error !=""){
+				alert(jQuery("#error_sections_reg").html());
+			}
+		}
+
+		jQuery(function(){
+			create_subdomain();
+		});
+		jQuery(window).load(function(){
+			have_error();
+		});
+	</script>

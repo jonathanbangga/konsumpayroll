@@ -17,7 +17,8 @@ class Authentication {
 			if($sql->num_rows()>0){
 				$a = $sql->row();
 				$newdata = array(
-                   'account_id'  => $a->account_id
+                   'account_id'  => $a->account_id,
+				   'account_type_id'  => $a->account_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
 				redirect('/admin/dashboard');
@@ -30,7 +31,9 @@ class Authentication {
 			if($sql->num_rows()>0){
 				$a = $sql->row();
 				$newdata = array(
-                   'account_id'  => $a->account_id
+                   'account_id'  => $a->account_id,
+				   'account_type_id'  => $a->account_type_id,
+				   'psa_id'  => $a->payroll_system_account_id
 				);
 				$this->ci->session->set_userdata($newdata);
 				redirect('/company/dashboard/company_list');
@@ -48,9 +51,20 @@ class Authentication {
 	}
 	
 	public function logout(){
+		$account_type_id = $this->ci->session->userdata('account_type_id');
+		if($account_type_id==1){
+			$this->destroy_session();
+			redirect('/login/admin');
+		}else{
+			$this->destroy_session();
+			redirect('/');
+		}	
+	}
+	
+	public function destroy_session(){
 		$this->ci->session->unset_userdata('account_id');
+		$this->ci->session->unset_userdata('account_type_id');
 		$this->ci->session->sess_destroy();
-		redirect('/');
 	}
 	
 }

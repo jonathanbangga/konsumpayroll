@@ -1,3 +1,4 @@
+<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>Move employment type from left to right those that are applicable to your company. If there are employment <br>
@@ -21,6 +22,15 @@
 			?>
           </select>
           <select id="area2" class="txtselect select-employement-type right" multiple="multiple" name="">
+			<?php
+			if($aet->num_rows()>0){
+				foreach($aet->result() as $row){
+				?>
+					<option value="<?php echo $row->emp_type_id; ?>"><?php echo $row->name; ?></option>
+				<?php
+				}
+			}
+			?>
           </select>
           <!-- EMPLOYMENT-TYPE-WRAP END -->
           <div class="clearB">
@@ -41,14 +51,55 @@
 	</div>
 </div>
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 <script>
 jQuery(document).ready(function(){
+
+	// load highlight message script
+	redirect_highlight_message();
+
 	// assign employment type
 	jQuery("#arrow-right").click(function(){
-		jQuery("#area1 option:selected").appendTo("#area2")
+		var et = new Array();
+		var i= 0;
+		jQuery("#area1 option:selected").each(function(){
+			et[i] = jQuery(this).val();
+			i++;
+		});
+		var cid = <?php echo $comp_id; ?>; // company id
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			data: {
+				cid: cid,
+				et: et,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		});
+		highlight_message("Changes saved!");
+		jQuery("#area1 option:selected").appendTo("#area2");
 	});
 	jQuery("#arrow-left").click(function(){
-		jQuery("#area2 option:selected").appendTo("#area1")
+		var et = new Array();
+		var i= 0;
+		jQuery("#area2 option:selected").each(function(){
+			et[i] = jQuery(this).val();
+			i++;
+		});
+		var cid = 0	; // company id
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			data: {
+				cid: cid,
+				et: et,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		});
+		highlight_message("Changes saved!");
+		jQuery("#area2 option:selected").appendTo("#area1");
 	});
 	// add more
 	jQuery("#add-more").click(function(){
@@ -71,6 +122,7 @@ jQuery(document).ready(function(){
 							}
 						}).done(function(ret){
 							if(ret==1){
+								jQuery.cookie("msg", "New employee type had been saved!");
 								window.location="/company/hr_setup/employment_type";
 							}
 						});

@@ -26,6 +26,7 @@ class Users extends CI_Controller {
 		$this->num_pagi = 5;
 		$this->all_user = "/admin/users/all_users/";
 		$this->admin_url = "/admin/users/all_admin";
+		$this->load->helper('email');
 	}
 
 	public function index()
@@ -57,7 +58,7 @@ class Users extends CI_Controller {
         $config["uri_segment"] 	= $this->segment_url;
         $this->pagination->initialize($config);
 		$pagi_url = $this->uri->segment(4) == "" ?  0 : $this->uri->segment(4);
-		$data['client_user'] 	= $this->users_model->fetch_admin($config['per_page'],intval($pagi_url));
+		$data['client_user'] 	= $this->users_model->fetch_admin($config['per_page'],intval($pagi_url));	
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/admin_view', $data);	
@@ -70,7 +71,7 @@ class Users extends CI_Controller {
 				if($this->form_validation->run() == false) {
 					echo json_encode(validation_errors());
 				} else {
-				$user_item = $this->users_model->select_admin_user($this->input->post("admin_id"));
+				$user_item = $this->users_model->get_admin_fulldetails($this->input->post("admin_id"));
 					echo json_encode($user_item);
 				}
 			}
@@ -104,7 +105,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
 					$email =  $this->db->escape_str($this->input->post("email_address"));
-					#---------- PAYROLL SYSTEM ACCOUNT ------#
+					#---------- PAYROLL SYSTEM ACCOUNT -----#
 					$payroll_field = array(
 									"company_owner_email"	=> $email,
 									"status"			=> "Active"
@@ -115,11 +116,13 @@ class Users extends CI_Controller {
 						$account_field = array(
 									"payroll_system_account_id" => $payroll_system_account_id,
 									"email"				=> $email,
-									"account_type_id"	=> 4,
-									"password"			=> $this->input->post("password")
+									"account_type_id"	=> 2,
+									"password"			=> $this->input->post("password"),
+									"user_type_id"		=> 2
 							);		
+					// CHECK USERTYPE_ID SINCE IT'S AN OWNER 1-ADMIN 2-OWNER 3-HR 4-ACCOUNTANT
 						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
-					#--------- COMPANY_OWNER --------------#
+					#--------- COMPANY_OWNER ---------------#
 						if($account_id){
 							$company_owner_field = array(
 									"owner_name"		=> $this->input->post("owner_name"),
@@ -145,18 +148,31 @@ class Users extends CI_Controller {
 		if($this->input->is_ajax_request()){
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('name','name','xss_clean|trim|required');
-				$this->form_validation->set_rules('username','username','xss_clean|trim|required|callback_admin_username_check');
-				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|callback_email_check');
+				$this->form_validation->set_rules('username','username','xss_clean|trim|required|is_unique[accounts.payroll_cloud_id]');
+				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|[accounts.email]');
 				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
-					$fields = array(
-								"name"		=> $this->db->escape_str($this->input->post('name')),
-								"username" 	=> $this->db->escape_str($this->input->post('username')),
-								"email_address" => $this->db->escape_str($this->input->post('email_address')),
-								"password"		=> $this->db->escape_str(md5($this->input->post('password')))
-							);
-					$this->users_model->add_all_admin($fields);
+					
+					
+					
+					$email = $this->db->escape_str($this->input->post('email_address'));			
+					$account_field = array(
+							"payroll_cloud_id" => $this->input->post('username'),
+							"account_type_id"  => 1, // BECAUSE 1= ADMIN 2= USER ( EMPLOYEE,USER)
+							"user_type_id"	   => 1, // 1=admin 2=owner 3=hr 4=accountant
+							"email"			   => $email,
+							"password"		   => $this->db->escape_str(md5($this->input->post('password'))),
+							"deleted"		   => '0'
+					);	
+					$account_id = $this->users_model->add_data_fields("accounts",$account_field);			
+					if($account_id){
+						$konsum_admin_field = array(
+							"name"			=> $this->db->escape_str($this->input->post('name')),
+							"account_id" 	=> $account_id 
+						);	
+						$this->users_model->add_data_fields("konsum_admin",$konsum_admin_field);	
+					}
 					echo json_encode(array("success"=>"1","error_msg"=>""));
 				}else{
 					$error = validation_errors('<span class="error_zone">','</span>');
@@ -167,6 +183,48 @@ class Users extends CI_Controller {
 			show_404();
 		}
 	}	
+	
+	/**
+	 * ADDS ADMIN MULTIPLE INPUT
+	 * @return JSON AJAX
+	 */
+	public function add_admin(){
+		if($this->input->post('save_user')){
+			$name = $this->input->post('name');
+			if($name){
+				foreach($name as $key=>$val):
+					$this->form_validation->set_rules("name[{$key}]","Name","required|trim|xss_clean");
+					$this->form_validation->set_rules("username[{$key}]","Username","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
+				endforeach;
+				if($this->form_validation->run() == true){
+					foreach($name as  $key=>$val){
+						//ADD FIRST IN ACCOUNT
+						$account_field = array(
+							"payroll_cloud_id" => $val,
+							"account_type_id"  => 1, // BECAUSE 1= ADMIN 2= USER ( EMPLOYEE,USER)
+							"user_type_id"	   => 1, // 1=admin 2=owner 3=hr 4=accountant
+							"password"		   => $this->db->escape_str(md5($this->input->post('password'))),
+							"deleted"		   => '0'
+						);	
+						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
+						// ADD IN KONSUM ADMIN ACCOUNT
+						if($account_id){
+							$konsum_admin_field = array(
+								"name"			=> $this->db->escape_str($val),
+								"account_id" 	=> $account_id 
+							);	
+							$this->users_model->add_data_fields("konsum_admin",$konsum_admin_field);	
+						}
+					}	
+					echo json_encode(array("success"=>"1","error"=>""));
+					return false;
+				}else{
+					$error = validation_errors('<span class="error_zone">','</span>');
+					echo json_encode(array("success"=>"0","error"=>$error));
+				}
+			}
+		}
+	}
 	
 	public function update_users() {
 		if($this->input->is_ajax_request()) {
@@ -213,21 +271,27 @@ class Users extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
-				$this->form_validation->set_rules('edit_id','id','xss_clean|trim|required');
-				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_check');
-				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_admin_username_update_check');
-				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
+				$this->form_validation->set_rules('accounts_id','Admin id','xss_clean|trim|required');
+				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_update_check');
+				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required');
+				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim');
 				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
-				if($this->form_validation->run() == true) {	
-					$fields = array(
-								"name"		=> $this->db->escape_str($this->input->post('edit_name')),
-								"username" 	=> $this->db->escape_str($this->input->post('edit_username')),
-								"email_address" => $this->db->escape_str($this->input->post('edit_email')),
-								"password"		=> $this->db->escape_str(md5($this->input->post('edit_password')))
-							);
-					$this->users_model->update_admin_user($fields,$this->input->post('edit_id'));
-					echo json_encode(array("error_msg"=>'',"success"=>"1"));
+				if($this->form_validation->run() == true) {
+					$account_id = $this->db->escape_str($this->input->post('accounts_id'));	
+					$email = $this->db->escape_str($this->input->post('edit_email'));
+					// UPDATE ACCOUNTS OF KONSUM ADMIN
+					$account_field = array(
+							"payroll_cloud_id" => $this->input->post('edit_username'),
+							"email"			   => $email,
+							"password"		   => md5($this->input->post('edit_password')),
+					);	
+					$this->users_model->update_data_fields("accounts",$account_field,array("account_id"=>$account_id));	
+					// UPDATES ACCOUNTS ON KONSUM ADMIN
+					$konsum_admin_field = array("name"	=> $this->input->post('edit_name'));	
+					$this->users_model->update_data_fields("konsum_admin",$konsum_admin_field,array("account_id"=>$account_id));	
+					// RETURNS JSON SUCCESS ELSE FALSE	
+					echo json_encode(array("error_msg"=>'',"success"=>"1"));		
 				} else {
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
 				}
@@ -237,12 +301,24 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * DELETE ADMIN USERS 
+	 * @return json response
+	 */
 	public function delete_admin_user() {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('delete')) {
 				$this->form_validation->set_rules("admin_id","user","xss_clean|trim|required");
 				if($this->form_validation->run()) {
-					$this->users_model->delete_users_id("konsum_admin",array("konsum_admin_id"=>$this->input->post("admin_id")));
+					$check_admin = $this->users_model->select_admin_user($this->input->post("admin_id"));
+					if($check_admin){
+						$fields = array(
+								"deleted" 	=>"1",
+								"status" 	=>"Inactive"
+						);
+						$this->users_model->update_data_fields("konsum_admin",$fields,array("konsum_admin_id"=>$this->input->post("admin_id")));
+						$this->users_model->update_data_fields("accounts",array("deleted"=>"1"),array("user_type_id"=>"1","account_type_id"=>"1","account_id"=>$check_admin->account_id));
+					}
 				}else{
 					echo json_encode(array("error_msg"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
 				}
@@ -259,13 +335,16 @@ class Users extends CI_Controller {
 	public function delete_user() {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('delete')) {
-				$this->form_validation->set_rules("admin_id","user","xss_clean|trim|required");
+				$this->form_validation->set_rules("company_owner_id","user","xss_clean|trim|required");
 				if($this->form_validation->run()) {
-					$fields = array(
-								"status" => "Inactive",
-								"deleted" => "1"
-							);
-					$this->users_model->disable_user($fields,$this->input->post('admin_id'));
+					$check_user = $this->users_model->single_company_owner($this->input->post('company_owner_id'));
+					if($check_user){ // CHECK THE USER IF VALID
+						$fields = array("status"=>"Inactive","deleted" =>"1");	
+						$fields_accounts = array( "deleted"=>"1" );	
+						$this->users_model->update_data_fields("accounts",$fields_accounts,array("account_id"=>$check_user->account_id));
+						$this->users_model->update_data_fields("payroll_system_account",array("status"=>"Inactive"),array("payroll_system_account_id"=>$check_user->payroll_system_account_id));
+						$this->users_model->update_data_fields("company_owner",$fields,array("account_id"=>$this->input->post('company_owner_id')));
+					}
 				}else{
 					echo validation_errors();
 				}
@@ -309,21 +388,75 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	public function add_owners(){
+		if($this->input->post('add_owner')){
+			$this->form_validation->set_rules('owners_name[]',"Owners name","required|callback_check_owners_name|trim|xss_clean|callback_check_owners_name");
+			$this->form_validation->set_rules('owners_email[]',"Email address","valid_email|required|trim|xss_clean|callback_check_owners_email");
+			if($this->form_validation->run() == false){
+				echo validation_errors();
+			}else{
+				foreach($this->input->post('owners_name') as $key=>$val):
+				$owners_name =  $val;
+				$owners_current_email  =  $this->input->post('owners_email');
+				$owners_email = $owners_current_email[$key];		
+				// save the company owner
+				$this->users_model->save_owners($owners_name,$owners_email);
+				endforeach;
+			}	
+		}
+	}
+	
 	/**
-	 * 
-	 * admin email checks
-	 * @param string $str
-	 * @return callbacks
+	 * CAllback on adding a user on OWNER
+	 * @return callbacks checking files
 	 */
-	public function admin_email_check($str){
-		$old_email = $this->input->post("edit_old_email");
-		$query = $this->db->query("SELECT * from konsum_admin WHERE email_address ='{$this->db->escape_str($str)}' AND NOT email_address = '{$old_email}'");
-		$row = $query->row();
-		if($row){
-			$this->form_validation->set_message("admin_email_check","The email address is already in uses");
-			return false;
-		}else{
+	public function check_owners_name() {
+		$flag = "";
+		foreach($this->input->post('owners_name') as $key=>$val):
+			if($val == "") $flag++;
+		endforeach;
+		if($flag ==""){
 			return true;
+		}else{
+			$this->form_validation->set_message("check_owners_name","The Owners name field is required.");
+			return false;
+		}
+	}
+	
+	/**
+	 * CALLBACK ADDING OWNERS EMAIL CHECKING IF EMAILS ALREADY IN USED OR NOT
+	 * @return callback
+	 */
+	public function check_owners_email(){
+		$old_email = $this->input->post('edit_old_email');
+		$flag = "";
+		$flag_exist_email = "";
+		$email_exists = array();
+		foreach($this->input->post('owners_email') as $key=>$val):
+			if($val != ""){
+				$query = $this->db->query("SELECT * from accounts WHERE email ='{$this->db->escape_str($val)}' and deleted='0'");
+				$row = $query->num_rows();
+				$result = $query->row();
+				$query->free_result();
+				if($row){
+					$email_exists[] = $result->email;
+					$flag_exist_email++;
+				}
+			}else{
+				$flag++;
+			} 
+		endforeach;
+		if($flag > 0){	
+			$this->form_validation->set_message("check_owners_email","The Email Address is requireds.");
+			return false;
+		}
+		if($flag_exist_email > 0){
+			$exist_now = implode(",",$email_exists);
+			$this->form_validation->set_message("check_owners_email","The Email Address is already in used. ie(".$exist_now.")");
+			return false;
+		}
+		if($flag =="" && $flag_exist_email ==""){
+			return TRUE;
 		}
 	}
 	
@@ -335,10 +468,10 @@ class Users extends CI_Controller {
 	 */
 	public function admin_username_update_check($str){
 		$old_username = $this->input->post("edit_username_old");
-		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}' AND NOT username='{$old_username}'");
+		$query = $this->db->query("SELECT * from accounts WHERE  payroll_cloud_id ='{$this->db->escape_str($str)}' AND NOT payroll_cloud_id='{$old_username}'");
 		$row = $query->row();
 		if($row){
-			$this->form_validation->set_message("admin_username_check","The username is already in use");
+			$this->form_validation->set_message("admin_username_update_check","The username is already in use");
 			return false;
 		}else{
 			return true;
@@ -353,7 +486,7 @@ class Users extends CI_Controller {
 	 */
 	public function admin_username_check($str){
 		$old_username = $this->input->post("edit_username_old");
-		$query = $this->db->query("SELECT * from konsum_admin WHERE username ='{$this->db->escape_str($str)}'");
+		$query = $this->db->query("SELECT * from accounts WHERE payroll_cloud_id ='{$this->db->escape_str($str)}'");
 		$row = $query->row();
 		if($row){
 			$this->form_validation->set_message("admin_username_check","The username is already in use");

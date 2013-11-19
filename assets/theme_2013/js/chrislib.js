@@ -80,7 +80,8 @@ var kpay = {
 					jQuery(document).on("click", ".jdel_approvers", function (e) {
 						e.preventDefault();
 						var el = jQuery(this);
-						var unique_id = el.attr("account_id");
+						var unique_id = el.attr("acid");
+						var act_id = el.attr("account_id");
 						jQuery(".opt_selection").empty().html(message);
 						jQuery(".opt_selection").dialog({
 							resizable: false,
@@ -93,12 +94,13 @@ var kpay = {
 								"Yes": function () {
 									jQuery("#jwrap_"+unique_id).remove();
 									jQuery(".opt_selection").dialog("close");
-									jQuery.post(urls,{"account_id":unique_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
+									jQuery.post(urls,{"account_id":act_id,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(json){
 										var result = jQuery.parseJSON(json);
 										if(result.success == '0'){
-											alert('error');
+											alert(result.error);
 										}else{
-											alert('success');
+										jQuery(".success_messages").empty().html("<p>You have Successfully deleted company approver</p>");
+										kpay.overall.show_success(".success_messages");
 										}
 									});
 								},
@@ -108,6 +110,81 @@ var kpay = {
 							}
 						});
 					});
+				},
+				get_approvers: function(urls,token,company_id,account_id){
+					jQuery.post(urls,{
+						"company_id":company_id,
+						"account_id":account_id,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery("input[id^='edit_company_id']").empty().val(results.approvers.company_id);
+							jQuery("input[id^='edit_account_id']").empty().val(results.approvers.account_id);
+							jQuery("input[id^='edit_fname']").empty().val(results.approvers.first_name);
+							jQuery("input[id^='edit_mname']").empty().val(results.approvers.middle_name);
+							jQuery("input[id^='edit_lname']").empty().val(results.approvers.last_name);
+							jQuery("input[id^='edit_email']").empty().val(results.approvers.email);
+							jQuery("input[id^='old_edit_email']").empty().val(results.approvers.email);
+							jQuery("input[id^='edit_mobile']").empty().val(results.approvers.mobile_no);
+							jQuery("input[id^='edit_level']").empty().val(results.approvers.level);
+							kpay.overall.show_pops(".jpop_edit_approvers");	
+						}else{
+							alert(results.error);
+						}
+					});
+				},
+				update_approverscompany: function(urls,token){
+					var comp_id = jQuery("input[id^='edit_company_id']").val();
+					var account_id = jQuery("input[id^='edit_account_id']").val();
+					var fname	=jQuery("input[id^='edit_fname']").val();
+					var mname	=jQuery("input[id^='edit_mname']").val();
+					var lname	=jQuery("input[id^='edit_lname']").val();
+					var email	=jQuery("input[id^='edit_email']").val();
+					var mobile	=jQuery("input[id^='edit_mobile']").val();
+					var old_email =jQuery("input[id^='old_edit_email']").val(); 
+					var level	=jQuery("input[id^='edit_level']").val();
+					jQuery.post(urls,{
+						"edit_company_id":comp_id,
+						"edit_account_id":account_id,
+						"edit_fname":fname,
+						"edit_mname":mname,
+						"edit_lname":lname,
+						"edit_email":email,
+						"old_edit_email":old_email,
+						"edit_mobile":mobile,
+						"edit_level":level,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						console.log(results);
+						if(results.success == "1"){
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated company approvers</p>");
+							kpay.overall.show_success(".success_messages");
+						}else{
+							alert(results.error);
+						}
+					});
+				},
+				add_approvers: function(urls,token,emp_id,first_name,middle_name,last_name,level){
+					jQuery.post(urls,{
+						"emp_id[]":emp_id,
+						"first_name[]":first_name,
+						"middle_name[]":middle_name,
+						"last_name[]":last_name,
+						"level[]":level,
+						"approver_save":'true',
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated company approvers</p>");
+							kpay.overall.show_success(".success_messages");
+						}else{
+							alert(results.error);
+						}
+					});
+					return false;
 				}
 			},
 			principal:{
@@ -176,24 +253,83 @@ var kpay = {
 				}
 			},
 			cost_center:{
-				add_costcenter: function(urls,token){
+				add_costcenter: function(urls,token,center_code,description){
 					var fields = {
-							"cost_center_code":jQuery("input[name='cost_center_code']").val(),
-							"add_desc":	jQuery("textarea[name='add_desc']").val(),
-							"company_id":jQuery("input[name='subscription_date']").val(),
+							"cost_center_code[]":center_code,
+							"cost_center_description[]":description,
 							"ZGlldmlyZ2luamM":jQuery.cookie(token),
 							"submit":"true"
 							};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
-						if(res.success == 'false')
+						if(res.success == 0)
 						{
 							alert(res.error);
 						}else{
-							
+							jQuery(".success_messages").empty().html("<p>You have Successfully added cost center</p>");
+							kpay.overall.show_success(".success_messages");
 						}
 					});
 					return false;
+				},
+				delete_costcenter: function(urls,token,cost_center_id,company_id){
+					var fields = {
+							"cost_center_id":cost_center_id,
+							"company_id":company_id,
+							"ZGlldmlyZ2luamM":jQuery.cookie(token),
+							"delete":'true'
+							};
+					jQuery.post(urls,fields,function(json){
+						var res = jQuery.parseJSON(json);
+						if(res.success == 0)
+						{
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully deleted cost center</p>");
+							kpay.overall.show_success(".success_messages");
+						}
+						
+					});
+					return false;
+				},
+				get_cost_center: function(urls,token,comp_id,cost_id){
+					jQuery.post(urls,{
+						"company_id":comp_id,
+						"cost_center_id":cost_id,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token)
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery("input[id^='edit_id_cost_center']").empty().val(results.cost_centers.cost_center_id);
+							jQuery("input[id^='old_edit_cost_center_code']").empty().val(results.cost_centers.cost_center_code);
+							jQuery("#edit_company_id").empty().val(results.cost_centers.company_id);
+							jQuery("input[id^='edit_cost_center_code']").empty().val(results.cost_centers.cost_center_code);
+							jQuery("#edit_desc").empty().val(results.cost_centers.description);
+							kpay.overall.show_pops("#jeditparent_costcenter");
+						}else{
+							alert(results.error);
+						}
+					});
+				},
+				update_cost_center: function(urls,token,comp_id,cost_center_id,cost_center_code,desc,cost_center_id_old){
+					jQuery.post(urls,{
+						"company_id":comp_id,
+						"cost_center_id":cost_center_id,
+						"old_edit_cost_center_code":cost_center_id_old,
+						"cost_center_code":cost_center_code,
+						"description":desc,
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"update":"true"
+					},function(res){
+						var results = jQuery.parseJSON(res);
+						if(results.success == "1"){
+							jQuery(".success_messages").empty().html("<p>You have Successfully updated cost center</p>");
+							jQuery("#jeditparent_costcenter").dialog('close');
+							kpay.overall.show_success(".success_messages");
+						}else{
+							alert(results.error);
+						}
+					});
 				}
 			}
 		},
@@ -443,8 +579,7 @@ var kpay = {
 							jQuery("input[id^='edit_account_id']").val(jres.account_id);
 							jQuery("input[id^='edit_payroll_system_account_id']").val(jres.payroll_system_account_id);
 							jQuery("input[id^='edit_pass']").val();
-							jQuery("input[id^='edit_cpass']").val();
-							
+							jQuery("input[id^='edit_cpass']").val();	
 						});
 					});
 				},
@@ -491,7 +626,7 @@ var kpay = {
 							buttons: {
 							"Yes": function () {
 								jQuery("#jcomp_"+ids).remove();
-								jQuery.post(urls,{"admin_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
+								jQuery.post(urls,{"company_owner_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
 								jQuery(".option_alert").dialog("close");
 							},
 							No: function () {
@@ -532,16 +667,16 @@ var kpay = {
 						e.preventDefault();
 						var el = jQuery(this);
 						var getid= el.attr("set_id");
-						jQuery(".edit_users_reg").dialog();
+						kpay.overall.show_pops(".edit_users_reg");
 						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
 							jQuery("input[id^='edit_name']").val(jres.name);
-							jQuery("input[id^='edit_id']").val(jres.konsum_admin_id);
-							jQuery("input[id^='edit_email']").val(jres.email_address);
-							jQuery("input[id^='edit_old_email']").val(jres.email_address);
-							jQuery("input[id^='edit_username']").val(jres.username);
-							jQuery("input[id^='edit_username_old']").val(jres.username);
+							jQuery("input[id^='accounts_id']").val(jres.account_id);
+							jQuery("input[id^='edit_email']").val(jres.email);
+							jQuery("input[id^='edit_old_email']").val(jres.email);
+							jQuery("input[id^='edit_username']").val(jres.payroll_cloud_id);
+							jQuery("input[id^='edit_username_old']").val(jres.payroll_cloud_id);
 							jQuery("input[id^='edit_password']").val();
 							jQuery("input[id^='edit_cpassword']").val();
 						});
@@ -552,7 +687,7 @@ var kpay = {
 					url:urls,
 					type: "POST",
 					data:{
-						'edit_id':jQuery("input[name='id']").val(),
+						'accounts_id':jQuery("input[name='accounts_id']").val(),
 						'edit_name':jQuery("input[name='name']:visible").val(),
 						'edit_email':jQuery("input[name='email_address']:visible").val(),
 						'edit_username':jQuery("input[name='username']:visible").val(),
@@ -641,7 +776,7 @@ var kpay = {
 						});						
 					});
 				},
-				show_add_form: function(){
+				show_add_form: function(){ // NOT USED
 					jQuery(document).on('click',"#jlight_adduser",function(e){
 						e.preventDefault();
 						jQuery("form.jaddusers")[0].reset();
@@ -672,6 +807,56 @@ var kpay = {
 		}
 };
 
+// global functions 
+// returns array fields like input[name='empid[]'] 
+function array_fields(field){
+	var object_data = [];
+		jQuery(field).each(function(a,b){
+			object_data.push(jQuery(this).val());  
+		});
+	return object_data;	
+}
+// ADD ERROR TO YOUR FIELDS
+function ierror_field(fields){
+	jQuery(fields).each(function(e){
+		var el = jQuery(this);
+		if(el.val() == ""){
+			jQuery(this).addClass('emp_str');
+		}else{
+			jQuery(this).removeClass('emp_str');
+		}
+	});
+}
+// MARK ERROR
+function ierror_mark(fields){
+	var codered = 0;
+	jQuery(fields).each(function(){
+		if(jQuery(this).hasClass("emp_str")){
+			codered++;
+		}
+	});
+	return codered;
+}
+
+// MARK DUPLICATE
+function ierror_duplicate(fields){
+	var dup = 0;
+	jQuery(fields).each(function(){
+		var first = jQuery(this).val();
+		 jQuery(fields).not(this).each(function(){
+			var el = jQuery(this);
+			var second =el.val();
+			 if(first !="" && second !=""){
+				 if(first == second){
+					 dup++;
+					 el.addClass("emp_str");
+				 }
+			 }
+		});
+	});
+	return dup;
+}
+
 // overwrite comments
 window.alert = function(msg){
    jQuery(".source_error").html(msg);
@@ -692,7 +877,11 @@ window.alert = function(msg){
 	   },
 	   overlay: {
    		   opacity: 0
-   	   }
+   	   },
+	   show: {
+			effect: "bounce",
+			duration:'slow'
+		}
    });
 }
 

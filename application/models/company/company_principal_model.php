@@ -84,7 +84,7 @@
 					and e.status = 'Active' and e.deleted = '0' and cp.status = 'Active' and cp.deleted = '0' 
 					and a.deleted = '0'";
 				$sql = "SELECT DISTINCT concat( e.first_name, ' ', e.last_name ) AS fullname,e.emp_id,e.account_id,e.payroll_group_id,e.permission_id,e.company_id,e.rank_id,e.dept_id,e.location_id,e.last_name,e.first_name,e.middle_name,e.dob,
-					e.gender,e.marital_status,e.address,e.contact_no,e.mobile_no,e.home_no,e.photo,e.tin,e.hdmf,e.sss,e.phil_health,e.gsis,e.emergency_contact_person,e.emergency_contact_number,e.position_id,e.`status`,e.deleted,a.account_id,a.payroll_cloud_id,a.account_type_id,a.email,a.deleted,cp.deleted,cp.`status`,cp.company_principal_id
+					e.gender,e.marital_status,e.address,e.mobile_no,e.home_no,e.photo,e.tin,e.hdmf,e.sss,e.phil_health,e.gsis,e.emergency_contact_person,e.emergency_contact_number,e.position_id,e.`status`,e.deleted,a.account_id,a.payroll_cloud_id,a.account_type_id,a.email,a.deleted,cp.deleted,cp.`status`,cp.company_principal_id
 					FROM employee e
 					LEFT JOIN company_principal cp ON e.emp_id = cp.emp_id
 					LEFT JOIN accounts a ON a.account_id = e.account_id
@@ -135,6 +135,12 @@
 			}
 		}
 		
+		/**
+		 * Checks payroll id if EXIST OR NOT AND CHANGE THE PAYROLL CLOUD ID by ORIGINAL ACCOUNT OWNER
+		 * @param int $old_payroll_cloud_id
+		 * @param int $new_payroll_cloud_id
+		 * @return boolean used for callbacks 
+		 */
 		public function check_payrol_cloud_id($old_payroll_cloud_id,$new_payroll_cloud_id){
 			$old_payroll_cloud_id = $this->db->escape_str($old_payroll_cloud_id);
 			$new_payroll_cloud_id = $this->db->escape_Str($new_payroll_cloud_id);
@@ -146,6 +152,18 @@
 				$query->free_result();
 				return $row ? true : false;	
 			}
+		}
+		
+		/**
+		 * FETCH COMPANY PRINCIPAL
+		 * @param array $where
+		 * @return object
+		 */
+		public function fetch_company_principal($where){
+			$query = $this->db->get_where("company_principal",$where);
+			$row = $query->row();
+			$query->free_result();
+			return $row;
 		}
 		
 		

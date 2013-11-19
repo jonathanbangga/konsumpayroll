@@ -4,16 +4,19 @@ class Employment_type extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
+	protected $comp_id;
 	
 	public function __construct() {
 		parent::__construct();
 		// menu and authentication
 		$this->theme = $this->config->item('default');
-		$this->menu = 'content_holders/company_menu';	
-		$this->sidebar_menu = 'content_holders/hr_setup_sidebar_menu';
+		$this->menu = $this->config->item('add_company_menu');
+		$this->sidebar_menu = $this->config->item('add_company_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/employment_type_model');	
+		// default
+		$this->comp_id = 6;
 	}
 
 	public function index(){
@@ -23,6 +26,8 @@ class Employment_type extends CI_Controller {
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
 		$data['et'] = $this->employment_type_model->get_employment_type();
+		$data['aet'] = $this->employment_type_model->get_assigned_employment_type();
+		$data['comp_id'] = $this->comp_id;
 		$this->layout->view('pages/hr_setup/employment_type_view',$data);
 	}
 	
@@ -31,6 +36,11 @@ class Employment_type extends CI_Controller {
 		echo $this->employment_type_model->add_employment_type($et);
 	}
 
+	public function ajax_assign_employment_type(){
+		$cid = $this->input->post('cid');
+		$et = $this->input->post('et');
+		$this->employment_type_model->update_employment_type($cid,$et);
+	}
 	
 }
 

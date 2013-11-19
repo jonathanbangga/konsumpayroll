@@ -29,6 +29,10 @@ class Dashboard extends CI_Controller {
 		$this->layout->view('pages/dashboard_view', $data);
 	}
 	
+	public function we(){
+	p($this->session->all_userdata());
+	}
+	
 }
 
 /* End of file */

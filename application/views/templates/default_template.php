@@ -2,7 +2,7 @@
 	$main_menu = "content_holders/main_menu";
 	$company_wizards_menu = "content_holders/company_wizards_menu";
 	$script_library = "content_holders/script_library";
-	$header_panel = "content_holders/header_panel";
+	$header_panel = "content_holders/company_dashboard_header_panel";
 	$main_header = "content_holders/main_header";
 ?>
 <!DOCTYPE HTML>
@@ -16,7 +16,6 @@
 <link href="/assets/theme_2013/css/global.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/custom.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/external-css.css" type="text/css" rel="stylesheet" media="screen" />
-<link href="/assets/theme_2013/css/custom-theme/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 <link href="/assets/theme_2013/css/custom-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/theme_2013/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/assets/theme_2013/js/customSelect.jquery.js"></script>
@@ -55,9 +54,7 @@
     <div class="rbox left">
       <!-- RBOX START -->
 	    <h1><?php echo $page_title;?></h1>
-		<div class="main-content">
 		<?php print $layout_contents;?>
-		</div>
       <!-- RBOX END -->
     </div>
     <div class="clearB"></div>
