@@ -3,12 +3,24 @@
 			<?php 
 			foreach($company->result() as $row){?>
 			 <tr>
-              <td class="txtcenter" style="width:200px;"><img src="<?php echo $row->company_logo ?>" alt=" "></td>
+              <td class="txtcenter" style="width:200px;">
+              
+              <img src="<?php echo image_exist($row->company_logo,$row->company_id);?>" class="list_logos" alt=" ">
+              
+              </td>
               <td style="width:340px;"><h1><?php echo $row->company_name; ?></h1></td>
-              <td style="width:200px;" class="txtright"><a class="btn btn-gray" href="#">MANAGE</a> <a class="btn btn-red" href="#">DELETE</a></td>
+              <td style="width:200px;" class="txtright">
+              <a class="btn btn-gray" href="<?php echo "/".$row->sub_domain."/hr/emp_basic_information"?>">MANAGE</a> 
+              <a class="btn btn-red" href="#">DELETE</a>
+              </td>
             </tr>
 			<?php 
 			} ?>
           </table>
         </div>
+        <?php 
+        $row = $this->profile->accounts();
+		
+		p($row);
+        ?>
         <a href="/company/company_setup/company_information/" class="btn">ADD COMPANY</a>

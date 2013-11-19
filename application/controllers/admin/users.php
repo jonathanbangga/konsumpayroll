@@ -153,6 +153,9 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
 				if($this->form_validation->run() == true){
+					
+					
+					
 					$email = $this->db->escape_str($this->input->post('email_address'));			
 					$account_field = array(
 							"payroll_cloud_id" => $this->input->post('username'),
@@ -180,6 +183,48 @@ class Users extends CI_Controller {
 			show_404();
 		}
 	}	
+	
+	/**
+	 * ADDS ADMIN MULTIPLE INPUT
+	 * @return JSON AJAX
+	 */
+	public function add_admin(){
+		if($this->input->post('save_user')){
+			$name = $this->input->post('name');
+			if($name){
+				foreach($name as $key=>$val):
+					$this->form_validation->set_rules("name[{$key}]","Name","required|trim|xss_clean");
+					$this->form_validation->set_rules("username[{$key}]","Username","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
+				endforeach;
+				if($this->form_validation->run() == true){
+					foreach($name as  $key=>$val){
+						//ADD FIRST IN ACCOUNT
+						$account_field = array(
+							"payroll_cloud_id" => $val,
+							"account_type_id"  => 1, // BECAUSE 1= ADMIN 2= USER ( EMPLOYEE,USER)
+							"user_type_id"	   => 1, // 1=admin 2=owner 3=hr 4=accountant
+							"password"		   => $this->db->escape_str(md5($this->input->post('password'))),
+							"deleted"		   => '0'
+						);	
+						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
+						// ADD IN KONSUM ADMIN ACCOUNT
+						if($account_id){
+							$konsum_admin_field = array(
+								"name"			=> $this->db->escape_str($val),
+								"account_id" 	=> $account_id 
+							);	
+							$this->users_model->add_data_fields("konsum_admin",$konsum_admin_field);	
+						}
+					}	
+					echo json_encode(array("success"=>"1","error"=>""));
+					return false;
+				}else{
+					$error = validation_errors('<span class="error_zone">','</span>');
+					echo json_encode(array("success"=>"0","error"=>$error));
+				}
+			}
+		}
+	}
 	
 	public function update_users() {
 		if($this->input->is_ajax_request()) {
@@ -229,7 +274,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('accounts_id','Admin id','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_update_check');
 				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required');
-				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
+				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim');
 				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
 				if($this->form_validation->run() == true) {

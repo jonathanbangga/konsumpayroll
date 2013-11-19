@@ -63,7 +63,6 @@ width:90px;
 width: 129px;
 }
 /** end cost center **/
-
 /* highlight message(jc) - start */
 .highlight_message{
 	background-color: #D7F3BD;
@@ -77,5 +76,17 @@ input,select{
 }
 select{
 	padding-top: 3px;
+}
+
+.list_logos{
+width:200px;
+height:200px;
+}
+
+input.btn[type="submit"] {
+    height: 27.4px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+	font:12px Trebuchet MS",​Arial,​Helvetica,​sans-serif
 }
 
