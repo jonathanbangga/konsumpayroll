@@ -6,19 +6,18 @@
 	margin-top: 15px;
 }
 .jdialog input{
-	height: 25px;
-	margin-top: 12px;
 	width: 200px;
+	height: 30px;
+	padding-left: 5px;	
+	margin-top: 10px;
+}
+.jdialog select{
+	width: 200px;
+	height: 30px;
+	padding:4px 0 0 6px;
+	margin-top: 10px;
 }
 .ui-dialog-buttonpane{
 	border-top: none;
 }
 /* dialog box - end */
-/* highlight message - start */
-.highlight_message{
-	background-color: #D7F3BD;
-    display: inline-block;
-    margin-bottom: 11px;
-    padding: 8px
-}
-/* highlight message - end */

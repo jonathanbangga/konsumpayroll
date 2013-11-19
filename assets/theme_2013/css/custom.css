@@ -63,3 +63,19 @@ width:90px;
 width: 129px;
 }
 /** end cost center **/
+
+/* highlight message(jc) - start */
+.highlight_message{
+	background-color: #D7F3BD;
+    display: inline-block;
+    margin-bottom: 11px;
+    padding: 8px
+}
+/* highlight message(jc) - end */
+input,select{
+	height: 25px;
+}
+select{
+	padding-top: 3px;
+}
+
