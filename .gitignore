@@ -9,6 +9,5 @@ application/logs/*
 !application/logs/.htaccess
 
 # jc git ignore
-uploads/companies/*
 application/config/config.php
 application/config/database.php
