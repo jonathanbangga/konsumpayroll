@@ -468,6 +468,7 @@ var kpay = {
 							function (json) {
 								var res = jQuery.parseJSON(json);  
 								jQuery("#psa_name").empty().val(res.name);
+								jQuery("#old_psa_name").empty().val(res.name);
 								jQuery("select[name='jowner']").val(res.company_owner_id);
 								jQuery("#psa_id").empty().val(res.payroll_system_account_id);
 								jQuery(".jedit_compform").dialog({	
@@ -818,7 +819,7 @@ window.alert = function(msg){
 	   draggable: false,
 	   modal: true,
 	   width:'auto',
-	   minWidth:'400',
+	   minWidth:'500',
 	   dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
@@ -830,11 +831,7 @@ window.alert = function(msg){
 	   },
 	   overlay: {
    		   opacity: 0
-   	   },
-	   show: {
-			effect: "bounce",
-			duration:'slow'
-		}
+   	   }
    });
 }
 

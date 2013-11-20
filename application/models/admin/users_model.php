@@ -128,7 +128,7 @@ class Users_model extends CI_Model {
 			#$query = $this->db->get_where("company_owner",array("company_owner_id"=>$id));
 			$query = $this->db->query(
 			"SELECT co.company_owner_id,co.owner_name,co.mobile,co.country,co.date,co.`status`,co.deleted AS company_deleted,co.account_id,co.address,co.street,
-			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.company_owner_email,psa.`status` AS psa_status
+			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.`status` AS psa_status
 			FROM `company_owner` co
 			LEFT JOIN accounts a on a.account_id = co.account_id 
 			LEFT JOIN payroll_system_account psa on psa.payroll_system_account_id = a.payroll_system_account_id
@@ -252,23 +252,23 @@ class Users_model extends CI_Model {
 		}
 	}
 	
+	/**
+	 * SAVE OWNERS FOR LOOP
+	 * Enter description here ...
+	 * @param unknown_type $owners_name
+	 * @param unknown_type $email_address
+	 */
 	public function save_owners($owners_name,$email_address){
 		$owners_name = $this->db->escape_str($owners_name);
 		$email =  $this->db->escape_str($email_address);
-		#---------- PAYROLL SYSTEM ACCOUNT -----#
-		$payroll_field = array(
-						"company_owner_email"	=> $email,
-						"status"			=> "Active"
-					);
-		$payroll_system_account_id = $this->add_data_fields("payroll_system_account",$payroll_field);
-		if($payroll_system_account_id){
 		#---------- ACCOUNT --------------------#
 			$account_field = array(
-						"payroll_system_account_id" => $payroll_system_account_id,
+						"payroll_system_account_id" => 0,
 						"email"				=> $email,
 						"account_type_id"	=> 2,
 						"password"			=> md5(idates_now()),
-						"user_type_id"		=> 2
+						"user_type_id"		=> 2,
+						"deleted"			=> '0'
 				);		
 			$account_id = $this->add_data_fields("accounts",$account_field);	
 		#--------- COMPANY_OWNER ---------------#
@@ -280,11 +280,10 @@ class Users_model extends CI_Model {
 						"status"			=> "Active"
 				);		
 				$this->add_data_fields("company_owner",$company_owner_field);
+				return true;
+			}else{
+				return false;
 			}
-			return TRUE;
-		}else{
-			return FALSE;
-		}
 	}
 	
 }

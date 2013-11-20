@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2013 at 09:51 AM
+-- Generation Time: Nov 20, 2013 at 02:40 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -37,85 +37,18 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `token` varchar(250) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=73 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_account_id`, `password`, `account_type_id`, `email`, `user_type_id`, `token`, `deleted`) VALUES
-(1, 'admin', 0, 'admin', 1, 'admin@yahoo.com', 1, 'gwapoakoohyeah', '0'),
-(2, 'chris@chris.com', 17, 'tech123', 2, 'chris@chris.com', 2, '', '1'),
-(3, '10-060073', 0, 'bfec45245c286e72707af2a1b922c516', 2, '', 3, '', '0'),
-(4, '10-060074', 0, '1bbd886460827015e5d605ed44252251', 2, 'chris@chris.com', 3, '', '0'),
-(5, '10-060075', 0, 'bfec45245c286e72707af2a1b922c516', 2, '', 3, '', '0'),
-(6, '10-060075', 0, 'bfec45245c286e72707af2a1b922c516', 2, '', 3, '', '0'),
-(7, '10-060073', 0, 'bfec45245c286e72707af2a1b922c516', 2, '', 3, '', '0'),
-(8, '10-060074', 0, 'f43482b539682eb2372e16480ab7be3d', 2, '', 3, '', '0'),
-(9, '10-0600743', 0, 'f43482b539682eb2372e16480ab7be3d', 2, '', 3, '', '0'),
-(10, '10-060074', 0, '93d789ac1e4070857a53bba67eeb52b5', 2, '', 3, '', '0'),
-(11, '10-0600743', 0, '93d789ac1e4070857a53bba67eeb52b5', 2, '', 3, '', '0'),
-(12, '10-060074', 0, '251ef663d56c453e31ba60bf61fdaee8', 2, '', 3, '', '0'),
-(13, '10-060076', 0, '251ef663d56c453e31ba60bf61fdaee8', 2, '', 3, '', '0'),
-(14, '3', 0, 'c6efabfe8dd610eca4ea7d6e176a48cc', 2, '', 3, '', '1'),
-(15, '', 0, 'c6efabfe8dd610eca4ea7d6e176a48cc', 2, '', 3, '', '1'),
-(16, '', 0, 'c6efabfe8dd610eca4ea7d6e176a48cc', 2, '', 3, '', '1'),
-(17, '', 0, '60a3a1804a11007482a23752c2a3c8b6', 2, '', 3, '', '1'),
-(18, '', 0, '60a3a1804a11007482a23752c2a3c8b6', 2, '', 3, '', '1'),
-(19, '3', 0, '60a3a1804a11007482a23752c2a3c8b6', 2, '', 3, '', '1'),
-(20, '', 0, 'e24637a5c27d385b3cdf73a793d2348b', 2, '', 3, '', '1'),
-(21, '', 0, 'e24637a5c27d385b3cdf73a793d2348b', 2, '', 3, '', '1'),
-(22, '3', 0, 'e24637a5c27d385b3cdf73a793d2348b', 2, '', 3, '', '1'),
-(23, '', 0, '66922386f5df61685f5b371ae77b6cd9', 2, '', 3, '', '1'),
-(24, '', 0, '66922386f5df61685f5b371ae77b6cd9', 2, '', 3, '', '1'),
-(25, '4', 0, '66922386f5df61685f5b371ae77b6cd9', 2, '', 3, '', '1'),
-(26, 'b', 0, '57dbb642286f81e047fd7a57cbd9568e', 2, '', 3, '', '1'),
-(27, 'c', 0, '57dbb642286f81e047fd7a57cbd9568e', 2, '', 3, '', '1'),
-(28, 'd', 0, '57dbb642286f81e047fd7a57cbd9568e', 2, '', 3, '', '1'),
-(29, '12312323', 0, '1a4e730e8465860f2c4031be66c291c3', 3, 'allan@vergara.com', 0, '', '0'),
-(30, '123123233', 0, '7e26058b187268899f80c5ded619c32c', 3, 'allan3@vergara.com', 0, '', '0'),
-(31, '1', 0, '90e703ee8e99c588f7bbb3630d5a66f3', 3, 'christopher@yahoo.com', 0, '', '0'),
-(32, '2', 0, 'f83ee0be6d7b6ceca17dcecad1277ee0', 3, 'christopher2@yahoo.com', 0, '', '0'),
-(33, '3', 0, 'f83ee0be6d7b6ceca17dcecad1277ee0', 3, 'christopher3@yahoo.com', 0, '', '0'),
-(34, '12345678', 0, 'c3a4cef721eea83aca8fd358871e0b87', 3, 'christopher2@yahoo.com', 0, '', '0'),
-(35, '', 0, '4202e67575c4940a37d82a915ab6483d', 3, '', 0, '', '0'),
-(36, '', 0, '4202e67575c4940a37d82a915ab6483d', 3, '', 0, '', '0'),
-(37, '', 0, '4202e67575c4940a37d82a915ab6483d', 3, '', 0, '', '0'),
-(38, '', 0, '07d0d72ed39b67ecb8aa62d68f76071f', 3, '', 0, '', '0'),
-(39, '10-0600716', 0, '63de377094e3e5886145d977c60f8892', 3, 'joe.3christian@techgrowthglobal.com', 0, '', '0'),
-(40, '10-060072', 0, '63de377094e3e5886145d977c60f8892', 3, 'joe.christian@techgrowthglobal.com', 0, '', '0'),
-(41, '155', 0, 'a7c6f410c3d71026a47c096903a768b3', 3, 'joe.christian@tech3growthglobal.com', 0, '', '0'),
-(42, '3555', 0, 'a7c6f410c3d71026a47c096903a768b3', 3, 'joe.christian@tec3hgrowthglobal.com', 0, '', '0'),
-(43, '2', 0, '64558f2f223354bc9de65e6e578a40f7', 2, '', 3, '', '0'),
-(44, '4', 0, '64558f2f223354bc9de65e6e578a40f7', 2, '', 3, '', '0'),
-(45, '33', 0, '8e9ca5ce77c56b9d19a3e94f480e4472', 3, 'christoph3er2@yahoo.com', 0, '', '0'),
-(46, '42323', 0, 'c75a8804f8be21a8ac5038101fa111fd', 2, '', 3, '', '1'),
-(47, '2323', 0, '626bb87388a9dc37cb60ab654c03e718', 2, 'admin123@yahoo.com', 3, '', '1'),
-(48, '444444', 0, '5162f988eae47f08c1dd2458da22393c', 2, 'chris@techgrowthglobal.com', 3, '', '1'),
-(49, '31232', 0, '2645d7c82b8046a697bb78685bd7f8c3', 3, 'website@qa.com', 0, '', '0'),
-(50, '1', 0, 'c8ef0759f16b6bc54bb33a8dd2342585', 2, '', 3, '', '1'),
-(51, '354545', 0, 'c8ef0759f16b6bc54bb33a8dd2342585', 2, '', 3, '', '1'),
-(52, '4', 0, 'c8ef0759f16b6bc54bb33a8dd2342585', 2, 'we3@yahoo.com', 3, '', '0'),
-(53, '1', 0, 'bd1bc5590518a5d41e263f1d1064549c', 2, 'chris@techgrowthglobal.com', 3, '', '1'),
-(54, '23', 0, 'bd1bc5590518a5d41e263f1d1064549c', 2, 'chris@techgrowthglobal.com', 3, '', '1'),
-(55, '23123123', 0, 'b82e693b31795105355107118c1e22af', 2, 'tetew@yahoo.com', 3, '', '1'),
-(56, '11111111111111111', 0, 'f3a18d2f883737a7fe0ea48f927d583a', 2, 'we2@yahoo.com', 3, '', '0'),
-(57, '1111122323', 0, '7b6b52109f449e50af680df95f80a3fa', 2, '', 3, '', '0'),
-(58, '22222222222', 0, '35759b28a43d9af446a712e4fda58995', 2, '', 3, '', '0'),
-(59, '', 18, 'password', 2, 'jonathan@banga.com', 2, '', '1'),
-(60, 'admin@yahoo.com', 0, '3325b3371681e9381a2c8610f34aaae7', 1, 'admin1@yahoo.com', 1, '', '1'),
-(61, 'admin@yahoo.com', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '0'),
-(62, 'admin@yahoo.com', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '1'),
-(63, 'admin@yahoo.com', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '1'),
-(64, 'admin@yahoo.com', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '1'),
-(65, 'a', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '1'),
-(66, 'femae', 0, 'd41d8cd98f00b204e9800998ecf8427e', 1, '', 1, '', '1'),
-(67, 'christopher admin cuizon', 0, '18dff74c86bbd2834c9dff6ee7dfc417', 1, 'dsdfs34234@yahoo.com', 1, '', '0'),
-(68, 'jonadddd12', 0, '42ed400e44fc7f6aea284d9c2fe9ca24', 1, 'dsdfs342344@yahoo.com', 1, '', '0'),
-(69, 'dsdfs34234', 0, '18dff74c86bbd2834c9dff6ee7dfc417', 1, 'dsdfs34234@yahoo.com', 1, '', '0'),
-(70, 'admin2323', 0, '3a990cdecc7d237a2b1e69e3736cdaff', 1, '', 1, '', '0'),
-(71, 'admin345', 0, '982c43a5e6709027913a425298eca39d', 1, '', 1, '', '0'),
-(72, 'admin3453', 0, '0e81637455d08398f93ce4e6bd848405', 1, '', 1, '', '0');
+(1, '', 4, '05d5d1168a8c16e9bab0f0ed956d691e', 2, 'joe@techgrowthglobal.com', 2, '', '0'),
+(2, '', 5, '05d5d1168a8c16e9bab0f0ed956d691e', 2, 'christopher.cuizon@techgrowthglobal.com', 2, '', '0'),
+(3, '', 6, '9dacbf073f9938a03acd10b23a6817b7', 2, 'joe@alcomendras.com', 2, '', '0'),
+(4, '', 7, 'fbee1c9abffe28f2d1a144fbdfd5c27a', 2, 'jonathan@banga.com', 2, '', '0'),
+(5, '', 0, '8cb52caf041ccba4e435bc393bc638ed', 2, 'ronelo@yahoo.com', 2, '', '0');
 
 -- --------------------------------------------------------
 
@@ -150,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -165,7 +98,23 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (6, 'administrator has added a company', '2013-11-19 06:43:23', 0, '0'),
 (7, 'administrator has added a company', '2013-11-19 06:43:40', 0, '0'),
 (8, 'admins has added a company', '2013-11-19 08:13:53', 0, '0'),
-(9, 'admins cuizon has added a company', '2013-11-19 08:14:12', 0, '0');
+(9, 'admins cuizon has added a company', '2013-11-19 08:14:12', 0, '0'),
+(10, 'admins cuizon has added a company', '2013-11-19 10:27:40', 0, '0'),
+(11, 'admins cuizon has added a company', '2013-11-19 10:34:14', 0, '0'),
+(12, 'admins cuizon has added a company', '2013-11-19 11:40:26', 0, '0'),
+(13, 'admins cuizon has added a company', '2013-11-19 11:40:27', 0, '0'),
+(14, 'admins cuizon has added a company', '2013-11-19 11:40:49', 0, '0'),
+(15, 'admins cuizon has added a company', '2013-11-19 11:40:49', 0, '0'),
+(16, 'admins cuizon has added a company', '2013-11-19 11:41:31', 0, '0'),
+(17, 'admins cuizon has added a company', '2013-11-19 11:46:54', 0, '0'),
+(18, 'admins cuizon has added a company', '2013-11-19 11:46:54', 0, '0'),
+(19, 'admins cuizon has added a company', '2013-11-19 11:48:01', 0, '0'),
+(20, 'admins cuizon has added a company', '2013-11-19 12:01:21', 0, '0'),
+(21, 'admins cuizon has added a company', '2013-11-19 12:01:21', 0, '0'),
+(22, 'admins cuizon has added a company', '2013-11-19 12:06:01', 0, '0'),
+(23, 'admins cuizon has added a company', '2013-11-19 12:06:01', 0, '0'),
+(24, 'admins cuizon has added a company', '2013-11-19 12:07:12', 0, '0'),
+(25, 'admins cuizon has added a company', '2013-11-19 12:14:42', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -500,8 +449,6 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
   `mobile` varchar(50) NOT NULL,
   `country` varchar(50) NOT NULL,
   `date` datetime NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`company_owner_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
@@ -510,10 +457,12 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
 -- Dumping data for table `company_owner`
 --
 
-INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `date`, `status`, `deleted`, `account_id`) VALUES
-(1, 'james wilkinson', '', '', '', '0', '2147483647', '', '2013-11-11 07:49:50', 'Active', '0', 1),
-(4, 'christopher cuizon', '', '', '', '0', '0', '', '2013-11-12 03:09:42', 'Active', '0', 2),
-(5, 'jonathan bangga', '', '', '', '0', '0', '', '2013-11-18 02:22:28', 'Active', '0', 59);
+INSERT INTO `company_owner` (`company_owner_id`, `owner_name`, `address`, `street`, `city`, `zipcode`, `mobile`, `country`, `date`, `account_id`) VALUES
+(1, 'christopher cuizon', '', '', '', '', '', '', '2013-11-19 11:59:20', 1),
+(2, 'erap estrada', '', '', '', '', '', '', '2013-11-19 11:59:20', 2),
+(3, 'joe christian alcomendras', '', '', '', '', '', '', '2013-11-19 12:06:58', 3),
+(4, 'jonathan bangga', '', '', '', '', '', '', '2013-11-19 12:09:51', 4),
+(5, 'ronelo ronelo', '', '', '', '', '', '', '2013-11-19 12:15:49', 5);
 
 -- --------------------------------------------------------
 
@@ -1565,22 +1514,23 @@ INSERT INTO `payroll_group` (`payroll_group_id`, `payroll_group_name`, `minimum_
 
 CREATE TABLE IF NOT EXISTS `payroll_system_account` (
   `payroll_system_account_id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_owner_email` varchar(200) NOT NULL,
   `account_id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
   `subscription_date` datetime NOT NULL,
   `subscription_end_date` datetime NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`payroll_system_account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `payroll_system_account`
 --
 
-INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `company_owner_email`, `account_id`, `name`, `subscription_date`, `subscription_end_date`, `status`) VALUES
-(17, 'chris@chris.com', 2, 'sfsf', '2013-11-19 04:01:23', '0000-00-00 00:00:00', 'Active'),
-(18, 'jonathan@banga.com', 59, 'sdfsdffff', '2013-11-19 04:01:23', '0000-00-00 00:00:00', 'Active');
+INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `account_id`, `name`, `subscription_date`, `subscription_end_date`, `status`) VALUES
+(4, 1, 'tetew', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active'),
+(5, 2, 'dsfsf', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active'),
+(6, 3, 'tetews', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active'),
+(7, 4, 'asdasd', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active');
 
 -- --------------------------------------------------------
 

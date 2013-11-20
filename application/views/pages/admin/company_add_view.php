@@ -189,7 +189,6 @@
 		</div>
 		
 		<div class="jedit_compform" title="Update Department Information">
-		
 		<div id="error" class="ihide"><?php echo validation_errors("<span>","</span><br />");?></div>
 		<?php echo form_open("admin/company_setup/status",array("class"=>"company_reg","onsubmit"=>"return update_department();"));?>
 			<table>
@@ -212,18 +211,20 @@
 				</tr>
 				<tr>
 				  <td>Department Name:</td>
-				  <td><input type="text" value="" name="psa_name"  id="psa_name"class="txtfield" style="width: 164px;"></td>
+				  <td>
+					  <input type="text" value="" name="psa_name"  id="psa_name"class="txtfield" style="width: 164px;">
+					  <input type="hidden" value="" name="old_psa_name"  id="old_psa_name" class="txtfield" style="width: 164px;">
+				  </td>
 				</tr>
 				<tr>
 					<td></td>
-					<td >
-					<input type="submit" name="update_dept" class="btn" value="UPDATE" />		
-					<input type="submit" name="update_close" class="btn" value="CLOSE" />	
+					<td>
+						<input type="submit" name="update_dept" class="btn" value="UPDATE" />		
+						<input type="submit" name="update_close" class="btn" value="CLOSE" />	
 					</td>
 				</tr>
 				</tbody>
 			</table>
-			
 		<?php echo form_close();?>
 		</div>
 	</div>
@@ -283,15 +284,18 @@
 
 		// UPDATE COMPANY
 		function update_department(){
-			var psa_id = jQuery("input[id^='psa_id']").val();
-			var dept_owner = jQuery("select[name='jowner']").val();
-			var dept_name = jQuery("input[name='psa_name']").val();	
-			var urls = "/admin/company_setup/update_psa";
+			var psa_id 		= jQuery.trim(jQuery("input[id^='psa_id']").val());
+			var dept_owner 	= jQuery.trim(jQuery("select[name='jowner']").val());
+			var dept_name 	= jQuery.trim(jQuery("input[name='psa_name']").val());
+			var old_psa_name = jQuery.trim(jQuery("input[name='old_psa_name']").val());	
+			var urls 	= "/admin/company_setup/update_psa";
 			var fields = {
 					"psa_id":psa_id,
 					"dept_owner":dept_owner,
 					"dept_name":dept_name,
+					"update_dept":"true",
 					"ZGlldmlyZ2luamM": jQuery.cookie(itokens),
+					"old_psa_name":old_psa_name
 			};
 			kpay.overall.ajax_save(urls,fields);
 			return false;
