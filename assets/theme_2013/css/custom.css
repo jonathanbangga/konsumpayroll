@@ -91,3 +91,19 @@ input.btn[type="submit"] {
 	font:12px Trebuchet MS",​Arial,​Helvetica,​sans-serif
 }
 
+.ownerd,.view_company .jowner
+{
+	width:200px;
+}
+.jview_name,.jview_city,.jview_street{
+	text-transform:capitalize;
+}
+
+.list_logos_small{
+	width:50px;
+	height:50px;
+}
+
+.complist > li {
+    padding-bottom: 10px;
+}

@@ -49,6 +49,23 @@
 			return $row;
 		}
 		
+		public function get_account($account_id,$user_type="company_owner"){
+			switch($user_type):
+				case "company_owner":
+					$query = $this->ci->db->query(
+							"SELECT * FROM `accounts` a
+							LEFT JOIN company_owner co on a.account_id = co.account_id 
+							WHERE a.account_type_id = 2 and a.account_id = '{$this->ci->db->escape_str($account_id)}'");
+					$row = $query->row();
+					$query->free_result();
+					return $row;
+				break;
+				case "":
+					
+				break;
+			endswitch;
+		}
+		
 		
 		
 	}

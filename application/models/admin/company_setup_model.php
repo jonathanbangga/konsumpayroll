@@ -21,7 +21,7 @@ class Company_setup_model extends CI_Model {
 	 * Enter description here ...
 	 */
 	public function display_owners(){ 
-		$query 	= $this->db->get_where("company_owner",array("status"=>"Active","deleted"=>"0"));
+		$query 	= $this->db->get_where("company_owner");
 		$row	= $query->result();
 		$query->free_result();
 		return $row;
@@ -41,7 +41,7 @@ class Company_setup_model extends CI_Model {
 	
 	public function owners_no_psa(){
 		$query = $this->db->query(
-					"SELECT * FROM `company_owner` co
+					"SELECT * FROM company_owner co
 					LEFT JOIN accounts a on a.account_id = co.account_id
 					WHERE a.user_type_id = 2 AND a.payroll_system_account_id = 0 AND
 					a.deleted = '0'"
@@ -50,6 +50,24 @@ class Company_setup_model extends CI_Model {
 		$query->free_result();
 		return $result;
 	}
+	
+	/**
+	 * CHECK AVAILABLE OWNERS NO PSA INCLUDE
+	 * Enter description here ...
+	 * @param int $account_id
+	 */
+	public function owners_no_psa_include($account_id){
+		$query = $this->db->query(
+					"SELECT a.account_id,co.owner_name,a.payroll_system_account_id FROM company_owner co
+					LEFT JOIN accounts a on a.account_id = co.account_id
+					WHERE a.account_id = '{$this->db->escape_str($account_id)}' OR a.user_type_id = 2 AND a.payroll_system_account_id = 0 AND
+					a.deleted = '0'"
+		);
+		$result = $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
 	
 	public function display_owners_options(){
 		$owners = $this->owners_no_psa();
@@ -102,7 +120,7 @@ class Company_setup_model extends CI_Model {
 			WHERE a.user_type_id = 2 AND psa.payroll_system_account_id = {$this->db->escape_str($comp_id)}"
 		);
 		$rows = $query->row();
-		$query->free_result();
+		$query->free_result();	
 		return $rows;
 	}
 	
@@ -212,6 +230,27 @@ class Company_setup_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 	
+	/**
+	 * THIS IS FOR THE AJAX RETURN VIEW CHECK THE DEPARTMENT DETAILS ( eq: parent company)
+	 * Enter description here ...
+	 * @param int $psa_id
+	 * @return object
+	 */
+	public function department_details($psa_id){
+		if($psa_id){
+			$query = $this->db->query(
+				"SELECT * FROM accounts a
+				LEFT JOIN company_owner co on co.account_id = a.account_id
+				LEFT JOIN payroll_system_account psa on psa.payroll_system_account_id = a.payroll_system_account_id
+				WHERE a.payroll_system_account_id !=0 AND  a.payroll_system_account_id = '{$this->db->escape_str($psa_id)}'"
+			);
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
 
 }
 
