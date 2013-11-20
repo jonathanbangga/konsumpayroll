@@ -32,7 +32,7 @@
 	function check_user_admin(){
 		$CI =& get_instance();
 		$id = $CI->session->userdata('account_id');
-		$query = $CI->db->get_where("konsum_admin",array("konsum_admin_id"=>$id));
+		$query = $CI->db->get_where("konsum_admin",array("account_id"=>$id));
 		$row = $query->row();
 		return $row;
 	}

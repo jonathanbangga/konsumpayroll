@@ -18,9 +18,4 @@
 			} ?>
           </table>
         </div>
-        <?php 
-        $row = $this->profile->accounts();
-		
-		p($row);
-        ?>
         <a href="/company/company_setup/company_information/" class="btn">ADD COMPANY</a>

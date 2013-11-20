@@ -27,10 +27,8 @@ class Company_setup extends CI_Controller {
 	public function index(){
 		redirect("admin/company_setup/add");
 	}
-	
-	
-	public function add()
-	{		
+
+	public function add(){		
 		$config["base_url"] 	= "/admin/company_setup/add";
         $config["total_rows"] 	= $this->company_setup->count_company();
         $config["per_page"] 	= $this->num_pagi;
@@ -40,7 +38,7 @@ class Company_setup extends CI_Controller {
 		$data['page_title'] = "Department Setup";	
 		$data['owners']		= $this->company_setup->display_owners(); # for dropdowns 
 		$data['companies'] 	= $this->company_setup->fetch_company($config["per_page"],$pagi_url);
-		$data['option_owners']		= $this->company_setup->display_owners_options();
+		$data['option_owners'] = $this->company_setup->display_owners_options();
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/company_add_view', $data);	
@@ -103,8 +101,10 @@ class Company_setup extends CI_Controller {
 				return false;
 			}else{
 				$where = array("payroll_system_account_id"=>$this->input->post("id"));
-				$fields = array("status"=>"Inactive");
+				$fields = array("status"=>"Inactive");	
 				$this->company_setup->update_payroll_account_system("payroll_system_account",$fields,$where);
+				$fileds_accounts = array("payroll_system_account_id"=>"0");
+				$this->company_setup->update_payroll_account_system("accounts",$fileds_accounts,$where);
 			}
 		}
 	}
@@ -116,11 +116,22 @@ class Company_setup extends CI_Controller {
 				case "company_view":
 					if($this->input->post('update')) {	
 						$info = $this->company_setup->company_info($this->input->post('psa_id'));
-						echo json_encode($info);
+						$options = $this->company_setup->owners_no_psa_include($info->account_id);
+						$options_fields = "<option value=\"\">Please select owner</option>";
+						if($options){
+							foreach($options as $key):
+							$options_fields .="<option value=\"{$key->account_id}\">{$key->owner_name}</option>";
+							endforeach;
+						}				
+						echo json_encode(array("psa"=>$info,"options"=>$options_fields));
 					}
 				break;
-				case "update":
-					
+				case "view":
+					$psa_id = $this->input->post('psa_id');
+					if($psa_id){
+						$data = $this->company_setup->department_details($psa_id);
+						echo json_encode($data);
+					}
 				break;
 			endswitch;
 		}else{
@@ -138,16 +149,37 @@ class Company_setup extends CI_Controller {
 			$this->form_validation->set_rules("dept_owner","Owner","required|trim|xss_clean");
 			$this->form_validation->set_rules("dept_name","Name","required|trim|xss_clean|callback_check_psa_name");
 			$this->form_validation->set_rules("old_psa_name","Name","required|trim|xss_clean");
+			$this->form_validation->set_rules("old_account_id","AccountID","required|trim|xss_clean");
 			if($this->form_validation->run() == false){
 				echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors'>","</span>")));
 				return false;
 			}else{
-				$fields = array(
-								"name"			=> $this->input->post('dept_name'),
-								"status"		=> "Active"
+				$psa_id = $this->db->escape_str($this->input->post("psa_id"));
+				$fields_psa = array(
+						"name"			=> $this->input->post('dept_name'),
+						"status"		=> "Active",
+						"account_id"	=> $this->input->post('dept_owner')
 				);
-				$where = array("payroll_system_account_id"=>$this->db->escape_str($this->input->post("psa_id")));
-				$this->company_setup->update_payroll_account_system("payroll_system_account",$fields,$where);
+				$where = array("payroll_system_account_id"=>$psa_id);
+				$this->company_setup->update_payroll_account_system("payroll_system_account",$fields_psa,$where);
+				// ACCOUNTS REMOVE THE ACCOUNT ACCOUNT RENDERED
+				$fields_account = array(
+						"payroll_system_account_id" => '0'
+				);
+				$where_account = array(
+						"account_id"=> $this->input->post('old_account_id')
+				);
+				$check_change = $this->company_setup->update_fields_data("accounts",$fields_account,$where_account);
+				if($check_change){	
+				// CHANGE THE ACCOUNT NEW ONCE
+					$fields_account_new = array(
+							"payroll_system_account_id" => $psa_id
+					);
+					$where_account_new = array(
+							"account_id"=> $this->input->post('dept_owner')
+					);
+					$this->company_setup->update_fields_data("accounts",$fields_account_new,$where_account_new);
+				}
 				echo json_encode(array("success"=>"1","error"=>''));
 				return false;
 			}
@@ -168,84 +200,6 @@ class Company_setup extends CI_Controller {
 	}
 	/** CALLBACKS FOR END UPDATE PSA **/
 	
-	
-	public function edit(){
-		$data['page_title'] = "Edit";
-		if(is_numeric($this->uri->segment(4))){
-			$data['company_info'] = $this->company_setup->company_info($this->uri->segment(4));
-			$data['owners']	= $this->company_setup->display_owners(); # for dropdowns
-			$data['error'] = "";
-			if($this->input->post('update')) {
-				$this->form_validation->set_rules("jowner","Owner","required|trim|xss_clean");
-				$this->form_validation->set_rules("ucompid","id","required|trim|xss_clean");
-				$this->form_validation->set_rules("company_name","Registration Business Name","required|trim|xss_clean|callback_update_company_check");
-				$this->form_validation->set_rules("old_company_name","Old company","required|trim|xss_clean");
-				$this->form_validation->set_rules("uemail","email","required|trim|xss_clean|valid_email");
-				$this->form_validation->set_rules("usubscription_date","Subscription Date","required|trim|xss_clean");
-				$this->form_validation->set_rules("uno_employee","Number of employess","trim|xss_clean");
-				$this->form_validation->set_rules("uprovince","Province","trim|xss_clean");
-				$this->form_validation->set_rules("ubusiness_address","business address","required|trim|xss_clean");
-				$this->form_validation->set_rules("ucity","city","required|trim|xss_clean");
-				$this->form_validation->set_rules("uzip_code","zip","required|trim|xss_clean");
-				$this->form_validation->set_rules("ubusiness_phone","business phone","required|trim|xss_clean");
-				$this->form_validation->set_rules("uextension","extension","trim|xss_clean");
-				$this->form_validation->set_rules("umobile_no","mobile no","required|trim|xss_clean");
-				$this->form_validation->set_rules("ufax","fax","trim|xss_clean");
-				if($this->form_validation->run() == FALSE) {
-					$data['error'] = validation_errors("<span class='errors'>","</span>");
-				} else {
-					$comp_id = $this->db->escape_str($this->input->post('ucompid'));
-					$fields = array(
-								"company_owner_id"	=> $this->db->escape_str($this->input->post("jowner")),
-								"company_name" 		=> $this->db->escape_str($this->input->post("company_name")),
-								"subscription_date"	=> $this->db->escape_str($this->input->post("usubscription_date")),
-								"business_address"	=> $this->db->escape_str($this->input->post("ubusiness_address")),
-								"city"				=> $this->db->escape_str($this->input->post("ucity")),
-								"zipcode"			=> $this->db->escape_str($this->input->post("uzip_code")),
-								"email_address"		=> $this->db->escape_str($this->input->post("uemail")),
-								"industry"			=> $this->db->escape_str($this->input->post("uindustry")),
-								"business_phone"	=> $this->db->escape_str($this->input->post("ubusiness_phone")),
-								"province"			=> $this->db->escape_str($this->input->post("uprovince")),
-								"mobile_number"		=> $this->db->escape_str($this->input->post("umobile_no")),
-								"fax"				=> $this->db->escape_str($this->input->post("ufax")),
-								"status"			=> "Active",
-								"deleted"			=> "0"
-							);		
-					$comp_ids = $this->company_setup->update_fields("company",$fields,$comp_id);	
-					$this->session->set_flashdata("success","You have successfully updated company");
-				}
-			}
-		$this->layout->set_layout($this->theme);	
-		$this->layout->view('pages/admin/edit_company_view', $data);	
-		}else{
-			show_404();
-		}
-	}
-	
-	public function company_check($str){
-		$res = $this->company_setup->exist_company($str);
-		if($res) {
-			$this->form_validation->set_message("company_check","Company is already been used");
-			return false;
-		}else{
-			return true;
-		}
-	}
-	
-	
-	
-	public function update_company_check($str){
-		$oname = $this->input->post('old_company_name');	
-		$res = $this->company_setup->update_exist_company($str,$oname);
-		if($res) {
-			$this->form_validation->set_message("update_company_check","Company is already been used");
-			return false;
-		}else{
-			return true;
-		}
-	}
-	
-
 }
 
 /* End of file dashboard.php */
