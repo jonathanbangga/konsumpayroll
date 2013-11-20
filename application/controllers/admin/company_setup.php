@@ -67,15 +67,24 @@ class Company_setup extends CI_Controller {
 				foreach($owner as $key=>$val):
 					$payroll_system  = $this->company_setup->display_owners_details($val);				
 					if($payroll_system){
-						$fields = array(
+						// CREATE PAYROLL SYSTEM ACCOUNT FIRST THEN ASSIGN THE OWNER
+						$fields_psa = array(
 								"name"			=> $name[$key],
 								"account_id"	=> $val,
 								"status"		=> "Active"
 						);
-						$where = array("payroll_system_account_id"=>$payroll_system->payroll_system_account_id);
-						$this->company_setup->update_payroll_account_system("payroll_system_account",$fields,$where);
+						$payroll_system_account_id = $this->company_setup->save_fields("payroll_system_account",$fields_psa);
+						if($payroll_system_account_id){
+						// UPDATE AND ASSIGNED IT TO T HE PAYROLL SYSTEM ACCOUNT ID THE ACCOUNT ID
+							$where = array("account_id"=>$val);
+							$fields_account = array(
+									"payroll_system_account_id" => $payroll_system_account_id
+							);
+							$this->company_setup->update_fields_data("accounts",$fields_account,$where);
+						}
+						
 					}		
-				add_activity(sprintf(lang("added_company"),$this->profile->account_admin()->name),"");	
+					add_activity(sprintf(lang("added_company"),$this->profile->account_admin()->name),"");	
 				endforeach;	
 				echo json_encode(array("success"=>"1","error"=>''));
 				return false;
@@ -124,15 +133,23 @@ class Company_setup extends CI_Controller {
 	 * VALIDATES ERROR TRAPPING
 	 */
 	public function update_psa(){
-		if($this->input->post('update_psa')){
+		if($this->input->post('update_dept')){
 			$this->form_validation->set_rules("psa_id","PSA ID","required|is_numeric|trim|xss_clean");
-			$this->form_validation->set_rules("jowner","Owner","required|is_numeric|trim|xss_clean");
-			$this->form_validation->set_rules("psa_name","Name","required|is_numeric|trim|xss_clean");
-			$this->form_validation->set_rules("old_psa_name","Name","required|is_numeric|trim|xss_clean");
+			$this->form_validation->set_rules("dept_owner","Owner","required|trim|xss_clean");
+			$this->form_validation->set_rules("dept_name","Name","required|trim|xss_clean|callback_check_psa_name");
+			$this->form_validation->set_rules("old_psa_name","Name","required|trim|xss_clean");
 			if($this->form_validation->run() == false){
-					
+				echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors'>","</span>")));
+				return false;
 			}else{
-				
+				$fields = array(
+								"name"			=> $this->input->post('dept_name'),
+								"status"		=> "Active"
+				);
+				$where = array("payroll_system_account_id"=>$this->db->escape_str($this->input->post("psa_id")));
+				$this->company_setup->update_payroll_account_system("payroll_system_account",$fields,$where);
+				echo json_encode(array("success"=>"1","error"=>''));
+				return false;
 			}
 		}
 	}
@@ -140,7 +157,7 @@ class Company_setup extends CI_Controller {
 	/** CALLBACKS FOR UPDATE PSA ***/
 	public function check_psa_name($str){
 		$old_name =  $this->db->escape_str($this->input->post("old_psa_name"));
-		$query = $this->db->query("SELECT * FROM `payroll_system_account` WHERE name = '{$this->db->escape_str($name)}' AND name NOT IN('{$old_name}')");
+		$query = $this->db->query("SELECT * FROM `payroll_system_account` WHERE name = '{$this->db->escape_str($str)}' AND name NOT IN('{$old_name}')");
 		$row = $query->num_rows();
 		if($row){
 			$this->form_validation->set_message("check_psa_name","Name of department already exist");

@@ -23,7 +23,7 @@ class Users extends CI_Controller {
 		$this->theme = $this->config->item('temp_admin');
 		$this->load->model("admin/users_model");
 		$this->segment_url = 4;
-		$this->num_pagi = 5;
+		$this->num_pagi = 15;
 		$this->all_user = "/admin/users/all_users/";
 		$this->admin_url = "/admin/users/all_admin";
 		$this->load->helper('email');
@@ -90,54 +90,6 @@ class Users extends CI_Controller {
 				} else {
 					$user_item = $this->users_model->select_user($this->input->post("admin_id"));
 					echo json_encode($user_item);
-				}
-			}
-		}else{
-			show_404();
-		}
-	}
-	
-	public function add_users(){
-		if($this->input->is_ajax_request()){
-			if($this->input->post('add')){
-				$this->form_validation->set_rules('owner_name','Owner name','xss_clean|trim|required');
-				$this->form_validation->set_rules('email_address','Email Address','xss_clean|is_unique[accounts.email]|valid_email|trim|required');
-				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[32]');
-				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
-				if($this->form_validation->run() == true){
-					$email =  $this->db->escape_str($this->input->post("email_address"));
-					#---------- PAYROLL SYSTEM ACCOUNT -----#
-					$payroll_field = array(
-									"company_owner_email"	=> $email,
-									"status"			=> "Active"
-								);
-					$payroll_system_account_id = $this->users_model->add_data_fields("payroll_system_account",$payroll_field);
-					if($payroll_system_account_id){
-					#---------- ACCOUNT --------------------#
-						$account_field = array(
-									"payroll_system_account_id" => $payroll_system_account_id,
-									"email"				=> $email,
-									"account_type_id"	=> 2,
-									"password"			=> $this->input->post("password"),
-									"user_type_id"		=> 2
-							);		
-					// CHECK USERTYPE_ID SINCE IT'S AN OWNER 1-ADMIN 2-OWNER 3-HR 4-ACCOUNTANT
-						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
-					#--------- COMPANY_OWNER ---------------#
-						if($account_id){
-							$company_owner_field = array(
-									"owner_name"		=> $this->input->post("owner_name"),
-									"account_id"		=> $account_id,
-									"date"				=> idates_now(),
-									"status"			=> "Active"
-							);		
-							$this->users_model->add_data_fields("company_owner",$company_owner_field);
-						}
-					}		
-					echo json_encode(array("success"=>"1","error_msg"=>""));
-				}else{
-					$error = validation_errors('<span class="error_zone">','</span>');
-					echo json_encode(array("success"=>"0","error_msg"=>$error));
 				}
 			}
 		}else{
@@ -249,7 +201,6 @@ class Users extends CI_Controller {
 					$this->users_model->update_data_fields("accounts",$fields,array("account_id"=>$this->input->post('edit_account_id')));
 					// UPDATE PAYROLL SYSTEM ACCOUNT
 					$payroll_field = array(
-								"company_owner_email" => $this->input->post('edit_email'),
 								"status"		=> "Active"
 					);
 					$where_payroll_field = array("payroll_system_account_id"=>$this->input->post('edit_payroll_system_account_id'));
@@ -478,12 +429,13 @@ class Users extends CI_Controller {
 			if($this->form_validation->run() == false){
 				echo validation_errors();
 			}else{
-				foreach($this->input->post('owners_name') as $key=>$val):
-				$owners_name =  $val;
-				$owners_current_email  =  $this->input->post('owners_email');
-				$owners_email = $owners_current_email[$key];		
-				// save the company owner
-				$this->users_model->save_owners($owners_name,$owners_email);
+				$on = $this->input->post('owners_name');
+				foreach($on as $key=>$val):
+					$owners_name =  $val;
+					$owners_current_email  =  $this->input->post('owners_email');
+					$owners_email = $owners_current_email[$key];		
+					// save the company owner
+					$this->users_model->save_owners($owners_name,$owners_email);
 				endforeach;
 			}	
 		}

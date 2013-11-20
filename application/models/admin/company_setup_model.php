@@ -16,6 +16,10 @@ class Company_setup_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	/**
+	 * DISPLAYS ALL USERS
+	 * Enter description here ...
+	 */
 	public function display_owners(){ 
 		$query 	= $this->db->get_where("company_owner",array("status"=>"Active","deleted"=>"0"));
 		$row	= $query->result();
@@ -25,22 +29,34 @@ class Company_setup_model extends CI_Model {
 	
 	public function display_owners_details($account_id){
 		if(is_numeric($account_id)){
-			$sql = "SELECT co.account_id,psa.payroll_system_account_id,co.owner_name FROM `payroll_system_account` psa
-				LEFT JOIN accounts a on a.payroll_system_account_id = psa.payroll_system_account_id
-				LEFT JOIN company_owner co on co.account_id = a.account_id
-				WHERE co.account_id = $account_id";
+			$sql = "SELECT * FROM company_owner co
+					LEFT JOIN accounts a on a.account_id = co.account_id
+					WHERE a.user_type_id = 2 AND a.account_id = {$account_id}";
+			 
 			$q = $this->db->query($sql);
 			$row = $q->row();
 			return $row;
 		}
 	}
 	
+	public function owners_no_psa(){
+		$query = $this->db->query(
+					"SELECT * FROM `company_owner` co
+					LEFT JOIN accounts a on a.account_id = co.account_id
+					WHERE a.user_type_id = 2 AND a.payroll_system_account_id = 0 AND
+					a.deleted = '0'"
+		);
+		$result = $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
 	public function display_owners_options(){
-		$owners = $this->display_owners();
+		$owners = $this->owners_no_psa();
 		$option = "";
 		if($owners){
 			foreach($owners as $key=>$val):
-				if($key)$option .="<option value='{$val->account_id}'>{$val->owner_name}</option>";
+				$option .="<option value='{$val->account_id}'>{$val->owner_name}</option>";
 			endforeach;
 		}
 		return $option;
@@ -182,6 +198,21 @@ class Company_setup_model extends CI_Model {
 		}
 	}
 	
+	/**
+	 * Update fields global 
+	 * Enter description here ...
+	 * @param string $database
+	 * @param array $fields
+	 * @param array $where
+	 * @return integer
+	 */
+	public function update_fields_data($database,$fields,$where){
+		$this->db->where($where);
+		$this->db->update($database,$fields);
+		return $this->db->affected_rows();
+	}
+	
+
 }
 
 /* End of file Company_setup_model.php */
