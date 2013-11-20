@@ -5,7 +5,6 @@
         Assign employees to this projects, if not applicable to your company use default project for all.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
-		  <?php if($proj_sql->num_rows()>0){ ?>
 			<table class="tbl">
 				<tr>
 				  <th style="width:125px;">Project</th>
@@ -13,25 +12,26 @@
 				  <th style="width:92px">Action</th>
 				</tr>
 				<?php
-				foreach($proj_sql->result() as $proj){ ?>
-				<tr>
-				  <td><?php echo $proj->project_name ?></td> 
-				  <td><?php echo $proj->project_description ?></td>
-				  <td>
-					<a class="btn btn-red btn-action btn-delete" href="javascript:void(0);">DELETE</a>
-					<input type="hidden" class="proj_id" value="<?php echo $proj->project_id; ?>" />
-				</td>
-				</tr>
-			<?php
-			}
-			?>    
+				if($proj_sql->num_rows()>0){
+					foreach($proj_sql->result() as $proj){ ?>
+					<tr>
+					  <td><?php echo $proj->project_name ?></td> 
+					  <td><?php echo $proj->project_description ?></td>
+					  <td>
+						<a class="btn btn-red btn-action btn-delete" href="javascript:void(0);">DELETE</a>
+						<input type="hidden" class="proj_id" value="<?php echo $proj->project_id; ?>" />
+					  </td>
+					</tr>
+				<?php
+					}
+				}else{ ?>
+					<tr>
+					  <td colspan="3" id="empty">No projects yet</td>
+					</tr>
+				<?php
+				}
+				?>    
 			</table>
-		  <?php
-		  }else{
-			echo "No projects yet";
-		  }		  
-		  ?>
-          
           <!-- TBL-WRAP END -->
         </div>
         <a class="btn" href="javascript:void(0);" id="add-project" >ADD PROJECT</a>
@@ -67,6 +67,7 @@ jQuery(document).ready(function(){
 
 	// add project
 	jQuery("#add-project").click(function(){
+		jQuery("#empty").hide();
 		str = ''+
 			'<tr>'+
 				'<td><input type="text" name="project" class="project"></td>'+
@@ -119,6 +120,7 @@ jQuery(document).ready(function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".project").length==0){
 			jQuery("#save").hide();
+			jQuery("#empty").show();
 		}
 	});
 	// delete project
