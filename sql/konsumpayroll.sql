@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2013 at 09:57 AM
+-- Generation Time: Nov 21, 2013 at 03:01 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `allowance_type` (
 
 CREATE TABLE IF NOT EXISTS `approval_groups` (
   `approval_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `approval_process_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `level` int(11) NOT NULL,
@@ -214,9 +215,9 @@ CREATE TABLE IF NOT EXISTS `approval_groups` (
 -- Dumping data for table `approval_groups`
 --
 
-INSERT INTO `approval_groups` (`approval_group_id`, `name`, `emp_id`, `level`) VALUES
-(1, 'Accounting', 4, 1),
-(2, 'HR', 5, 2);
+INSERT INTO `approval_groups` (`approval_group_id`, `approval_process_id`, `name`, `emp_id`, `level`) VALUES
+(1, 0, 'Accounting', 4, 1),
+(2, 0, 'HR', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -1285,7 +1286,7 @@ CREATE TABLE IF NOT EXISTS `location` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`location_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1407,7 +1408,7 @@ CREATE TABLE IF NOT EXISTS `payroll_group` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`payroll_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

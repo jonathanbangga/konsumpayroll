@@ -151,7 +151,7 @@
 	 */
 	function image_exist($image,$company_id){
 		$no_image = "/assets/theme_2013/images/photo_not_available.png";
-		$image_val = "/uploads/companies/";
+		$image_val = "./uploads/companies/";
 		if($image != ""){
 			return (file_exists($image_val.$company_id."/".$image)) ? $image_val.$company_id."/".$image : $no_image;
 		}else{
