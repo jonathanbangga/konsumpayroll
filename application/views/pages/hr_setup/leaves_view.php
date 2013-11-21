@@ -11,52 +11,72 @@
               <th style="width:163px;">Required Documents</th>
               <th style="width:214px;">Include in actual hours worked</th>
               <th style="width:238px;">Leaves used to deduct no. of work </th>
-              <th style="width:165px;">Leave Recognition</th>
               <th style="width:134px;">Leave Accrued</th>
-              <th style="width:107px;">For Every</th>
               <th style="width:85px;">Period</th>
               <th style="width:96px;">Position</th>
               <th style="width:133px;">Years of Service</th>
               <th style="width:122px;">Unused Leave</th>
               <th style="width:210px;">Unused Leave Upon Termination</th>
               <th style="width:137px;">Max Days of Leave</th>
-              <th>Continuous</th>
             </tr>
             <tr>
-              <td>2</td>
-              <td><select class="txtselect select-medium" name="select">
-                </select></td>
-              <td>&nbsp;</td>
+              <td>Sick Leave</td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>No</option>
+					<option>Yes</option>
+                </select>
+			  </td>
+              <td><input type="text" /></td>
               <td><input name="" type="checkbox" value=""></td>
               <td><input name="" type="checkbox" value=""></td>
-              <td><select class="txtselect select-medium" name="select">
-                </select></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td> 4 </td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
+              <td>
+				<input type="text" />
+			  </td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>select period</option>
+					<option>monthly</option>
+					<option>quarterly</option>
+					<option>yearly</option>
+                </select>
+			  </td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>select position</option>
+                </select>
+			  </td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>below 3 months</option>
+					<option>above 3 months</option>
+					<option>below 6 months</option>
+					<option>above 6 months</option>
+					<option>below 1 year</option>
+					<option>1 year</option>
+					<option>2 year</option>
+					<option>3 year</option>
+					<option>4 year</option>
+					<option>5 year</option>
+					<option>above 5 years</option>
+                </select>
+			  </td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>select</option>
+					<option>convert to cash</option>
+					<option>accrue to next year</option>
+                </select>
+			  </td>
+              <td>
+				<select class="txtselect select-medium" name="select">
+					<option>select</option>
+					<option>convert to cash</option>
+					<option>accrue to next year</option>
+                </select>
+			  </td>
+              <td><input type="text" /></td>
+   
             </tr>
           </table>
           <!-- TBL-WRAP END -->

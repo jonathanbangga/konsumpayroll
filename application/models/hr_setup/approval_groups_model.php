@@ -60,7 +60,7 @@ class Approval_groups_model extends CI_Model {
 	
 	public function get_approval_process_in_approval_groups($company_id){
 		return $this->db->query("
-			SELECT DISTINCT ag.`approval_process_id` , `name`
+			SELECT DISTINCT ag.`approval_process_id` , ap.`name`
 			FROM `approval_groups` AS ag
 			LEFT JOIN `approval_process` AS ap ON ( ag.`approval_process_id` = ap.`approval_process_id` )
 			WHERE ag.`company_id` ={$company_id}
