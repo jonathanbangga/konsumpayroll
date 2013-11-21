@@ -17,6 +17,7 @@ class Account extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->theme = $this->config->item('temp_company_wizard');
+		$this->authentication->check_if_logged_in();	
 	}
 
 	public function index()

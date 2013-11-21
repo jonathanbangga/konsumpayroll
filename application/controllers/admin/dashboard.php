@@ -21,9 +21,10 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		$this->theme = $this->config->item('temp_admin_dashboard');
 		$this->load->model("admin/activity_log_model","activity_logs");
-		$this->segment_url = 3;
+		$this->segment_url = 4;
 		$this->num_pagi = 20;
-		$this->dashboard = "/admin/dashboard";
+		$this->dashboard = "/admin/dashboard/index";
+		$this->authentication->check_if_logged_in();	
 	}
 
 	public function index()
@@ -31,8 +32,9 @@ class Dashboard extends CI_Controller {
 		$data['page_title'] = "Dashboard";
 		$total_rows = $this->activity_logs->count_activity_logs();
 		$get_pagi = init_pagination($this->dashboard,$total_rows,$this->num_pagi,$this->segment_url);
-		$pagi_url = $this->uri->segment(3) == "" ?  0 : $this->uri->segment(3);
-		$data['logs'] = $this->activity_logs->fetch_activity_logs($get_pagi['per_page'],intval($pagi_url));
+		$pagi_url = $this->uri->segment(4) == "" ?  0 : $this->uri->segment(4);
+		$data['logs'] = $this->activity_logs->fetch_activity_logs($get_pagi['per_page'],intval($pagi_url) * $this->num_pagi);
+		echo $this->db->last_query();
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/dashboard_view', $data);	

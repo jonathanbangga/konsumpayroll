@@ -60,8 +60,15 @@
 					$query->free_result();
 					return $row;
 				break;
-				case "":
-					
+				case "employee":
+					$query = $this->ci->db->query(
+							"SELECT * FROM `accounts` a 
+							LEFT JOIN employee e on e.account_id = a.account_id
+							WHERE a.account_id = '{$this->ci->db->escape_str($account_id)}'"
+					);
+					$row = $query->row();
+					$query->free_result();
+					return $row;
 				break;
 			endswitch;
 		}

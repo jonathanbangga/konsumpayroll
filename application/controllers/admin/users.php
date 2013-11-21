@@ -29,6 +29,7 @@ class Users extends CI_Controller {
 		$this->load->helper('email');
 		$this->load->library('parser');
 		$this->load->helper('string');
+		$this->authentication->check_if_logged_in();	
 	}
 
 	public function index()
