@@ -5,8 +5,7 @@
      <p>The rank that you define here is assigned to the employees you create and is used to determine the leave entitlement</p>
       <div class="tbl-wrap">
       <!-- TBL-WRAP START -->
-	  <?php
-	  if($ranks_sql->num_rows()>0){ ?>
+
 	  
 		  <table class="tbl">
 			  <tr>
@@ -15,26 +14,29 @@
 				<th style="width:90">Action</th>
 			  </tr>
 			  <?php
-			  foreach($ranks_sql->result() as $rank){ ?>
+			  if($ranks_sql->num_rows()>0){
+				  foreach($ranks_sql->result() as $rank){ ?>
+					<tr>
+						<td><?php echo $rank->rank; ?></td>
+						<td><?php echo $rank->description; ?></td>
+						<td>
+							<a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>
+							<input type="hidden" class="rank_id" value="<?php echo $rank->rank_id; ?>" />
+						</td>
+						
+					</tr>
+				  <?php
+				  }
+			}else{ ?>
 				<tr>
-					<td><?php echo $rank->rank; ?></td>
-					<td><?php echo $rank->description; ?></td>
-					<td>
-						<a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>
-						<input type="hidden" class="rank_id" value="<?php echo $rank->rank_id; ?>" />
-					</td>
-					
+				  <td colspan="4" id="empty">No Ranks yet</td>
 				</tr>
-			  <?php
-			  }
-			  ?>
+			<?php
+			}
+			?>
 			</table>
 	  
-	  <?php
-	  }else{
-		echo "No ranks yet";
-	  }
-	  ?>
+
         
           <!-- TBL-WRAP END -->
       </div>
@@ -49,14 +51,16 @@
       </div>
       <!-- RBOX END -->
 
-<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
-<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
+
 
 <div id="confirm-delete-dialog" class="jdialog"  title="Add more">
 	<div class="inner_div">
 		Are you sure you want to delete?: 
 	</div>
 </div>
+
+<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 
 <script>
 jQuery(document).ready(function(){
@@ -65,6 +69,7 @@ jQuery(document).ready(function(){
 	redirect_highlight_message();
 	
 	jQuery("#add-more").click(function(){
+		jQuery("#empty").hide();
 		var obj = jQuery(this);
 		var str = ''+
 		'<tr>'+
@@ -164,6 +169,7 @@ jQuery(document).ready(function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".rank").length==0){
 			jQuery("#save").hide();
+			jQuery("#empty").show();
 		}
 	});
 

@@ -5,8 +5,7 @@
         create mulitple locations.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
-		  <?php
-		  if($locations->num_rows()>0){ ?>
+	
 			<table class="tbl">
 				<tr>
 				  <th style="width:125px;">Project</th>
@@ -15,25 +14,28 @@
 				  <th style="width:153px">Action</th>
 				</tr>
 				<?php
-				foreach($locations->result() as $row){ ?>
-				 <tr>
-				  <td><?php echo $row->project_name; ?></td>
-				  <td><?php echo $row->location; ?></td>
-				  <td><?php echo $row->description; ?></td>
-				  <td>
-				  <a class="btn btn-gray btn-action btn-edit" href="javascript:void(0)">EDIT</a> <a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>.
-				  <input type="hidden" class="loc_id" value="<?php echo $row->location_id; ?>" />
-				  </td>
-				</tr>
+				if($locations->num_rows()>0){
+					foreach($locations->result() as $row){ ?>
+					 <tr>
+					  <td><?php echo $row->project_name; ?></td>
+					  <td><?php echo $row->location; ?></td>
+					  <td><?php echo $row->description; ?></td>
+					  <td>
+					  <a class="btn btn-gray btn-action btn-edit" href="javascript:void(0)">EDIT</a> <a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>.
+					  <input type="hidden" class="loc_id" value="<?php echo $row->location_id; ?>" />
+					  </td>
+					</tr>
+				<?php
+					}
+				}else{ ?>
+					<tr>
+					  <td colspan="4" id="empty">No project locations yet</td>
+					</tr>
 				<?php
 				}
 				?>
           </table>
-		  <?php
-		  }else{
-			echo "No project locations yet";
-		  }
-		  ?>
+	
           <!-- TBL-WRAP END -->
         </div>
         <a class="btn" href="javascript:void(0);" id="add-more">ADD MORE</a>
@@ -110,7 +112,8 @@ jQuery(document).ready(function(){
 	// load highlight message script
 	redirect_highlight_message();
 	// add more
-	jQuery("#add-more").click(function(){					
+	jQuery("#add-more").click(function(){	
+		jQuery("#empty").hide();
 		str = ''+
 			'<tr>'+
 				'<td>'+
@@ -180,6 +183,7 @@ jQuery(document).ready(function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".project").length==0){
 			jQuery("#save").hide();
+			jQuery("#empty").show();
 		}
 	});
 	// delete location
