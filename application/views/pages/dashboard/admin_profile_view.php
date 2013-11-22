@@ -1,10 +1,11 @@
 <?php echo form_open($this->uri->uri_string);?>
+
 <div class="main-content">
     <!-- MAIN-CONTENT START -->
     <div class="success_trigger">
     	<div class="isuccess_profile"><?php echo $this->session->flashdata("success");?></div>
+    	 <div class="error ihide" id="error_trigger"><?php echo $error;?></div>
     </div>
-	<?php p($this->session->all_userdata());?>
     <div class="tbl-wrap">
         <!-- TBL-WRAP START -->
         <table>
@@ -35,8 +36,7 @@
                             <td>
                                 <input type="text" name="birth_date" value="<?php echo set_value("birth_date",$name->dob);?>" class="txtfield">
                             </td>
-                        </tr>
-                         
+                        </tr>  
                     </table>
                 </td>
                 <td>
@@ -92,7 +92,7 @@
                     		<tr>
 	                            <td style="width:155px">Username:</td>
 	                            <td>
-	                                <input type="text"   name="payroll_cloud_id" value="<?php echo set_value("payroll_cloud_id",$name->payroll_cloud_id);?>" class="txtfield">
+	                                <input type="text" name="payroll_cloud_id" value="<?php echo set_value("payroll_cloud_id",$name->payroll_cloud_id);?>" class="txtfield" readonly="readonly">
 	                            </td>
                         	</tr>
 	                        
@@ -119,7 +119,7 @@
                         <tr>
                             <td>Retype Password:</td>
                             <td>
-                                <input type="text" name="retype_password" class="txtfield">
+                                <input type="password" name="retype_password" class="txtfield">
                             </td>
                         </tr>
                     </table>
@@ -152,15 +152,21 @@
             	</td>
             </tr>
         </table>
-         <div class="error"><?php echo $error;?></div>
+        
         <!-- TBL-WRAP END -->
     </div>
     <!-- MAIN-CONTENT END -->
 </div>
  <?php echo form_close();?>
  <script type="text/javascript">
-	
+	function error_show(){
+		var a = jQuery.trim(jQuery("#error_trigger").html());
+		if(a){
+			alert(a);
+			return false;
+		}
+	}
 	jQuery(window).load(function(){
-	
+		error_show();
  	});
  </script>

@@ -49,7 +49,7 @@ class Admin_profile extends CI_Controller {
 			$this->form_validation->set_rules('home_no','Telephone Number','xss_clean|trim|required');
 			$this->form_validation->set_rules('home_add',"Home Address",'xss_clean|trim|required');
 			$this->form_validation->set_rules('emergency_contact_person',"Emergency Contact Person",'xss_clean|trim|required');
-			$this->form_validation->set_rules("email_add","Email Address","xss_clean|valid_email|trim");		
+			$this->form_validation->set_rules("email_add","Email Address","xss_clean|valid_email|trim|required");		
 			$this->form_validation->set_rules("old_email_add","Email Address","xss_clean|valid_email|trim");				
 			$this->form_validation->set_rules('emergency_contact_number',"Emergency Contact Number",'xss_clean|trim|required');
 			$this->form_validation->set_rules('old_password',"Old password",'xss_clean|trim|required|min_length[12]|max_length[20]');
@@ -90,7 +90,7 @@ class Admin_profile extends CI_Controller {
 					);
 					$this->admin->update_fields("accounts",$account_field,$where);
 				}	
-				$this->session->set_flashdata("success","Successfully saved");
+				$this->session->set_flashdata("success","<div class='highlight_message'>Successfully saved</div>");
 				redirect($this->uri->uri_string());
 			}else{
 				$data['error'] = validation_errors("<span class='error_zone'>","</span>");	
@@ -100,10 +100,25 @@ class Admin_profile extends CI_Controller {
 		$this->layout->view('pages/dashboard/admin_profile_view', $data);
 	}
 	
+	/**
+	 * CALL BACK UPDATE EMAIL
+	 * @param return callback $str
+	 */
 	public function email_check($str){
 		$old_email = $this->input->post("old_email_add");
 		$new_email = $this->input->post("email_add");
-		$query = $this->db->query("SELECT * FROM accounts WHERE ");
+		if($old_email_add !=""){
+			$query = $this->db->query("SELECT * FROM accounts WHERE email = '{$new_email}' AND email NOT IN ('{$old_email}')");
+			$row = $query->row();
+			if($row){
+				$this->form_validation->set_message("email_check","The %s must be unique");
+				return false;
+			}else{
+				return false;
+			}
+		}else{
+			return true;
+		}
 	}
 }
 

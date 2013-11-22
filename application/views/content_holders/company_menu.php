@@ -7,6 +7,8 @@
         	if($this->session->userdata("company_id") != ""){
         		$hs_url = "/company/hr_setup/employment_type";
         		$ps_url = "/company/hr_setup/employment_type";
+        	}else{
+        		
         	}
         ?>
         <a href="<?php echo $hs_url;?>">HR SETUP</a>

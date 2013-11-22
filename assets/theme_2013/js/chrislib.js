@@ -814,9 +814,10 @@ window.alert = function(msg){
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,
-	   width:'400',
+	  
 	   minWidth:'400',
 	   maxWidth:'600',
+		width:'350',
 	   dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
