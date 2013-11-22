@@ -1,4 +1,5 @@
 <div style="display:none;" class="highlight_message">Message</div>
+<div class="main-content">
 <p>Create an approval group and assign approver for each approval group. Leaves, overtime, timesheet or expenses<br>
   if an approval, assign it here.</p>
 <div class="tbl-wrap">
@@ -97,6 +98,13 @@ if($max>0){
   ?>
   <!-- TBL-WRAP END -->
 </div>
+
+ </div>
+      <div class="footer-grp-btn">
+        <!-- FOOTER-GRP-BTN START -->
+        <a class="btn btn-gray left" href="/company/hr_setup/department_and_positions">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/projects"> CONTINUE</a>
+        <!-- FOOTER-GRP-BTN END -->
+      </div>
 
 <div class="jdialog" id="add-approval-process" title="Add Approval Process">
 	<div class="inner_div">
