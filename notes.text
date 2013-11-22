@@ -19,3 +19,19 @@ $arr = array(
 	"description"=>$loc->description
 );
 echo json_encode($arr);
+
+HOW TO ADD ACTIVITY LOGS
+
+Example
+
+	1). Declaring language go to  application/language/english/activity_lang.php
+		example
+		$lang['last_login'] = "%s has login"; // for example this
+
+	2). How to used on your controller
+		$lang_here=sprintf(lang("last_login"),$this->profile->account_admin()->name);
+		example
+		first parameter = for the language
+		second paramter = Company_id for clients and  admin left company_id to null
+		add_activity($lang_here,company_id);
+

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2013 at 09:57 AM
+-- Generation Time: Nov 21, 2013 at 03:12 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -204,6 +204,8 @@ CREATE TABLE IF NOT EXISTS `allowance_type` (
 
 CREATE TABLE IF NOT EXISTS `approval_groups` (
   `approval_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `approval_process_id` int(11) NOT NULL,
+  ` dept_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `level` int(11) NOT NULL,
@@ -214,9 +216,9 @@ CREATE TABLE IF NOT EXISTS `approval_groups` (
 -- Dumping data for table `approval_groups`
 --
 
-INSERT INTO `approval_groups` (`approval_group_id`, `name`, `emp_id`, `level`) VALUES
-(1, 'Accounting', 4, 1),
-(2, 'HR', 5, 2);
+INSERT INTO `approval_groups` (`approval_group_id`, `approval_process_id`, ` dept_id`, `name`, `emp_id`, `level`) VALUES
+(1, 0, 0, 'Accounting', 4, 1),
+(2, 0, 0, 'HR', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -1131,7 +1133,7 @@ CREATE TABLE IF NOT EXISTS `hours_worked` (
 CREATE TABLE IF NOT EXISTS `job_grade` (
   `job_grade_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
-  `job_grade_name` varchar(100) NOT NULL,
+  `job_grade` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -1279,13 +1281,13 @@ CREATE TABLE IF NOT EXISTS `loan_type` (
 CREATE TABLE IF NOT EXISTS `location` (
   `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `project_id` int(11) NOT NULL,
-  `location_name` varchar(100) NOT NULL,
+  `location` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`location_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1407,7 +1409,7 @@ CREATE TABLE IF NOT EXISTS `payroll_group` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`payroll_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1580,47 +1582,13 @@ CREATE TABLE IF NOT EXISTS `project` (
 
 CREATE TABLE IF NOT EXISTS `rank` (
   `rank_id` int(11) NOT NULL AUTO_INCREMENT,
-  `rank_name` varchar(100) NOT NULL,
+  `rank` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`rank_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
-
---
--- Dumping data for table `rank`
---
-
-INSERT INTO `rank` (`rank_id`, `rank_name`, `description`, `company_id`, `status`, `deleted`) VALUES
-(1, 'hr', 'hr ni siya oh yeha', 2, 'Active', '0'),
-(2, '', '', 8, 'Active', '0'),
-(3, '', '', 8, 'Active', '0'),
-(4, '', '', 8, 'Active', '0'),
-(5, '', '', 8, 'Active', '0'),
-(6, '', '', 8, 'Active', '0'),
-(7, '', '', 9, 'Active', '0'),
-(8, '', '', 9, 'Active', '0'),
-(9, '', '', 9, 'Active', '0'),
-(10, '', '', 9, 'Active', '0'),
-(11, '', '', 9, 'Active', '0'),
-(12, '', '', 9, 'Active', '0'),
-(13, '', '', 9, 'Active', '0'),
-(14, '', '', 9, 'Active', '0'),
-(15, '', '', 9, 'Active', '0'),
-(16, '', '', 9, 'Active', '0'),
-(17, '', '', 9, 'Active', '0'),
-(18, '', '', 9, 'Active', '0'),
-(19, '', '', 9, 'Active', '0'),
-(20, '', '', 9, 'Active', '0'),
-(21, '', '', 8, 'Active', '0'),
-(22, '', '', 4, 'Active', '0'),
-(23, '', '', 4, 'Active', '0'),
-(24, '', '', 2, 'Active', '0'),
-(25, '', '', 2, 'Active', '0'),
-(26, '', '', 2, 'Active', '0'),
-(27, '', '', 2, 'Active', '0'),
-(28, '', '', 2, 'Active', '0');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

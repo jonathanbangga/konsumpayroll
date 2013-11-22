@@ -22,6 +22,7 @@ class Company_setup extends CI_Controller {
 		$this->load->model("admin/company_setup_model","company_setup");
 		$this->num_pagi = 3;
 		$this->segment_url = 4;
+		$this->authentication->check_if_logged_in();	
 	}
 
 	public function index(){

@@ -24,7 +24,6 @@
 						if($all_companies){
 							foreach($all_companies as $comp_list): ?>
 							<li>
-						
 								 <img src="<?php echo"/uploads/companies/".$comp_list->company_id."/".$comp_list->company_logo;?>" class="list_logos_small" alt=" ">
 								<span><?php echo $comp_list->company_name;?></span></li>
 					<?php

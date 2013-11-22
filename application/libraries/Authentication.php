@@ -33,7 +33,8 @@ class Authentication {
 				$newdata = array(
                    'account_id'  => $a->account_id,
 				   'account_type_id'  => $a->account_type_id,
-				   'psa_id'  => $a->payroll_system_account_id
+				   'psa_id'  => $a->payroll_system_account_id,
+					'user_type_id' => $a->user_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
 				redirect('/company/dashboard/company_list');
@@ -64,6 +65,9 @@ class Authentication {
 	public function destroy_session(){
 		$this->ci->session->unset_userdata('account_id');
 		$this->ci->session->unset_userdata('account_type_id');
+		$this->ci->session->unset_userdata("user_type_id");
+		$this->ci->session->unset_userdata("psa_id");
+		$this->ci->session->unset_userdata("company_id");
 		$this->ci->session->sess_destroy();
 	}
 	

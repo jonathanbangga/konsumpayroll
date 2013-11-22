@@ -107,3 +107,14 @@ input.btn[type="submit"] {
 .complist > li {
     padding-bottom: 10px;
 }
+
+.list_logos{
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+.list_logos:hover {
+  opacity:0.3;
+}
