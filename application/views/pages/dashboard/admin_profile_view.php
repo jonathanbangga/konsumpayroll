@@ -1,9 +1,12 @@
+<?php echo form_open($this->uri->uri_string);?>
 <div class="main-content">
     <!-- MAIN-CONTENT START -->
- 	<?php p($name);?>
+    <div class="success_trigger">
+    	<div class="isuccess_profile"><?php echo $this->session->flashdata("success");?></div>
+    </div>
+	<?php p($this->session->all_userdata());?>
     <div class="tbl-wrap">
         <!-- TBL-WRAP START -->
-        <?php echo form_open($this->uri->uri_string);?>
         <table>
             <tr>
                 <td style="vertical-align:top;width:400px;">
@@ -12,27 +15,28 @@
                         <tr>
                             <td style="width:155px">First Name:</td>
                             <td>
-                                <input type="text"  name="first_name" value="<?php echo set_value("first_name",$name->first_name);?>" class="txtfield">
+                                <input type="text" name="first_name" value="<?php echo set_value("first_name",$name->first_name);?>" class="txtfield">
                             </td>
                         </tr>
                         <tr>
                             <td>Last Name:</td>
                             <td>
-                                <input type="text"  name="last_name" value="<?php echo set_value("last_name",$name->last_name);?>" class="txtfield">
+                                <input type="text" name="last_name" value="<?php echo set_value("last_name",$name->last_name);?>" class="txtfield">
                             </td>
                         </tr>
                         <tr>
                             <td>Middle Name:</td>
                             <td>
-                                <input type="text"   name="middle_name" value="<?php echo set_value("middle_name",$name->middle_name);?>" class="txtfield">
+                                <input type="text" name="middle_name" value="<?php echo set_value("middle_name",$name->middle_name);?>" class="txtfield">
                             </td>
                         </tr>
                         <tr>
                             <td>BirthDate:</td>
                             <td>
-                                <input type="text"   name="birth_date" value="<?php echo set_value("birth_date",$name->dob);?>" class="txtfield">
+                                <input type="text" name="birth_date" value="<?php echo set_value("birth_date",$name->dob);?>" class="txtfield">
                             </td>
                         </tr>
+                         
                     </table>
                 </td>
                 <td>
@@ -41,13 +45,13 @@
                         <tr>
                             <td style="width: 205px;">Mobile Number:</td>
                             <td>
-                                <input type="text"  name="mobile_no" value="<?php echo set_value("mobile_no",$name->mobile_no);?>" class="txtfield">
+                                <input type="text" name="mobile_no" value="<?php echo set_value("mobile_no",$name->mobile_no);?>" class="txtfield">
                             </td>
                         </tr>
                         <tr>
                             <td>Telephone Number:</td>
                             <td>
-                                <input type="text"  name="home_no" value="<?php echo set_value("home_no",$name->home_no);?>" class="txtfield">
+                                <input type="text" name="home_no" value="<?php echo set_value("home_no",$name->home_no);?>" class="txtfield">
                             </td>
                         </tr>
                         <?php if($this->access_type !=2){?>
@@ -55,6 +59,7 @@
                             <td>Email:</td>
                             <td>
                                 <input type="text"  name="email_add" value="<?php echo set_value("email_add",$name->email);?>" class="txtfield">
+                                 <input type="hidden"  name="old_email_add" value="<?php echo $name->email;?>" class="txtfield">
                             </td>
                         </tr>
                         <?php }?>
@@ -147,10 +152,15 @@
             	</td>
             </tr>
         </table>
-        <?php echo form_close();?>
          <div class="error"><?php echo $error;?></div>
         <!-- TBL-WRAP END -->
     </div>
-    
     <!-- MAIN-CONTENT END -->
 </div>
+ <?php echo form_close();?>
+ <script type="text/javascript">
+	
+	jQuery(window).load(function(){
+	
+ 	});
+ </script>

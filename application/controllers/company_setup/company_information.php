@@ -145,7 +145,7 @@
 		}
 		
 		public function we(){
-			p($this->session->unset_userdata('company_id'));
+			p($this->session->all_userdata());
 		}
 		
 		
