@@ -50,7 +50,7 @@
 					LEFT JOIN company_principal cp on e.emp_id = cp.emp_id
 					LEFT JOIN accounts a on a.account_id = e.account_id WHERE cp.company_id={$this->db->escape_str($company_id)}
 					and e.status = 'Active' and e.deleted = '0' and cp.status = 'Active' and cp.deleted = '0' 
-					and a.deleted = '0'
+					and a.deleted = '0' ORDER BY cp.level ASC
 					";
 				if($start !="" && $limit == NULL){
 					$sql .=" LIMIT $start";

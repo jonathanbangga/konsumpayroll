@@ -49,18 +49,17 @@
     <!-- BODY START -->
     <div class="rbox" style="margin:auto;">
       <!-- RBOX START -->
-      <h1><?php echo $page_title;?></h1>
-      <div class="main-content">
-        <!-- MAIN-CONTENT START -->
-       <?php print $layout_contents;?>
-        <!-- MAIN-CONTENT END -->
-      </div>
-      <!-- RBOX END -->
+      <?php print $layout_contents;?>
     </div>
     <div class="clearB"></div>
     <!-- BODY END -->
   </section>
   <!-- WRAPPER END -->
+</div>
+<div class="ihide">
+<div class="source_error" title="Information"></div>
+<div class="opt_selection" title="Warning"></div>
+<div class="success_messages" title="Success"></div>
 </div>
 <?php print $this->load->view($script_library);?>
 </body>

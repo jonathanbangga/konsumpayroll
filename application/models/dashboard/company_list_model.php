@@ -10,7 +10,6 @@ class Company_list_model extends CI_Model {
 		return $this->db->query("
 			SELECT *
 			FROM `company` c
-			
 		");
 	}
 	
