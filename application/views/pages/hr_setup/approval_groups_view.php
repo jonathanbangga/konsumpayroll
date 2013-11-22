@@ -75,12 +75,15 @@ if($max>0){
 					  <th>Action</th>
 					</tr>
 					<?php
-					$appr_sql = $this->approval_groups_model->get_approvers($row->approval_process_id,$comp_id);
+					$appr_sql = $this->approval_groups_model->get_approvers($row->approval_process_id);
 					foreach($appr_sql->result() as $appr){ ?>
 					<tr>
 					  <td><?php echo "{$appr->first_name} {$appr->last_name}";  ?></td>
 					  <td><?php echo $appr->level; ?></td>
-					  <td><a class="btn btn-red btn-action" href="#">DELETE</a></td>
+					  <td>
+						<a class="btn btn-red btn-action btn-remove" href="javascript:void(0)">REMOVE</a>
+						<input type="hidden" class="ag_id" value="<?php echo $appr->approval_group_id; ?>" />
+					  </td>
 					</tr>
 					<?php }
 					?>
@@ -113,7 +116,11 @@ if($max>0){
 	</div>
 </div>
 
-
+<div id="confirm-remove-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to remove this employee?
+	</div>
+</div>
 
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
@@ -206,7 +213,7 @@ jQuery(document).ready(function(){
 	// auto complete script 
 	function auto_complete(){
 		<?php
-			$sql_emp = $this->approval_groups_model->get_employee($comp_id);
+			$sql_emp = $this->approval_groups_model->get_employee();
 			$emp_str = "";
 			if($sql_emp->num_rows()>0){
 				foreach($sql_emp->result() as $emp){
@@ -307,6 +314,41 @@ jQuery(document).ready(function(){
 			});
 		}
 		
+	});
+	
+	// remove approver
+	jQuery(".btn-remove").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-remove-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var ag_id = obj.parents("tr").find(".ag_id").val();
+					if(ag_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/approval_groups/delete_approver",
+							data: {
+								ag_id: ag_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "An approver has been removed");
+							window.location="/company/hr_setup/approval_groups";
+						});
+					}else{
+						alert('Approval Groups Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
 	});
 
 	

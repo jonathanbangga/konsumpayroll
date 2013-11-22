@@ -67,14 +67,13 @@ jQuery(document).ready(function(){
 			et[i] = jQuery(this).val();
 			i++;
 		});
-		var cid = <?php echo $comp_id; ?>; // company id
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
 			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
-				cid: cid,
 				et: et,
+				selected:1,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});
@@ -94,8 +93,8 @@ jQuery(document).ready(function(){
 			type: "POST",
 			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
-				cid: cid,
 				et: et,
+				selected:0,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});

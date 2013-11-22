@@ -13,8 +13,6 @@ class Projects extends CI_Controller {
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/projects_model');	
-		// default
-		$this->comp_id = 6;
 	}
 
 	public function index(){
@@ -22,7 +20,7 @@ class Projects extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		$data['proj_sql'] = $this->projects_model->get_projects($this->comp_id);
+		$data['proj_sql'] = $this->projects_model->get_projects();
 		$this->layout->view('pages/hr_setup/projects_view',$data);
 	}
 
@@ -30,13 +28,13 @@ class Projects extends CI_Controller {
 		$proj = $this->input->post('proj');
 		$desc = $this->input->post('desc');
 		foreach($proj as $index=>$val){
-			$this->projects_model->add_project($val,$desc[$index],$this->comp_id);
+			$this->projects_model->add_project($val,$desc[$index]);
 		}
 	}
 	
 	public function ajax_delete_project(){
 		$proj = $this->input->post('proj');
-		$this->projects_model->delete_project($proj,$this->comp_id);
+		$this->projects_model->delete_project($proj);
 		redirect('/company/hr_setup/projects');
 	}
 	

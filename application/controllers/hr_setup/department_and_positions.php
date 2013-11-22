@@ -4,7 +4,6 @@ class Department_and_positions extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
-	protected $comp_id;
 	
 	public function __construct() {
 		parent::__construct();
@@ -15,8 +14,6 @@ class Department_and_positions extends CI_Controller {
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/department_and_positions_model');	
-		// default
-		$this->comp_id = 6;
 	}
 
 	public function index(){
@@ -25,17 +22,15 @@ class Department_and_positions extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		$data['departments'] = $this->department_and_positions_model->get_departments(6);
-		$data['sel_dept'] = $this->department_and_positions_model->get_distinct_department(6);
-		$data['comp_id'] = $this->comp_id;
+		$data['departments'] = $this->department_and_positions_model->get_departments();
+		$data['sel_dept'] = $this->department_and_positions_model->get_distinct_department();
 		$this->layout->view('pages/hr_setup/department_and_positions_view',$data);
 	}
 
 	public function ajax_get_positions(){
-		//$this->comp_id = 6;
 		$dept_id = $this->input->post('dept_id');
 		$dept_name = $this->input->post('dept_name');
-		$pos = $this->department_and_positions_model->get_positions($this->comp_id,$dept_id);
+		$pos = $this->department_and_positions_model->get_positions($dept_id);
 		$str = "";
 		if($pos->num_rows()>0){
 			$str = '
@@ -65,10 +60,9 @@ class Department_and_positions extends CI_Controller {
 	public function ajax_add_department(){
 		$dept_name = $this->input->post('dept_name');
 		// return the department ID added
-		//$this->comp_id = 6;
-		$dept_id = $this->department_and_positions_model->add_department($dept_name,$this->comp_id);
+		$dept_id = $this->department_and_positions_model->add_department($dept_name);
 		// get that specific department via department id
-		$sql_dept = $this->department_and_positions_model->get_departments($this->comp_id,$dept_id);
+		$sql_dept = $this->department_and_positions_model->get_departments($dept_id);
 		$temp = "";
 		if($sql_dept->num_rows()>0){
 			$row = $sql_dept->row();
@@ -83,13 +77,12 @@ class Department_and_positions extends CI_Controller {
 	}
 	
 	public function ajax_add_position(){
-		//$this->comp_id = 6; 	// company id
 		$pos = $this->input->post('pos');
 		$dept_id = $this->input->post('dept_id');
 		// return the position ID added
-		$pos_id = $this->department_and_positions_model->add_position($this->comp_id,$pos,$dept_id);
+		$pos_id = $this->department_and_positions_model->add_position($pos,$dept_id);
 		// get that specific position via department id
-		$sql_pos = $this->department_and_positions_model->get_positions($this->comp_id,$dept_id,$pos_id);
+		$sql_pos = $this->department_and_positions_model->get_positions($dept_id,$pos_id);
 		
 		if($sql_pos->num_rows()){
 			$row = $sql_pos->row();
@@ -104,16 +97,14 @@ class Department_and_positions extends CI_Controller {
 	}
 	
 	public function ajax_assign_department_and_position(){
-		//$this->comp_id = 6;
 		$dept_id = $this->input->post('dept_id');
 		$pos_id = $this->input->post('pos_id');
-		$this->department_and_positions_model->assign_selected_position($this->comp_id,$dept_id,$pos_id);
+		$this->department_and_positions_model->assign_selected_position($dept_id,$pos_id);
 	}
 	
 	public function ajax_unassign_department_and_position(){
-		//$this->comp_id = 6;
 		$pos_id = $this->input->post('pos_id');
-		$this->department_and_positions_model->unassign_positions($pos_id,$this->comp_id);
+		$this->department_and_positions_model->unassign_positions($pos_id);
 	}
 	
 }

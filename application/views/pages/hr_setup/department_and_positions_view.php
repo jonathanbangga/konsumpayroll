@@ -13,7 +13,7 @@
                 <ul id="dept_ul">
                 <?php
 					foreach($departments->result() as $row){ 
-						$check_dept = $this->department_and_positions_model->check_department($row->dept_id,$comp_id);
+						$check_dept = $this->department_and_positions_model->check_department($row->dept_id);
 						$str_checked = ($check_dept->num_rows()>0)?'checked="checked"':"";
 				?>
 						<li class="li_dept">
@@ -42,16 +42,16 @@
 			<li class="li<?php echo $row->dept_id ?> li_dept">
 			  <input type="hidden" value="<?php echo $row->dept_id ?>" class="dept_id" name="dept_id">
 			  <?php 
-			  $sql = $this->department_and_positions_model->get_departments($comp_id,$row->dept_id); 
+			  $sql = $this->department_and_positions_model->get_departments($row->dept_id); 
 			  $row2 = $sql->row();
 			  ?>
 			  <header><?php echo $row2->department_name; ?></header>
 			  <div class="dept-box">
 				<ul>
 				<?php
-				$pos = $this->department_and_positions_model->get_positions($comp_id,$row->dept_id); 
+				$pos = $this->department_and_positions_model->get_positions($row->dept_id); 
 				foreach($pos->result() as $row2){ 
-					$check_pos = $this->department_and_positions_model->check_position($row2->position_id,$comp_id);
+					$check_pos = $this->department_and_positions_model->check_position($row2->position_id);
 					$str_checked = ($check_pos->num_rows()>0)?'checked="checked"':"";
 				?>
 					<li>

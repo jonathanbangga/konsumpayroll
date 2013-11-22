@@ -13,15 +13,13 @@ class Job_grade extends CI_Controller {
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/job_grade_model');	
-		// default
-		$this->comp_id = 6;
 	}
 
 	public function index(){
 		$data['page_title'] = "Job Grade";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
-		$data['jg_sql'] = $this->job_grade_model->get_job_grade($this->comp_id);
+		$data['jg_sql'] = $this->job_grade_model->get_job_grade();
 		$this->layout->view('pages/hr_setup/job_grade_view',$data);
 	}
 	
@@ -29,7 +27,7 @@ class Job_grade extends CI_Controller {
 		$rank = $this->input->post('jg');
 		$desc = $this->input->post('desc');
 		foreach($rank as $index=>$val){
-			$this->job_grade_model->add_job_grade($val,$desc[$index],$this->comp_id);
+			$this->job_grade_model->add_job_grade($val,$desc[$index]);
 		}
 	}
 	

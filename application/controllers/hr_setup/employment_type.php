@@ -4,7 +4,6 @@ class Employment_type extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
-	protected $comp_id;
 	
 	public function __construct() {
 		parent::__construct();
@@ -15,8 +14,6 @@ class Employment_type extends CI_Controller {
 		$this->authentication->check_if_logged_in();
 		// load
 		$this->load->model('hr_setup/employment_type_model');	
-		// default
-		$this->comp_id = 6;
 	}
 
 	public function index(){
@@ -27,7 +24,6 @@ class Employment_type extends CI_Controller {
 		// data
 		$data['et'] = $this->employment_type_model->get_employment_type();
 		$data['aet'] = $this->employment_type_model->get_assigned_employment_type();
-		$data['comp_id'] = $this->comp_id;
 		$this->layout->view('pages/hr_setup/employment_type_view',$data);
 	}
 	
@@ -37,9 +33,9 @@ class Employment_type extends CI_Controller {
 	}
 
 	public function ajax_assign_employment_type(){
-		$cid = $this->input->post('cid');
 		$et = $this->input->post('et');
-		$this->employment_type_model->update_employment_type($cid,$et);
+		$selected = $this->input->post('selected');
+		$this->employment_type_model->update_employment_type($selected,$et);
 	}
 	
 }

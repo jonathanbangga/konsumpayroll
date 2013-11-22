@@ -2,29 +2,32 @@
 
 class Leaves_model extends CI_Model {
 
+	protected $company_id;
+
     public function __construct(){
         parent::__construct();
+		$this->company_id = $this->session->userdata('company_id');
     }
 
-	public function get_leaves($company_id){
+	public function get_leaves(){
 		return $this->db->query("
 			SELECT *
 			FROM `leaves` AS l
 			LEFT JOIN `position` AS p ON ( l.`position_id` = p.`position_id` ) 
-			WHERE l.`company_id` = {$company_id}
+			WHERE l.`company_id` = {$this->company_id}
 		");
 	}
 	
-	public function get_position($company_id){
+	public function get_position(){
 		return $this->db->query("
 			SELECT *
 			FROM `selected_position` AS sp
 			LEFT JOIN `position` AS p ON ( sp.position_id = p.position_id )
-			WHERE sp.`company_id` ={$company_id}
+			WHERE sp.`company_id` ={$this->company_id}
 		");
 	}
 	
-	public function add_leaves($leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave,$company_id){
+	public function add_leaves($leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave){
 		$this->db->query("
 			INSERT INTO 
 			`leaves` (	
@@ -55,7 +58,7 @@ class Leaves_model extends CI_Model {
 				'{$unused_leave}',
 				'{$unused_leave_upon_termination}',
 				'{$max_days_of_leave}',
-				'{$company_id}'
+				'{$this->company_id}'
 			)
 		");
 	}
