@@ -42,7 +42,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-      <a class="btn btn-gray left" href="#">BACK</a> <a class="btn btn-gray right" href="#"> CONTINUE</a>
+      <a class="btn btn-gray left" href="/company/hr_setup/locations">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/leaves"> CONTINUE</a>
           <!-- FOOTER-GRP-BTN END -->
       </div>
       <!-- RBOX END -->

@@ -44,7 +44,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a href="#" class="btn btn-gray left">BACK</a> <a href="#" class="btn btn-gray right"> CONTINUE</a>
+        <a href="/company/hr_setup/projects" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/job_grade" class="btn btn-gray right"> CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
       </div>
 	  
