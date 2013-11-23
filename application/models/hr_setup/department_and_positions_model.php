@@ -120,6 +120,49 @@ class Department_and_positions_model extends CI_Model {
 			AND `company_id` ={$this->company_id}
 		");
 	}
+	
+	public function delete_department($dept_id){
+		$dept_id2 = implode(",",$dept_id);
+		// delete department
+		$this->db->query("
+			DELETE 
+			FROM `department`
+			WHERE `dept_id` IN ({$dept_id2})
+			AND `company_id` = {$this->company_id}
+		");
+		// delete it's position as well
+		$this->db->query("
+			DELETE 
+			FROM `position`
+			WHERE `dept_id` IN ({$dept_id2})
+			AND `company_id` = {$this->company_id}
+		");
+		// delete it's selected position as well
+		$this->db->query("
+			DELETE 
+			FROM `selected_position`
+			WHERE `dept_id` IN ({$dept_id2})
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function delete_position($pos_id){
+		$pos_id2 = implode(",",$pos_id);
+		// delete position 
+		$this->db->query("
+			DELETE 
+			FROM `position`
+			WHERE `position_id` IN ({$pos_id2})
+			AND `company_id` = {$this->company_id}
+		");
+		// delete it's selected position as well
+		$this->db->query("
+			DELETE 
+			FROM `selected_position`
+			WHERE `position_id` IN ({$pos_id2})
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */

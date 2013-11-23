@@ -39,8 +39,8 @@ class Locations_model extends CI_Model {
 			)
 			VALUES (
 				{$project_id},
-				'{$location}',
-				'{$description}',
+				'".mysql_real_escape_string($location)."',
+				'".mysql_real_escape_string($description)."',
 				{$this->company_id}
 			)
 		");
@@ -58,8 +58,8 @@ class Locations_model extends CI_Model {
 	public function update_project_location($location,$description,$location_id){
 		return $this->db->query("
 			UPDATE `location`
-			SET `location` = '{$location}',
-				`description` = '{$description}'
+			SET `location` = '".mysql_real_escape_string($location)."',
+				`description` = '".mysql_real_escape_string($description)."'
 			WHERE `location_id` = {$location_id}
 			AND `company_id` = {$this->company_id}
 		");

@@ -18,8 +18,8 @@ class Projects_model extends CI_Model {
 				`company_id`
 			)
 			VALUE (
-				'{$project_name}',
-				'{$project_description}',
+				'".mysql_real_escape_string($project_name)."',
+				'".mysql_real_escape_string($project_description)."',
 				{$this->company_id}
 			)
 		");

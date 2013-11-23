@@ -51,6 +51,7 @@ class Department_and_positions extends CI_Controller {
 				$str .= '</ul>
 			  </div>
 			  <a class="add-more-pos btn" href="javascript:void(0);">ADD POSITION</a> 
+			  <a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>
 			</li>
 			';
 		}
@@ -58,7 +59,7 @@ class Department_and_positions extends CI_Controller {
 	}
 	
 	public function ajax_add_department(){
-		$dept_name = $this->input->post('dept_name');
+		$dept_name = mysql_real_escape_string($this->input->post('dept_name'));
 		// return the department ID added
 		$dept_id = $this->department_and_positions_model->add_department($dept_name);
 		// get that specific department via department id
@@ -77,7 +78,7 @@ class Department_and_positions extends CI_Controller {
 	}
 	
 	public function ajax_add_position(){
-		$pos = $this->input->post('pos');
+		$pos = mysql_real_escape_string($this->input->post('pos'));
 		$dept_id = $this->input->post('dept_id');
 		// return the position ID added
 		$pos_id = $this->department_and_positions_model->add_position($pos,$dept_id);
@@ -105,6 +106,16 @@ class Department_and_positions extends CI_Controller {
 	public function ajax_unassign_department_and_position(){
 		$pos_id = $this->input->post('pos_id');
 		$this->department_and_positions_model->unassign_positions($pos_id);
+	}
+	
+	public function ajax_delete_department(){
+		$dept_id = $this->input->post('dept_id');
+		$this->department_and_positions_model->delete_department($dept_id);
+	}
+	
+	public function ajax_delete_position(){
+		$pos_id = $this->input->post('pos_id');
+		$this->department_and_positions_model->delete_position($pos_id);
 	}
 	
 }

@@ -28,7 +28,7 @@ class Employment_type extends CI_Controller {
 	}
 	
 	public function ajax_add_employment_type(){
-		$et = $this->input->post('et');
+		$et = mysql_real_escape_string($this->input->post('et'));
 		echo $this->employment_type_model->add_employment_type($et);
 	}
 
@@ -36,6 +36,11 @@ class Employment_type extends CI_Controller {
 		$et = $this->input->post('et');
 		$selected = $this->input->post('selected');
 		$this->employment_type_model->update_employment_type($selected,$et);
+	}
+	
+	public function ajax_delete_employment_type(){
+		$et_id = $this->input->post('et_id');
+		$this->employment_type_model->delete_employment_type($et_id);
 	}
 	
 }

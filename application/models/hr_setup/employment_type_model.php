@@ -51,6 +51,16 @@ class Employment_type_model extends CI_Model {
 			AND `company_id` = {$this->company_id}
 		");
 	}
+	
+	public function delete_employment_type($emp_type_id){
+		$et = implode(",",$emp_type_id);
+		$this->db->query("
+			DELETE 
+			FROM `employment_type`
+			WHERE `emp_type_id` IN ({$et})
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file hr_setup_model.php */

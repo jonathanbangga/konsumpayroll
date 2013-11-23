@@ -46,18 +46,18 @@ class Leaves_model extends CI_Model {
 				`company_id`
 			)
 			VALUES (
-				'{$leave_type}',
+				'".mysql_real_escape_string($leave_type)."',
 				'{$payable}',
-				'{$required_documents}',
+				'".mysql_real_escape_string($required_documents)."',
 				'{$include_in_actual_hours_worked}',
 				'{$leaves_used_to_deduct_no_of_work}',
-				'{$leave_accrued}',
+				'".mysql_real_escape_string($leave_accrued)."',
 				'{$period}',
 				'{$position_id}',
 				'{$years_of_service}',
 				'{$unused_leave}',
 				'{$unused_leave_upon_termination}',
-				'{$max_days_of_leave}',
+				'".mysql_real_escape_string($max_days_of_leave)."',
 				'{$this->company_id}'
 			)
 		");

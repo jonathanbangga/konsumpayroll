@@ -27,7 +27,7 @@ class Approval_groups extends CI_Controller {
 	}
 	
 	public function ajax_add_approval_process(){
-		$name = $this->input->post('name');
+		$name = mysql_real_escape_string($this->input->post('name'));
 		echo $this->approval_groups_model->add_approval_process($name);
 	}
 	
@@ -41,6 +41,11 @@ class Approval_groups extends CI_Controller {
 	public function delete_approver(){
 		$ag_id = $this->input->post('ag_id');
 		$this->approval_groups_model->delete_approval_groups($ag_id);
+	}
+	
+	public function ajax_delete_approval_process(){
+		$ap_id = $this->input->post('ap_id');
+		$this->approval_groups_model->delete_approval_process($ap_id);
 	}
 	
 }

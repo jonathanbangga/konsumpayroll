@@ -88,5 +88,15 @@ class Approval_groups_model extends CI_Model {
 		");
 	}
 	
+	public function delete_approval_process($ap_id){
+		$ap_id2 = implode(",",$ap_id);
+		$this->db->query("
+			DELETE 
+			FROM `approval_process`
+			WHERE `approval_process_id` IN ({$ap_id2})
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
 }
 /* End of file */

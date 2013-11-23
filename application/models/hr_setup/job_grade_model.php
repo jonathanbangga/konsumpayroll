@@ -26,8 +26,8 @@ class Job_grade_model extends CI_Model {
 				`company_id`
 			)
 			VALUES (
-				'{$job_grade}',
-				'{$description}',
+				'".mysql_real_escape_string($job_grade)."',
+				'".mysql_real_escape_string($description)."',
 				{$this->company_id}
 			)
 		");

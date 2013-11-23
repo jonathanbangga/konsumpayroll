@@ -47,6 +47,7 @@ if($max>0){
 	  <a href="javascript:void(0);" id="btn-add-approval-process" class="btn">
 		ADD APPROVAL PROCESS
 	  </a>
+	  <a class="btn" id="btn-delete" href="javascript:void(0);">DELETE</a>
   </p>
 </div>
 <div class="tbl-wrap tbl-approvers">
@@ -116,9 +117,9 @@ if($max>0){
 	</div>
 </div>
 
-<div id="confirm-remove-dialog" class="jdialog"  title="Add more">
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
 	<div class="inner_div">
-		Are you sure you want to remove this employee?
+		Are you sure you want to delete?
 	</div>
 </div>
 
@@ -342,6 +343,45 @@ jQuery(document).ready(function(){
 						});
 					}else{
 						alert('Approval Groups Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	
+	// delete approval process
+	jQuery("#btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var ap_id = new Array();
+					jQuery(".app_proc:checked").each(function(index){
+						ap_id[index] = jQuery(this).val();
+					});
+					if(ap_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/approval_groups/ajax_delete_approval_process",
+							data: {
+								ap_id: ap_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Approval process has been deleted");
+							window.location="/company/hr_setup/approval_groups";
+						});
+					}else{
+						alert('Approval process Id is missing');
 					}					
 				},
 				'no': function() {

@@ -33,6 +33,7 @@
 			  <?php }
 			  ?>
               <a class="btn" href="javascript:void(0);" id="add-more-dept">ADD DEPARTMENT</a> 
+			  <a class="btn" href="javascript:void(0);" id="btn-delete_dept" style="margin-top: 9px;">DELETE</a>
 			</li>
 			
 			<?php
@@ -65,6 +66,7 @@
 				</ul>
 			  </div>
 			  <a href="javascript:void(0);" class="add-more-pos btn">ADD POSITION</a> 
+			  <a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>
 			</li>
 			
 			<?php }
@@ -103,6 +105,12 @@
 <div class="jdialog" id="no-pos-alert" title="Notice">
 	<div class="inner_div">
 		No positions for this department
+	</div>
+</div>
+
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to delete?
 	</div>
 </div>
 
@@ -250,6 +258,7 @@ jQuery(document).ready(function(){
 													'</ul>'+
 												  '</div>'+
 												  '<a class="add-more-pos btn" href="javascript:void(0);">ADD POSITION</a> '+
+												  '<a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>'+
 												'</li>';
 									jQuery("#deptnpos").append(temp);
 								}
@@ -294,6 +303,84 @@ jQuery(document).ready(function(){
 			}
 				
 	});
+	
+	
+	// delete department
+	jQuery("#btn-delete_dept").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var dept_id = new Array();
+					jQuery(".dept_id:checked").each(function(index){
+						dept_id[index] = jQuery(this).val();
+					});
+					if(dept_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/department_and_positions/ajax_delete_department",
+							data: {
+								dept_id: dept_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Department has been deleted");
+							window.location="/company/hr_setup/department_and_positions";
+						});
+					}else{
+						alert('Department Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	// delete department
+	jQuery(document).on("click",".btn-delete_pos",function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var pos_id = new Array();
+					obj.parents("li:first").find(".jpos:checked").each(function(index){
+						pos_id[index] = jQuery(this).val();
+					});
+					if(pos_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/department_and_positions/ajax_delete_position",
+							data: {
+								pos_id: pos_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Position has been deleted");
+							window.location="/company/hr_setup/department_and_positions";
+						});
+					}else{
+						alert('Position Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
 	
 });
 </script>
