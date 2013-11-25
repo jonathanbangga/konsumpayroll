@@ -144,13 +144,10 @@
 			}
 		}
 		
-		public function we(){
-			$this->session->set_userdata("company_id","1");
+		public function we(){	
 			p($this->session->all_userdata());
 		}
-	
-		
-		
+			
 	}
 
 /* End of file company_approvers.php */
