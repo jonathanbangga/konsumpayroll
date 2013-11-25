@@ -214,7 +214,7 @@ jQuery(document).ready(function(){
 	// auto complete script 
 	function auto_complete(){
 		<?php
-			$sql_emp = $this->approval_groups_model->get_employee();
+			$sql_emp = $this->approval_groups_model->get_company_approver();
 			$emp_str = "";
 			if($sql_emp->num_rows()>0){
 				foreach($sql_emp->result() as $emp){

@@ -31,11 +31,13 @@ class Approval_groups_model extends CI_Model {
 		");
 	}
 	
-	public function get_employee(){
+	public function get_company_approver(){
 		return $this->db->query("
 			SELECT *
-			FROM `employee`
-			WHERE `company_id` = {$this->company_id}
+			FROM `company_approvers` AS ca
+			LEFT JOIN `accounts` AS a ON ( ca.account_id = a.account_id )
+			LEFT JOIN `employee` AS e ON ( ca.account_id = e.account_id ) 
+			WHERE ca.`company_id` = {$this->company_id}
 		");
 	}
 	
