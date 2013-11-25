@@ -43,7 +43,7 @@ span.errors{
 /** fields **/
 
 .emp_fields,.cost_inputs{
-/* /* padding:5px; */ */
+/* padding:5px;  */
 }
 
 
@@ -93,7 +93,7 @@ input.btn[type="submit"] {
     height: 27.4px;
     padding-bottom: 4px;
     padding-top: 4px;
-	font:12px Trebuchet MS",​Arial,​Helvetica,​sans-serif
+	font:12px Trebuchet MS,​Arial,​Helvetica,​sans-serif
 }
 
 .ownerd,.view_company .jowner
@@ -123,3 +123,10 @@ input.btn[type="submit"] {
 .list_logos:hover {
   opacity:0.3;
 }
+
+
+/** hr users input **/
+.inp_user{
+	width:200px;
+}
+/** hr users input **/

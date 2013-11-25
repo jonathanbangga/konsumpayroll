@@ -262,6 +262,7 @@ CREATE TABLE IF NOT EXISTS `assign_company_head` (
 CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `basic_pay_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
   `current_basic_pay` decimal(10,2) NOT NULL,
   `new_basic_pay` decimal(10,2) NOT NULL,
   `effective_date` datetime NOT NULL,
@@ -680,7 +681,30 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `leaves`
+--
 
+CREATE TABLE IF NOT EXISTS `leaves` (
+  `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
+  `leave_type` varchar(80) NOT NULL,
+  `payable` int(11) NOT NULL,
+  `required_documents` varchar(250) NOT NULL,
+  `include_in_actual_hours_worked` int(11) NOT NULL,
+  `leaves_used_to_deduct_no_of_work` int(11) NOT NULL,
+  `leave_accrued` int(11) NOT NULL,
+  `period` varchar(100) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `years_of_service` varchar(100) NOT NULL,
+  `unused_leave` varchar(100) NOT NULL,
+  `unused_leave_upon_termination` varchar(100) NOT NULL,
+  `max_days_of_leave` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`leaves_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `employee_loans`
 --
@@ -817,9 +841,10 @@ CREATE TABLE IF NOT EXISTS `employment_type` (
   `emp_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `selected` int(1) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`emp_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1076,25 +1101,6 @@ INSERT INTO `konsum_admin` (`konsum_admin_id`, `account_id`, `name`, `status`, `
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `leave`
---
-
-CREATE TABLE IF NOT EXISTS `leave` (
-  `leave_id` int(11) NOT NULL AUTO_INCREMENT,
-  `emp_id` int(11) NOT NULL,
-  `pay_date` date NOT NULL,
-  `leave_type` varchar(100) NOT NULL,
-  `date` date NOT NULL,
-  `to` date NOT NULL,
-  `no_of_hours` float NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (`leave_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `leave_type`

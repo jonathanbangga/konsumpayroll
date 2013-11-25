@@ -100,9 +100,6 @@ class Company_setup extends CI_Controller {
 		}
 	}
 	
-	public function we(){
-		p($this->session->all_userdata());
-	}
 	
 	public function delete(){
 		if($this->input->post("delete")) {
