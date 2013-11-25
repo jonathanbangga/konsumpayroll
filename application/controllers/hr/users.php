@@ -31,10 +31,9 @@ class Users extends CI_Controller {
 	public function index(){
 		$data['page_title'] = "Manage Users";
 		$company_info = whose_company();
-		echo $this->db->last_query();
 		if($company_info == false){
-			#show_error("Company subdomain is invalid");
-			#return false;
+			show_error("Company subdomain is invalid");
+			return false;
 		}
 		$data['sidebar_menu'] =$this->sidebar_menu;	
 		$data['approvers_list'] = $this->users->fetch_approvers_users($company_info->company_id);

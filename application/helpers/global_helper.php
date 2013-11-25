@@ -173,7 +173,7 @@
 		$query = $CI->db->query("
 									SELECT * FROM assigned_company ac
 									LEFT JOIN company c on c.company_id = ac.company_id
-									WHERE ac.payroll_system_account_id = 1 AND c.sub_domain = '{$company_name}'
+									WHERE ac.payroll_system_account_id = {$psa_id} AND c.sub_domain = '{$company_name}'
 								");
 		$row = $query->row();
 		return $row;
