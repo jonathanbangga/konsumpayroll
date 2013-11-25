@@ -163,16 +163,18 @@
 	}
 	
 	/**
-	 * Checks whose company has been handled by this
+	 * Checks whose company has been handled by the right 
 	 * return object
 	 */
 	function whose_company(){
 		$CI =& get_instance();
 		$psa_id = $CI->session->userdata("psa_id");
 		$company_name = trim($CI->db->escape_str($CI->uri->segment(1)));
-		$query = $CI->db->query("SELECT * FROM assigned_company ac
-						LEFT JOIN company c on c.company_id = ac.company_id
-						WHERE ac.payroll_system_account_id = 1 AND c.sub_domain = '{$company_name}'");
+		$query = $CI->db->query("
+									SELECT * FROM assigned_company ac
+									LEFT JOIN company c on c.company_id = ac.company_id
+									WHERE ac.payroll_system_account_id = 1 AND c.sub_domain = '{$company_name}'
+								");
 		$row = $query->row();
 		return $row;
 	}

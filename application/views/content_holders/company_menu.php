@@ -1,5 +1,5 @@
       <ul>
-        <li><a href="/company/company_setup/company_information">COMPANY SETUP</a></li>  
+        <li><a href="/<?php $this->session->userdata("sub_domain");?>/company_setup/company_information">COMPANY SETUP</a></li>  
         <li>
         <?php 
         	$hs_url = "/company/company_setup/company_information";
