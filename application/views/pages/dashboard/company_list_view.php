@@ -1,5 +1,6 @@
  <div class="tbl-wrap">
-          <table class="company-list-tbl">
+	<?php if($company->num_rows()>0){ ?>
+		<table class="company-list-tbl">
 			<?php 
 			foreach($company->result() as $row){?>
 			 <tr>
@@ -16,5 +17,11 @@
 			<?php 
 			} ?>
           </table>
+	<?php
+	}else{
+		echo "No company yet";
+	}
+	?>
+          
         </div>
         <a href="/company/company_setup/company_information/" class="btn">ADD COMPANY</a>

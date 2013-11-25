@@ -33,8 +33,11 @@
 			?>
           </select>
           <!-- EMPLOYMENT-TYPE-WRAP END -->
-          <div class="clearB">
-          <a class="btn" id="add-more" href="javascript:void(0);">ADD MORE</a>          </div>
+		  <div class="clearB"></div>
+          <div style="margin-top: 20px;">
+			<a class="btn" id="add-more" href="javascript:void(0);">ADD MORE</a> 
+			<a class="btn" id="btn-delete" href="javascript:void(0);">DELETE</a>
+		  </div>
         </div>
         <!-- MAIN-CONTENT END -->
       </div>
@@ -50,6 +53,13 @@
 		<input type="text" id="employment_type" name="employment_type" />
 	</div>
 </div>
+
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to delete?
+	</div>
+</div>
+
 
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
@@ -67,14 +77,13 @@ jQuery(document).ready(function(){
 			et[i] = jQuery(this).val();
 			i++;
 		});
-		var cid = <?php echo $comp_id; ?>; // company id
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
 			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
-				cid: cid,
 				et: et,
+				selected:1,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});
@@ -94,8 +103,8 @@ jQuery(document).ready(function(){
 			type: "POST",
 			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
-				cid: cid,
 				et: et,
+				selected:0,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		});
@@ -111,7 +120,7 @@ jQuery(document).ready(function(){
 			},
 			buttons: {
 				save: function() {
-					var et = jQuery("#employment_type").val();
+					var et = jQuery("select option:selected").val();
 					if(et!=""){
 						// ajax call
 						jQuery.ajax({
@@ -134,5 +143,44 @@ jQuery(document).ready(function(){
 			},
 		});
 	});
+	
+	// delete employment type
+	jQuery("#btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var et_id = new Array();
+					jQuery("select option:selected").each(function(index){
+						et_id[index] = jQuery(this).val();
+					});
+					if(et_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/company/hr_setup/employment_type/ajax_delete_employment_type",
+							data: {
+								et_id: et_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Employee type has been deleted");
+							window.location="/company/hr_setup/employment_type";
+						});
+					}else{
+						alert('Employment type Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
 });
 </script>
