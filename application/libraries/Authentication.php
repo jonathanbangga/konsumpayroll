@@ -34,7 +34,7 @@ class Authentication {
                    'account_id'  => $a->account_id,
 				   'account_type_id'  => $a->account_type_id,
 				   'psa_id'  => $a->payroll_system_account_id,
-					'user_type_id' => $a->user_type_id
+				   'user_type_id' => $a->user_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
 				redirect('/company/dashboard/company_list');

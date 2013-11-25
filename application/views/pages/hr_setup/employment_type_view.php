@@ -120,7 +120,7 @@ jQuery(document).ready(function(){
 			},
 			buttons: {
 				save: function() {
-					var et = jQuery("select option:selected").val();
+					var et = jQuery("#employment_type").val();
 					if(et!=""){
 						// ajax call
 						jQuery.ajax({
