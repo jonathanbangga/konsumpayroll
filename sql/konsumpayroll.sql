@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2013 at 08:17 AM
+-- Generation Time: Nov 25, 2013 at 08:30 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `token` varchar(250) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `accounts`
@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 
 INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_account_id`, `password`, `account_type_id`, `email`, `user_type_id`, `token`, `deleted`) VALUES
 (1, 'admin', 0, '7b591a2a55585e166465a838c28a2c5f', 1, 'admin@yahoo.com', 1, '85c2e269c6306a4e7a90d6ee7cb51f5f', '0'),
-(2, 'owner@test.com', 2, '7b591a2a55585e166465a838c28a2c5f', 2, 'owner@test.com', 2, '', '0');
+(2, 'owner@test.com', 2, '7b591a2a55585e166465a838c28a2c5f', 2, 'owner@test.com', 2, '', '0'),
+(3, 'techgrowthglobal@techgrowthglobal.com', 0, '0630f267362249665efde740072e77c3', 2, 'techgrowthglobal@techgrowthglobal.com', 2, '', '0');
 
 -- --------------------------------------------------------
 
@@ -339,14 +340,15 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
   `date` datetime NOT NULL,
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`company_owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `company_owner`
 --
 
 INSERT INTO `company_owner` (`company_owner_id`, `first_name`, `middle_name`, `last_name`, `owner_name`, `dob`, `address`, `street`, `city`, `zipcode`, `home_no`, `mobile_no`, `emergency_contact_person`, `emergency_contact_number`, `security_question`, `security_answer`, `country`, `date`, `account_id`) VALUES
-(2, '', '', '', 'Owner Profile', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '2013-11-25 04:26:19', 2);
+(2, '', '', '', 'Owner Profile', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '2013-11-25 04:26:19', 2),
+(3, '', '', '', 'Techgrowth admin', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '2013-11-25 08:21:12', 3);
 
 -- --------------------------------------------------------
 

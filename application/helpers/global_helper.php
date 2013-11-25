@@ -184,9 +184,10 @@
 	 */
 	function replace_space($text) { 
 	    $text = strtolower(htmlentities($text)); 
-	    $text = str_replace(get_html_translation_table(), "-", $text);
-	    $text = str_replace(" ", "-", $text);
-	    $text = preg_replace("/[-]+/i", "-", $text);
+	    $text = str_replace(get_html_translation_table(), "_", $text);
+	    $text = str_replace(" ", "_", $text);
+	   	$text = str_replace("-", "_", $text);
+	    $text = preg_replace("/[_]+/i", "_", $text);
 	    return $text;
 	}
 	
