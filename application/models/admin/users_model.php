@@ -288,6 +288,7 @@ class Users_model extends CI_Model {
 			$account_field = array(
 						"payroll_system_account_id" => 0,
 						"email"				=> $email,
+						"payroll_cloud_id"	=> $email,
 						"account_type_id"	=> 2,
 						"password"			=> md5(idates_now()),
 						"user_type_id"		=> 2,

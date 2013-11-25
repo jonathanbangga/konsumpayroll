@@ -6,13 +6,39 @@
 				<tr>
 					<th style="width:50px;">Line</th>
 					<th style="width:170px;">Email</th>
-					<th style="width:170px;">Account Name</th>
+					<th style="width:170px;">First Name</th>
+					<th style="width:170px;">Middle Name</th>
+					<th style="width:170px;">Last Name</th>
 					<th style="width:170px;">Password</th>
 					<th style="width:170px;">Retype password</th>
 					<th style="width:170px;">Payroll Group</th>
 					<th style="width:170px;">Permission</th>
 					<th style="width:170px">Action</th>
 				</tr>
+				<?php 
+					if($approvers_list){
+						foreach($approvers_list as $approvers):
+				?>
+				<tr>
+					<td></td>
+					<td>
+						<input type="hidden" id="account_id" name="account_id" value="<?php echo base64_encode($approvers->account_id);?>">
+						<input type="text" name="email[]" value="<?php echo $approvers->email;?>" class="inp_user">
+					</td>
+					<td><input type="text" name="first_name[]" value="<?php echo $approvers->first_name;?>" class="inp_user"></td>
+					<td><input type="text" name="middle_name[]" value="<?php echo $approvers->middle_name;?>" class="inp_user"></td>
+					<td><input type="text" name="last_name[]" value="<?php echo $approvers->last_name;?>" class="inp_user"></td>
+					<td><input type="text" name="password[]" class="inp_user"></td>
+					<td><input type="text" name="retype_password[]" class="inp_user"></td>
+					<td><input type="text" name="payroll_group[]" class="inp_user"></td>
+					<td><input type="text" class="inp_user"></td>
+					<td><a class="btn btn-red btn-action jdel_the_users" href="#">DELETE</a></td>
+				</tr>
+				
+				<?php 		
+						endforeach;
+					}
+				?>
 			</tbody> 
 		</table>
 		<span class="ihides unameContBoxTrick"></span>

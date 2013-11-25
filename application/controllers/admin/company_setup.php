@@ -70,6 +70,7 @@ class Company_setup extends CI_Controller {
 						$fields_psa = array(
 								"name"			=> $name[$key],
 								"account_id"	=> $val,
+								"sub_domain"	=> replace_space($name[$key]),
 								"status"		=> "Active"
 						);
 						$payroll_system_account_id = $this->company_setup->save_fields("payroll_system_account",$fields_psa);
@@ -99,7 +100,6 @@ class Company_setup extends CI_Controller {
 			}
 		}
 	}
-	
 	
 	public function delete(){
 		if($this->input->post("delete")) {

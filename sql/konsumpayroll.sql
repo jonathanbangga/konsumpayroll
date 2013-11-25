@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2013 at 06:49 AM
+-- Generation Time: Nov 25, 2013 at 08:17 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `token` varchar(250) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `accounts`
@@ -45,9 +45,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 
 INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_account_id`, `password`, `account_type_id`, `email`, `user_type_id`, `token`, `deleted`) VALUES
 (1, 'admin', 0, '7b591a2a55585e166465a838c28a2c5f', 1, 'admin@yahoo.com', 1, '85c2e269c6306a4e7a90d6ee7cb51f5f', '0'),
-(2, 'owner@test.com', 1, 'owner@test.com', 2, 'owner@test.com', 2, '', '0'),
-(3, '12345678', 0, '68e410f03e0be5c4516c8d2908c651ef', 2, '', 3, '', '0'),
-(4, '23456789', 0, '68e410f03e0be5c4516c8d2908c651ef', 2, '', 3, '', '0');
+(2, 'owner@test.com', 2, '7b591a2a55585e166465a838c28a2c5f', 2, 'owner@test.com', 2, '', '0');
 
 -- --------------------------------------------------------
 
@@ -89,8 +87,8 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
 --
 
 INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `deleted`) VALUES
-(1, 'administrator has added a company', '2013-11-25 04:32:35', 0, '0'),
-(2, 'administrator has added a company', '2013-11-25 04:39:06', 1, '0');
+(1, 'administrator has added a company', '2013-11-25 08:08:28', 0, '0'),
+(2, 'administrator has added a company', '2013-11-25 08:15:41', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -157,22 +155,6 @@ CREATE TABLE IF NOT EXISTS `approval_process` (
   PRIMARY KEY (`approval_process_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
---
--- Dumping data for table `approval_process`
---
-
-INSERT INTO `approval_process` (`approval_process_id`, `name`, `company_id`) VALUES
-(1, 'Timesheet', 6),
-(2, 'Overtime', 6),
-(3, 'Leaves', 6),
-(4, 'Expenses', 6),
-(5, 'process1', 6),
-(6, 'process2', 6),
-(7, 'process3', 6),
-(8, 'process4', 6),
-(9, 'process5', 6),
-(10, 'process 6', 6);
-
 -- --------------------------------------------------------
 
 --
@@ -218,34 +200,7 @@ CREATE TABLE IF NOT EXISTS `assigned_company` (
   `payroll_system_account_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`assigned_company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
-
---
--- Dumping data for table `assigned_company`
---
-
-INSERT INTO `assigned_company` (`assigned_company_id`, `company_id`, `payroll_system_account_id`, `deleted`) VALUES
-(1, 1, 17, '0'),
-(2, 2, 17, '0'),
-(3, 3, 17, '0'),
-(4, 4, 17, '0'),
-(5, 5, 17, '0'),
-(6, 6, 17, '0'),
-(7, 7, 17, '0'),
-(8, 8, 17, '0'),
-(9, 9, 17, '0'),
-(10, 10, 17, '0'),
-(11, 11, 17, '0'),
-(12, 12, 17, '0'),
-(13, 13, 17, '0'),
-(14, 14, 17, '0'),
-(15, 15, 38, '0'),
-(16, 16, 38, '0'),
-(17, 17, 38, '0'),
-(18, 18, 38, '0'),
-(19, 19, 38, '0'),
-(20, 20, 38, '0'),
-(21, 1, 1, '0');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -340,14 +295,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `company`
---
-
-INSERT INTO `company` (`company_id`, `subscription_date`, `company_name`, `number_of_employees`, `sub_domain`, `trade_name`, `email_address`, `business_address`, `city`, `province`, `zipcode`, `organization_type`, `industry`, `business_phone`, `extension`, `mobile_number`, `fax`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `business_category`, `company_logo`, `status`, `deleted`) VALUES
-(1, '2013-11-25 04:38:24', 'konsum technologies', 0, 'konsumtechnolog', 'web development', '', 'australia sydney', 'melbourne heights', '', '7000', 'government', 'outsourcing company', '123456789', '', '12345678910', '987654321', '', '', '', '', '', '', '51b7a596caab657c1b13311c7392edcc.png', 'Active', '0');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -362,19 +310,7 @@ CREATE TABLE IF NOT EXISTS `company_approvers` (
   `level` tinyint(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`company_approvers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
-
---
--- Dumping data for table `company_approvers`
---
-
-INSERT INTO `company_approvers` (`company_approvers_id`, `account_id`, `company_id`, `level`, `deleted`) VALUES
-(63, 84, 15, 1, '0'),
-(64, 85, 15, 2, '0'),
-(65, 90, 18, 3, '0'),
-(66, 102, 20, 2, '0'),
-(67, 3, 1, 1, '0'),
-(68, 4, 1, 2, '0');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
 
 -- --------------------------------------------------------
 
@@ -410,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `company_owner` (
 --
 
 INSERT INTO `company_owner` (`company_owner_id`, `first_name`, `middle_name`, `last_name`, `owner_name`, `dob`, `address`, `street`, `city`, `zipcode`, `home_no`, `mobile_no`, `emergency_contact_person`, `emergency_contact_number`, `security_question`, `security_answer`, `country`, `date`, `account_id`) VALUES
-(2, 'joe', 'mercado', 'mercado', 'Owner Profile', '0000-00-00', '0', '', '', '', '092945682312', '092024509123', 'my family', '0920123123123', 'what is my favorite sports?', 'boxing', '', '2013-11-25 04:26:19', 2);
+(2, '', '', '', 'Owner Profile', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '2013-11-25 04:26:19', 2);
 
 -- --------------------------------------------------------
 
@@ -463,18 +399,6 @@ CREATE TABLE IF NOT EXISTS `cost_center` (
   `date_created` datetime NOT NULL,
   PRIMARY KEY (`cost_center_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `cost_center`
---
-
-INSERT INTO `cost_center` (`cost_center_id`, `company_id`, `cost_center_code`, `description`, `status`, `deleted`, `date_created`) VALUES
-(1, 15, '123123', 'Hirota Works', 'Active', '0', '2013-11-20 09:29:05'),
-(2, 15, '120931203', 'Konsum Technologies Incorporation', 'Active', '0', '2013-11-20 09:29:05'),
-(3, 15, '123123', 'Jac Lending', 'Active', '0', '2013-11-20 09:29:05'),
-(4, 18, '12323', 'i love this way', 'Inactive', '1', '2013-11-22 08:05:04'),
-(5, 18, '01923213', 'thi sis great', 'Active', '0', '2013-11-22 08:15:29'),
-(6, 18, '019232134', 'thats the way it is aha', 'Inactive', '1', '2013-11-22 08:15:48');
 
 -- --------------------------------------------------------
 
@@ -568,54 +492,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`emp_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
-
---
--- Dumping data for table `employee`
---
-
-INSERT INTO `employee` (`emp_id`, `account_id`, `payroll_group_id`, `permission_id`, `company_id`, `rank_id`, `dept_id`, `location_id`, `last_name`, `first_name`, `middle_name`, `dob`, `gender`, `marital_status`, `address`, `mobile_no`, `home_no`, `photo`, `tin`, `hdmf`, `sss`, `phil_health`, `gsis`, `emergency_contact_person`, `emergency_contact_number`, `no_of_dependents`, `position_id`, `security_question`, `security_answer`, `status`, `deleted`) VALUES
-(36, 39, 0, 0, 2, 0, 0, 0, 'christopher2', 'cuizon3', '123234', '0000-00-00', 'Male', 'Married', '', '10293235', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(37, 40, 0, 0, 2, 0, 0, 0, 'c', 'joe christian alcomendras', 'Marquez', '0000-00-00', 'Male', 'Married', '', '11121314', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(38, 41, 0, 0, 2, 0, 0, 0, '', '2', '', '0000-00-00', 'Male', 'Married', '', '4', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(39, 42, 0, 0, 2, 0, 0, 0, '', '4', '', '0000-00-00', 'Male', 'Married', '', '6', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(40, 43, 0, 0, 2, 0, 0, 0, 'banga', '123', '132', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(41, 44, 0, 0, 2, 0, 0, 0, 'banga', '123', 'sdf', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(42, 45, 0, 0, 3, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '1029323', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(43, 46, 0, 0, 3, 0, 0, 0, '3333333', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(44, 47, 0, 0, 3, 0, 0, 0, 'cuizon', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '1111111111111', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(45, 48, 0, 0, 3, 0, 0, 0, 'banga', 'reyneil', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(46, 49, 0, 0, 3, 0, 0, 0, '', '3', '', '0000-00-00', 'Male', 'Married', '', '3', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(47, 50, 0, 0, 3, 0, 0, 0, '1', '1', '1', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(48, 51, 0, 0, 3, 0, 0, 0, '232', '667', '23', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(49, 52, 0, 0, 3, 0, 0, 0, '3', '4', '23', '0000-00-00', 'Male', 'Married', '', '23', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(50, 53, 0, 0, 3, 0, 0, 0, 'cuizon', 'chris gwapo cute', 'marquez2', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(51, 2, 0, 0, 3, 0, 0, 0, 'cuizon', 'christopher', 'gwapo', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(52, 55, 0, 0, 3, 0, 0, 0, '313123', '1213', '12312', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(53, 56, 0, 0, 3, 0, 0, 0, '213', 'ee12', '323', '0000-00-00', 'Male', 'Married', '', '1', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(54, 57, 0, 0, 3, 0, 0, 0, '232', '12', '2323', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(55, 58, 0, 0, 3, 0, 0, 0, '22222222222', '222222222222', '2222222222222222222', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(56, 84, 0, 0, 15, 0, 0, 0, 'concuera', 'violet', 'zanoria', '0000-00-00', 'Male', 'Married', '', '092999293213', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(57, 85, 0, 0, 15, 0, 0, 0, 'zanoria', 'ariel', 'bungot', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(58, 86, 0, 0, 15, 0, 0, 0, '', 'Donna Crystal', '', '0000-00-00', 'Male', 'Married', '', '0920202020', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(59, 87, 0, 0, 15, 0, 0, 0, '', 'Majal Dael', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(60, 88, 0, 0, 15, 0, 0, 0, '', 'Robin Cui', '', '0000-00-00', 'Male', 'Married', '', '232323', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(61, 90, 0, 0, 18, 0, 0, 0, '123123', '13123', '123123', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(62, 91, 0, 0, 18, 0, 0, 0, '', '12312312', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(63, 92, 0, 0, 18, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '3', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(64, 93, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(65, 94, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(66, 95, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(67, 96, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(68, 97, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '1', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(69, 98, 0, 0, 19, 0, 0, 0, '', 'nene', '', '0000-00-00', 'Male', 'Married', '', '4', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(70, 99, 0, 0, 19, 0, 0, 0, '', '2', '', '0000-00-00', 'Male', 'Married', '', '2', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(71, 100, 0, 0, 19, 0, 0, 0, '', '1234567890', '', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(72, 102, 0, 0, 20, 0, 0, 0, 'banga', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(73, 103, 0, 0, 20, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(74, 104, 0, 0, 20, 0, 0, 0, '', 'christopher cuizon2', '', '0000-00-00', 'Male', 'Married', '', '111111111', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(75, 3, 0, 0, 1, 0, 0, 0, 'concuera', 'violet', 'concuera', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(76, 4, 0, 0, 1, 0, 0, 0, 'vergara', 'alan', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 -- --------------------------------------------------------
 
@@ -941,14 +818,7 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`government_registration_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `government_registration`
---
-
-INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `category`, `company_id`, `status`, `deleted`) VALUES
-(1, '1223456789023456789', '1234567890123456789', '2345678901234567234', '1234567890234567834', '45678902312345678923', 'regular', 1, 'Active', '0');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1266,14 +1136,15 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `date` datetime NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`notification_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `notification`
 --
 
 INSERT INTO `notification` (`notification_id`, `account_id`, `payroll_system_account_id`, `name`, `date`, `deleted`) VALUES
-(1, 0, 0, '2', '2013-11-25 04:32:35', '0');
+(1, 0, 0, '2', '2013-11-25 08:08:28', '0'),
+(2, 0, 0, '2', '2013-11-25 08:15:41', '0');
 
 -- --------------------------------------------------------
 
@@ -1375,18 +1246,19 @@ CREATE TABLE IF NOT EXISTS `payroll_system_account` (
   `payroll_system_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
+  `sub_domain` varchar(55) NOT NULL,
   `subscription_date` datetime NOT NULL,
   `subscription_end_date` datetime NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`payroll_system_account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `payroll_system_account`
 --
 
-INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `account_id`, `name`, `subscription_date`, `subscription_end_date`, `status`) VALUES
-(1, 2, 'konsumtechnology', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active');
+INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `account_id`, `name`, `sub_domain`, `subscription_date`, `subscription_end_date`, `status`) VALUES
+(2, 2, 'konsum TECHNOLOGY', 'konsum-technology', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active');
 
 -- --------------------------------------------------------
 
@@ -1506,14 +1378,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `project`
---
-
-INSERT INTO `project` (`project_id`, `project_name`, `project_description`, `company_id`, `status`, `deleted`) VALUES
-(1, '8', 'jhj', 1, 'Active', '0');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1667,14 +1532,6 @@ CREATE TABLE IF NOT EXISTS `withholding_tax_annual` (
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`withholding_tax_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `withholding_tax_annual`
---
-
-INSERT INTO `withholding_tax_annual` (`withholding_tax_id`, `salary_bracket`, `range_of_tax_from`, `range_of_tax_to`, `initial_tax`, `additional_tax`, `company_id`, `status`) VALUES
-(1, 1, 1.00, 10000.00, 0.00, 5.00, 1, 'Active'),
-(2, 2, 10000.01, 30000.00, 500.00, 10.00, 1, 'Active');
 
 -- --------------------------------------------------------
 
