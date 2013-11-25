@@ -147,21 +147,7 @@ CREATE TABLE IF NOT EXISTS `approval_process` (
   PRIMARY KEY (`approval_process_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
---
--- Dumping data for table `approval_process`
---
 
-INSERT INTO `approval_process` (`approval_process_id`, `name`, `company_id`) VALUES
-(1, 'Timesheet', 6),
-(2, 'Overtime', 6),
-(3, 'Leaves', 6),
-(4, 'Expenses', 6),
-(5, 'process1', 6),
-(6, 'process2', 6),
-(7, 'process3', 6),
-(8, 'process4', 6),
-(9, 'process5', 6),
-(10, 'process 6', 6);
 
 -- --------------------------------------------------------
 
@@ -210,31 +196,6 @@ CREATE TABLE IF NOT EXISTS `assigned_company` (
   PRIMARY KEY (`assigned_company_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
---
--- Dumping data for table `assigned_company`
---
-
-INSERT INTO `assigned_company` (`assigned_company_id`, `company_id`, `payroll_system_account_id`, `deleted`) VALUES
-(1, 1, 17, '0'),
-(2, 2, 17, '0'),
-(3, 3, 17, '0'),
-(4, 4, 17, '0'),
-(5, 5, 17, '0'),
-(6, 6, 17, '0'),
-(7, 7, 17, '0'),
-(8, 8, 17, '0'),
-(9, 9, 17, '0'),
-(10, 10, 17, '0'),
-(11, 11, 17, '0'),
-(12, 12, 17, '0'),
-(13, 13, 17, '0'),
-(14, 14, 17, '0'),
-(15, 15, 38, '0'),
-(16, 16, 38, '0'),
-(17, 17, 38, '0'),
-(18, 18, 38, '0'),
-(19, 19, 38, '0'),
-(20, 20, 38, '0');
 
 -- --------------------------------------------------------
 
@@ -262,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `assign_company_head` (
 CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `basic_pay_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
   `current_basic_pay` decimal(10,2) NOT NULL,
   `new_basic_pay` decimal(10,2) NOT NULL,
   `effective_date` datetime NOT NULL,
@@ -345,15 +307,6 @@ CREATE TABLE IF NOT EXISTS `company_approvers` (
   PRIMARY KEY (`company_approvers_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
 
---
--- Dumping data for table `company_approvers`
---
-
-INSERT INTO `company_approvers` (`company_approvers_id`, `account_id`, `company_id`, `level`, `deleted`) VALUES
-(63, 84, 15, 1, '0'),
-(64, 85, 15, 2, '0'),
-(65, 90, 18, 3, '0'),
-(66, 102, 20, 2, '0');
 
 -- --------------------------------------------------------
 
@@ -443,17 +396,7 @@ CREATE TABLE IF NOT EXISTS `cost_center` (
   PRIMARY KEY (`cost_center_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
---
--- Dumping data for table `cost_center`
---
 
-INSERT INTO `cost_center` (`cost_center_id`, `company_id`, `cost_center_code`, `description`, `status`, `deleted`, `date_created`) VALUES
-(1, 15, '123123', 'Hirota Works', 'Active', '0', '2013-11-20 09:29:05'),
-(2, 15, '120931203', 'Konsum Technologies Incorporation', 'Active', '0', '2013-11-20 09:29:05'),
-(3, 15, '123123', 'Jac Lending', 'Active', '0', '2013-11-20 09:29:05'),
-(4, 18, '12323', 'i love this way', 'Inactive', '1', '2013-11-22 08:05:04'),
-(5, 18, '01923213', 'thi sis great', 'Active', '0', '2013-11-22 08:15:29'),
-(6, 18, '019232134', 'thats the way it is aha', 'Inactive', '1', '2013-11-22 08:15:48');
 
 -- --------------------------------------------------------
 
@@ -549,50 +492,6 @@ CREATE TABLE IF NOT EXISTS `employee` (
   PRIMARY KEY (`emp_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
---
--- Dumping data for table `employee`
---
-
-INSERT INTO `employee` (`emp_id`, `account_id`, `payroll_group_id`, `permission_id`, `company_id`, `rank_id`, `dept_id`, `location_id`, `last_name`, `first_name`, `middle_name`, `dob`, `gender`, `marital_status`, `address`, `mobile_no`, `home_no`, `photo`, `tin`, `hdmf`, `sss`, `phil_health`, `gsis`, `emergency_contact_person`, `emergency_contact_number`, `no_of_dependents`, `position_id`, `security_question`, `security_answer`, `status`, `deleted`) VALUES
-(36, 39, 0, 0, 2, 0, 0, 0, 'christopher2', 'cuizon3', '123234', '0000-00-00', 'Male', 'Married', '', '10293235', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(37, 40, 0, 0, 2, 0, 0, 0, 'c', 'joe christian alcomendras', 'Marquez', '0000-00-00', 'Male', 'Married', '', '11121314', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(38, 41, 0, 0, 2, 0, 0, 0, '', '2', '', '0000-00-00', 'Male', 'Married', '', '4', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(39, 42, 0, 0, 2, 0, 0, 0, '', '4', '', '0000-00-00', 'Male', 'Married', '', '6', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(40, 43, 0, 0, 2, 0, 0, 0, 'banga', '123', '132', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(41, 44, 0, 0, 2, 0, 0, 0, 'banga', '123', 'sdf', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(42, 45, 0, 0, 3, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '1029323', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
-(43, 46, 0, 0, 3, 0, 0, 0, '3333333', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(44, 47, 0, 0, 3, 0, 0, 0, 'cuizon', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '1111111111111', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(45, 48, 0, 0, 3, 0, 0, 0, 'banga', 'reyneil', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(46, 49, 0, 0, 3, 0, 0, 0, '', '3', '', '0000-00-00', 'Male', 'Married', '', '3', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(47, 50, 0, 0, 3, 0, 0, 0, '1', '1', '1', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(48, 51, 0, 0, 3, 0, 0, 0, '232', '667', '23', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(49, 52, 0, 0, 3, 0, 0, 0, '3', '4', '23', '0000-00-00', 'Male', 'Married', '', '23', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(50, 53, 0, 0, 3, 0, 0, 0, 'cuizon', 'chris gwapo cute', 'marquez2', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(51, 2, 0, 0, 3, 0, 0, 0, 'cuizon', 'christopher', 'gwapo', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(52, 55, 0, 0, 3, 0, 0, 0, '313123', '1213', '12312', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(53, 56, 0, 0, 3, 0, 0, 0, '213', 'ee12', '323', '0000-00-00', 'Male', 'Married', '', '1', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(54, 57, 0, 0, 3, 0, 0, 0, '232', '12', '2323', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(55, 58, 0, 0, 3, 0, 0, 0, '22222222222', '222222222222', '2222222222222222222', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(56, 84, 0, 0, 15, 0, 0, 0, 'concuera', 'violet', 'zanoria', '0000-00-00', 'Male', 'Married', '', '092999293213', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(57, 85, 0, 0, 15, 0, 0, 0, 'zanoria', 'ariel', 'bungot', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(58, 86, 0, 0, 15, 0, 0, 0, '', 'Donna Crystal', '', '0000-00-00', 'Male', 'Married', '', '0920202020', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(59, 87, 0, 0, 15, 0, 0, 0, '', 'Majal Dael', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(60, 88, 0, 0, 15, 0, 0, 0, '', 'Robin Cui', '', '0000-00-00', 'Male', 'Married', '', '232323', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(61, 90, 0, 0, 18, 0, 0, 0, '123123', '13123', '123123', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(62, 91, 0, 0, 18, 0, 0, 0, '', '12312312', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(63, 92, 0, 0, 18, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '3', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(64, 93, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(65, 94, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(66, 95, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(67, 96, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(68, 97, 0, 0, 19, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '1', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(69, 98, 0, 0, 19, 0, 0, 0, '', 'nene', '', '0000-00-00', 'Male', 'Married', '', '4', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(70, 99, 0, 0, 19, 0, 0, 0, '', '2', '', '0000-00-00', 'Male', 'Married', '', '2', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(71, 100, 0, 0, 19, 0, 0, 0, '', '1234567890', '', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(72, 102, 0, 0, 20, 0, 0, 0, 'banga', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(73, 103, 0, 0, 20, 0, 0, 0, '', 'christopher cuizon', '', '0000-00-00', 'Male', 'Married', '', '34234', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(74, 104, 0, 0, 20, 0, 0, 0, '', 'christopher cuizon2', '', '0000-00-00', 'Male', 'Married', '', '111111111', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -680,7 +579,30 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `leaves`
+--
 
+CREATE TABLE IF NOT EXISTS `leaves` (
+  `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
+  `leave_type` varchar(80) NOT NULL,
+  `payable` int(11) NOT NULL,
+  `required_documents` varchar(250) NOT NULL,
+  `include_in_actual_hours_worked` int(11) NOT NULL,
+  `leaves_used_to_deduct_no_of_work` int(11) NOT NULL,
+  `leave_accrued` int(11) NOT NULL,
+  `period` varchar(100) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `years_of_service` varchar(100) NOT NULL,
+  `unused_leave` varchar(100) NOT NULL,
+  `unused_leave_upon_termination` varchar(100) NOT NULL,
+  `max_days_of_leave` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`leaves_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `employee_loans`
 --
@@ -817,9 +739,10 @@ CREATE TABLE IF NOT EXISTS `employment_type` (
   `emp_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `selected` int(1) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`emp_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1076,25 +999,6 @@ INSERT INTO `konsum_admin` (`konsum_admin_id`, `account_id`, `name`, `status`, `
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `leave`
---
-
-CREATE TABLE IF NOT EXISTS `leave` (
-  `leave_id` int(11) NOT NULL AUTO_INCREMENT,
-  `emp_id` int(11) NOT NULL,
-  `pay_date` date NOT NULL,
-  `leave_type` varchar(100) NOT NULL,
-  `date` date NOT NULL,
-  `to` date NOT NULL,
-  `no_of_hours` float NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
-  PRIMARY KEY (`leave_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `leave_type`
@@ -1611,13 +1515,7 @@ CREATE TABLE IF NOT EXISTS `withholding_tax_annual` (
   PRIMARY KEY (`withholding_tax_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `withholding_tax_annual`
---
 
-INSERT INTO `withholding_tax_annual` (`withholding_tax_id`, `salary_bracket`, `range_of_tax_from`, `range_of_tax_to`, `initial_tax`, `additional_tax`, `company_id`, `status`) VALUES
-(1, 1, 1.00, 10000.00, 0.00, 5.00, 1, 'Active'),
-(2, 2, 10000.01, 30000.00, 500.00, 10.00, 1, 'Active');
 
 -- --------------------------------------------------------
 
