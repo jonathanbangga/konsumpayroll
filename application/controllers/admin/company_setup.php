@@ -73,6 +73,13 @@ class Company_setup extends CI_Controller {
 								"status"		=> "Active"
 						);
 						$payroll_system_account_id = $this->company_setup->save_fields("payroll_system_account",$fields_psa);
+						// CREATE NOTIFICATIONS
+						$noti_field = array(
+								"name"			=> $val,
+								"date"			=> idates_now()
+						);
+						$this->company_setup->save_fields("notification",$noti_field);
+						
 						if($payroll_system_account_id){
 						// UPDATE AND ASSIGNED IT TO T HE PAYROLL SYSTEM ACCOUNT ID THE ACCOUNT ID
 							$where = array("account_id"=>$val);
@@ -81,6 +88,8 @@ class Company_setup extends CI_Controller {
 							);
 							$this->company_setup->update_fields_data("accounts",$fields_account,$where);
 						}
+				
+						
 						
 					}		
 					add_activity(sprintf(lang("added_company"),$this->profile->account_admin()->name),"");	
