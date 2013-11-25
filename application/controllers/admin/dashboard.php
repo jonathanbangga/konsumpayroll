@@ -34,7 +34,6 @@ class Dashboard extends CI_Controller {
 		$get_pagi = init_pagination($this->dashboard,$total_rows,$this->num_pagi,$this->segment_url);
 		$pagi_url = $this->uri->segment(4) == "" ?  0 : $this->uri->segment(4);
 		$data['logs'] = $this->activity_logs->fetch_activity_logs($get_pagi['per_page'],intval($pagi_url) * $this->num_pagi);
-		echo $this->db->last_query();
 		$data['pagi'] = $this->pagination->create_links();
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/admin/dashboard_view', $data);	

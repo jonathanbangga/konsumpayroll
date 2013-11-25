@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+	<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  *
  * Admin Users 
@@ -132,7 +132,7 @@ class Users_model extends CI_Model {
 		if(is_numeric($id)){
 			#$query = $this->db->get_where("company_owner",array("company_owner_id"=>$id));
 			$query2 = $this->db->query(
-			"SELECT co.company_owner_id,co.owner_name,co.mobile,co.country,co.date,co.account_id,co.address,co.street,
+			"SELECT co.company_owner_id,co.owner_name,co.mobile_no as mobile,co.country,co.date,co.account_id,co.address,co.street,
 			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.`status` AS psa_status
 			FROM `company_owner` co
 			LEFT JOIN accounts a on a.account_id = co.account_id 

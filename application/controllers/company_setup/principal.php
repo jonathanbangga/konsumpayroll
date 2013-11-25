@@ -32,9 +32,9 @@
 		
 		
 		public function index(){
-			$valid_domain = $this->company_id;
-			if($valid_domain){
-			$data['company_principal'] = $this->principal->fetch_principals($valid_domain);
+			
+			if($this->company_id){
+			$data['company_principal'] = $this->principal->fetch_principals($this->company_id);
 			$data['error'] = "";
 			if($this->input->is_ajax_request()){
 				if($this->input->post("approver_save")){
@@ -116,20 +116,20 @@
 		
 		public function principal_id(){
 			if($this->input->is_ajax_request()){
-			$company_id = $this->input->post("company_id");
-			$emp_id = $this->input->post("emp_id");
-			if($this->input->post("edit")){		
-				$this->form_validation->set_rules("company_id","company id","xss_clean|trim|required");
-				$this->form_validation->set_rules("emp_id","company id","xss_clean|trim|required");
-				if($this->form_validation->run() == false){				
-					echo json_encode(array("success"=>"0","errors"=>validation_errors("<span class='error_zone'>",'</span>',"")));
-					return false;
-				}else{
-					$fields = $this->principal->get_principal_emp($company_id,$emp_id);	
-					echo json_encode($fields);
-					return true;
+				$company_id = $this->input->post("company_id");
+				$emp_id = $this->input->post("emp_id");
+				if($this->input->post("edit")){		
+					$this->form_validation->set_rules("company_id","company id","xss_clean|trim|required");
+					$this->form_validation->set_rules("emp_id","company id","xss_clean|trim|required");
+					if($this->form_validation->run() == false){				
+						echo json_encode(array("success"=>"0","errors"=>validation_errors("<span class='error_zone'>",'</span>',"")));
+						return false;
+					}else{
+						$fields = $this->principal->get_principal_emp($company_id,$emp_id);	
+						echo json_encode($fields);
+						return true;
+					}
 				}
-			}
 			}else{
 				show_404();
 			}
@@ -194,7 +194,6 @@
 					$where = array("company_principal_id"=>$this->db->escape_str($this->input->post("company_principal_id")));
 					$update_id = $this->principal->update_fields("company_principal",$fields,$where);
 					// DELETE EMPLOYEE
-					
 					$company_principal = $this->principal->fetch_company_principal($where);
 					// GET THE COMPANY PRINCIPAL AND CHECK WHO IS THE USER
 					if($company_principal){
@@ -203,8 +202,7 @@
 					}
 					// END DELETE EMPLOYEE
 					echo json_encode(array("success"=>"1","error"=>""));
-					return false;
-				
+					return false;	
 				}
 			}
 		}
@@ -233,11 +231,7 @@
 				return FALSE;
 			}
 		}
-		
-		
-		
-		
-		
+				
 	}
 
 /* End of file company_approvers.php */

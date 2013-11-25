@@ -47,11 +47,10 @@
 		public function fetch_principals($company_id,$start=5,$limit=NULL){
 			if(is_numeric($start) && is_numeric($company_id)){
 				$sql = "SELECT DISTINCT *,concat(e.first_name,' ',e.last_name) as fullname FROM employee e
-					LEFT JOIN company_principal cp on e.emp_id = cp.emp_id
-					LEFT JOIN accounts a on a.account_id = e.account_id WHERE cp.company_id={$this->db->escape_str($company_id)}
-					and e.status = 'Active' and e.deleted = '0' and cp.status = 'Active' and cp.deleted = '0' 
-					and a.deleted = '0' ORDER BY cp.level ASC
-					";
+						LEFT JOIN company_principal cp on e.emp_id = cp.emp_id
+						LEFT JOIN accounts a on a.account_id = e.account_id WHERE cp.company_id={$this->db->escape_str($company_id)}
+						and e.status = 'Active' and e.deleted = '0' and cp.status = 'Active' and cp.deleted = '0' 
+						and a.deleted = '0' ORDER BY cp.level ASC";
 				if($start !="" && $limit == NULL){
 					$sql .=" LIMIT $start";
 				}
@@ -75,7 +74,7 @@
 		public function get_principal_emp($company_id,$emp_id){
 			if(is_numeric($company_id) && is_numeric($emp_id)){
 				$sql2 = "SELECT DISTINCT concat(e.first_name,' ',e.last_name) as fullname,e.emp_id as emp_id,
-					cp.company_principal_id as company_principal_id,a.account_id as account_id, 
+					cp.company_principal_id as company_principal_id,a.account_id as account_id
 					
 					FROM employee e
 					LEFT JOIN company_principal cp on e.emp_id = cp.emp_id
@@ -91,8 +90,7 @@
 					WHERE cp.company_id ={$this->db->escape_str($company_id)}
 					AND e.emp_id ={$this->db->escape_str($emp_id)} 
 					AND e.status = 'Active'
-					AND e.deleted = '0'";
-				
+					AND e.deleted = '0'";		
 				$query = $this->db->query($sql);
 				$row = $query->row();
 				$query->free_result();
