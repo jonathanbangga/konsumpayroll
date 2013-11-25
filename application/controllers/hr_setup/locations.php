@@ -37,7 +37,7 @@ class Locations extends CI_Controller {
 	public function ajax_delete_project_location(){
 		$loc_id = $this->input->post('loc_id');
 		$this->locations_model->delete_project_location($loc_id);
-		redirect('/company/hr_setup/projects');
+		redirect("/{$this->session->userdata('sub_domain')}/hr_setup/projects");
 	}
 	
 	public function ajax_get_project_location(){

@@ -43,7 +43,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray right" href="/company/hr_setup/department_and_positions">CONTINUE</a>
+        <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
@@ -80,7 +80,7 @@ jQuery(document).ready(function(){
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
-			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
 				et: et,
 				selected:1,
@@ -101,7 +101,7 @@ jQuery(document).ready(function(){
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
-			url: "/company/hr_setup/employment_type/ajax_assign_employment_type",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type/ajax_assign_employment_type",
 			data: {
 				et: et,
 				selected:0,
@@ -113,6 +113,7 @@ jQuery(document).ready(function(){
 	});
 	// add more
 	jQuery("#add-more").click(function(){
+		jQuery("#employment_type").val("");
 		jQuery("#add-more-dialog").dialog({
 			modal: true,
 			show: {
@@ -125,7 +126,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/employment_type/ajax_add_employment_type",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type/ajax_add_employment_type",
 							data: {
 								et: et, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -133,7 +134,7 @@ jQuery(document).ready(function(){
 						}).done(function(ret){
 							if(ret==1){
 								jQuery.cookie("msg", "New employee type had been saved!");
-								window.location="/company/hr_setup/employment_type";
+								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type";
 							}
 						});
 					}else{
@@ -162,14 +163,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/employment_type/ajax_delete_employment_type",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type/ajax_delete_employment_type",
 							data: {
 								et_id: et_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Employee type has been deleted");
-							window.location="/company/hr_setup/employment_type";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type";
 						});
 					}else{
 						alert('Employment type Id is missing');

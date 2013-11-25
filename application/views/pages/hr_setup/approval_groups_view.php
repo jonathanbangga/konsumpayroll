@@ -2,10 +2,7 @@
 <div class="main-content">
 <p>Create an approval group and assign approver for each approval group. Leaves, overtime, timesheet or expenses<br>
   if an approval, assign it here.</p>
-<div class="tbl-wrap">
-  <h5>How many level of approval process do you have?</h5>
-  <input class="txtfield txtcenter num_level" name="" type="text">
-</div>
+
 <div class="tbl-wrap">
 <?php 
 $max = $ap_sql->num_rows();
@@ -50,6 +47,12 @@ if($max>0){
 	  <a class="btn" id="btn-delete" href="javascript:void(0);">DELETE</a>
   </p>
 </div>
+
+<div class="tbl-wrap">
+  <h5>How many level of approval process do you have?</h5>
+  <input class="txtfield txtcenter num_level" name="" type="text">
+</div>
+
 <div class="tbl-wrap tbl-approvers">
 	<div id="tbl-approvers"></div> 
     <p class="jc1">
@@ -57,6 +60,7 @@ if($max>0){
 	  <label style="bottom: 8px;position: relative;">include HR for confirmation<label/>
     </p>
 </div>
+
 <div class="tbl-wrap">
   <!-- TBL-WRAP START -->
   <h5>Approval Group</h5>
@@ -103,10 +107,12 @@ if($max>0){
   <!-- TBL-WRAP END -->
 </div>
 
+
+
  </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="/company/hr_setup/department_and_positions">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/projects"> CONTINUE</a>
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects"> CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
       </div>
 
@@ -192,7 +198,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/approval_groups/ajax_add_approval_process",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_add_approval_process",
 							data: {
 								name: name, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -200,7 +206,7 @@ jQuery(document).ready(function(){
 						}).done(function(ret){
 							if(ret==1){
 								jQuery.cookie("msg", "New approval process had been saved!");
-								window.location="/company/hr_setup/approval_groups";
+								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
 							}
 						});
 					}else{
@@ -302,7 +308,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/company/hr_setup/approval_groups/ajax_add_approval_group",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_add_approval_group",
 				data: {
 					app_proc: app_proc, 
 					approver: approver,
@@ -311,7 +317,7 @@ jQuery(document).ready(function(){
 				}
 			}).done(function(ret){
 				jQuery.cookie("msg", "New approval group had been saved!");
-				window.location='/company/hr_setup/approval_groups';
+				window.location='/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups';
 			});
 		}
 		
@@ -332,14 +338,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/approval_groups/delete_approver",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/delete_approver",
 							data: {
 								ag_id: ag_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "An approver has been removed");
-							window.location="/company/hr_setup/approval_groups";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
 						});
 					}else{
 						alert('Approval Groups Id is missing');
@@ -371,14 +377,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/approval_groups/ajax_delete_approval_process",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_delete_approval_process",
 							data: {
 								ap_id: ap_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Approval process has been deleted");
-							window.location="/company/hr_setup/approval_groups";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
 						});
 					}else{
 						alert('Approval process Id is missing');

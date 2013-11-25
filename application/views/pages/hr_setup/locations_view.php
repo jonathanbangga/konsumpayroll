@@ -44,7 +44,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a href="/company/hr_setup/projects" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/job_grade" class="btn btn-gray right"> CONTINUE</a>
+        <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects" class="btn btn-gray left">BACK</a> <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade" class="btn btn-gray right"> CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
       </div>
 	  
@@ -162,7 +162,7 @@ jQuery(document).ready(function(){
 				// ajax call
 				jQuery.ajax({
 					type: "POST",
-					url: "/company/hr_setup/locations/ajax_project_location",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_project_location",
 					data: {
 						proj: proj, 
 						loc: loc,
@@ -171,7 +171,7 @@ jQuery(document).ready(function(){
 					}
 				}).done(function(ret){
 						jQuery.cookie("msg", "New project location has been saved!");
-						window.location="/company/hr_setup/locations";
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations";
 				});
 			}else{
 				alert('Enter employment type');
@@ -201,14 +201,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/locations/ajax_delete_project_location",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_delete_project_location",
 							data: {
 								loc_id: loc_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "A project location has been deleted");
-							window.location="/company/hr_setup/locations";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations";
 						});
 					}else{
 						alert('Location Id is missing');
@@ -227,7 +227,7 @@ jQuery(document).ready(function(){
 		// ajax call
 		jQuery.ajax({
 			type: "POST",
-			url: "/company/hr_setup/locations/ajax_get_project_location",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_get_project_location",
 			data: {
 				loc_id: loc_id,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -253,7 +253,7 @@ jQuery(document).ready(function(){
 							// ajax call
 							jQuery.ajax({
 								type: "POST",
-								url: "/company/hr_setup/locations/ajax_update_project_location",
+								url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_update_project_location",
 								data: {
 									loc_id: loc_id,
 									loc: loc,
@@ -263,7 +263,7 @@ jQuery(document).ready(function(){
 							}).done(function(ret){
 								if(ret==1){
 									jQuery.cookie("msg", "Project location has been updated");
-									window.location="/company/hr_setup/locations";
+									window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations";
 								}
 							});
 						}else{

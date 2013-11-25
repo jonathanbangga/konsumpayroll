@@ -40,7 +40,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a href="/company/hr_setup/approval_groups" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/locations" class="btn btn-gray right"> CONTINUE</a>
+        <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups" class="btn btn-gray left">BACK</a> <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations" class="btn btn-gray right"> CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
       </div>
 
@@ -100,7 +100,7 @@ jQuery(document).ready(function(){
 				// ajax call
 				jQuery.ajax({
 					type: "POST",
-					url: "/company/hr_setup/projects/ajax_add_project",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects/ajax_add_project",
 					data: {
 						proj: proj, 
 						desc: desc,
@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 					}
 				}).done(function(ret){
 						jQuery.cookie("msg", "New Project had been saved!");
-						window.location="/company/hr_setup/projects";
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects";
 				});
 			}else{
 				alert('Enter employment type');
@@ -138,14 +138,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/projects/ajax_delete_project",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects/ajax_delete_project",
 							data: {
 								proj: proj,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 								jQuery.cookie("msg", "A project has been deleted");
-								window.location="/company/hr_setup/projects";
+								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects";
 						});
 					}else{
 						alert('Project Id is missing');
