@@ -24,4 +24,4 @@
 	?>
           
         </div>
-        <a href="/company/company_setup/company_information/" class="btn">ADD COMPANY</a>
+        <a href="/<?php echo $sub_domain; ?>/company_setup/company_information/" class="btn">ADD COMPANY</a>
