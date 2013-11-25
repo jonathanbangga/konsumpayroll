@@ -20,7 +20,7 @@
 	</div>
 	<p>
 	<a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a>
-	<input type="submit" name="save_user" value="SAVE" class="btn" />
+	<input type="submit" name="save" value="SAVE" class="btn" />
 	</p>
 	<p>&nbsp;</p>
 	<div class="footer-grp-btn">
@@ -34,13 +34,13 @@
 			jQuery(document).on("click","#add-more-users",function(){
 			    var html = '<tr>';
 			    html +='<td></td>';
+			    html +='<td><input type="text" class="inp_user" name="email[]"></td>';
+			    html +='<td><input type="text" class="inp_user" name="full_name[]"></td>';
+			    html +='<td><input type="text" class="inp_user" name="password[]"></td>';
+			    html +='<td><input type="text" class="inp_user" name="retype_password[]"></td>';
+			    html +='<td><input type="text" class="inp_user" name="payroll_group[]"></td>';
 			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
-			    html +='<td><input type="text" class="inp_user"></td>';
+			    html +='<td><a href="#" class="btn btn-red btn-action jdel_the_users">DELETE</a></td>';
 			    html +='</tr>';
 			    jQuery(".emp_users_list").append(html);
 			});
