@@ -34,10 +34,11 @@ class Authentication {
                    'account_id'  => $a->account_id,
 				   'account_type_id'  => $a->account_type_id,
 				   'psa_id'  => $a->payroll_system_account_id,
-				   'user_type_id' => $a->user_type_id
+				   'user_type_id' => $a->user_type_id,
+				   'sub_domain' => $a->sub_domain
 				);
 				$this->ci->session->set_userdata($newdata);
-				redirect('/company/dashboard/company_list');
+				redirect("/{$a->sub_domain}/dashboard/company_list");
 			}else{
 				redirect('/');
 			}	
