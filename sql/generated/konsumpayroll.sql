@@ -1558,6 +1558,23 @@ CREATE TABLE IF NOT EXISTS `withholding_tax_status` (
   PRIMARY KEY (`withholding_tax_status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hr_setup_properties`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_setup_properties` (
+  `hr_setup_properties_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `include_hr_for_confirmation` int(11) NOT NULL,
+  `leave_day_num_of_hours` int(11) NOT NULL,
+  `month_num_of_workdays` int(11) NOT NULL,
+  PRIMARY KEY (`hr_setup_properties_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
 -- --------------------------------------------------------
 
 --
