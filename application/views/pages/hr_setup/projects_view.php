@@ -40,7 +40,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups" class="btn btn-gray left">BACK</a> <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations" class="btn btn-gray right"> CONTINUE</a>
+        <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions" class="btn btn-gray left">BACK</a> <a href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations" class="btn btn-gray right"> CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
       </div>
 

@@ -82,7 +82,7 @@ class Department_and_positions_model extends CI_Model {
 	public function get_distinct_department(){
 		return $this->db->query("
 			SELECT DISTINCT `dept_id`
-			FROM `selected_position` 
+			FROM `position` 
 			WHERE `company_id` ={$this->company_id}
 		");
 	}
