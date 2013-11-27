@@ -36,7 +36,12 @@ class Users extends CI_Controller {
 			return false;
 		}
 		$data['sidebar_menu'] =$this->sidebar_menu;	
+		init_pagination("/{$this->uri->segment(1)}/hr/users/index",10,1,5);
+		$data['pagi'] = $this->pagination->create_links();
+		
+		$data['company_info'] = $company_info;
 		$data['approval_group'] = $this->users->fetch_approval_group($company_info->company_id);
+		$data['approval_process'] = $this->users->approval_process($company_info->company_id);
 		$data['approvers_list'] = $this->users->fetch_approvers_users($company_info->company_id);
 		// save
 		
@@ -54,13 +59,13 @@ class Users extends CI_Controller {
 				if($emp_email){
 					foreach($payroll_cloud_id as $k=>$v){
 						$this->form_validation->set_rules("payroll_cloud_id[".$k."]","Payroll Cloud ID (".$k."):","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
-						$this->form_validation->set_rules("email[".$k."]","Employee Email (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("email[".$k."]","Employee Email (".$k."):","required|trim|xss_clean|valid_email|is_unique[accounts.email]");
 						$this->form_validation->set_rules("first_name[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("middle_name[".$k."]","Employee Middle Name (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("last_name[".$k."]","Employee Last Name (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("password[".$k."]","Employee password (".$k."):","required|trim|xss_clean");
-						$this->form_validation->set_rules("approval_process_id[".$k."]","Employee Payroll group (".$k."):","trim|xss_clean");
-						$this->form_validation->set_rules("permission[".$k."]","Permission (".$k."):","trim|xss_clean|numeric");
+						$this->form_validation->set_rules("approval_process_id[".$k."]","Employee Payroll group (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("permission[".$k."]","Permission (".$k."):","trim|xss_clean");
 					}		
 				}		
 				if($this->form_validation->run() == TRUE){	
@@ -79,8 +84,7 @@ class Users extends CI_Controller {
 							"first_name" 	=> $this->db->escape_str($emp_first[$key]),
 							"middle_name"	=> $this->db->escape_str($emp_middle[$key]),
 							"account_id"	=> $this->db->escape_str($account_id),
-							"company_id"	=> $company_info->company_id,
-							"payroll_group_id" => $this->db->escape_str($approval_process_id[$key])
+							"company_id"	=> $company_info->company_id
 						);
 						$emp_id = $this->users->save_fields("employee",$fields);
 						// CREATE COMPANY APPROVERS
@@ -91,8 +95,20 @@ class Users extends CI_Controller {
 							"deleted"		=> '0'
 						);
 						$this->users->save_fields("company_approvers",$approvers_fields);
+						// ADD PAYROLL TO APPROVAL PROCESS
+						$employee_info = $this->users->employee_info($account_id);
+						if($approval_process_id[$key]){
+							if($employee_info){
+								$appgroups_fields = array(
+									"approval_process_id" => $approval_process_id[$key],
+									"emp_id"		=> $employee_info->emp_id,
+									"company_id"	=> $company_info->company_id
+								);
+								$this->users->save_fields("approval_groups",$appgroups_fields);
+							}
+						}
+						
 					}	
-					
 					echo json_encode(array("success"=>"1","error"=>""));
 					return false;
 				}else{

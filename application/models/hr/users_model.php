@@ -46,6 +46,11 @@
 			}
 		}
 		
+		/**
+		 * Fetch approval groups
+		 * @param int $comp_id
+		 * @return json_encode
+		 */
 		public function fetch_approval_group($comp_id){
 			$name = $this->input->post("name");
 			$query = $this->db->query("SELECT * FROM approval_process WHERE company_id = '{$this->db->escape_str($comp_id)}'");
@@ -87,17 +92,48 @@
 		
 		/**
 		 * Approver groups
-		 * Approver uploads
 		 * @param int $approval_group_id
+		 * @param int $company_id
+		 * @param int $emp_id
 		 * @return object
 		 */
-		public function approver_groups($approval_group_id){
-			$query = $this->db->query("SELECT * FROM approval_process WHERE approval_process_id = '{$this->db->escape_str($approval_group_id)}'");
+		public function approver_groups($company_id,$emp_id){
+			$query = $this->db->query(
+				"SELECT * FROM approval_groups ag 
+				LEFT JOIN approval_process ap on ap.approval_process_id = ag.approval_process_id
+				WHERE ag.emp_id = '{$this->db->escape_str($emp_id)}' AND ag.company_id = '{$this->db->escape_str($company_id)}'
+				"
+			);
 			$row = $query->row();
 			$query->free_result();
 			return $row;
 		}
 		
+		/**
+		 * Process approval groups
+		 * Enter description here ...
+		 * @param int $comp_id
+		 */
+		public function approval_process($comp_id){
+			$name = $this->input->post("name");
+			$query = $this->db->query("SELECT * FROM approval_process WHERE company_id = '{$this->db->escape_str($comp_id)}'");
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}
+		
+		/**
+		 * Get employee info
+		 * Enter description here ...
+		 * @param int $account_id
+		 * @return object
+		 */
+		public function employee_info($account_id){
+			$query = $this->db->get_where("employee",array("account_id"=>$account_id));
+			$row  = $query->row();
+			$query->free_result();
+			return $row;
+		}
 	}
 
 /* End of file Company_model.php */

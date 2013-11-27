@@ -35,7 +35,7 @@ class Projects extends CI_Controller {
 	public function ajax_delete_project(){
 		$proj = $this->input->post('proj');
 		$this->projects_model->delete_project($proj);
-		redirect('/company/hr_setup/projects');
+		redirect("/{$this->session->userdata('sub_domain')}/hr_setup/projects");
 	}
 	
 }

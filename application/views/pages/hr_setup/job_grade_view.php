@@ -42,7 +42,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-      <a class="btn btn-gray left" href="/company/hr_setup/locations">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/leaves"> CONTINUE</a>
+      <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves"> CONTINUE</a>
           <!-- FOOTER-GRP-BTN END -->
       </div>
       <!-- RBOX END -->
@@ -102,7 +102,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/company/hr_setup/job_grade/ajax_add_job_grade",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade/ajax_add_job_grade",
 				data: {
 					jg: jg,
 					desc: desc,
@@ -110,7 +110,7 @@ jQuery(document).ready(function(){
 				}
 			}).done(function(ret){
 				jQuery.cookie("msg", "Job Grade has been saved");
-				window.location="/company/hr_setup/job_grade";
+				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade";
 			});
 		}else{
 			alert(error);
@@ -132,14 +132,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/job_grade/ajax_delete_job_grade",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade/ajax_delete_job_grade",
 							data: {
 								jg_id: jg_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Job grade has been deleted");
-							window.location="/company/hr_setup/job_grade";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade";
 						});
 					}else{
 						alert('Job grade Id is missing');

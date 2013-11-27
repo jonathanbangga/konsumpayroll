@@ -82,7 +82,7 @@
         
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="/company/hr_setup/employment_type">BACK</a> <a class="btn btn-gray right" href="/company/hr_setup/approval_groups">CONTINUE</a>
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
@@ -133,7 +133,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/company/hr_setup/department_and_positions/ajax_get_positions",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_get_positions",
 				data: {
 					dept_id: dept_id,
 					dept_name: dept_name,
@@ -179,7 +179,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/department_and_positions/ajax_add_department",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_add_department",
 							data: {
 								dept_name: dept_name, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -192,7 +192,7 @@ jQuery(document).ready(function(){
 									jQuery(dialog).dialog( "close" );
 								}else{
 									jQuery.cookie("msg", "New department had been saved!");
-									window.location="/company/hr_setup/department_and_positions";
+									window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions";
 								}
 						});
 					}else{
@@ -225,7 +225,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/department_and_positions/ajax_add_position",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_add_position",
 							data: {
 								pos: pos,
 								dept_id: dept_id,
@@ -284,7 +284,7 @@ jQuery(document).ready(function(){
 			if(jQuery(this).prop("checked")==true){
 				jQuery.ajax({
 					type: "POST",
-					url: "/company/hr_setup/department_and_positions/ajax_assign_department_and_position",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_assign_department_and_position",
 					data: {
 						dept_id: dept_id,
 						pos_id: pos_id,
@@ -294,7 +294,7 @@ jQuery(document).ready(function(){
 			}else{
 				jQuery.ajax({
 					type: "POST",
-					url: "/company/hr_setup/department_and_positions/ajax_unassign_department_and_position",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_unassign_department_and_position",
 					data: {
 						pos_id: pos_id,
 						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -323,14 +323,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/department_and_positions/ajax_delete_department",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_delete_department",
 							data: {
 								dept_id: dept_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Department has been deleted");
-							window.location="/company/hr_setup/department_and_positions";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions";
 						});
 					}else{
 						alert('Department Id is missing');
@@ -361,14 +361,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/department_and_positions/ajax_delete_position",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_delete_position",
 							data: {
 								pos_id: pos_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Position has been deleted");
-							window.location="/company/hr_setup/department_and_positions";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions";
 						});
 					}else{
 						alert('Position Id is missing');

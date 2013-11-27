@@ -45,7 +45,7 @@
 			<?php
 				}
 			}else{
-				echo '<tr><td id="empty" colspan="12">No leaves yet</td></tr>';
+				echo '<tr><td id="empty" colspan="13">No leaves yet</td></tr>';
 			}
 			?>
             
@@ -65,7 +65,7 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="/company/hr_setup/job_grade">BACK</a> 
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade">BACK</a> 
         <!-- FOOTER-GRP-BTN END -->
       </div>
       <!-- RBOX END -->
@@ -242,7 +242,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/company/hr_setup/leaves/ajax_add_leaves",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves/ajax_add_leaves",
 				data: {
 					lt: lt,
 					payable: payable,
@@ -260,7 +260,7 @@ jQuery(document).ready(function(){
 				}
 			}).done(function(ret){
 				jQuery.cookie("msg", "Leave has been saved");
-				window.location="/company/hr_setup/leaves";
+				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves";
 			});
 		}else{
 			alert(error);
@@ -282,14 +282,14 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/leaves/ajax_delete_leaves",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves/ajax_delete_leaves",
 							data: {
 								leaves_id: leaves_id,
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
 							jQuery.cookie("msg", "Job grade has been deleted");
-							window.location="/company/hr_setup/leaves";
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves";
 						});
 					}else{
 						alert('leaves Id is missing');

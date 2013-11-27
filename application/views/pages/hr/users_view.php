@@ -54,7 +54,7 @@
 						<input type="hidden" name="update_payroll_group[]" class="inp_userlist">
 						<div class="users_text">
 							<?php 
-								$approver_group =  $this->users->approver_groups($approvers->payroll_group_id);
+								$approver_group =  $this->users->approver_groups($company_info->company_id,$approvers->emp_id);
 								if($approver_group){
 									echo $approver_group->name;
 								}else{
@@ -66,7 +66,7 @@
 					<td>
 						<input type="hidden" class="inp_userlist" name="update_permission[]">
 					</td>
-					<td><a class="btn btn-red btn-action jdel_users" href="#">DELETE</a></td>
+					<td>&nbsp;</td>
 				</tr>
 				
 				<?php 		
@@ -78,6 +78,7 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
+	<p><?php echo $pagi;?></p>
 	<p>
 	<a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a>
 	<input type="submit" name="save" value="SAVE" class="btn" />
@@ -89,6 +90,15 @@
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>
 	<!-- FOOTER-GRP-BTN END -->
 	</div>
+	<?php 
+		$options = "<option value=\"\">Please select group</option>";
+		if($approval_process){
+			foreach($approval_process as $key_process=>$val_process){
+				$options .='<option value="'.$val_process->approval_process_id.'">'.$val_process->name.'</option>';	
+			}
+		}
+	
+	?>
 	
 	<script type="text/javascript">
 		//token
@@ -123,6 +133,7 @@
 		
 		// ADD USERS
 		function add_users(){
+			var $select_options = '<?php echo $options;?>';
 			jQuery(document).on("click","#add-more-users",function(){
 			    var html = '<tr>';
 				    html +='<td></td>';
@@ -133,11 +144,12 @@
 				    html +='<td><input type="text" class="inp_user" name="last_name[]"></td>';    
 				    html +='<td><input type="text" class="inp_user" name="password[]"></td>'; 
 				    html +='<td><input type="text" class="inp_user" name="retype_password[]"></td>';
-				    html +='<td><input type="text" class="inp_user" name="payroll_group[]">';
-					html +='<input type="hidden" class="inp_user" name="approval_process_id[]" readonly="readonly">';
+				    html +='<td><input type="hidden" class="inp_user" name="payroll_groups[]">';
+				    html +='<select name="approval_process_id[]" class="inp_user">'+$select_options+'</select>';
+					html +='<input type="hidden" class="inp_user" name="approval_process_ids[]" readonly="readonly">';
 					html +='</td>';
 				    html +='<td><input type="text" class="inp_user" name="permission[]"></td>';
-				    html +='<td><a href="#" class="btn btn-red btn-action jdel_users_append">DELETE</a></td>';
+				    html +='<td><a href="#" class="btn btn-red btn-action jdel_users_append">REMOVE</a></td>';
 				    html +='</tr>'; 
 			    jQuery(".emp_users_list").append(html); 
 			    search_name();
@@ -164,7 +176,7 @@
 			var last_name = array_fields("input[name='last_name[]']");
 			var password = array_fields("input[name='password[]']");
 			var retype_password = array_fields("input[name='retype_password[]']");
-			var approval_process_id = array_fields("input[name='approval_process_id[]']");
+			var approval_process_id = array_fields("select[name='approval_process_id[]']");
 			var permission = array_fields("input[name='permission[]']");
 			ierror_field("input[name='payroll_cloud_id[]']");
 			ierror_field("input[name='email[]']");
@@ -172,6 +184,7 @@
 			ierror_field("input[name='middle_name[]']");
 			ierror_field("input[name='last_name[]']");
 			ierror_field("input[name='password[]']");
+			ierror_field("select[name='approval_process_id[]']");
 			ierror_field("input[name='retype_password[]']");			
 			ierror_duplicate("input[name='payroll_cloud_id[]']");
 			ierror_duplicate("input[name='email[]']");
