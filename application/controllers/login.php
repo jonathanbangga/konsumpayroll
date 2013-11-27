@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 	}
 	
 	public function validate_login($account_type){
-		$user = $this->input->post('user');
+		$user = mysql_real_escape_string($this->input->post('user'));
 		$pass = md5(mysql_real_escape_string($this->input->post('pass')));
 		$this->authentication->validate_login($user,$pass,$account_type); 
 	}
