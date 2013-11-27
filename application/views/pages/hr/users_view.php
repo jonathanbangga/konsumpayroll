@@ -66,7 +66,7 @@
 					<td>
 						<input type="hidden" class="inp_userlist" name="update_permission[]">
 					</td>
-					<td>&nbsp;</td>
+					<td> <a class="btn btn-gray btn-action" href="#" edit_approvers="<?php echo $approvers->account_id;?>" >EDIT</a> </td>
 				</tr>
 				
 				<?php 		

@@ -1172,10 +1172,12 @@ CREATE TABLE IF NOT EXISTS `other_earnings` (
 -- Table structure for table `overtime`
 --
 
+
 CREATE TABLE IF NOT EXISTS `overtime` (
   `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
-  `overtime_date` date NOT NULL,
+  `overtime_from` datetime NOT NULL,
+  `overtime_to` datetime NOT NULL,
   `overtime_type_id` varchar(100) NOT NULL,
   `rate` decimal(10,2) NOT NULL,
   `project` varchar(100) NOT NULL,

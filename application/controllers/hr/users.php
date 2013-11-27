@@ -25,7 +25,7 @@ class Users extends CI_Controller {
 		$this->segment_url = 4;
 		$this->authentication->check_if_logged_in();	
 		$this->menu = 'content_holders/company_menu';
-		$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+		$this->sidebar_menu = 'content_holders/hr_approver_sidebar_menu';
 	}
 
 	public function index(){
