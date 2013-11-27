@@ -1177,6 +1177,7 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `overtime_from` datetime NOT NULL,
+  `overtime_date_applied` datetime NOT NULL,
   `overtime_to` datetime NOT NULL,
   `overtime_type_id` varchar(100) NOT NULL,
   `rate` decimal(10,2) NOT NULL,
@@ -1190,7 +1191,7 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`overtime_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
