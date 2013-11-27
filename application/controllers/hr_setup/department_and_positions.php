@@ -118,6 +118,18 @@ class Department_and_positions extends CI_Controller {
 		$this->department_and_positions_model->delete_position($pos_id);
 	}
 	
+	public function ajax_update_department(){
+		$dept_id = $this->input->post('dept_id');
+		$dept_name = $this->input->post('dept_name');
+		$this->department_and_positions_model->update_department($dept_id,$dept_name);
+	}
+	
+	public function ajax_update_position(){
+		$pos_id = $this->input->post('pos_id');
+		$pos_name = $this->input->post('pos_name');
+		$this->department_and_positions_model->update_position($pos_id,$pos_name);
+	}
+	
 }
 
 /* End of file login.php */

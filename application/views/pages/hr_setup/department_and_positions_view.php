@@ -17,10 +17,8 @@
 						$str_checked = ($check_dept->num_rows()>0)?'checked="checked"':"";
 				?>
 						<li class="li_dept">
-							<label>
 								<input class="dept_id right" name="dept_id[]" type="checkbox" value="<?php echo $row->dept_id ?>" <?php echo $str_checked; ?>>
 								<span class="dept_name"><?php echo $row->department_name; ?></span>
-							</label>
 						</li>	  
 					<?php
 					}
@@ -56,10 +54,8 @@
 					$str_checked = ($check_pos->num_rows()>0)?'checked="checked"':"";
 				?>
 					<li>
-						<label>
 							<input type="checkbox" value="<?php echo $row2->position_id ?>" name="" class="right jpos" <?php echo $str_checked; ?> />
-							<?php echo $row2->position_name; ?>
-						</label>
+							<span class="pos_name"><?php echo $row2->position_name; ?></span>		
 					</li>
 				<?php }
 				?>
@@ -114,8 +110,33 @@
 	</div>
 </div>
 
+<div class="jdialog" id="edit-dept-dialog" title="Update Department">
+	<div class="inner_div">
+		<p>
+			Department:<br />
+			<input type="text" id="update_dept" name="update_dept" />
+		</p>
+	</div>
+</div>
+
+<div class="jdialog" id="edit-pos-dialog" title="Update Position">
+	<div class="inner_div">
+		<p>
+			Position:<br />
+			<input type="text" id="update_pos" name="update_pos" />
+		</p>
+	</div>
+</div>
+
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
+
+<style>
+.dept_name, .pos_name{
+	cursor:pointer;
+}
+</style>
+
 <script>
 jQuery(document).ready(function(){
 
@@ -138,37 +159,33 @@ jQuery(document).ready(function(){
 		
 		// if checked
 		if(dept_exist==false){
-			if(state==true){
-				// ajax call
-				jQuery.ajax({
-					type: "POST",
-					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_get_positions",
-					data: {
-						dept_id: dept_id,
-						dept_name: dept_name,
-						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-					}
-				}).done(function(ret){
-					if(ret!=""){
-						jQuery("#deptnpos").append(ret);
-					}else{
-						jQuery("#no-pos-alert").dialog({
-							modal: true,
-							show: {
-								effect: "blind"
-							},
-							buttons: {
-								'add position': function() {
-									jQuery( this ).dialog( "close" );
-									add_position(dept_id);	
-								}
+			// ajax call
+			jQuery.ajax({
+				type: "POST",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_get_positions",
+				data: {
+					dept_id: dept_id,
+					dept_name: dept_name,
+					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+				}
+			}).done(function(ret){
+				if(ret!=""){
+					jQuery("#deptnpos").append(ret);
+				}else{
+					jQuery("#no-pos-alert").dialog({
+						modal: true,
+						show: {
+							effect: "blind"
+						},
+						buttons: {
+							'add position': function() {
+								jQuery( this ).dialog( "close" );
+								add_position(dept_id);	
 							}
-						});
-					}
-				});
-			}else{
-				jQuery(".li"+dept_id).remove();
-			}
+						}
+					});
+				}
+			});
 		}
 		
 	});
@@ -289,9 +306,6 @@ jQuery(document).ready(function(){
 		var dept_id = jQuery(this).parents(".li_dept").find(".dept_id").val();
 		var pos_id = jQuery(this).val();
 		var num_of_pos = jQuery(this).parents(".dept-box").find("input:checked").length;
-			if(num_of_pos==0){
-				jQuery(this).parents(".li_dept").remove();
-			}
 			if(jQuery(this).prop("checked")==true){
 				jQuery.ajax({
 					type: "POST",
@@ -387,6 +401,78 @@ jQuery(document).ready(function(){
 				},
 				'no': function() {
 					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	// edit department name
+	jQuery(document).on("click",".dept_name",function(){
+		var obj = jQuery(this);
+		var dept_name = obj.html();
+		jQuery("#update_dept").val(dept_name);
+		jQuery("#edit-dept-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'Update': function() {
+					var dept_id = obj.parents("li:first").find(".dept_id").val();
+					var dept_name2 = jQuery("#update_dept").val();
+					if(dept_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_update_department",
+							data: {
+								dept_id: dept_id,
+								dept_name: dept_name2,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Department has been updated");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions";
+						});
+					}else{
+						alert('Department Id is missing');
+					}										
+				}
+			}
+		});
+	});
+	
+	// edit position name
+	jQuery(document).on("click",".pos_name",function(){
+		var obj = jQuery(this);
+		var pos_name = obj.html();
+		jQuery("#update_pos").val(pos_name);
+		jQuery("#edit-pos-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'Update': function() {
+					var pos_id = obj.parents("li:first").find(".jpos").val();
+					var pos_name2 = jQuery("#update_pos").val();
+					if(pos_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_update_position",
+							data: {
+								pos_id: pos_id,
+								pos_name: pos_name2,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Position has been updated");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions";
+						});
+					}else{
+						alert('Department Id is missing');
+					}										
 				}
 			}
 		});

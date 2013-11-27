@@ -163,6 +163,24 @@ class Department_and_positions_model extends CI_Model {
 			AND `company_id` = {$this->company_id}
 		");
 	}
+	
+	public function update_department($dept_id,$department_name){
+		$this->db->query("
+			UPDATE `department`
+			SET `department_name` = '{$department_name}'
+			WHERE `dept_id` = {$dept_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_position($position_id,$position_name){
+		$this->db->query("
+			UPDATE `position`
+			SET `position_name` = '{$position_name}'
+			WHERE `position_id` = {$position_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */
