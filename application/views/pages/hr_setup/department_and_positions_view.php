@@ -40,7 +40,7 @@
 			if($sel_dept->num_rows()>0){
 				foreach($sel_dept->result() as $row){ ?>
 			
-			<li class="li<?php echo $row->dept_id ?> li_dept">
+			<li class="li<?php echo $row->dept_id ?> li_dept pos_li">
 			  <input type="hidden" value="<?php echo $row->dept_id ?>" class="dept_id" name="dept_id">
 			  <?php 
 			  $sql = $this->department_and_positions_model->get_departments($row->dept_id); 
@@ -82,7 +82,7 @@
         
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups">CONTINUE</a>
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects">CONTINUE</a>
         <!-- FOOTER-GRP-BTN END -->
 </div>
 
@@ -128,38 +128,49 @@ jQuery(document).ready(function(){
 		var dept_id = obj.val();
 		var dept_name = obj.parents(".li_dept").find(".dept_name").html();
 		var state = obj.prop("checked");
+		
+		var dept_exist = false;
+		jQuery(".pos_li .dept_id").each(function(){
+			if(jQuery(this).val()==dept_id){
+				dept_exist = true;
+			}
+		});
+		
 		// if checked
-		if(state==true){
-			// ajax call
-			jQuery.ajax({
-				type: "POST",
-				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_get_positions",
-				data: {
-					dept_id: dept_id,
-					dept_name: dept_name,
-					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-				}
-			}).done(function(ret){
-				if(ret!=""){
-					jQuery("#deptnpos").append(ret);
-				}else{
-					jQuery("#no-pos-alert").dialog({
-						modal: true,
-						show: {
-							effect: "blind"
-						},
-						buttons: {
-							'add position': function() {
-								jQuery( this ).dialog( "close" );
-								add_position(dept_id);	
+		if(dept_exist==false){
+			if(state==true){
+				// ajax call
+				jQuery.ajax({
+					type: "POST",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions/ajax_get_positions",
+					data: {
+						dept_id: dept_id,
+						dept_name: dept_name,
+						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+					}
+				}).done(function(ret){
+					if(ret!=""){
+						jQuery("#deptnpos").append(ret);
+					}else{
+						jQuery("#no-pos-alert").dialog({
+							modal: true,
+							show: {
+								effect: "blind"
+							},
+							buttons: {
+								'add position': function() {
+									jQuery( this ).dialog( "close" );
+									add_position(dept_id);	
+								}
 							}
-						}
-					});
-				}
-			});
-		}else{
-			jQuery(".li"+dept_id).remove();
+						});
+					}
+				});
+			}else{
+				jQuery(".li"+dept_id).remove();
+			}
 		}
+		
 	});
 	// add more department
 	jQuery("#add-more-dept").click(function(){
