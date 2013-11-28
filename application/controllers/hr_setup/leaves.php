@@ -22,6 +22,7 @@ class Leaves extends CI_Controller {
 		// data
 		$data['leaves_sql'] = $this->leaves_model->get_leaves();
 		$data['pos_sql'] = $this->leaves_model->get_position();
+		$data['lp_sql'] = $this->leaves_model->get_hr_setup_properties();
 		$this->layout->view('pages/hr_setup/leaves_view',$data);
 	}
 
@@ -63,6 +64,23 @@ class Leaves extends CI_Controller {
 		$ult = $this->input->post('ult');
 		$mdl = $this->input->post('mdl');
 		$this->leaves_model->update_leaves($leaves_id,$lt,$pybl,$rec_doc,$ahw,$dnw,$acrd,$prd,$pos,$yos,$ul,$ult,$mdl);
+	}
+	
+	public function ajax_check_hr_setup_properties(){
+		$sql = $this->leaves_model->get_hr_setup_properties();
+		echo $sql->num_rows();
+	}
+	
+	public function ajax_set_hr_setup_properties(){
+		$ldnh = $this->input->post('ldnh');
+		$mwd = $this->input->post('mwd');
+		$this->leaves_model->set_hr_setup_properties($ldnh,$mwd);
+	}
+	
+	public function ajax_update_hr_setup_properties(){
+		$ldnh = $this->input->post('ldnh');
+		$mwd = $this->input->post('mwd');
+		$this->leaves_model->update_hr_setup_properties($ldnh,$mwd);
 	}
 	
 }

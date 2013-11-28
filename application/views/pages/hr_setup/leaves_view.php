@@ -71,8 +71,20 @@
 		<a class="btn" id="save" style="display:none;" href="javascript:void(0);">SAVE</a>
 		
 			<ul class="leaves_ul" style="list-style-type: none;">
-			<li>Define number of hours in a leave day <input type="text" /></li>
-			<li>Specify default number of work days for the month <input type="text" /></li>
+			<?php 
+			
+			if($lp_sql->num_rows()>0){
+				$lp = $lp_sql->row(); 
+				$ldnh  = $lp->leave_day_num_of_hours;
+				$mwd  = $lp->month_num_of_workdays;
+			}else{
+				$ldnh  = "";
+				$mwd = "";
+			}
+			
+			?>
+			<li>Define number of hours in a leave day <input type="text" class="leave_prop" id="leave_day_num_hours" value="<?php echo $ldnh; ?>" /></li>
+			<li>Specify default number of work days for the month <input type="text" class="leave_prop" id="month_work_days" value="<?php echo $mwd; ?>" /></li>
 		<ul>
         <!-- MAIN-CONTENT END -->
       </div>
@@ -519,6 +531,47 @@ jQuery(document).ready(function(){
 						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves";
 					});		
 				}
+			}
+		});
+	});
+	
+	// leave properties
+	jQuery(".leave_prop").blur(function(){
+		var ldnh = jQuery("#leave_day_num_hours").val();
+		var mwd = jQuery("#month_work_days").val();
+		jQuery.ajax({
+			type: "POST",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves/ajax_check_hr_setup_properties",
+			data: {
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		}).done(function(ret){
+			if(ret>0){
+				//update
+				jQuery.ajax({
+					type: "POST",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves/ajax_update_hr_setup_properties",
+					data: {
+						ldnh: ldnh,
+						mwd: mwd,
+						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+					}
+				}).done(function(ret){
+					highlight_message("Leave property saved");
+				});
+			}else{
+				// set
+				jQuery.ajax({
+					type: "POST",
+					url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/leaves/ajax_set_hr_setup_properties",
+					data: {
+						ldnh: ldnh,
+						mwd: mwd,
+						<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+					}
+				}).done(function(ret){
+					highlight_message("Leave property saved");
+				});
 			}
 		});
 	});

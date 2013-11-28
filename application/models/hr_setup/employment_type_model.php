@@ -36,7 +36,7 @@ class Employment_type_model extends CI_Model {
 				`company_id`
 			)
 			VALUES(
-				'{$et}',
+				'".mysql_real_escape_string($et)."',
 				'{$this->company_id}'
 			)
 		");

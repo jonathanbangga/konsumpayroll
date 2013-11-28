@@ -50,7 +50,7 @@
 <div id="add-more-dialog" class="jdialog"  title="Add more">
 	<div class="inner_div">
 		Enter employment type name: 
-		<input type="text" id="employment_type" name="employment_type" />
+		<div class="inner_field"><input type="text" class="employment_type" name="employment_type" /></div>
 	</div>
 </div>
 
@@ -117,15 +117,27 @@ jQuery(document).ready(function(){
 	});
 	// add more
 	jQuery("#add-more").click(function(){
-		jQuery("#employment_type").val("");
+		jQuery(".employment_type").val("");
+		jQuery("#add-more-dialog .inner_field").html('<input type="text" class="employment_type" name="employment_type" />');
 		jQuery("#add-more-dialog").dialog({
 			modal: true,
 			show: {
 				effect: "blind"
 			},
 			buttons: {
+				'add': function(){
+					jQuery("#add-more-dialog .inner_field").append('<input type="text" class="employment_type" name="employment_type" />');
+				},
 				save: function() {
-					var et = jQuery("#employment_type").val();
+					var et = new Array();
+					var i = 0;
+					jQuery(".employment_type").each(function(index){
+						if(jQuery(this).val()!=""){
+							et[i] = jQuery(this).val();
+							i++;
+						}
+					});
+
 					if(et!=""){
 						// ajax call
 						jQuery.ajax({
@@ -136,14 +148,13 @@ jQuery(document).ready(function(){
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
-							if(ret==1){
 								jQuery.cookie("msg", "New employee type had been saved!");
 								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/employment_type";
-							}
 						});
 					}else{
 						alert('Enter employment type');
-					}					
+					}	
+			
 				}
 			},
 		});

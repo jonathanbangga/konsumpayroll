@@ -35,42 +35,49 @@ class Department_and_positions extends CI_Controller {
 	}
 	
 	public function ajax_add_department(){
-		$dept_name = mysql_real_escape_string($this->input->post('dept_name'));
+		$dept_name = $this->input->post('dept_name');
 		// return the department ID added
-		$dept_id = $this->department_and_positions_model->add_department($dept_name);
-		// get that specific department via department id
-		$sql_dept = $this->department_and_positions_model->get_departments($dept_id);
 		$temp = "";
-		if($sql_dept->num_rows()>0){
-			$row = $sql_dept->row();
-			$temp = '<li class="li_dept">
-						<label>
-							<input class="dept_id right" name="dept_id[]" type="checkbox" value="'.$row->dept_id.'">
-							<span class="dept_name">'.$row->department_name.'</span>
-						</label>
-					</li>';	
+		foreach($dept_name as $val){
+			$dept_id = $this->department_and_positions_model->add_department($val);
+			// get that specific department via department id
+			$sql_dept = $this->department_and_positions_model->get_departments($dept_id);
+			
+			if($sql_dept->num_rows()>0){
+				$row = $sql_dept->row();
+				$temp .= '<li class="li_dept">
+							<label>
+								<input class="dept_id right" name="dept_id[]" type="checkbox" value="'.$row->dept_id.'">
+								<span class="dept_name">'.$row->department_name.'</span>
+							</label>
+						</li>';	
+			}
 		}
 		echo $temp;
 	}
 	
 	public function ajax_add_position(){
-		$pos = mysql_real_escape_string($this->input->post('pos'));
+		$pos = $this->input->post('pos');
 		$dept_id = $this->input->post('dept_id');
-		// return the position ID added
-		$pos_id = $this->department_and_positions_model->add_position($pos,$dept_id);
-		// get that specific position via department id
-		$sql_pos = $this->department_and_positions_model->get_positions($dept_id,$pos_id);
+		$arr = array();
+		foreach($pos as $val){
+			// return the position ID added
+			$pos_id = $this->department_and_positions_model->add_position($val,$dept_id);
+			// get that specific position via department id
+			$sql_pos = $this->department_and_positions_model->get_positions($dept_id,$pos_id);
+			
+			if($sql_pos->num_rows()){
+				$row = $sql_pos->row();
+				$arr[] = array(
+						"department"=>$row->department_name,
+						"dept_id"=>$row->dept_id,
+						"pos_id"=>$row->position_id,
+						"position"=>$row->position_name
+					);
 		
-		if($sql_pos->num_rows()){
-			$row = $sql_pos->row();
-			$arr = array(
-				"department"=>$row->department_name,
-				"dept_id"=>$row->dept_id,
-				"pos_id"=>$row->position_id,
-				"position"=>$row->position_name
-			);
-			echo json_encode($arr);
+			}
 		}
+		echo json_encode($arr);
 	}
 	
 	public function ajax_assign_department_and_position(){

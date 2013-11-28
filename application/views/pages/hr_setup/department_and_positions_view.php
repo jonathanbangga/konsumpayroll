@@ -85,7 +85,7 @@
 <div class="jdialog" id="add-more-dept-dialog" title="Add Department">
 	<div class="inner_div">
 		Enter department name: 
-		<input type="text" id="department_name" name="department_name" />
+		<div class="inner_field"><input type="text" class="department_name" name="department_name" /></div>
 	</div>
 </div>
 
@@ -93,7 +93,7 @@
 <div class="jdialog" id="add-more-position-dialog" title="Add Position">
 	<div class="inner_div">
 		Enter position: 
-		<input type="text" id="position" name="position" />
+		<div class="inner_field"><input type="text" class="position" name="position" /></div>
 	</div>
 </div>
 
@@ -194,7 +194,8 @@ jQuery(document).ready(function(){
 	// add more department
 	jQuery("#add-more-dept").click(function(){
 		// empty department name
-		jQuery("#department_name").val("");
+		jQuery(".department_name").val("");
+		jQuery("#add-more-dept-dialog .inner_field").html('<input type="text" class="department_name" name="department_name" />');
 		// launch add more department dialog box
 		jQuery("#add-more-dept-dialog").dialog({
 			modal: true,
@@ -202,9 +203,20 @@ jQuery(document).ready(function(){
 				effect: "blind"
 			},
 			buttons: {
+				'add': function(){
+					jQuery("#add-more-dept-dialog .inner_field").append('<input type="text" class="department_name" name="department_name" />');
+				},
 				save: function() {
 					var dialog = jQuery(this);
-					var dept_name = jQuery("#department_name").val();
+					var dept_name = new Array();
+					var i = 0;
+					jQuery(".department_name").each(function(index){
+						if(jQuery(this).val()!=""){
+							dept_name[i] = jQuery(this).val();
+							i++;
+						}
+					});
+					
 					if(dept_name!=""){
 						// ajax call
 						jQuery.ajax({
@@ -240,7 +252,8 @@ jQuery(document).ready(function(){
 	// add position script
 	function add_position(dept_id){
 		// empty position
-		jQuery("#position").val("");
+		jQuery(".position").val("");
+		jQuery("#add-more-position-dialog .inner_field").html('<input type="text" class="position" name="position" />');
 		// launch add position dialog box
 		jQuery("#add-more-position-dialog").dialog({
 			modal: true,
@@ -248,10 +261,22 @@ jQuery(document).ready(function(){
 				effect: "blind"
 			},
 			buttons: {
+				'add': function(){
+					jQuery("#add-more-position-dialog .inner_field").append('<input type="text" class="position" name="position" />');
+				},
 				save: function() {
 					var dialog = jQuery(this);
-					var pos = jQuery("#position").val();
-					if(pos!=""){
+
+					var pos = new Array();
+					var i = 0;
+					jQuery(".position").each(function(index){
+						if(jQuery(this).val()!=""){
+							pos[i] = jQuery(this).val();
+							i++;
+						}
+					});
+					
+					
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
@@ -263,38 +288,42 @@ jQuery(document).ready(function(){
 							},
 							dataType:'json'
 						}).done(function(ret){
-								//console.log(ret.dept_id);
-								pos_box = jQuery(".li"+ret.dept_id).html();
-								if(pos_box!=null){
-									var temp = '<li>'+					
-													'<input class="right jpos" type="checkbox" value="'+ret.pos_id+'">'+
-													'<span class="pos_name">'+ret.position+'</div>'+
-											   '</li>';
-											   jQuery(".li"+ret.dept_id+" ul").append(temp);
-								}else{
-									//console.log('wa pay sud');
-									var temp = '<li class="li'+ret.dept_id+' li_dept">'+
-												  '<input type="hidden" name="dept_id" class="dept_id" value="'+ret.dept_id+'" />'+
-												  '<header>'+ret.department+'</header>'+
-												  '<div class="dept-box position_div">'+
-													'<ul>'+
-														'<li>'+
-																'<input class="right jpos" name="" type="checkbox" value="'+ret.pos_id+'">'+
-																'<span class="pos_name">'+ret.position+'</span>'+
-														'</li>'+
-													'</ul>'+
-												  '</div>'+
-												  '<a class="add-more-pos btn" href="javascript:void(0);">ADD POSITION</a> '+
-												  '<a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>'+
-												'</li>';
-									jQuery("#deptnpos").append(temp);
+								//console.log(ret[i].length);
+								var i = 0;
+								var temp = "";
+								if(ret.length>0){
+									for(i=0;i<ret.length;i++){
+										pos_box = jQuery(".li"+ret[i].dept_id).html();
+										if(pos_box!=null){
+											var temp = '<li>'+					
+															'<input class="right jpos" type="checkbox" value="'+ret[i].pos_id+'">'+
+															'<span class="pos_name">'+ret[i].position+'</div>'+
+													   '</li>';
+													   jQuery(".li"+ret[i].dept_id+" ul").append(temp);
+										}else{
+											//console.log('wa pay sud');
+											var temp = '<li class="li'+ret[i].dept_id+' li_dept">'+
+														  '<input type="hidden" name="dept_id" class="dept_id" value="'+ret[i].dept_id+'" />'+
+														  '<header>'+ret[i].department+'</header>'+
+														  '<div class="dept-box position_div">'+
+															'<ul>'+
+																'<li>'+
+																		'<input class="right jpos" name="" type="checkbox" value="'+ret[i].pos_id+'">'+
+																		'<span class="pos_name">'+ret[i].position+'</span>'+
+																'</li>'+
+															'</ul>'+
+														  '</div>'+
+														  '<a class="add-more-pos btn" href="javascript:void(0);">ADD POSITION</a> '+
+														  '<a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>'+
+														'</li>';
+											jQuery("#deptnpos").append(temp);
+										}
+									}
+									highlight_message("New position has been created!");
+									jQuery(dialog).dialog( "close" );
 								}
-								highlight_message("New position has been created!");
-								jQuery(dialog).dialog( "close" );
 						});
-					}else{
-						alert('Enter position');
-					}	
+						
 				}
 			}
 		});

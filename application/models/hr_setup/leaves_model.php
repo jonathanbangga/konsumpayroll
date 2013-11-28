@@ -74,20 +74,54 @@ class Leaves_model extends CI_Model {
 	public function update_leaves($leaves_id,$leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave){
 		$this->db->query("
 			UPDATE `leaves`
-			SET `leave_type` = '{$leave_type}',
+			SET `leave_type` = '".mysql_real_escape_string($leave_type)."',
 				`payable` = '{$payable}',
-				`required_documents` = '{$required_documents}',
+				`required_documents` = '".mysql_real_escape_string($required_documents)."',
 				`include_in_actual_hours_worked` = '{$include_in_actual_hours_worked}',
 				`leaves_used_to_deduct_no_of_work` = '{$leaves_used_to_deduct_no_of_work}',
-				`leave_accrued` = '{$leave_accrued}',
+				`leave_accrued` = '".mysql_real_escape_string($leave_accrued)."',
 				`period` = '{$period}',
 				`position_id` = '{$position_id}',
 				`years_of_service` = '{$years_of_service}',
 				`unused_leave` = '{$unused_leave}',
 				`unused_leave_upon_termination` = '{$unused_leave_upon_termination}',
-				`max_days_of_leave` = '{$max_days_of_leave}'
+				`max_days_of_leave` = '".mysql_real_escape_string($max_days_of_leave)."'
 			WHERE `leaves_id` = {$leaves_id}
 			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function	set_hr_setup_properties($leave_day_num_of_hours,$month_num_of_workdays){
+		$this->db->query("
+			INSERT INTO 
+				`hr_setup_properties` (
+					`leave_day_num_of_hours`,
+					`month_num_of_workdays`,
+					`company_id`
+				)
+				VALUES (
+					'{$leave_day_num_of_hours}',
+					'{$month_num_of_workdays}',
+					{$this->company_id}
+				)
+		");
+	}
+	
+	public function update_hr_setup_properties($leave_day_num_of_hours,$month_num_of_workdays){
+		$this->db->query("
+			UPDATE `hr_setup_properties`
+			SET
+				`leave_day_num_of_hours` = '{$leave_day_num_of_hours}',
+				`month_num_of_workdays` = '{$month_num_of_workdays}'
+			WHERE `company_id` = {$this->company_id}	
+		");
+	}
+	
+	public function get_hr_setup_properties(){
+		return $this->db->query("
+			SELECT *
+			FROM `hr_setup_properties`
+			WHERE `company_id` = {$this->company_id}
 		");
 	}
 	
