@@ -9,13 +9,12 @@
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
 					<th style="width:170px;">Emp ID</th>
 					<th style="width:170px;">Employee Name</th>
-					<th style="width:170px;">Overtime Type</th>
-					<th style="width:170px;">Overtime Date</th>
 					<th style="width:170px;">Date From</th>
 					<th style="width:170px;">Date To</th>
-					<th style="width:170px;">Hours</th>
-					<th style="width:170px;">NSD Hours</th>
-					<th style="width:170px;">Reason</th>
+					<th style="width:170px;">Hoursworked</th>
+					<th style="width:170px;">Tardiness</th>
+					<th style="width:170px;">Undertime</th>
+					<th style="width:170px;">Timesheet</th>
 					<th style="width:170px;">Note</th>
 					<th style="width:170px;">Status</th>
 				</tr>
@@ -24,43 +23,35 @@
 						foreach($leave_application as $key=>$approvers):
 				?>
 				<tr>
-					<td><input type="checkbox" name="leave_ids"></td>
+					<td><input type="checkbox" name="leave_ids" class="mark_timeshit" value="<?php echo $approvers->timesheets_id;?>"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						
+					<td>	
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
-						
-						<div class="users_text"><?php echo $approvers->overtime_type_id;?></div>
+						<div class="users_text"><?php echo idates_only($approvers->date_from);?></div>
+					</td>
+					<td>	
+						<div class="users_text"><?php echo idates_only($approvers->date_to);?></div>
+					</td>
+					<td>				
+						<div class="users_textdesc"><?php echo $approvers->hoursworked;?></div>
 					</td>
 					<td>
-						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_date_applied);?></div>
+						<div class="users_text"><?php echo $approvers->tardiness;?></div>
 					</td>
 					<td>
-						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_from);?></div>
+						<div class="users_text"><?php echo $approvers->undertime;?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo idates_only($approvers->overtime_to);?></div>
+						<div class="users_text"><?php echo $approvers->timesheet;?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo $approvers->no_of_hours;?></div>
+						<div class="users_text"><?php echo $approvers->note;?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo $approvers->with_nsd_hours;?></div>
+						<div class="users_text"><?php echo $approvers->timesheets_status;?></div>
 					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->reason;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->notes;?></div>
-					</td>
-					<td>
-						<div class="users_text">Status</div>
-					</td>
-					
 				</tr>
 				
 				<?php 		
@@ -84,8 +75,8 @@
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>
 	<!-- FOOTER-GRP-BTN END -->
 	</div>
-	
 	<script type="text/javascript">
+		// CHECK ALL checkbox
 		function check_all(){
 			jQuery(document).on("change","input[name='checkall']",function(e){
 			    e.preventDefault();
@@ -102,7 +93,4 @@
 			check_all();
 		});
 	</script>
-	
-	
-	
 	

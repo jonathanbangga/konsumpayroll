@@ -9,14 +9,9 @@
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
 					<th style="width:170px;">Emp ID</th>
 					<th style="width:170px;">Employee Name</th>
-					<th style="width:170px;">Overtime Type</th>
-					<th style="width:170px;">Overtime Date</th>
-					<th style="width:170px;">Date From</th>
-					<th style="width:170px;">Date To</th>
-					<th style="width:170px;">Hours</th>
-					<th style="width:170px;">NSD Hours</th>
-					<th style="width:170px;">Reason</th>
-					<th style="width:170px;">Note</th>
+					<th style="width:170px;">Payroll Date</th>
+					<th style="width:170px;">Amount</th>
+					<th style="width:170px;">Details</th>
 					<th style="width:170px;">Status</th>
 				</tr>
 				<?php 
@@ -26,39 +21,20 @@
 				<tr>
 					<td><input type="checkbox" name="leave_ids"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						
+					<td>	
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
-						
-						<div class="users_text"><?php echo $approvers->overtime_type_id;?></div>
+						<div class="users_text"><?php echo $approvers->payroll_date;?></div>
+					</td>
+					<td>	
+						<div class="users_text"><?php echo number_format($approvers->amount,2);?></div>
+					</td>
+					<td>				
+						<div class="users_textdesc"><?php echo $approvers->details;?></div>
 					</td>
 					<td>
-						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_date_applied);?></div>
-					</td>
-					<td>
-						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_from);?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo idates_only($approvers->overtime_to);?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->no_of_hours;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->with_nsd_hours;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->reason;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->notes;?></div>
-					</td>
-					<td>
-						<div class="users_text">Status</div>
+						<div class="users_text"><?php echo $approvers->expense_status;?></div>
 					</td>
 					
 				</tr>
@@ -84,8 +60,8 @@
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>
 	<!-- FOOTER-GRP-BTN END -->
 	</div>
-	
 	<script type="text/javascript">
+		// CHECK ALL checkbox
 		function check_all(){
 			jQuery(document).on("change","input[name='checkall']",function(e){
 			    e.preventDefault();
@@ -102,7 +78,4 @@
 			check_all();
 		});
 	</script>
-	
-	
-	
 	

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2013 at 07:24 AM
+-- Generation Time: Nov 28, 2013 at 03:09 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -905,15 +905,24 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `emp_id` int(11) NOT NULL,
   `expense_type` varchar(100) NOT NULL,
   `project` enum('regular','non-regular') NOT NULL,
+  `details` text NOT NULL,
   `min` decimal(10,2) NOT NULL,
   `max` decimal(10,2) NOT NULL,
-  `expense_date` date NOT NULL,
-  `amount` date NOT NULL,
+  `expense_date` datetime NOT NULL,
+  `payroll_date` datetime NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
+  `expense_status` enum('pending','approved','reject') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`expense_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`expense_id`, `emp_id`, `expense_type`, `project`, `details`, `min`, `max`, `expense_date`, `payroll_date`, `amount`, `company_id`, `expense_status`, `deleted`) VALUES
+(1, 4, '1', 'regular', 'A couple of things to note here. First off, you’ll notice that I’m using an static class member to store the type of the request. That’s because we’re getting the response format correctly, but we cannot tell the rest of the application about it. At this early point of the application execution, the config class is not yet loaded so we need to use another hook. With that in mind, we’ll need to make it static so it’s not overridden when we call the next hook.', 1000000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 11123.00, 4, 'pending', '0');
 
 -- --------------------------------------------------------
 
@@ -1328,8 +1337,8 @@ CREATE TABLE IF NOT EXISTS `other_earnings` (
 CREATE TABLE IF NOT EXISTS `overtime` (
   `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
-  `overtime_from` datetime NOT NULL,
   `overtime_date_applied` datetime NOT NULL,
+  `overtime_from` datetime NOT NULL,
   `overtime_to` datetime NOT NULL,
   `overtime_type_id` varchar(100) NOT NULL,
   `rate` decimal(10,2) NOT NULL,
@@ -1340,17 +1349,21 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `no_of_hours` float NOT NULL,
   `with_nsd_hours` float NOT NULL,
   `company_id` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `notes` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
+  `approve` enum('pending','no','yes') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`overtime_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `overtime`
 --
 
-INSERT INTO `overtime` (`overtime_id`, `emp_id`, `overtime_from`, `overtime_date_applied`, `overtime_to`, `overtime_type_id`, `rate`, `project`, `project_location`, `start_time`, `end_time`, `no_of_hours`, `with_nsd_hours`, `company_id`, `status`, `deleted`) VALUES
-(1, 4, '2013-11-27 01:05:13', '0000-00-00 00:00:00', '2013-11-20 09:26:27', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 2, 10, 4, 'Active', '0');
+INSERT INTO `overtime` (`overtime_id`, `emp_id`, `overtime_date_applied`, `overtime_from`, `overtime_to`, `overtime_type_id`, `rate`, `project`, `project_location`, `start_time`, `end_time`, `no_of_hours`, `with_nsd_hours`, `company_id`, `reason`, `notes`, `status`, `approve`, `deleted`) VALUES
+(1, 4, '2013-11-27 01:05:13', '0000-00-00 00:00:00', '2013-11-20 09:26:27', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 2, 10, 4, 'reason', 'notes', 'Active', 'pending', '0'),
+(2, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0');
 
 -- --------------------------------------------------------
 

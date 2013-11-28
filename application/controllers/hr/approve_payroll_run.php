@@ -7,7 +7,7 @@
  * @version 1.0
  * @author Christopher Cuizon <christophercuizons@gmail.com>
  */
-	class Approve_overtime extends CI_Controller {
+	class Approve_payroll_run extends CI_Controller {
 		
 		/**
 		 * Theme options - default theme
@@ -22,7 +22,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->load->model("hr/approve_overtime_model","overtime");
+			$this->load->model("hr/approve_payroll_run_model","payroll_run");
 			$this->theme = $this->config->item('default');
 			$this->menu = "content_holders/hr_company_sidebar_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
@@ -38,11 +38,12 @@
 		}
 		
 		public function lists(){
-			$data['page_title'] = "Overtime Application"; 
+			$data['page_title'] = "Timesheets Application"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
-			$data['leave_application'] = $this->overtime->overtime_list($this->company_info->company_id);
+			$data['leave_application'] = $this->payroll_run->payroll_run_list($this->company_info->company_id);
+			echo $this->db->last_query();
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/hr/approve_overtime_view', $data);
+			$this->layout->view('pages/hr/approve_payroll_run_view', $data);
 		}
 	
 	}

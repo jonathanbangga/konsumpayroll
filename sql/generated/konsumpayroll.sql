@@ -774,15 +774,17 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `emp_id` int(11) NOT NULL,
   `expense_type` varchar(100) NOT NULL,
   `project` enum('regular','non-regular') NOT NULL,
+  `details` text NOT NULL,
   `min` decimal(10,2) NOT NULL,
   `max` decimal(10,2) NOT NULL,
-  `expense_date` date NOT NULL,
-  `amount` date NOT NULL,
+  `expense_date` datetime NOT NULL,
+  `payroll_date` datetime NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
+  `expense_status` enum('pending','approved','reject') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`expense_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1176,8 +1178,8 @@ CREATE TABLE IF NOT EXISTS `other_earnings` (
 CREATE TABLE IF NOT EXISTS `overtime` (
   `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
-  `overtime_from` datetime NOT NULL,
   `overtime_date_applied` datetime NOT NULL,
+  `overtime_from` datetime NOT NULL,
   `overtime_to` datetime NOT NULL,
   `overtime_type_id` varchar(100) NOT NULL,
   `rate` decimal(10,2) NOT NULL,
@@ -1188,10 +1190,13 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `no_of_hours` float NOT NULL,
   `with_nsd_hours` float NOT NULL,
   `company_id` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `notes` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
+  `approve` enum('pending','no','yes') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`overtime_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
