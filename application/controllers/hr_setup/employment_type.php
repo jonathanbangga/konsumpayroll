@@ -28,8 +28,10 @@ class Employment_type extends CI_Controller {
 	}
 	
 	public function ajax_add_employment_type(){
-		$et = mysql_real_escape_string($this->input->post('et'));
-		echo $this->employment_type_model->add_employment_type($et);
+		$et = $this->input->post('et');
+		foreach($et as $val){
+			$this->employment_type_model->add_employment_type($val);
+		}
 	}
 
 	public function ajax_assign_employment_type(){

@@ -39,7 +39,7 @@ class Department_and_positions_model extends CI_Model {
 				`company_id`
 			)
 			VALUES(
-				'{$dept_name}',
+				'".mysql_real_escape_string($dept_name)."',
 				{$this->company_id}
 			)
 		");
