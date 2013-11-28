@@ -22,7 +22,9 @@
 						foreach($leave_application as $key=>$approvers):
 				?>
 				<tr>
-					<td><input type="checkbox" name="payroll_run_id" class="mark_timeshit" value="<?php echo $approvers-> 	payroll_run_id;?>"></td>
+					<td>
+						<input type="checkbox" name="payroll_run_id" class="mark_timeshit" value="<?php echo $approvers->payroll_run_id;?>">
+					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td>	
 						<div class="users_text"><?php echo $approvers->first_name." ".$approvers->last_name;?></div>
@@ -60,7 +62,7 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php # echo $pagi;?></p>
+	<p><?php  echo $pagi;?></p>
 	<p>
 	<a id="leave_approve" href="javascript:void(0);" class="btn">APPROVE</a>
 	<a id="leave_reject" href="javascript:void(0);" class="btn">REJECT</a>
@@ -79,15 +81,30 @@
 			    e.preventDefault();
 			    var el = jQuery(this);  
 			    if(el.is(":checked")){
-			        jQuery("input[name='leave_ids']").prop("checked","checked");
+			        jQuery("input[name='payroll_run_id']").prop("checked","checked");
 			    }else{
-			      jQuery("input[name='leave_ids']").removeAttr("checked");
+			      jQuery("input[name='payroll_run_id']").removeAttr("checked");
 			    }
+			});
+		}
+
+		// REMOVE function
+		function approve_this(){
+			jQuery(document).on("click","#leave_approve",function(e){
+				e.preventDefault();
+				$(".mark_timeshit").each(function(e){
+				    var el = jQuery(this);
+				    console.log(el.is(":checked"));
+				    if(el.is(":checked") == true){
+				        el.parents("tr").remove();
+				    }
+				});
 			});
 		}
 
 		jQuery(function(){
 			check_all();
+			approve_this();
 		});
 	</script>
 	
