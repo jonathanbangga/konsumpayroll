@@ -55,11 +55,13 @@ class Locations_model extends CI_Model {
 		");
 	}
 	
-	public function update_project_location($location,$description,$location_id){
+	public function update_project_location($location,$description,$location_id,$project_id){
 		return $this->db->query("
 			UPDATE `location`
-			SET `location` = '".mysql_real_escape_string($location)."',
-				`description` = '".mysql_real_escape_string($description)."'
+			SET 
+				`project_id` = {$project_id},
+				`location` = '{$location}',
+				`description` = '{$description}'
 			WHERE `location_id` = {$location_id}
 			AND `company_id` = {$this->company_id}
 		");

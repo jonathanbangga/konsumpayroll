@@ -18,11 +18,12 @@
 					foreach($locations->result() as $row){ ?>
 					 <tr>
 					  <td><?php echo $row->project_name; ?></td>
-					  <td><?php echo $row->location; ?></td>
-					  <td><?php echo $row->description; ?></td>
+					  <td><span class="loc"><?php echo $row->location; ?></span></td>
+					  <td><span class="desc"><?php echo $row->description; ?></span></td>
 					  <td>
 					  <a class="btn btn-gray btn-action btn-edit" href="javascript:void(0)">EDIT</a> <a class="btn btn-red btn-action btn-delete" href="javascript:void(0)">DELETE</a>.
 					  <input type="hidden" class="loc_id" value="<?php echo $row->location_id; ?>" />
+					  <input type="hidden" class="proj_id" value="<?php echo $row->project_id; ?>" />
 					  </td>
 					</tr>
 				<?php
@@ -91,7 +92,15 @@
 	<div class="inner_div">
 		<p>
 			Project:<br />
-			<div id="edit_proj"></div>
+			<select id="edit_proj">
+			<option value="-1">select project</option>
+			<?php
+				foreach($sql_proj->result() as $proj){ ?>
+					<option value="<?php echo $proj->project_id; ?>"><?php echo $proj->project_name; ?></option>
+			<?php
+			}
+			?>
+			</select>
 		</p>
 		<p>
 			Location:<br />
@@ -222,56 +231,56 @@ jQuery(document).ready(function(){
 	});
 	// edit location
 	jQuery(".btn-edit").click(function(){
+		// resets project selection
+		//jQuery(".edit_proj option").removeAttr("selected");
 		var obj = jQuery(this);
+		var proj_id = obj.parents("tr").find(".proj_id").val();
 		var loc_id = obj.parents("tr").find(".loc_id").val();
-		// ajax call
-		jQuery.ajax({
-			type: "POST",
-			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_get_project_location",
-			data: {
-				loc_id: loc_id,
-				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+		var loc = obj.parents("tr").find(".loc").html();
+		var desc = obj.parents("tr").find(".desc").html();
+		jQuery(".edit_proj option").each(function(){
+		   if(jQuery(this).val()==proj_id){
+			jQuery(this).prop("selected","selected");
+		   }else{
+			jQuery(this).removeProp("selected");
+		   }
+		});
+		jQuery("#edit_loc").val(loc);
+		jQuery("#edit_desc").val(desc);
+		jQuery("#location-details-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
 			},
-			dataType: 'json'
-		}).done(function(ret){
-			//jQuery.cookie("msg", "A project location has been deleted");
-			//window.location="/company/hr_setup/locations";
-			jQuery("#edit_proj").html(ret.project_name);
-			jQuery("#edit_loc").val(ret.location);
-			jQuery("#edit_desc").val(ret.description);
-			jQuery("#location-details-dialog").dialog({
-				modal: true,
-				show: {
-					effect: "blind"
-				},
-				buttons: {
-					'update': function() {
-						var loc = jQuery("#edit_loc").val();
-						var desc = jQuery("#edit_desc").val();
-						//var loc_id = obj.parents("tr").find(".loc_id").val();
-						if(loc_id!=""){
-							// ajax call
-							jQuery.ajax({
-								type: "POST",
-								url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_update_project_location",
-								data: {
-									loc_id: loc_id,
-									loc: loc,
-									desc: desc,
-									<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-								}
-							}).done(function(ret){
-								if(ret==1){
-									jQuery.cookie("msg", "Project location has been updated");
-									window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations";
-								}
-							});
-						}else{
-							alert('Location Id is missing');
-						}			
-					}
+			buttons: {
+				'update': function() {
+					var proj_id2 = jQuery("#edit_proj").val();
+					var loc = jQuery("#edit_loc").val();
+					var desc = jQuery("#edit_desc").val();
+					//var loc_id = obj.parents("tr").find(".loc_id").val();
+					if(loc_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations/ajax_update_project_location",
+							data: {
+								loc_id: loc_id,
+								proj_id: proj_id2,
+								loc: loc,
+								desc: desc,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							if(ret==1){
+								jQuery.cookie("msg", "Project location has been updated");
+								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/locations";
+							}
+						});
+					}else{
+						alert('Location Id is missing');
+					}			
 				}
-			});
+			}
 		});
 	});
 

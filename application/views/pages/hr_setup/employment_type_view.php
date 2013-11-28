@@ -36,7 +36,7 @@
 		  <div class="clearB"></div>
           <div style="margin-top: 20px;">
 			<a class="btn" id="add-more" href="javascript:void(0);">ADD MORE</a> 
-			<a class="btn" id="btn-delete" href="javascript:void(0);">DELETE</a>
+			<a class="btn" id="btn-delete" href="javascript:void(0);" style="display:none;">DELETE</a>
 		  </div>
         </div>
         <!-- MAIN-CONTENT END -->
@@ -68,6 +68,10 @@ jQuery(document).ready(function(){
 
 	// load highlight message script
 	redirect_highlight_message();
+	
+	if(jQuery(".employment-type-wrap option").length>0){
+		jQuery("#btn-delete").show();
+	}
 
 	// assign employment type
 	jQuery("#arrow-right").click(function(){
