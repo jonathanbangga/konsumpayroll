@@ -16,9 +16,10 @@
 		  if($jg_sql->num_rows()>0){
 			foreach($jg_sql->result() as $jg){ ?>
 			<tr>
-				<td><?php echo $jg->job_grade; ?></td>
-				<td><?php echo $jg->description; ?></td>
+				<td><span class="job_grade_span"><?php echo $jg->job_grade; ?></span></td>
+				<td><span class="desc_span"><?php echo $jg->description; ?></span></td>
 				<td>
+					<a href="javascript:void(0)" class="btn btn-gray btn-action btn-edit">EDIT</a>
 					<a class="btn btn-red btn-action btn-delete" href="javascript:void(0);">DELETE</a>
 					<input type="hidden" class="job_grade_id" value="<?php echo $jg->job_grade_id; ?>" />
 				</td>
@@ -50,6 +51,19 @@
 <div id="confirm-delete-dialog" class="jdialog"  title="Add more">
 	<div class="inner_div">
 		Are you sure you want to delete?: 
+	</div>
+</div>
+
+<div id="job_grade-details-dialog" class="jdialog"  title="Update Job Grade">
+	<div class="inner_div">
+		<p>
+			Job Grade:<br />
+			<input type="text" id="edit_job_grade" name="edit_job_grade">
+		</p>
+		<p>
+			Description:<br />
+			<input type="text" id="edit_desc" name="edit_desc">
+		</p>
 	</div>
 </div>
 	  
@@ -117,7 +131,7 @@ jQuery(document).ready(function(){
 		}
 	});
 	
-	// delete ranks
+	// delete job grade
 	jQuery(".btn-delete").click(function(){
 		var obj = jQuery(this);
 		jQuery("#confirm-delete-dialog").dialog({
@@ -152,13 +166,53 @@ jQuery(document).ready(function(){
 		});
 	});
 	
-	// remove rank row
+	// remove job grade row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".job_grade").length==0){
 			jQuery("#save").hide();
 			jQuery("#empty").show();
 		}
+	});
+	
+	// edit job grade
+	jQuery(".btn-edit").click(function(){
+		var obj = jQuery(this);
+		var job_grade_id = obj.parents("tr").find(".job_grade_id").val();
+		var job_grade = obj.parents("tr").find(".job_grade_span").html();
+		var desc = obj.parents("tr").find(".desc_span").html();
+		jQuery("#edit_job_grade").val(job_grade);
+		jQuery("#edit_desc").val(desc);
+		jQuery("#job_grade-details-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'update': function() {
+					var job_grade = jQuery("#edit_job_grade").val();
+					var desc = jQuery("#edit_desc").val();
+					if(job_grade_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade/ajax_update_job_grade",
+							data: {
+								job_grade_id: job_grade_id,
+								job_grade: job_grade,
+								desc: desc,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Job Grade has been updated");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/job_grade";
+						});
+					}else{
+						alert('Job grade Id is missing');
+					}			
+				}
+			}
+		});
 	});
 
 });

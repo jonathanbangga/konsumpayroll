@@ -40,6 +40,16 @@ class Job_grade_model extends CI_Model {
 			WHERE `job_grade_id` = {$job_grade_id}
 		");
 	}
+	
+	public function update_job_grade($job_grade_id,$job_grade,$description){
+		$this->db->query("
+			UPDATE `job_grade`
+			SET `job_grade` = '{$job_grade}',
+				`description` = '{$description}'
+			WHERE `job_grade_id` = {$job_grade_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */

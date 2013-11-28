@@ -71,5 +71,25 @@ class Leaves_model extends CI_Model {
 		");
 	}
 	
+	public function update_leaves($leaves_id,$leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave){
+		$this->db->query("
+			UPDATE `leaves`
+			SET `leave_type` = '{$leave_type}',
+				`payable` = '{$payable}',
+				`required_documents` = '{$required_documents}',
+				`include_in_actual_hours_worked` = '{$include_in_actual_hours_worked}',
+				`leaves_used_to_deduct_no_of_work` = '{$leaves_used_to_deduct_no_of_work}',
+				`leave_accrued` = '{$leave_accrued}',
+				`period` = '{$period}',
+				`position_id` = '{$position_id}',
+				`years_of_service` = '{$years_of_service}',
+				`unused_leave` = '{$unused_leave}',
+				`unused_leave_upon_termination` = '{$unused_leave_upon_termination}',
+				`max_days_of_leave` = '{$max_days_of_leave}'
+			WHERE `leaves_id` = {$leaves_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
 }
 /* End of file */

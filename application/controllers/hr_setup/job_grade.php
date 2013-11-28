@@ -35,6 +35,13 @@ class Job_grade extends CI_Controller {
 		$jg_id = $this->input->post('jg_id');
 		echo $this->job_grade_model->delete_job_grade($jg_id);
 	}
+	
+	public function ajax_update_job_grade(){
+		$job_grade_id = $this->input->post('job_grade_id');
+		$job_grade = mysql_real_escape_string($this->input->post('job_grade'));
+		$desc = mysql_real_escape_string($this->input->post('desc'));
+		$this->job_grade_model->update_job_grade($job_grade_id,$job_grade,$desc);
+	}
 
 	
 }

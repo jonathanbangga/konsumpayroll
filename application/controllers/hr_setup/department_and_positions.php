@@ -31,31 +31,7 @@ class Department_and_positions extends CI_Controller {
 		$dept_id = $this->input->post('dept_id');
 		$dept_name = $this->input->post('dept_name');
 		$pos = $this->department_and_positions_model->get_positions($dept_id);
-		$str = "";
-		if($pos->num_rows()>0){
-			$str = '
-			<li class="li'.$dept_id.' li_dept">
-			  <input type="hidden" name="dept_id" class="dept_id" value="'.$dept_id.'" />
-			  <header>'.$dept_name.'</header>
-			  <div class="dept-box">
-				<ul>';
-					foreach($pos->result() as $row){ 
-					$str .= '
-						<li>
-							<label>
-								<input class="right jpos" name="" type="checkbox" value="'.$row->position_id.'">
-								'.$row->position_name.'
-							</label>
-						</li>';	  
-					}
-				$str .= '</ul>
-			  </div>
-			  <a class="add-more-pos btn" href="javascript:void(0);">ADD POSITION</a> 
-			  <a class="btn btn-delete_pos" href="javascript:void(0);" style="margin-top: 9px;">DELETE</a>
-			</li>
-			';
-		}
-		echo $str;
+		echo $pos->num_rows();
 	}
 	
 	public function ajax_add_department(){

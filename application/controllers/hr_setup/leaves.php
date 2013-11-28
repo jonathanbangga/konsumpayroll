@@ -48,6 +48,23 @@ class Leaves extends CI_Controller {
 		echo $this->leaves_model->delete_leaves($leaves_id);
 	}
 	
+	public function ajax_update_leaves(){
+		$leaves_id = $this->input->post('leaves_id');
+		$lt = $this->input->post('lt');
+		$pybl = $this->input->post('pybl');
+		$rec_doc = $this->input->post('rec_doc');
+		$ahw = $this->input->post('ahw');
+		$dnw = $this->input->post('dnw');
+		$acrd = $this->input->post('acrd');
+		$prd = $this->input->post('prd');
+		$pos = $this->input->post('pos');
+		$yos = $this->input->post('yos');
+		$ul = $this->input->post('ul');
+		$ult = $this->input->post('ult');
+		$mdl = $this->input->post('mdl');
+		$this->leaves_model->update_leaves($leaves_id,$lt,$pybl,$rec_doc,$ahw,$dnw,$acrd,$prd,$pos,$yos,$ul,$ult,$mdl);
+	}
+	
 }
 
 /* End of file login.php */

@@ -40,6 +40,23 @@ class Projects_model extends CI_Model {
 			WHERE `project_id` = {$project_id}
 			AND `company_id` = {$this->company_id}
 		");
+		// delete locations as well
+		$this->db->query("
+			DELETE 
+			FROM `location`
+			WHERE `project_id` = {$project_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_project($project_id,$project_name,$project_description){
+		$this->db->query("
+			UPDATE `project`
+			SET `project_name` = '{$project_name}',
+				`project_description` = '{$project_description}'
+			WHERE `project_id` = {$project_id}
+			AND `company_id` = {$this->company_id}
+		");
 	}
 	
 }

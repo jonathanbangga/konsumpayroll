@@ -9,7 +9,7 @@
 			  <?php
 			  if($departments->num_rows()>0){
 			  ?>
-              <div class="dept-box">
+              <div class="dept-box department_div">
                 <ul id="dept_ul">
                 <?php
 					foreach($departments->result() as $row){ 
@@ -31,7 +31,7 @@
 			  <?php }
 			  ?>
               <a class="btn" href="javascript:void(0);" id="add-more-dept">ADD DEPARTMENT</a> 
-			  <a class="btn" href="javascript:void(0);" id="btn-delete_dept" style="margin-top: 9px;">DELETE</a>
+			  <a class="btn" href="javascript:void(0);" id="btn-delete_dept" style="margin-top: 9px; display:none;">DELETE</a>
 			</li>
 			
 			<?php
@@ -45,7 +45,7 @@
 			  $row2 = $sql->row();
 			  ?>
 			  <header><?php echo $row2->department_name; ?></header>
-			  <div class="dept-box">
+			  <div class="dept-box position_div">
 				<ul>
 				<?php
 				$pos = $this->department_and_positions_model->get_positions($row->dept_id); 
@@ -142,6 +142,10 @@ jQuery(document).ready(function(){
 
 	// load highlight message script
 	redirect_highlight_message();
+	
+	if(jQuery(".department_div ul").length>0){
+		jQuery("#btn-delete_dept").show();
+	}
 
 	// department script
 	jQuery(document).on("click",".dept_id",function(){
@@ -169,9 +173,7 @@ jQuery(document).ready(function(){
 					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 				}
 			}).done(function(ret){
-				if(ret!=""){
-					jQuery("#deptnpos").append(ret);
-				}else{
+				if(ret==0){
 					jQuery("#no-pos-alert").dialog({
 						modal: true,
 						show: {
@@ -264,10 +266,9 @@ jQuery(document).ready(function(){
 								//console.log(ret.dept_id);
 								pos_box = jQuery(".li"+ret.dept_id).html();
 								if(pos_box!=null){
-									var temp = '<li>'+
-												 '<label>'+
-													'<input class="right jpos" type="checkbox" value="'+ret.pos_id+'">'+ret.position+''+
-												 '</label>'+
+									var temp = '<li>'+					
+													'<input class="right jpos" type="checkbox" value="'+ret.pos_id+'">'+
+													'<span class="pos_name">'+ret.position+'</div>'+
 											   '</li>';
 											   jQuery(".li"+ret.dept_id+" ul").append(temp);
 								}else{
@@ -275,13 +276,11 @@ jQuery(document).ready(function(){
 									var temp = '<li class="li'+ret.dept_id+' li_dept">'+
 												  '<input type="hidden" name="dept_id" class="dept_id" value="'+ret.dept_id+'" />'+
 												  '<header>'+ret.department+'</header>'+
-												  '<div class="dept-box">'+
+												  '<div class="dept-box position_div">'+
 													'<ul>'+
 														'<li>'+
-															'<label>'+
 																'<input class="right jpos" name="" type="checkbox" value="'+ret.pos_id+'">'+
-																ret.position+''+
-															'</label>'+
+																'<span class="pos_name">'+ret.position+'</span>'+
 														'</li>'+
 													'</ul>'+
 												  '</div>'+
