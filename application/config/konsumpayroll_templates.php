@@ -14,7 +14,8 @@ $config['company_dashboard_menu'] = 'content_holders/company_dashboard_menu';
 $config['add_company_menu'] = 'content_holders/company_menu';
 
 // side bar menu
-$config['add_company_sidebar_menu'] = 'content_holders/hr_setup_sidebar_menu';
+$config['hr_setup_sidebar_menu'] = 'content_holders/hr_setup_sidebar_menu';
+$config['payroll_setup_sidebar_menu'] = 'content_holders/payroll_setup_sidebar_menu';
 
 // assgin TYPe
 $config['type_admin'] = "1";

@@ -55,7 +55,7 @@
 			Project:<br /> 
 			<?php
 			if($sql_proj->num_rows()>0){ ?>
-				<select id="project">
+				<select id="project" class="txtselect">
 					<option value="0">Select Project</option>
 					<?php
 					foreach($sql_proj->result() as $proj){ ?>
@@ -73,11 +73,11 @@
 		</p>
 		<p>
 			Location:<br /> 
-			<input type="text" id="location" name="location" />
+			<input type="text" id="location" name="location" class="txtfield" />
 		</p>
 		<p>
 			Description:<br /> 
-			<input type="text" id="description" name="description" />
+			<input type="text" id="description" name="description" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -92,7 +92,7 @@
 	<div class="inner_div">
 		<p>
 			Project:<br />
-			<select id="edit_proj">
+			<select id="edit_proj" class="txtselect">
 			<option value="-1">select project</option>
 			<?php
 				foreach($sql_proj->result() as $proj){ ?>
@@ -104,11 +104,11 @@
 		</p>
 		<p>
 			Location:<br />
-			<input type="text" id="edit_loc" name="location">
+			<input type="text" id="edit_loc" name="location" class="txtfield" />
 		</p>
 		<p>
 			Description:<br />
-			<input type="text" id="edit_desc" name="description">
+			<input type="text" id="edit_desc" name="description" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -126,8 +126,8 @@ jQuery(document).ready(function(){
 		str = ''+
 			'<tr>'+
 				'<td>'+
-					'<select class="project" style="width: 80px;">'+
-						'<option value="0">--select--</option>'+
+					'<select class="txtselect project" style="width: 80px;">'+
+						'<option value="0">select</option>'+
 						<?php
 						$str = "";
 						foreach($sql_proj->result() as $proj){ 
@@ -137,8 +137,8 @@ jQuery(document).ready(function(){
 						'<?php echo $str; ?>'+
 					'</select>'+
 				'</td>'+
-				'<td><input type="text" name="location" class="location"></td>'+
-				'<td><input type="text" name="description" class="description"></td>'+
+				'<td><input type="text" name="location" class="txtfield location"></td>'+
+				'<td><input type="text" name="description" class="txtfield description"></td>'+
 				'<td><a href="javascript:void();" class="btn btn-red btn-action btn-remove">REMOVE</a></td>'+
 			'</tr>';
 		jQuery("#save").show();

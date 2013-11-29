@@ -55,11 +55,11 @@
 	<div class="inner_div">
 		<p>
 			Project:<br />
-			<input type="text" id="edit_proj" name="edit_proj">
+			<input type="text" id="edit_proj" name="edit_proj" class="txtfield" />
 		</p>
 		<p>
 			Description:<br />
-			<input type="text" id="edit_desc" name="edit_desc">
+			<input type="text" id="edit_desc" name="edit_desc" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -67,11 +67,6 @@
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 
-<style>
-.tbl input{
-	height: 25px;
-}
-</style>
 
 <script>
 jQuery(document).ready(function(){
@@ -84,8 +79,8 @@ jQuery(document).ready(function(){
 		jQuery("#empty").hide();
 		str = ''+
 			'<tr>'+
-				'<td><input type="text" name="project" class="project"></td>'+
-				'<td><input type="text" name="description" class="description" /></td>'+
+				'<td><input type="text" name="project" class="txtfield project"></td>'+
+				'<td><input type="text" name="description" class="txtfield description" /></td>'+
 				'<td><a href="javascript:void(0);" class="btn btn-red btn-action btn-remove">REMOVE</a></td>'+
 			'</tr>';
 		jQuery("#save").show();

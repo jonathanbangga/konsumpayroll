@@ -50,7 +50,7 @@
 <div id="add-more-dialog" class="jdialog"  title="Add more">
 	<div class="inner_div">
 		Enter employment type name: 
-		<div class="inner_field"><input type="text" class="employment_type" name="employment_type" /></div>
+		<div class="inner_field"><input type="text" class="txtfield employment_type" name="employment_type" /></div>
 	</div>
 </div>
 
@@ -118,7 +118,7 @@ jQuery(document).ready(function(){
 	// add more
 	jQuery("#add-more").click(function(){
 		jQuery(".employment_type").val("");
-		jQuery("#add-more-dialog .inner_field").html('<input type="text" class="employment_type" name="employment_type" />');
+		jQuery("#add-more-dialog .inner_field").html('<input type="text" class="txtfield employment_type" name="employment_type" />');
 		jQuery("#add-more-dialog").dialog({
 			modal: true,
 			show: {
@@ -126,7 +126,7 @@ jQuery(document).ready(function(){
 			},
 			buttons: {
 				'add': function(){
-					jQuery("#add-more-dialog .inner_field").append('<input type="text" class="employment_type" name="employment_type" />');
+					jQuery("#add-more-dialog .inner_field").append('<input type="text" class="txtfield employment_type" name="employment_type" />');
 				},
 				save: function() {
 					var et = new Array();

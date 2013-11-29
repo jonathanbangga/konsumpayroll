@@ -21,6 +21,7 @@ body {
 	padding:0px;
 	font-size:12px;
 	color:#333333;
+	min-width:1170px;
 }
 body, html {
 	height:100%;
@@ -118,7 +119,7 @@ p {
 	margin:0 auto;
 	min-height:100%;
 }
-.txtfield, .txtselect {
+.txtfield, .txtselect, .txtarea {
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:11px;
 	font-style:italic;
@@ -140,6 +141,10 @@ p {
 	line-height:22px;
 	font-style:normal;
 	color:#696969;
+}
+.txtarea {
+	overflow:auto;
+	height:67px;
 }
 .select-medium {
 	width:95px;
@@ -547,3 +552,112 @@ input[type="button"].btn {
 	margin-bottom:25px;
 }
 /* nov 5 2013 end */
+
+
+/* nov 26 2013 start */
+
+.compliance-col {
+	width:418px;
+	margin-bottom:18px;
+}
+.comp-logo {
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.comp-logo h3 {
+	color: #333333;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	padding:0;
+	margin-left:20px;
+	float:left;
+}
+.heading-blue, .heading-gray {
+	background-color:#44829c;
+	height:38px;
+	border-bottom:1px solid #dfdfdf;
+	color:#fff;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:12px;
+	padding:0 25px;
+}
+.heading-gray {
+	background-color:#999999;
+}
+.comp-date, .comp-markasdone, .comp-status {
+	margin-top:8px;
+}
+.comp-markasdone {
+	overflow:hidden;
+}
+.markasdone-checkbox {
+	float:left;
+	margin:3px 8px 0 0;
+}
+.comp-content {
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#333333;
+	background-color:#cccccc;
+	padding:10px 25px 10px
+}
+.comp-content p {
+	padding-bottom:15px;
+}
+.comp-content p:last-child {
+	padding:0;
+}
+.comp-content a {
+	text-decoration:underline;
+	color:#333333;
+	font-weight:bold;
+}
+.compliance-boxlist ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.compliance-boxlist ul li {
+	margin:0 0 11px;
+	padding:0;
+}
+.compliance-tbl {
+	width:880px;
+}
+.imba-container {
+	padding-left:17px;
+}
+/* nov 26 2013 end */
+
+/* nov 27 2013 start */
+.addaccural-box {
+	background-color:rgba(210, 210, 210, 0.50);
+	position:absolute;
+	left:0;
+	top:0;
+	min-width:1170px;
+	width:100%;
+	height:100%;
+	z-index:3;
+}
+.add-accural-item {
+	background-color:#fff;
+	width:300px;
+	padding:16px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+.add-accural-item .txtfield, .add-accural-item .txtarea {
+	font-style:normal;
+	color:#333333;
+}
+.add-accural-item table td {
+	vertical-align:middle;
+	padding:5px 0;
+}
+.add-accural-item h1 {
+	padding-bottom:20px;
+}
+/* nov 27 2013 end */

@@ -10,7 +10,7 @@ class Approval_groups extends CI_Controller {
 		// menu and authentication
 		$this->theme = $this->config->item('default');
 		$this->menu = $this->config->item('add_company_menu');
-		$this->sidebar_menu = $this->config->item('add_company_sidebar_menu');
+		$this->sidebar_menu = $this->config->item('hr_setup_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 			// load
 		$this->load->model('hr_setup/approval_groups_model');	
