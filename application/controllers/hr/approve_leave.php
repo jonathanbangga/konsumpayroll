@@ -27,7 +27,7 @@
 			parent::__construct();
 			$this->load->model("hr/approve_leave_model","leave");
 			$this->theme = $this->config->item('default');
-			$this->menu = "content_holders/hr_company_sidebar_menu";
+			$this->menu = "content_holders/user_hr_owner_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
