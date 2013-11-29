@@ -143,5 +143,8 @@ input.btn[type="submit"] {
     text-decoration: none;
     text-transform: uppercase;
 }
+.pagi-rights{
+	width:auto;
+}
 
 /** end paginations purposes **/

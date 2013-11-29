@@ -25,6 +25,7 @@
 				?>
 				<tr>
 					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->leaves_id;?>">
+					
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td>
@@ -80,11 +81,13 @@
 		<!-- TBL-WRAP END -->
 	</div>
 	<?php if($application){?>
-	<p><?php  echo $pagi;?></p>
-	<p>
-	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
-	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
+	<div class="left pagi-lefts">
+	<a id="leave_approve" href="javascript:void(0);" class="btn">APPROVE</a>
+	<a id="leave_reject" href="javascript:void(0);" class="btn">REJECT</a>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
+	<div class="clearB"></div>
 	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">

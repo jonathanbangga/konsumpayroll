@@ -26,13 +26,14 @@
 				?>
 				<tr>
 					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>">
+					
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td>
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
-						
+	
 						<div class="users_text"><?php echo $approvers->overtime_type_id;?></div>
 					</td>
 					<td>
@@ -82,11 +83,15 @@
 		<!-- TBL-WRAP END -->
 	</div>
 	<?php if($application){?>
-	<p><?php  echo $pagi;?></p>
-	<p>
-	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
-	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
+	<div class="left pagi-lefts">
+	<a id="overtime_approve" href="javascript:void(0);" class="btn">APPROVE</a>
+	<a id="overtime_reject" href="javascript:void(0);" class="btn">REJECT</a>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
+	<div class="clearB"></div>
+	
+	
 	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
