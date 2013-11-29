@@ -74,11 +74,12 @@
 		<!-- TBL-WRAP END -->
 	</div>
 	<?php if($application){?>
-	<p><?php  echo $pagi;?></p>
-	<p>
-	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
-	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
+	<div class="left pagi-lefts">
+	<a id="timesheet_approve" href="javascript:void(0);" class="btn">APPROVE</a>
+	<a id="timesheet_reject" href="javascript:void(0);" class="btn">REJECT</a>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
 	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
