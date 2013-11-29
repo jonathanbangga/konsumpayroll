@@ -16,10 +16,21 @@
 	<li><a href="#">Expenses</a></li>
 	<li><a href="#">Payroll Journal Entries</a></li>
 	<li><a href="#">Witholding Tax</a></li>
-	<li><a href="#">13th Month Settings</a></li>
+	<li <?php if($uri=='thirteen_month_pay_settings'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/thirteen_month_pay_settings">
+			13th Month Settings
+		</a>
+	</li>
 	<li <?php if($uri=='thirteen_month_pay'){ echo 'class="selected"'; } ?>>
-		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/thirteen_month_pay">13th Month Pay</a>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/thirteen_month_pay">
+			13th Month Pay
+		</a>
 	</li>
 	<li><a href="#">De Minimis</a></li>
+	<li <?php if($uri=='accural'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/accural">
+			Accural
+		</a>
+	</li>
 	<li><a href="#">Banks</a></li>
 </ul>

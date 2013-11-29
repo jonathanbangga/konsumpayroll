@@ -197,7 +197,8 @@
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
-        <a class="btn btn-gray left" href="#">BACK</a> <a class="btn btn-gray right" href="#"> CONTINUE</a>
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/thirteen_month_pay_settings">BACK</a> 
+		<a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/de_minimis">CONTINUE</a>
         <input style="margin-right:10px;" class="btn right" name="" type="button" value="SAVE">
         <!-- FOOTER-GRP-BTN END -->
       </div>

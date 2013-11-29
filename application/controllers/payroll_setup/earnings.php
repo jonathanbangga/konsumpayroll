@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Thirteen_month_pay_settings extends CI_Controller {
+class Earnings extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
@@ -13,16 +13,16 @@ class Thirteen_month_pay_settings extends CI_Controller {
 		$this->sidebar_menu = $this->config->item('payroll_setup_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
-		$this->load->model('payroll_setup/thirteen_month_pay_settings_model');	
+		$this->load->model('payroll_setup/earnings_model');	
 	}
 
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "13th Month Pay Settings";
+		$data['page_title'] = "Earnings";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		$this->layout->view('pages/payroll_setup/thirteen_month_pay_settings_view',$data);
+		$this->layout->view('pages/payroll_setup/earnings_view',$data);
 	}
 	
 }
