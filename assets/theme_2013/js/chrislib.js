@@ -385,36 +385,29 @@ var kpay = {
 					jQuery(document).on("click", ".jcomp_view", function (e) {
 						e.preventDefault();
 						var el = jQuery(this);
-						var fid = el.attr("set_id"); 
+						var psa_id = el.attr("psa_id"); 
 						jQuery.post(urls,
 							{
-								"type": "company_view",
+								"type": "view",
 								"update": "true",
-								"id": fid,
+								"psa_id": psa_id,
 								"ZGlldmlyZ2luamM": jQuery.cookie(token)
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#jregname").empty().text(res.company_name);
+								jQuery("#jregname").empty().text(res.name);
 								jQuery("#jowner").empty().text(res.owner_name);
 								jQuery("#jsubscription_date").empty().text(res.subscription_date);
-								jQuery("#jno_employee").empty().text(res.number_of_employees);
-								jQuery("#jbus_add").empty().text(res.business_address);
-								jQuery("#jemail").empty().text(res.email_address);
-								jQuery("#jcity").empty().text(res.city);
-								jQuery("#jzip").empty().text(res.zipcode);
-								jQuery("#jorg").empty().text(res.organization_type);	
-								jQuery("#jbpno").empty().text(res.business_phone);
-								jQuery("#jext").empty().text(res.extension);
-								jQuery("#jmob").empty().text(res.mobile_number);
-								jQuery("#jfax").empty().text(res.fax);
-								jQuery("#jprovince").empty().text(res.province);
-								jQuery(".view_company").dialog(
-									{	
+								jQuery("#jemail").empty().text(res.email);
+								jQuery("#jcity").empty().text(res.city ? res.city : "None");
+								jQuery("#jaddress").empty().text(res.address ? res.address : "None");
+								jQuery("#jstreet").empty().text(res.street ? res.street : "None");	
+								jQuery("#jmobile").empty().text(res.mobile ? res.mobile : "None");
+								jQuery(".view_company").dialog({	
 										draggable:false,
 										resizable: false,
-										height: 'auto',
-										width:"auto",
+										height: '320',
+										width:"280",
 										modal: true,
 										dialogClass: 'transparent',
 										buttons:{
@@ -467,9 +460,14 @@ var kpay = {
 							},
 							function (json) {
 								var res = jQuery.parseJSON(json);  
-								jQuery("#psa_name").empty().val(res.name);
-								jQuery("select[name='jowner']").val(res.company_owner_id);
-								jQuery("#psa_id").empty().val(res.payroll_system_account_id);
+								console.log(res);
+								jQuery("#psa_name").empty().val(res.psa.name);
+								jQuery("#old_psa_name").empty().val(res.psa.name);
+								
+								jQuery("#psa_id").empty().val(res.psa.payroll_system_account_id);
+								jQuery("#old_account_id").empty().val(res.psa.account_id);
+								jQuery("select[name='jowner']").html(res.options);
+								jQuery("select[name='jowner']").val(res.psa.account_id);
 								jQuery(".jedit_compform").dialog({	
 										draggable:false,
 										resizable: false,
@@ -517,14 +515,11 @@ var kpay = {
 						jQuery("form.jaddusers_update")[0].reset();
 						jQuery.post(urls,{"update_edit":'1',"admin_id":getid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(ret){
 							var jres = jQuery.parseJSON(ret);
-							jQuery("input[name='edit_owner']").val(jres.owner_name);
-							jQuery("input[id^='edit_owner_id']").val(jres.company_owner_id);
 							jQuery("input[id^='edit_email']").val(jres.email);
+							jQuery("input[id^='edit_owner']").val(jres.owner_name);
 							jQuery("input[id^='edit_old_email']").val(jres.email);
 							jQuery("input[id^='edit_account_id']").val(jres.account_id);
-							jQuery("input[id^='edit_payroll_system_account_id']").val(jres.payroll_system_account_id);
-							jQuery("input[id^='edit_pass']").val();
-							jQuery("input[id^='edit_cpass']").val();	
+							
 						});
 					});
 				},
@@ -533,14 +528,10 @@ var kpay = {
 					url:urls,
 					type: "POST",
 					data:{
-						'edit_id':jQuery("input[id^='edit_owner_id']").val(),
+						'edit_account_id':jQuery("input[id^='edit_account_id']").val(),
 						'edit_name':jQuery("input[name='edit_owner']").val(),
 						'edit_email':jQuery("input[id^='edit_email']").val(),
 						'edit_old_email':jQuery("input[id^='edit_old_email']").val(),
-						'edit_pass':jQuery("input[id^='edit_pass']").val(),
-						'edit_cpass':jQuery("input[id^='edit_cpass']").val(),
-						"edit_account_id":jQuery("input[id^='edit_owner']").val(),
-						'edit_payroll_system_account_id':jQuery("input[id^='edit_payroll_system_account_id']").val(),
 						'ZGlldmlyZ2luamM':jQuery.cookie(token),
 						'update':'true'
 						},success: function(data) {
@@ -548,7 +539,13 @@ var kpay = {
 							if(status.success == '1') {						
 								jQuery(".success_updated").dialog({width: 'auto',Maxwidth:750,close: function() {
 								window.location.href ="/admin/users/all_users"; 
-								}});
+								},buttons: {
+									'Close': function() {
+										jQuery(this).dialog("close");
+										location.reload();
+									}
+								}
+								});
 								return false;
 							} else {
 								alert(status.error_msg);
@@ -635,7 +632,7 @@ var kpay = {
 						'accounts_id':jQuery("input[name='accounts_id']").val(),
 						'edit_name':jQuery("input[name='name']:visible").val(),
 						'edit_email':jQuery("input[name='email_address']:visible").val(),
-						'edit_username':jQuery("input[name='username']:visible").val(),
+						'edit_username':jQuery("input[name='username']").val(),
 						'edit_username_old':jQuery("input[name='username_old']").val(),
 						'edit_password':jQuery("input[name='password']:visible").val(),
 						'edit_cpassword':jQuery("input[name='cpassword']:visible").val(),
@@ -668,22 +665,23 @@ var kpay = {
 							height: 150,
 							modal: true,
 							buttons: {
-							"Yes": function () {
-								jQuery.post(urls,{
-								'delete':true,
-								'admin_id':ids,
-								'ZGlldmlyZ2luamM':jQuery.cookie(token),
-								},function(d){
-									alert("User has been deleted");
-									jQuery(".option_alert").dialog("close");
-									jQuery(".admin_list_id"+ids).hide('slow',function(){
-										window.location.href ="/admin/users/all_admin/";
+								"Yes": function () {
+									jQuery.post(urls,
+									{
+									'delete':true,
+									'admin_id':ids,
+									'ZGlldmlyZ2luamM':jQuery.cookie(token),
+									},function(d){
+										alert("User has been deleted");
+										jQuery(".option_alert").dialog("close");
+										jQuery(".admin_list_id"+ids).hide('slow',function(){
+											window.location.href ="/admin/users/all_admin/";
+										});
 									});
-								});
-							},
-							No: function () {
-								jQuery(".option_alert").dialog("close");
-							}
+								},
+								No: function () {
+									jQuery(".option_alert").dialog("close");
+								}
 							}
 						});						
 					});
@@ -817,8 +815,10 @@ window.alert = function(msg){
 	   width: 'inherit',
 	   draggable: false,
 	   modal: true,
-	   width:'auto',
+	  
 	   minWidth:'400',
+	   maxWidth:'600',
+		width:'350',
 	   dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
@@ -830,13 +830,17 @@ window.alert = function(msg){
 	   },
 	   overlay: {
    		   opacity: 0
-   	   },
-	   show: {
-			effect: "bounce",
-			duration:'slow'
-		}
+   	   }
    });
 }
+
+function hightlight_success(){
+	var icheck = jQuery.trim(jQuery(".highlight_message").text());
+	if(icheck){
+		jQuery(".successContBox").fadeIn("slow");
+	}
+}
+		
 
 jQuery(function() {
 	kpay.hr.company_sidebar();

@@ -22,7 +22,7 @@
 	            <tr>
 	              <td><?php echo $cprincipal->payroll_cloud_id;?></td>
 	              <td><?php echo $cprincipal->fullname;?></td>
-	              <td>1</td>
+	              <td><?php echo $cprincipal->level;?></td>
 	              <td><?php echo $cprincipal->email;?></td>
 	              <td><?php echo $cprincipal->mobile_no;?></td>
 	              <td><?php echo $cprincipal->mobile_no;?></td>
@@ -385,7 +385,8 @@
 			if(returns.success == 0){
 				alert(returns.error);
 			}else{
-
+				jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+				kpay.overall.show_success(".success_messages");
 			}
 		});
 		

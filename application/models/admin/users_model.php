@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+	<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  *
  * Admin Users 
@@ -25,8 +25,10 @@ class Users_model extends CI_Model {
 	 */
 	public function users_list($limit,$start){
 		$this->db->limit($limit,$start);
-		$this->db->where(array("status"=>"Active","deleted"=>"0"));
-		$query = $this->db->get("company_owner");
+		$this->db->where("accounts.deleted","0");
+		$this->db->join("accounts","accounts.account_id = company_owner.account_id","left");
+		$this->db->from("company_owner");
+		$query = $this->db->get();
 		$result = $query->result();
 		$query->free_result();
 		return $result;
@@ -38,7 +40,10 @@ class Users_model extends CI_Model {
 	 * @return integer
 	 */
 	public function users_count_list(){
-		$query 	= $this->db->query("SELECT COUNT(*) as val from company_owner WHERE status='Active' and deleted = '0'");
+		$query 	= $this->db->query(
+					"SELECT COUNT(*) as val from company_owner co LEFT JOIN accounts a on a.account_id = co.account_id
+					WHERE a.deleted ='0'"
+				);
 		$row	= $query->num_rows();
 		$res 	= $query->row();
 		$query->free_result();
@@ -126,23 +131,41 @@ class Users_model extends CI_Model {
 	public function select_user($id){
 		if(is_numeric($id)){
 			#$query = $this->db->get_where("company_owner",array("company_owner_id"=>$id));
-			$query = $this->db->query(
-			"SELECT co.company_owner_id,co.owner_name,co.mobile,co.country,co.date,co.`status`,co.deleted AS company_deleted,co.account_id,co.address,co.street,
-			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.company_owner_email,psa.`status` AS psa_status
+			$query2 = $this->db->query(
+			"SELECT co.company_owner_id,co.owner_name,co.mobile_no as mobile,co.country,co.date,co.account_id,co.address,co.street,
+			a.payroll_cloud_id,a.payroll_system_account_id,a.`password`,a.email,a.deleted AS account_deleted,psa.`status` AS psa_status
 			FROM `company_owner` co
 			LEFT JOIN accounts a on a.account_id = co.account_id 
 			LEFT JOIN payroll_system_account psa on psa.payroll_system_account_id = a.payroll_system_account_id
 			WHERE co.company_owner_id = {$id} AND a.account_type_id = 2 
-			AND co.`status` = 'Active' 
-			AND co.deleted='0' AND a.deleted = '0'
+			AND a.deleted = '0'
 			AND psa.`status`= 'Active'
 			");
+			$query = $this->db->query(
+						"SELECT * FROM accounts a 
+						LEFT JOIN company_owner co on co.account_id = a.account_id
+						WHERE a.deleted = '0' AND a.account_id = '{$this->db->escape_str($id)}'
+						"
+					);	
 			$row = $query->row();
 			$query->free_result();
 			return $row;
 		}else{
 			return false;
 		}
+	}
+	
+	/**
+	 * Get acounts information
+	 * Enter description here ...
+	 * @param int $account_id
+	 * @return object
+	 */
+	public function get_account_info($account_id){
+		$query = $this->db->get_where("accounts",array("account_id"=>$this->db->escape_str($account_id)));
+		$row = $query->row();
+		$query->free_result();
+		return $row;
 	}
 	
 	/**
@@ -218,16 +241,16 @@ class Users_model extends CI_Model {
 	/**
 	 * 
 	 * owners company listtings
-	 * @param int $company_owner_id
+	 * @param int $payroll_system_account_id
 	 * @return object
 	 */
-	public function owners_company_list($company_owner_id){
-		$where_array = array(
-						"company_owner_id"	=> $this->db->escape_str($company_owner_id),
-						"status"	=> "Active",
-						"deleted"	=> "0"
-						);
-		$query = $this->db->get_where("company",$where_array);
+	public function owners_company_list($payroll_system_account_id){
+		$sql  = "SELECT * FROM assigned_company ac
+				LEFT JOIN company c on c.company_id = ac.company_id
+				WHERE ac.payroll_system_account_id  = '{$this->db->escape_str($payroll_system_account_id)}' 
+				AND ac.deleted = '0' 
+				AND c.status = 'Active' AND c.deleted = '0'";
+		$query = $this->db->query($sql);
 		$result = $query->result();
 		$query->free_result();
 		return $result;
@@ -241,8 +264,8 @@ class Users_model extends CI_Model {
 		if(is_numeric($company_owner_id)){
 			$sql  = "SELECT * FROM company_owner co
 						LEFT JOIN accounts a on a.account_id = co.account_id
-						WHERE a.user_type_id = '2' and a.deleted = '0' and co.deleted = '0' AND 
-						co.company_owner_id={$this->db->escape_str($company_owner_id)} and co.status = 'Active'";	
+						WHERE a.user_type_id = '2' and a.deleted = '0' AND 
+						co.company_owner_id={$this->db->escape_str($company_owner_id)}";	
 			$query = $this->db->query($sql);
 			$result = $query->row();
 			$query->free_result();
@@ -252,23 +275,24 @@ class Users_model extends CI_Model {
 		}
 	}
 	
+	/**
+	 * SAVE OWNERS FOR LOOP
+	 * Enter description here ...
+	 * @param unknown_type $owners_name
+	 * @param unknown_type $email_address
+	 */
 	public function save_owners($owners_name,$email_address){
 		$owners_name = $this->db->escape_str($owners_name);
 		$email =  $this->db->escape_str($email_address);
-		#---------- PAYROLL SYSTEM ACCOUNT -----#
-		$payroll_field = array(
-						"company_owner_email"	=> $email,
-						"status"			=> "Active"
-					);
-		$payroll_system_account_id = $this->add_data_fields("payroll_system_account",$payroll_field);
-		if($payroll_system_account_id){
 		#---------- ACCOUNT --------------------#
 			$account_field = array(
-						"payroll_system_account_id" => $payroll_system_account_id,
+						"payroll_system_account_id" => 0,
 						"email"				=> $email,
+						"payroll_cloud_id"	=> $email,
 						"account_type_id"	=> 2,
 						"password"			=> md5(idates_now()),
-						"user_type_id"		=> 2
+						"user_type_id"		=> 2,
+						"deleted"			=> '0'
 				);		
 			$account_id = $this->add_data_fields("accounts",$account_field);	
 		#--------- COMPANY_OWNER ---------------#
@@ -276,15 +300,13 @@ class Users_model extends CI_Model {
 				$company_owner_field = array(
 						"owner_name"		=> $owners_name,
 						"account_id"		=> $account_id,
-						"date"				=> idates_now(),
-						"status"			=> "Active"
+						"date"				=> idates_now()
 				);		
 				$this->add_data_fields("company_owner",$company_owner_field);
+				return true;
+			}else{
+				return false;
 			}
-			return TRUE;
-		}else{
-			return FALSE;
-		}
 	}
 	
 }

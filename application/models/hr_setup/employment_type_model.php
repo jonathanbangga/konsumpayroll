@@ -2,15 +2,20 @@
 
 class Employment_type_model extends CI_Model {
 
+	protected $company_id;
+
     public function __construct(){
         parent::__construct();
+		// default
+		$this->company_id = $this->session->userdata('company_id');
     }
 	
 	public function get_employment_type(){
 		return $this->db->query("
 			SELECT *
 			FROM `employment_type`
-			WHERE `company_id` = 0
+			WHERE `selected` = 0
+			AND `company_id` = {$this->company_id}
 		");
 	}
 	
@@ -18,7 +23,8 @@ class Employment_type_model extends CI_Model {
 		return $this->db->query("
 			SELECT *
 			FROM `employment_type`
-			WHERE `company_id` != 0
+			WHERE `selected` = 1
+			AND `company_id` = {$this->company_id}
 		");
 	}
 	
@@ -26,20 +32,33 @@ class Employment_type_model extends CI_Model {
 		return $this->db->query("
 			INSERT INTO 
 			`employment_type`(
-				`name`
+				`name`,
+				`company_id`
 			)
 			VALUES(
-				'{$et}'
+				'".mysql_real_escape_string($et)."',
+				'{$this->company_id}'
 			)
 		");
 	}
 	
-	public function update_employment_type($company_id,$emp_type_id){
+	public function update_employment_type($selected,$emp_type_id){
 		$et = implode(",",$emp_type_id);
 		return $this->db->query("
 			UPDATE `employment_type`
-			SET `company_id` = {$company_id}
+			SET `selected` = {$selected}
 			WHERE `emp_type_id` IN ({$et})
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function delete_employment_type($emp_type_id){
+		$et = implode(",",$emp_type_id);
+		$this->db->query("
+			DELETE 
+			FROM `employment_type`
+			WHERE `emp_type_id` IN ({$et})
+			AND `company_id` = {$this->company_id}
 		");
 	}
 		

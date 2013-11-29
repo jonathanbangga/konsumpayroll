@@ -48,6 +48,25 @@ class Activity_log_model extends CI_Model {
 		$val = $this->db->count_all("activity_logs");
 		return $val;
 	}
+	
+	/**
+	 * Fetch notifications 
+	 * get notification for admin usage
+	 * @param int $limit
+	 * @param int $start
+	 */
+	public function fetch_notification($limit = 10,$start = 0){
+		if(is_numeric($limit) || is_numeric($start)){
+			$this->db->where(array("deleted"=>"0"));
+			$this->db->limit($limit,$start);
+			$query = $this->db->get("notification");
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}else{
+			return false;
+		}
+	}
 
 }
 

@@ -12,7 +12,7 @@
               <td style="width:155px">Registered Business Name:</td>
               <td>
               	<input class="txtfield" name="old_company_name" type="hidden" value="<?php echo $company_info ? $company_info->company_name : "";?>" >
-              	<input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" >
+              	<input class="txtfield" name="company_name" type="text" value="<?php echo $company_info ? $company_info->company_name : "";?>" autocomplete="off" >
               	<input type="hidden" name="subdomain" status="<?php echo $this->company_id;?>" value="<?php echo  $company_info ? $company_info->sub_domain : '';?>"/>
               </td>
             </tr>

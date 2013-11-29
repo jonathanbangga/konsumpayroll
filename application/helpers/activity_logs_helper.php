@@ -117,6 +117,5 @@
        	$ci->pagination->initialize($config);
        return $config;
    } 
-
    
   

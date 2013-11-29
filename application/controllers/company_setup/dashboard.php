@@ -16,6 +16,7 @@ class Dashboard extends CI_Controller {
 		$this->theme = 'company_dashboard';
 		$this->sidebar_menu = 'content_holders/company_sidebar_menu';
 		$this->menu = 'content_holders/company_dashboard_menu';	
+		$this->authentication->check_if_logged_in();	
 	}
 
 	/**

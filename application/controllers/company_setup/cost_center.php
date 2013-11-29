@@ -28,6 +28,7 @@
 			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
 			$this->load->model("company/cost_center_model","cost_center");
 			$this->company_id = $this->session->userdata("company_id");
+			$this->authentication->check_if_logged_in();	
 		}
 		
 		

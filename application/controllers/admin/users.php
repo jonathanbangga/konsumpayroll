@@ -23,11 +23,13 @@ class Users extends CI_Controller {
 		$this->theme = $this->config->item('temp_admin');
 		$this->load->model("admin/users_model");
 		$this->segment_url = 4;
-		$this->num_pagi = 5;
+		$this->num_pagi = 4;
 		$this->all_user = "/admin/users/all_users/";
 		$this->admin_url = "/admin/users/all_admin";
 		$this->load->helper('email');
 		$this->load->library('parser');
+		$this->load->helper('string');
+		$this->authentication->check_if_logged_in();	
 	}
 
 	public function index()
@@ -97,54 +99,6 @@ class Users extends CI_Controller {
 		}
 	}
 	
-	public function add_users(){
-		if($this->input->is_ajax_request()){
-			if($this->input->post('add')){
-				$this->form_validation->set_rules('owner_name','Owner name','xss_clean|trim|required');
-				$this->form_validation->set_rules('email_address','Email Address','xss_clean|is_unique[accounts.email]|valid_email|trim|required');
-				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[32]');
-				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
-				if($this->form_validation->run() == true){
-					$email =  $this->db->escape_str($this->input->post("email_address"));
-					#---------- PAYROLL SYSTEM ACCOUNT -----#
-					$payroll_field = array(
-									"company_owner_email"	=> $email,
-									"status"			=> "Active"
-								);
-					$payroll_system_account_id = $this->users_model->add_data_fields("payroll_system_account",$payroll_field);
-					if($payroll_system_account_id){
-					#---------- ACCOUNT --------------------#
-						$account_field = array(
-									"payroll_system_account_id" => $payroll_system_account_id,
-									"email"				=> $email,
-									"account_type_id"	=> 2,
-									"password"			=> $this->input->post("password"),
-									"user_type_id"		=> 2
-							);		
-					// CHECK USERTYPE_ID SINCE IT'S AN OWNER 1-ADMIN 2-OWNER 3-HR 4-ACCOUNTANT
-						$account_id = $this->users_model->add_data_fields("accounts",$account_field);	
-					#--------- COMPANY_OWNER ---------------#
-						if($account_id){
-							$company_owner_field = array(
-									"owner_name"		=> $this->input->post("owner_name"),
-									"account_id"		=> $account_id,
-									"date"				=> idates_now(),
-									"status"			=> "Active"
-							);		
-							$this->users_model->add_data_fields("company_owner",$company_owner_field);
-						}
-					}		
-					echo json_encode(array("success"=>"1","error_msg"=>""));
-				}else{
-					$error = validation_errors('<span class="error_zone">','</span>');
-					echo json_encode(array("success"=>"0","error_msg"=>$error));
-				}
-			}
-		}else{
-			show_404();
-		}
-	}
-	
 	public function add_admin_users(){
 		if($this->input->is_ajax_request()){
 			if($this->input->post('add')){
@@ -153,10 +107,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('email_address','Email Address','xss_clean|valid_email|trim|required|[accounts.email]');
 				$this->form_validation->set_rules('password','Password','xss_clean|trim|required|matches[cpassword]|min_length[8]|max_length[18]');
 				$this->form_validation->set_rules('cpassword','Confirm Password','xss_clean|trim|required');
-				if($this->form_validation->run() == true){
-					
-					
-					
+				if($this->form_validation->run() == true){				
 					$email = $this->db->escape_str($this->input->post('email_address'));			
 					$account_field = array(
 							"payroll_cloud_id" => $this->input->post('username'),
@@ -233,32 +184,23 @@ class Users extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			if($this->input->post('update')) {
 				$this->form_validation->set_rules('edit_name','name','xss_clean|trim|required');
-				$this->form_validation->set_rules('edit_id','id','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_update_user_email_check');
 				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim|required');
-				$this->form_validation->set_rules('edit_pass','Password','xss_clean|trim|required|matches[edit_cpass]|min_length[8]|max_length[18]');
-				$this->form_validation->set_rules('edit_cpass','Confirm Password','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_account_id','Account ID','xss_clean|trim|required'); 
-				$this->form_validation->set_rules('edit_payroll_system_account_id','Edit Payroll ID','xss_clean|trim|required'); 
+			
 				if($this->form_validation->run() == true) {	
 					// UPDATE ACCOUNTS
+					$account_id = $this->db->escape_str($this->input->post('edit_account_id'));
 					$fields = array(
 								"email"			=> $this->input->post('edit_email'),
-								"password"		=> $this->db->escape_str(md5($this->input->post("edit_pass")))
+								"password"		=> 'tetew'
 					);
-					$this->users_model->update_data_fields("accounts",$fields,array("account_id"=>$this->input->post('edit_account_id')));
-					// UPDATE PAYROLL SYSTEM ACCOUNT
-					$payroll_field = array(
-								"company_owner_email" => $this->input->post('edit_email'),
-								"status"		=> "Active"
-					);
-					$where_payroll_field = array("payroll_system_account_id"=>$this->input->post('edit_payroll_system_account_id'));
-					$this->users_model->update_data_fields("payroll_system_account",$payroll_field,$where_payroll_field);
+					$this->users_model->update_data_fields("accounts",$fields,array("account_id"=>$account_id));					
 					// UPDATE COMPANY OWNER NAME
 					$company_owner_field = array(
 								"owner_name"	=> $this->input->post("edit_name")
 					);
-					$where_company = array("account_id"=>$this->input->post('edit_account_id'));
+					$where_company = array("account_id"=>$account_id);
 					$this->users_model->update_data_fields("company_owner",$company_owner_field,$where_company);
 					echo json_encode(array("error_msg"=>'',"success"=>"1","value"=>$fields));
 				} else {
@@ -277,9 +219,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules('accounts_id','Admin id','xss_clean|trim|required');
 				$this->form_validation->set_rules('edit_username','username','xss_clean|trim|required|callback_admin_username_update_check');
 				$this->form_validation->set_rules('edit_email','Email Address','xss_clean|valid_email|trim|required|callback_check_email');
-				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim');
-				$this->form_validation->set_rules('edit_password','Password','xss_clean|trim|required|matches[edit_cpassword]|min_length[8]|max_length[18]');
-				$this->form_validation->set_rules('edit_cpassword','Confirm Password','xss_clean|trim|required'); 
+				$this->form_validation->set_rules('edit_old_email','Email Address','xss_clean|valid_email|trim'); 
 				if($this->form_validation->run() == true) {
 					$account_id = $this->db->escape_str($this->input->post('accounts_id'));	
 					$email = $this->db->escape_str($this->input->post('edit_email'));
@@ -349,8 +289,8 @@ class Users extends CI_Controller {
 		if($this->input->post("update")){
 			$this->form_validation->set_rules("editpass_accountid","Account ID","required|trim|xss_clean|is_numeric");			 
 			if($this->form_validation->run() == true){
-				$this->sendmail_admin_password();
-				echo json_encode(array("error"=>'',"success"=>"1"));	
+				$we = $this->sendmail_admin_password($this->input->post('editpass_accountid'));
+				echo json_encode(array("error"=>'',"success"=>"1","tetew"=>$we));	
 				return false;
 			}else{
 				echo json_encode(array("error"=>validation_errors('<span class="error_zone">','</span>'),"success"=>"0"));
@@ -426,7 +366,6 @@ class Users extends CI_Controller {
 						$fields_accounts = array( "deleted"=>"1" );	
 						$this->users_model->update_data_fields("accounts",$fields_accounts,array("account_id"=>$check_user->account_id));
 						$this->users_model->update_data_fields("payroll_system_account",array("status"=>"Inactive"),array("payroll_system_account_id"=>$check_user->payroll_system_account_id));
-						$this->users_model->update_data_fields("company_owner",$fields,array("account_id"=>$this->input->post('company_owner_id')));
 					}
 				}else{
 					echo validation_errors();
@@ -471,21 +410,33 @@ class Users extends CI_Controller {
 		}
 	}
 	
+	/**
+	 * ADD OWNERS FOR ADMIN
+	 * RETURNS OBJECT FOR AJAX PURPOSES
+	 */
 	public function add_owners(){
-		if($this->input->post('add_owner')){
-			$this->form_validation->set_rules('owners_name[]',"Owners name","required|callback_check_owners_name|trim|xss_clean|callback_check_owners_name");
-			$this->form_validation->set_rules('owners_email[]',"Email address","valid_email|required|trim|xss_clean|callback_check_owners_email");
-			if($this->form_validation->run() == false){
-				echo validation_errors();
-			}else{
-				foreach($this->input->post('owners_name') as $key=>$val):
-				$owners_name =  $val;
-				$owners_current_email  =  $this->input->post('owners_email');
-				$owners_email = $owners_current_email[$key];		
-				// save the company owner
-				$this->users_model->save_owners($owners_name,$owners_email);
-				endforeach;
-			}	
+		if($this->input->is_ajax_request()){
+			if($this->input->post('add_owner')){
+				$this->form_validation->set_rules('owners_name[]',"Owners name","required|callback_check_owners_name|trim|xss_clean|callback_check_owners_name");
+				$this->form_validation->set_rules('owners_email[]',"Email address","valid_email|required|trim|xss_clean|callback_check_owners_email");
+				if($this->form_validation->run() == false){				
+					echo json_encode(array("error"=>validation_errors("<span class='errors'>","</span>"),"success"=>"0"));
+					return false;
+				}else{
+					$on = $this->input->post('owners_name');
+					foreach($on as $key=>$val):
+						$owners_name =  $val;
+						$owners_current_email  =  $this->input->post('owners_email');
+						$owners_email = $owners_current_email[$key];		
+						// save the company owner
+						$this->users_model->save_owners($owners_name,$owners_email);
+					endforeach;
+					echo json_encode(array("error"=>"","success"=>"1"));
+					return false;
+				}	
+			}
+		}else{
+			show_404();
 		}
 	}
 	

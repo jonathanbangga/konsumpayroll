@@ -10,14 +10,15 @@ class Authentication {
     }
 
     public function validate_login($user,$pass,$account_type){
+	
 		$sql = $this->ci->account_model->get_account($user,$pass,$account_type);
-		// admin
+		
 		if($account_type==1){
 			// if account exist
 			if($sql->num_rows()>0){
 				$a = $sql->row();
 				$newdata = array(
-                   'account_id'  => $a->account_id,
+                   'account_id'  => $a->main_account_id,
 				   'account_type_id'  => $a->account_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
@@ -31,12 +32,14 @@ class Authentication {
 			if($sql->num_rows()>0){
 				$a = $sql->row();
 				$newdata = array(
-                   'account_id'  => $a->account_id,
+                   'account_id'  => $a->main_account_id,
 				   'account_type_id'  => $a->account_type_id,
-				   'psa_id'  => $a->payroll_system_account_id
+				   'psa_id'  => $a->payroll_system_account_id,
+				   'user_type_id' => $a->user_type_id,
+				   'sub_domain' => $a->sub_domain
 				);
 				$this->ci->session->set_userdata($newdata);
-				redirect('/company/dashboard/company_list');
+				redirect("/{$a->sub_domain}/dashboard/company_list");
 			}else{
 				redirect('/');
 			}	
@@ -45,7 +48,7 @@ class Authentication {
 	
 	public function check_if_logged_in(){
 		$account = $this->ci->session->userdata('account_id');
-		if(!$account){
+		if($account==""){
 			redirect('/login/access_denied');
 		}
 	}
@@ -64,6 +67,9 @@ class Authentication {
 	public function destroy_session(){
 		$this->ci->session->unset_userdata('account_id');
 		$this->ci->session->unset_userdata('account_type_id');
+		$this->ci->session->unset_userdata("user_type_id");
+		$this->ci->session->unset_userdata("psa_id");
+		$this->ci->session->unset_userdata("company_id");
 		$this->ci->session->sess_destroy();
 	}
 	

@@ -43,7 +43,7 @@
 			            	<input type="hidden" class="old_edit_cost_center_code" id="old_edit_cost_center_code" name="old_edit_cost_center_code" readonly="readonly" />
 			            	<input type="hidden" class="edit_id_cost_center" id="edit_id_cost_center" name="edit_id_cost_center" readonly="readonly" />
 			            	<input type="hidden" class="edit_company_id" id="edit_company_id" name="edit_company_id" value="" readonly="readonly" />
-			                <input type="text" class="txtfield" id="edit_cost_center_code" name="edit_cost_center_code" value="" style="width:300px">
+			                <input type="text" readonly="readonly" class="txtfield" id="edit_cost_center_code" name="edit_cost_center_code" value="" style="width:300px">
 			            </td>
 			        </tr>
 			        <tr>

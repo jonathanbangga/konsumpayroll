@@ -53,19 +53,12 @@
 					<input type="hidden" value="<?php echo set_value("email_address");?>" name="email_old_address" id="edit_old_email" class="txtfield">
 					<input type="text" value="<?php echo set_value("email_address");?>" name="email_address" id="edit_email" class="txtfield"></td>
 				</tr>
-				<tr>
+				<tr class="ihide">
 					<td style="width:155px">Username:</td>
 					<td>
 					<input type="hidden"  value="<?php echo set_value("username");?>" name="username_old" id="edit_username_old" class="txtfield">
-					<input type="text"  value="<?php echo set_value("username");?>" name="username" id="edit_username" class="txtfield"></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type="password" value="" name="password" class="txtfield" id="edit_password"></td>
-				</tr>
-				<tr>
-					<td>Confirm Password:</td>
-					<td><input type="password" value="" name="cpassword" class="txtfield" id="edit_cpassword"></td>
+					<input type="text"  value="<?php echo set_value("username");?>" name="username" id="edit_username" class="txtfield" readonly="readonly"/>
+					</td>
 				</tr>	
 				<tr>
 					<td>&nbsp;</td>
@@ -196,8 +189,9 @@
 		}
 		jQuery.post(url,fields,function(json){
 			var res = jQuery.parseJSON(json);	
+			console.log(res);
 			if(res.success == '0'){
-				alert(res.error);
+				
 			}else if(res.success == 1){
 				jQuery(".success_messages").empty().html("<p>You have Successfully Updated</p>");
 				kpay.overall.show_success(".success_messages");

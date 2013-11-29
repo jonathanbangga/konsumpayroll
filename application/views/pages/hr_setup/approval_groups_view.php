@@ -1,10 +1,8 @@
 <div style="display:none;" class="highlight_message">Message</div>
+<div class="main-content">
 <p>Create an approval group and assign approver for each approval group. Leaves, overtime, timesheet or expenses<br>
   if an approval, assign it here.</p>
-<div class="tbl-wrap">
-  <h5>How many level of approval process do you have?</h5>
-  <input class="txtfield txtcenter num_level" name="" type="text">
-</div>
+
 <div class="tbl-wrap">
 <?php 
 $max = $ap_sql->num_rows();
@@ -46,8 +44,15 @@ if($max>0){
 	  <a href="javascript:void(0);" id="btn-add-approval-process" class="btn">
 		ADD APPROVAL PROCESS
 	  </a>
+	  <a class="btn" id="btn-delete" href="javascript:void(0);">DELETE</a>
   </p>
 </div>
+
+<div class="tbl-wrap">
+  <h5>How many level of approval process do you have?</h5>
+  <input class="txtfield txtcenter num_level" name="" type="text">
+</div>
+
 <div class="tbl-wrap tbl-approvers">
 	<div id="tbl-approvers"></div> 
     <p class="jc1">
@@ -55,6 +60,7 @@ if($max>0){
 	  <label style="bottom: 8px;position: relative;">include HR for confirmation<label/>
     </p>
 </div>
+
 <div class="tbl-wrap">
   <!-- TBL-WRAP START -->
   <h5>Approval Group</h5>
@@ -74,12 +80,15 @@ if($max>0){
 					  <th>Action</th>
 					</tr>
 					<?php
-					$appr_sql = $this->approval_groups_model->get_approvers($row->approval_process_id,$comp_id);
+					$appr_sql = $this->approval_groups_model->get_approvers($row->approval_process_id);
 					foreach($appr_sql->result() as $appr){ ?>
 					<tr>
 					  <td><?php echo "{$appr->first_name} {$appr->last_name}";  ?></td>
 					  <td><?php echo $appr->level; ?></td>
-					  <td><a class="btn btn-red btn-action" href="#">DELETE</a></td>
+					  <td>
+						<a class="btn btn-red btn-action btn-remove" href="javascript:void(0)">REMOVE</a>
+						<input type="hidden" class="ag_id" value="<?php echo $appr->approval_group_id; ?>" />
+					  </td>
 					</tr>
 					<?php }
 					?>
@@ -98,6 +107,15 @@ if($max>0){
   <!-- TBL-WRAP END -->
 </div>
 
+
+
+ </div>
+      <div class="footer-grp-btn">
+        <!-- FOOTER-GRP-BTN START -->
+        <a class="btn btn-gray left" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/department_and_positions">BACK</a> <a class="btn btn-gray right" href="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/projects"> CONTINUE</a>
+        <!-- FOOTER-GRP-BTN END -->
+      </div>
+
 <div class="jdialog" id="add-approval-process" title="Add Approval Process">
 	<div class="inner_div">
 		Enter approval process: 
@@ -105,7 +123,11 @@ if($max>0){
 	</div>
 </div>
 
-
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to delete?
+	</div>
+</div>
 
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
@@ -176,7 +198,7 @@ jQuery(document).ready(function(){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
-							url: "/company/hr_setup/approval_groups/ajax_add_approval_process",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_add_approval_process",
 							data: {
 								name: name, 
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -184,7 +206,7 @@ jQuery(document).ready(function(){
 						}).done(function(ret){
 							if(ret==1){
 								jQuery.cookie("msg", "New approval process had been saved!");
-								window.location="/company/hr_setup/approval_groups";
+								window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
 							}
 						});
 					}else{
@@ -198,7 +220,7 @@ jQuery(document).ready(function(){
 	// auto complete script 
 	function auto_complete(){
 		<?php
-			$sql_emp = $this->approval_groups_model->get_employee($comp_id);
+			$sql_emp = $this->approval_groups_model->get_company_approver();
 			$emp_str = "";
 			if($sql_emp->num_rows()>0){
 				foreach($sql_emp->result() as $emp){
@@ -286,7 +308,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/company/hr_setup/approval_groups/ajax_add_approval_group",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_add_approval_group",
 				data: {
 					app_proc: app_proc, 
 					approver: approver,
@@ -295,10 +317,84 @@ jQuery(document).ready(function(){
 				}
 			}).done(function(ret){
 				jQuery.cookie("msg", "New approval group had been saved!");
-				window.location='/company/hr_setup/approval_groups';
+				window.location='/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups';
 			});
 		}
 		
+	});
+	
+	// remove approver
+	jQuery(".btn-remove").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-remove-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var ag_id = obj.parents("tr").find(".ag_id").val();
+					if(ag_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/delete_approver",
+							data: {
+								ag_id: ag_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "An approver has been removed");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
+						});
+					}else{
+						alert('Approval Groups Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	
+	// delete approval process
+	jQuery("#btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var ap_id = new Array();
+					jQuery(".app_proc:checked").each(function(index){
+						ap_id[index] = jQuery(this).val();
+					});
+					if(ap_id!=""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups/ajax_delete_approval_process",
+							data: {
+								ap_id: ap_id,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Approval process has been deleted");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/hr_setup/approval_groups";
+						});
+					}else{
+						alert('Approval process Id is missing');
+					}					
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
 	});
 
 	

@@ -32,7 +32,7 @@
 	function check_user_admin(){
 		$CI =& get_instance();
 		$id = $CI->session->userdata('account_id');
-		$query = $CI->db->get_where("konsum_admin",array("konsum_admin_id"=>$id));
+		$query = $CI->db->get_where("konsum_admin",array("account_id"=>$id));
 		$row = $query->row();
 		return $row;
 	}
@@ -146,16 +146,50 @@
 	}
 	
 	/**
-	 * Image exist available
+	 * Image check if valid otherwise restore default image
+	 * validates image fetch
 	 * @param string $image
+	 * @param int $company_id
+	 * @param string $no_image
+	 * @return string
 	 */
-	function image_exist($image,$company_id){
-		$no_image = "/assets/theme_2013/images/photo_not_available.png";
-		$image_val = "/uploads/companies/";
+	function image_exist($image,$company_id,$no_image="/assets/theme_2013/images/photo_not_available.png"){
+		$image_val = "./uploads/companies/";
 		if($image != ""){
-			return (file_exists($company_id."/".$image)) ? $image_val.$company_id."/".$image : $no_image;
+			return (file_exists($image_val.$company_id."/".$image)) ? $image_val.$company_id."/".$image : $no_image;
 		}else{
 			return $no_image;
 		}
+	}
+	
+	/**
+	 * Checks whose company has been handled by the right 
+	 * return object
+	 */
+	function whose_company(){
+		$CI =& get_instance();
+		$psa_id = $CI->session->userdata("psa_id");
+		$company_name = trim($CI->db->escape_str($CI->uri->segment(1)));
+		$query = $CI->db->query("
+									SELECT * FROM assigned_company ac
+									LEFT JOIN company c on c.company_id = ac.company_id
+									WHERE ac.payroll_system_account_id = {$psa_id} AND c.sub_domain = '{$company_name}'
+								");
+		$row = $query->row();
+		return $row;
+	}
+	
+	/**
+	 * Replaces spaces with underscore
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 */
+	function replace_space($text) { 
+	    $text = strtolower(htmlentities($text)); 
+	    $text = str_replace(get_html_translation_table(), "_", $text);
+	    $text = str_replace(" ", "_", $text);
+	   	$text = str_replace("-", "_", $text);
+	    $text = preg_replace("/[_]+/i", "_", $text);
+	    return $text;
 	}
 	

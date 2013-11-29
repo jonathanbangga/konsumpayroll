@@ -9,11 +9,12 @@ class Account_model extends CI_Model {
 	public function get_account($user,$pass,$account_type){
 
 		$sql = $this->db->query("
-			SELECT *
-			FROM `accounts`
-			WHERE `payroll_cloud_id` = '{$user}'
-			AND `password` = '{$pass}'
-			AND `account_type_id` = {$account_type}
+			SELECT *, a.`account_id` AS main_account_id
+			FROM `accounts` AS a
+			LEFT JOIN `payroll_system_account` AS psa ON ( a.`payroll_system_account_id` = psa.`payroll_system_account_id` ) 
+			WHERE a.`payroll_cloud_id` = '{$user}'
+			AND a.`password` = '{$pass}'
+			AND a.`account_type_id` = {$account_type}
 		");
 		return $sql;
 		
