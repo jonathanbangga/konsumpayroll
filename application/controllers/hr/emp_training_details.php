@@ -33,8 +33,21 @@
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "201 File";
+			$data['page_title'] = "Training Details";
 			$data['sidebar_menu'] = $this->sidebar_menu;
+
+			// init pagination
+			$uri = "/{$this->uri->segment(1)}/hr/emp_training_details/index";
+			$total_rows = $this->hr_emp->employee_training_details_counter($this->company_id);
+			$per_page =2;
+			$segment=5;
+			
+			init_pagination($uri,$total_rows,$per_page,$segment);
+
+			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$data["links"] = $this->pagination->create_links();
+			
+			$data['employee_list'] = $this->hr_emp->employee_training_details($per_page, $page, $this->company_id);
 			
 			$employee = $this->hr_emp->view_employee($this->company_id);
 			$results = "";
@@ -44,7 +57,7 @@
 				}	
 			}
 			$data['employee'] = $results;
-			$data['employee_list'] = $this->hr_emp->employee_training_details($this->company_id);
+
 			if($this->input->is_ajax_request()) {
 				if($this->input->post('save')){
 					
@@ -85,7 +98,7 @@
 	
 							$insert_training_details = $this->jmodel->insert_data('employee_training_details',$valtraining_details);
 						}
-						$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
 						echo json_encode(array("success"=>1));
 						return false;
 					}else{
@@ -98,7 +111,7 @@
 					$emp_id = $this->input->post('emp_id');
 					$delete_me = $this->db->query("DELETE FROM employee_training_details WHERE emp_id = '{$emp_id}' and comp_id = '{$this->company_id}'");
 					if($delete_me){
-						$this->session->set_flashdata('message', '<p class="save_alert">Successfully deleted!</p>');
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully deleted!</div>');
 						echo json_encode(array("success"=>1));
 						return false;
 					}
@@ -148,7 +161,7 @@
 					
 					$update_info = $this->hr_emp->update_train_details($emp_idEdit,$dateFromEdit,$dateToEdit,$courseNameEdit,$courseNameEdit,$organizerEdit,$costEdit,$trainingHoursEdit,$this->company_id);
 					if($update_info){
-						$this->session->set_flashdata('message', '<p class="save_alert">Successfully updated!</p>');
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
 						echo json_encode(array("success"=>1));
 						return false;
 					}else{

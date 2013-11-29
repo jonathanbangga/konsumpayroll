@@ -9,3 +9,19 @@
 .emp_str{
 	border: 1px solid #E14343;
 }
+
+#pagination li {
+	list-style: none;
+	margin-right: 5px;
+	float: left;
+}
+#pagination li.active {
+	opacity: 0.8;
+}
+#pagination li a{
+	min-width: 0;	
+}
+
+.pagiCont_btnCont {
+	padding-bottom: 30px;
+}

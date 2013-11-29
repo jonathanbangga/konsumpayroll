@@ -1,6 +1,6 @@
 <?php print form_open('','onsubmit="return validateForm()"');?>
 <div class="tbl-wrap">	
-		  <div class="successContBox ihide"><?php print $this->session->flashdata('message');?></div>
+		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
           <table style="width:2430px;" class="tbl emp_conList">
             <tbody><tr>
@@ -50,7 +50,8 @@
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
-        <div>
+        <div class="pagiCont_btnCont">
+        	<div class="left"><?php print $links;?></div>
         	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
         	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
@@ -212,7 +213,7 @@
 			function _successContBox(){
 				var successContBox = jQuery.trim(jQuery(".successContBox").text());
 				if(successContBox != ""){
-				    jQuery(".successContBox").css("display","block");
+				    jQuery(".successContBox").css("display","inline-block");
 				    setTimeout(function(){
 				        jQuery(".successContBox").fadeOut('100');
 				    },3000);
@@ -486,11 +487,24 @@
                 	return "";
                 }
 	        }
+
+	        function pagination(){
+	    		jQuery("#pagination li").each(function(){
+	    		    jQuery(this).find("a").addClass("btn");;
+	    		});
+	    	}
+	        
 			jQuery(function(){
 				_addRowBtn();
 				_successContBox();
 				_delete_emp_fromDB();
 				_get_information();
 				_updateBtn();
+				pagination();
 			});
         </script>
+<div class="footer-grp-btn">
+ <!-- FOOTER-GRP-BTN START -->
+ <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
+ <!-- FOOTER-GRP-BTN END -->
+ </div>

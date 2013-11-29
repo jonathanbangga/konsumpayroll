@@ -1,6 +1,6 @@
 <!-- MAIN-CONTENT START -->
         <div class="tbl-wrap">
-        <div class="successContBox" style="display:none;"><?php print $this->session->flashdata('message');?></div>
+        <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
           <table style="width:100%" class="tbl">
             <tr>
@@ -260,11 +260,11 @@
 					});
 	        	}
 	        }
-
+	        
 	        function _successContBox(){
 				var successContBox = jQuery.trim(jQuery(".successContBox").text());
 				if(successContBox != ""){
-				    jQuery(".successContBox").css("display","block");
+				    jQuery(".successContBox").css("display","inline-block");
 				    setTimeout(function(){
 				        jQuery(".successContBox").fadeOut('100');
 				    },3000);
@@ -427,3 +427,8 @@
 				//check_dep();
 			});
        	</script>
+<div class="footer-grp-btn">
+ <!-- FOOTER-GRP-BTN START -->
+ <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
+ <!-- FOOTER-GRP-BTN END -->
+ </div>
