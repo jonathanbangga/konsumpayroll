@@ -45,7 +45,7 @@
 			$data['page_title'] = "Expense Application"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$data['success']	= $this->session->flashdata("success");
-			$data['leave_application'] = $this->expense->expense_list($this->company_info->company_id);
+			$data['application'] = $this->expense->expense_list($this->company_info->company_id);
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_expenses_view', $data);
 		}

@@ -48,12 +48,11 @@
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$uri = "/".$this->uri->segment(1)."/hr/approve_payroll_run/lists/";
 			$total_rows = $this->payroll_run->payroll_run_count($this->company_info->company_id);
-			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 	       	init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 	 		$data['pagi'] = $this->pagination->create_links();
 	 		$data['success'] = 	$this->session->flashdata("success");
-			$data['leave_application'] = $this->payroll_run->payroll_run_list($this->company_info->company_id,$this->per_page,$page);
-			
+			$data['application'] = $this->payroll_run->payroll_run_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));		
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_payroll_run_view', $data);
 		}

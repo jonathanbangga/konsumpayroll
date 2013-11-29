@@ -43,7 +43,7 @@
 			$data['page_title'] = "Approve Leave"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$data['success'] = $this->session->flashdata("success");
-			$data['leave_application'] = $this->leave->leave_application_list($this->company_info->company_id);
+			$data['application'] = $this->leave->leave_application_list($this->company_info->company_id);
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_leave_view', $data);
 		}

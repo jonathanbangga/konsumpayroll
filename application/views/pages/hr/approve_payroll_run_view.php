@@ -19,10 +19,10 @@
 					<th style="width:170px;">Note</th>
 					<th style="width:170px;">Status</th>
 				</tr>
-				<?php 
-					if($leave_application){
-						foreach($leave_application as $key=>$approvers):
-				?>
+			<?php 
+				if($application){
+					foreach($application as $key=>$approvers):
+			?>
 				<tr>
 					<td>
 						<input type="checkbox" name="payroll_run_id[]" class="mark_timeshit" value="<?php echo $approvers->payroll_run_id;?>">
@@ -52,24 +52,34 @@
 					<td>
 						<div class="users_text"><?php echo $approvers->payroll_run_status;?></div>
 					</td>
-					
+				</tr>		
+			<?php 		
+					endforeach;
+				}else{
+			?>
+				<tr>
+					<td colspan="12">
+						<?php echo msg_empty();?>
+					</td>
 				</tr>
-				
-				<?php 		
-						endforeach;
-					}
-				?>
+			<?php 
+				}
+			?>
 			</tbody> 
 		</table>
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php  echo $pagi;?></p>
+	<?php if($application){?>
+	<div><?php  echo $pagi;?></div>
+	<br /><br />
+	<div class="clearB"></div>
+	
 	<p>
 	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
 	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
 	</p>
-	<p>&nbsp;</p>
+	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
 	<!-- FOOTER-GRP-BTN START -->

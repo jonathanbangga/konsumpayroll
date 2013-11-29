@@ -21,8 +21,8 @@
 					<th style="width:170px;">Status</th>
 				</tr>
 				<?php 
-					if($leave_application){
-						foreach($leave_application as $key=>$approvers):
+					if($application){
+						foreach($application as $key=>$approvers):
 				?>
 				<tr>
 					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>">
@@ -66,6 +66,14 @@
 				
 				<?php 		
 						endforeach;
+					}else{
+				?>
+				<tr>
+					<td colspan="12">
+						<?php echo msg_empty();?>
+					</td>
+				</tr>
+				<?php 
 					}
 				?>
 			</tbody> 
@@ -73,12 +81,13 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php # echo $pagi;?></p>
+	<?php if($application){?>
+	<p><?php  echo $pagi;?></p>
 	<p>
-	<a id="overtime_approve" href="javascript:void(0);" class="btn">APPROVE</a>
-	<a id="overtime_reject" href="javascript:void(0);" class="btn">REJECT</a>
+	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
+	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
 	</p>
-	<p>&nbsp;</p>
+	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
 	<!-- FOOTER-GRP-BTN START -->
