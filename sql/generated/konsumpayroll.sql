@@ -576,10 +576,12 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `as_of` date NOT NULL,
   `detail` text NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
+  `notes` text NOT NULL,
+  `leaves_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
 
 -- --------------------------------------------------------
 
@@ -781,12 +783,55 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `payroll_date` datetime NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `expense_status` enum('pending','approved','reject') NOT NULL DEFAULT 'pending',
+  `expense_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`expense_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_timesheets`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_timesheets` (
+  `timesheets_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `date_applied` date NOT NULL,
+  `date_from` datetime NOT NULL,
+  `date_to` datetime NOT NULL,
+  `hoursworked` time NOT NULL,
+  `tardiness` time NOT NULL,
+  `undertime` time NOT NULL,
+  `timesheet` text NOT NULL,
+  `note` text NOT NULL,
+  `timesheets_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`timesheets_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_run`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_run` (
+  `payroll_run_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `period_from` datetime NOT NULL,
+  `period_to` datetime NOT NULL,
+  `run_by` varchar(80) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `details` text NOT NULL,
+  `note` text NOT NULL,
+  `payroll_run_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`payroll_run_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
 
 --
 -- Table structure for table `expense_type`
@@ -1193,11 +1238,10 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `reason` text NOT NULL,
   `notes` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
-  `approve` enum('pending','no','yes') NOT NULL DEFAULT 'pending',
+  `overtime_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`overtime_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 -- --------------------------------------------------------
 
 --

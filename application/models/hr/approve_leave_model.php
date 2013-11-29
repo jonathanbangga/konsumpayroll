@@ -20,7 +20,7 @@
 						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves el
 							LEFT JOIN employee e on e.emp_id = el.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
-							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0'
+							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leaves_status = 'pending'
 						"
 				);
 				$result = $query->result();
@@ -29,6 +29,19 @@
 			}else{
 				return false;
 			}
+		}
+		
+		/**
+		 * Update fields
+		 * @param string $database
+		 * @param array $field
+		 * @param array $where
+		 * @return boolean
+		 */
+		public function update_field($database,$field,$where){
+			$this->db->where($where);
+			$this->db->update($database,$field);
+			return $this->db->affected_rows();
 		}
 		
 	}

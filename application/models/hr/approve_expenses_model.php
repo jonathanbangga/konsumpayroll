@@ -20,7 +20,7 @@
 						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM expenses ee
 							LEFT JOIN employee e on e.emp_id = ee.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
-							WHERE ee.company_id = '{$this->db->escape_str($company_id)}' AND ee.deleted = '0'
+							WHERE ee.company_id = '{$this->db->escape_str($company_id)}' AND ee.deleted = '0' AND  ee.expense_status = 'pending'
 						"
 				);
 				$result = $query->result();
@@ -31,6 +31,18 @@
 			}
 		}
 		
+		/**
+		 * Update global fields
+		 * use for all
+		 * @param string $database
+		 * @param array $fields
+		 * @param array $where
+		 */
+		public function update_field($database,$fields,$where){
+			$this->db->where($where);
+			$this->db->update($database,$fields);
+			return $this->db->affected_rows();
+		}
 	}
 	
 /* End of file Approve_leave_model */

@@ -66,6 +66,19 @@
 			}
 		}
 		
+		/**
+		 * Update global fields
+		 * use for all
+		 * @param string $database
+		 * @param array $fields
+		 * @param array $where
+		 */
+		public function update_field($database,$fields,$where){
+			$this->db->where($where);
+			$this->db->update($database,$fields);
+			return $this->db->affected_rows();
+		}
+		
 	}
 	
 /* End of file Approve_leave_model */

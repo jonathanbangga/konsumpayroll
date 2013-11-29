@@ -17,6 +17,7 @@
 		var $menu;
 		var $sidebar_menu;
 		var $company_info;
+		var $subdomain;
 		/**
 		 * Constructor
 		 */
@@ -27,6 +28,7 @@
 			$this->menu = "content_holders/hr_company_sidebar_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
+			$this->subdomain = $this->uri->segment(1);
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
 				return false;
@@ -40,11 +42,70 @@
 		public function lists(){
 			$data['page_title'] = "Overtime Application"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
+			$data['success'] = $this->session->flashdata("success");
 			$data['leave_application'] = $this->overtime->overtime_list($this->company_info->company_id);
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_overtime_view', $data);
 		}
-	
+		
+		public function approve(){
+			if($this->input->is_ajax_request()){
+				if($this->input->post("submit")){
+					$overtime_id = $this->input->post('overtime_id');
+					$this->form_validation->set_rules("overtime_id[]","Overtime","required|trim|xss_clean");
+					if($this->form_validation->run() == true){	
+						foreach($overtime_id as $key=>$val):
+							$fields = array(
+								"overtime_status" => "approve"
+							);
+							$where = array(
+								"overtime_id"=>$val,
+								"company_id"=>$this->company_info->company_id
+							);
+							$this->overtime->update_field("overtime",$fields,$where);
+						endforeach;
+						$this->session->set_flashdata("success","Success");
+						echo json_encode(array("success"=>"1","error"=>"","field"=>$where));		
+						return true;
+					}else{
+						echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors_zone'>","</span>"),"we"=>"weee"));	
+						return false;
+					}			
+				}
+			}else{
+				show_404();
+			}
+		}
+		
+		public function reject(){
+			if($this->input->is_ajax_request()){
+				if($this->input->post("submit")){
+					$overtime_id = $this->input->post('overtime_id');
+					$this->form_validation->set_rules("overtime_id[]","Overtime","required|trim|xss_clean");
+					if($this->form_validation->run() == true){	
+						foreach($overtime_id as $key=>$val):
+							$fields = array(
+								"overtime_status" => "reject"
+							);
+							$where = array(
+								"overtime_id"=>$val,
+								"company_id"=>$this->company_info->company_id
+							);
+							$this->overtime->update_field("overtime",$fields,$where);
+						endforeach;
+						$this->session->set_flashdata("success","Success");
+						echo json_encode(array("success"=>"1","error"=>"","field"=>$where));		
+						return true;
+					}else{
+						echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors_zone'>","</span>"),"we"=>"weee"));	
+						return false;
+					}			
+				}
+			}else{
+				show_404();
+			}
+		}
+
 	}
 
 /* End of file company_approvers.php */
