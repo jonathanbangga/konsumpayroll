@@ -35,3 +35,13 @@ Example
 		second paramter = Company_id for clients and  admin left company_id to null
 		add_activity($lang_here,company_id);
 
+
+		
+// CHRISTOPHER NOTES 
+	
+	APPROVAL SECTIONS
+	
+		1) ADDED A TABLE  WHICH IS CALLED employee_timesheets gamita lng tan
+		2) PLEASE USE expenses table for employee expenses
+		3) Please use overtime table for employee overtime
+		

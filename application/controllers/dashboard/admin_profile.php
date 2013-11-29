@@ -52,9 +52,9 @@ class Admin_profile extends CI_Controller {
 			$this->form_validation->set_rules("email_add","Email Address","xss_clean|valid_email|trim|required");		
 			$this->form_validation->set_rules("old_email_add","Email Address","xss_clean|valid_email|trim");				
 			$this->form_validation->set_rules('emergency_contact_number',"Emergency Contact Number",'xss_clean|trim|required');
-			$this->form_validation->set_rules('old_password',"Old password",'xss_clean|trim|required|min_length[12]|max_length[20]');
-			$this->form_validation->set_rules('new_password',"New password",'xss_clean|trim|required|matches[retype_password]|min_length[12]|max_length[20]');
-			$this->form_validation->set_rules('retype_password',"Retype password",'xss_clean|trim|required|min_length[12]|max_length[20]');
+			$this->form_validation->set_rules('old_password',"Old password",'xss_clean|trim|required|min_length[8]|max_length[20]');
+			$this->form_validation->set_rules('new_password',"New password",'xss_clean|trim|required|matches[retype_password]|min_length[8]|max_length[20]');
+			$this->form_validation->set_rules('retype_password',"Retype password",'xss_clean|trim|required|min_length[8]|max_length[20]');
 			$this->form_validation->set_rules('security_question',"Security Question",'xss_clean|trim|required');
 			$this->form_validation->set_rules('security_answer','Security Answer','xss_clean|trim|required');
 			if($this->form_validation->run() == TRUE){	

@@ -92,7 +92,7 @@
 								if($photo_check['status'] == "1"){
 									$output = $this->company->update_company_photos($this->company_id,$photo_check['upload_data']['file_name']);
 									if($output){
-										redirect("/company/company_setup/government_registration");
+										redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
 									}
 								}
 							}	
@@ -115,7 +115,7 @@
 								);	
 							$this->company->save_fields("assigned_company",$save_assign);
 							$this->session->set_userdata("company_id",$company_id);
-							redirect("/company/company_setup/government_registration");
+							redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
 						}
 					}
 				}

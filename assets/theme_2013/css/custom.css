@@ -49,7 +49,6 @@ span.errors{
 
 .input_level {
     width: 30px;
-	padding:5px;
 }
 
 .btn.append_prin_del{
@@ -127,6 +126,9 @@ input.btn[type="submit"] {
 
 /** hr users input **/
 .inp_user{
+	width:200px;
+}
+.users_text{
 	width:200px;
 }
 /** hr users input **/
