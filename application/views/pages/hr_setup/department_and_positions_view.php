@@ -17,7 +17,7 @@
 						$str_checked = ($check_dept->num_rows()>0)?'checked="checked"':"";
 				?>
 						<li class="li_dept">
-								<input class="dept_id right" name="dept_id[]" type="checkbox" value="<?php echo $row->dept_id ?>" <?php echo $str_checked; ?>>
+								<input class="txtfield dept_id right" name="dept_id[]" type="checkbox" value="<?php echo $row->dept_id ?>" <?php echo $str_checked; ?>>
 								<span class="dept_name"><?php echo $row->department_name; ?></span>
 						</li>	  
 					<?php
@@ -85,7 +85,7 @@
 <div class="jdialog" id="add-more-dept-dialog" title="Add Department">
 	<div class="inner_div">
 		Enter department name: 
-		<div class="inner_field"><input type="text" class="department_name" name="department_name" /></div>
+		<div class="inner_field"><input type="text" class="txtfield department_name" name="department_name" /></div>
 	</div>
 </div>
 
@@ -93,7 +93,7 @@
 <div class="jdialog" id="add-more-position-dialog" title="Add Position">
 	<div class="inner_div">
 		Enter position: 
-		<div class="inner_field"><input type="text" class="position" name="position" /></div>
+		<div class="inner_field"><input type="text" class="txtfield position" name="position" /></div>
 	</div>
 </div>
 
@@ -114,7 +114,7 @@
 	<div class="inner_div">
 		<p>
 			Department:<br />
-			<input type="text" id="update_dept" name="update_dept" />
+			<input type="text" id="update_dept" name="update_dept" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -123,7 +123,7 @@
 	<div class="inner_div">
 		<p>
 			Position:<br />
-			<input type="text" id="update_pos" name="update_pos" />
+			<input type="text" id="update_pos" name="update_pos" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -195,7 +195,7 @@ jQuery(document).ready(function(){
 	jQuery("#add-more-dept").click(function(){
 		// empty department name
 		jQuery(".department_name").val("");
-		jQuery("#add-more-dept-dialog .inner_field").html('<input type="text" class="department_name" name="department_name" />');
+		jQuery("#add-more-dept-dialog .inner_field").html('<input type="text" class="txtfield department_name" name="department_name" />');
 		// launch add more department dialog box
 		jQuery("#add-more-dept-dialog").dialog({
 			modal: true,
@@ -204,7 +204,7 @@ jQuery(document).ready(function(){
 			},
 			buttons: {
 				'add': function(){
-					jQuery("#add-more-dept-dialog .inner_field").append('<input type="text" class="department_name" name="department_name" />');
+					jQuery("#add-more-dept-dialog .inner_field").append('<input type="text" class="txtfield department_name" name="department_name" />');
 				},
 				save: function() {
 					var dialog = jQuery(this);
@@ -253,7 +253,7 @@ jQuery(document).ready(function(){
 	function add_position(dept_id){
 		// empty position
 		jQuery(".position").val("");
-		jQuery("#add-more-position-dialog .inner_field").html('<input type="text" class="position" name="position" />');
+		jQuery("#add-more-position-dialog .inner_field").html('<input type="text" class="txtfield position" name="position" />');
 		// launch add position dialog box
 		jQuery("#add-more-position-dialog").dialog({
 			modal: true,
@@ -262,7 +262,7 @@ jQuery(document).ready(function(){
 			},
 			buttons: {
 				'add': function(){
-					jQuery("#add-more-position-dialog .inner_field").append('<input type="text" class="position" name="position" />');
+					jQuery("#add-more-position-dialog .inner_field").append('<input type="text" class="txtfield position" name="position" />');
 				},
 				save: function() {
 					var dialog = jQuery(this);

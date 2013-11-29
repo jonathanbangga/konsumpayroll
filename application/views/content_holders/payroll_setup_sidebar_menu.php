@@ -9,7 +9,11 @@
 	<li><a href="#">Night Differential</a></li>
 	<li><a href="#">Rest Day</a></li>
 	<li><a href="#">Income</a></li>
-	<li><a href="#">Earnings</a></li>
+	<li <?php if($uri=='earnings'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/earnings">
+			Earnings
+		</a>
+	</li>
 	<li><a href="#">Deductions</a></li>
 	<li><a href="#">Priority of Deductions</a></li>
 	<li><a href="#">Loans</a></li>
@@ -32,5 +36,9 @@
 			Accural
 		</a>
 	</li>
-	<li><a href="#">Banks</a></li>
+	<li <?php if($uri=='banks'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/banks">
+			Banks
+		</a>
+	</li>
 </ul>

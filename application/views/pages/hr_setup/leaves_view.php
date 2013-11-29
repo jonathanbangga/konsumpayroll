@@ -83,8 +83,8 @@
 			}
 			
 			?>
-			<li>Define number of hours in a leave day <input type="text" class="leave_prop" id="leave_day_num_hours" value="<?php echo $ldnh; ?>" /></li>
-			<li>Specify default number of work days for the month <input type="text" class="leave_prop" id="month_work_days" value="<?php echo $mwd; ?>" /></li>
+			<li>Define number of hours in a leave day <input type="text" class="txtfield leave_prop" id="leave_day_num_hours" value="<?php echo $ldnh; ?>" /></li>
+			<li>Specify default number of work days for the month <input type="text" class="txtfield leave_prop" id="month_work_days" value="<?php echo $mwd; ?>" /></li>
 		<ul>
         <!-- MAIN-CONTENT END -->
       </div>
@@ -105,7 +105,7 @@
 	<div class="inner_div">
 		<p>
 			Leave Type:<br />
-			<input type="text" id="edit_leave_type" name="leave_type">
+			<input type="text" id="edit_leave_type" name="leave_type" class="txtfield">
 		</p>
 		<p>
 			Payable:<br />
@@ -129,12 +129,12 @@
 		</p>
 		<p>
 			Leave Accrued:<br />
-			<input type="text" id="edit_accrued" name="edit_accrued">
+			<input type="text" id="edit_accrued" name="edit_accrued" class="txtfield">
 		</p>
 		<p>
 			Period:<br />
 			<select class="txtselect select-medium" id="edit_period" name="select">
-				<option value="">select period</option>
+				<option value="">select</option>
 				<option value="monthly">monthly</option>
 				<option value="quarterly">quarterly</option>
 				<option value="yearly">yearly</option>
@@ -184,7 +184,7 @@
 		</p>
 		<p>
 			Max Days of Leave:<br />
-			<input type="text" id="edit_max_day_leave" name="max_day_leave">
+			<input type="text" id="edit_max_day_leave" name="max_day_leave" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -217,7 +217,7 @@ jQuery(document).ready(function(){
 		var str = ''+
 		'<tr>'+
 			'<td>'+
-				'<input type="text" name="leave_type" class="leave_type">'+
+				'<input type="text" name="leave_type" class="txtfield leave_type" />'+
 			'</td>'+
 			'<td>'+
 				'<select name="select" class="txtselect select-medium payable" name="payable">'+
@@ -226,7 +226,7 @@ jQuery(document).ready(function(){
 				'</select>'+
 			'</td>'+
 			'<td>'+
-				'<input type="text" name="req_doc" class="txtfield req_doc">'+
+				'<input type="text" name="req_doc" class="txtfield req_doc" />'+
 			'</td>'+
 			'<td>'+
 				'<input type="checkbox" name="act_hours_worked" class="act_hours_worked" value="1">'+
@@ -235,11 +235,11 @@ jQuery(document).ready(function(){
 				'<input type="checkbox" name="deduct_num_work" class="deduct_num_work" value="1">'+
 			'</td>'+
 			'<td>'+
-				'<input type="text" name="leave_type" class="accrued">'+
+				'<input type="text" name="leave_type" class="txtfield accrued" />'+
 			'</td>'+
 			'<td>'+
 				'<select name="select" class="txtselect select-medium period" name="period">'+
-					'<option value="">select period</option>'+
+					'<option value="">select</option>'+
 					'<option value="monthly">monthly</option>'+
 					'<option value="quarterly">quarterly</option>'+
 					'<option value="yearly">yearly</option>'+
@@ -247,7 +247,7 @@ jQuery(document).ready(function(){
 			'</td>'+
 			'<td>'+
 				'<select name="select" class="txtselect select-medium position" class="position">'+
-						'<option>select position</option>'+
+						'<option>select</option>'+
 						'<?php foreach($pos_sql->result() as $pos){
 							echo '<option value="'.$pos->position_id.'">'.$pos->position_name.'</option>';
 						} ?>'+
@@ -255,7 +255,7 @@ jQuery(document).ready(function(){
 			'</td>'+
 			'<td>'+
 				'<select name="select" class="txtselect select-medium years_of_service" class="years_of_service">'+
-						'<option value="">select years of service</option>'+
+						'<option value="">select</option>'+
 						'<option value="below 3 months">below 3 months</option>'+
 						'<option value="above 3 months">above 3 months</option>'+
 						'<option value="below 6 months">below 6 months</option>'+
@@ -284,7 +284,7 @@ jQuery(document).ready(function(){
 				'</select>'+
 			'</td>'+
 			'<td>'+
-				'<input type="text" name="max_day_leave" class="max_day_leave">'+
+				'<input type="text" name="max_day_leave" class="txtfield max_day_leave" />'+
 			'</td>'+
 			'<td>'+
 				'<a href="javascript:void(0);" class="btn btn-red btn-action btn-remove">REMOVE</a>'+

@@ -58,11 +58,11 @@
 	<div class="inner_div">
 		<p>
 			Job Grade:<br />
-			<input type="text" id="edit_job_grade" name="edit_job_grade">
+			<input type="text" id="edit_job_grade" name="edit_job_grade" class="txtfield" />
 		</p>
 		<p>
 			Description:<br />
-			<input type="text" id="edit_desc" name="edit_desc">
+			<input type="text" id="edit_desc" name="edit_desc" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -83,10 +83,10 @@ jQuery(document).ready(function(){
 		var str = ''+
 		'<tr>'+
 			'<td>'+
-				'<input type="text" name="job_grade" class="job_grade">'+
+				'<input type="text" name="job_grade" class="txtfield job_grade">'+
 			'</td>'+
 			'<td>'+
-				'<input type="text" name="description" class="description">'+
+				'<input type="text" name="description" class="txtfield description">'+
 			'</td>'+
 			'<td>'+
 				'<a href="javascript:void(0)" class="btn btn-red btn-action btn-remove">REMOVE</a>'+

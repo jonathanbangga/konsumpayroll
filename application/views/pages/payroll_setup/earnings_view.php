@@ -20,13 +20,6 @@
                 <td><input style="width:115px;" class="txtfield" name="" type="text"></td>
                 <td><a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="#" class="btn btn-red btn-action">DELETE</a></td>
               </tr>
-              <tr>
-                <td><input style="width:115px;" class="txtfield" name="" type="text"></td>
-                <td><input style="width:115px;" class="txtfield" name="" type="text"></td>
-                <td><input style="width:115px;" class="txtfield" name="" type="text"></td>
-                <td><input style="width:115px;" class="txtfield" name="" type="text"></td>
-                <td><a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="#" class="btn btn-red btn-action">DELETE</a></td>
-              </tr>
             </tbody>
           </table>
           <!-- TBL-WRAP END -->
@@ -40,3 +33,7 @@
         <input style="margin-right:10px;" class="btn right" name="" type="button" value="SAVE">
         <!-- FOOTER-GRP-BTN END -->
       </div>
+	  
+	  
+<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
