@@ -68,6 +68,22 @@ class Activity_log_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Check payroll system account
+	 * @param int $psa_id
+	 * @return object
+	 */
+	public function check_psa_id($psa_id){
+		if(is_numeric($psa_id)){
+			$query = $this->db->get_where("payroll_system_account",array('payroll_system_account_id'=>$psa_id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	
 }
 
 /* End of file Admin_model.php */

@@ -32,11 +32,20 @@
       <div class="notification-box box-log right">
         <!-- ACTIVITY-BOX START -->
         <h1>Notifications</h1>
-<ul>
-        	<li>Information Technology will expire in November 17, 2013</li>
-        	<li>Microsoft admin added a user in information technology ltd</li>
-        	<li>Information Technology will expire in November 17, 2013</li>
-        	<li>Microsoft admin added a user in information technology ltd</li>
+		<ul>
+		<?php 
+			if($notification){
+				foreach($notification as $noti):
+				$payroll_system = $this->activity_logs->check_psa_id($noti->name);
+				$name = $payroll_system ? strtolower($payroll_system->name) : "error";
+				 echo '<li>'.$name .' will expire in November 17, 2013</li>';
+				endforeach;
+			}else{
+		?>
+        	
+        <?php 
+			}
+        ?>
         </ul>
         <!-- ACTIVITY-BOX END -->
       </div>
