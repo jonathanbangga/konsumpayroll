@@ -22,7 +22,32 @@ class Earnings extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
+		$data['esql'] = $this->earnings_model->get_earnings();
 		$this->layout->view('pages/payroll_setup/earnings_view',$data);
+	}
+	
+	public function ajax_add_earnings(){
+		$earnings = $this->input->post('earnings');
+		$taxable = $this->input->post('taxable');
+		$max_non_taxable = $this->input->post('max_non_taxable');
+		$withholding_tax = $this->input->post('withholding_tax');
+		foreach($earnings as $index=>$val){
+			$this->earnings_model->add_earnings($val,$taxable[$index],$max_non_taxable[$index],$withholding_tax[$index]);
+		}
+	}
+	
+	public function ajax_delete_earnings(){
+		$earnings_id = $this->input->post('earnings_id');
+		$this->earnings_model->delete_earnings($earnings_id);
+	}
+	
+	public function ajax_update_earnings(){
+		$earnings_id = $this->input->post('earnings_id');
+		$earnings = $this->input->post('earnings');
+		$taxable = $this->input->post('taxable');
+		$max_non_taxable = $this->input->post('max_non_taxable');
+		$witholding_tax = $this->input->post('witholding_tax');
+		$this->earnings_model->update_earnings($earnings_id,$earnings,$taxable,$max_non_taxable,$witholding_tax);
 	}
 	
 }

@@ -51,7 +51,7 @@
 	</div>
 </div>
 
-<div id="project-details-dialog" class="jdialog"  title="Add more">
+<div id="project-details-dialog" class="jdialog"  title="Edit Project">
 	<div class="inner_div">
 		<p>
 			Project:<br />
@@ -86,6 +86,7 @@ jQuery(document).ready(function(){
 		jQuery("#save").show();
 		jQuery(".tbl tbody").append(str);
 	});
+	
 	// save project
 	jQuery("#save").click(function(){
 		var proj = new Array();
@@ -124,6 +125,7 @@ jQuery(document).ready(function(){
 			}
 		}	
 	});
+	
 	// remove project row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
@@ -132,6 +134,7 @@ jQuery(document).ready(function(){
 			jQuery("#empty").show();
 		}
 	});
+	
 	// delete project
 	jQuery(".btn-delete").click(function(){
 		var obj = jQuery(this);
@@ -166,8 +169,7 @@ jQuery(document).ready(function(){
 			}
 		});
 	});
-});
-
+	
 	// edit project
 	jQuery(".btn-edit").click(function(){
 		var obj = jQuery(this);
@@ -207,6 +209,8 @@ jQuery(document).ready(function(){
 			}
 		});
 	});
-
+	
+	
+});
 </script>
 
