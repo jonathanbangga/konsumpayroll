@@ -1,6 +1,6 @@
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
-		  <div class="successContBox ihide"><?php print $this->session->flashdata('message');?></div>
+		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
           <table style="width:1610px;" class="tbl emp_conList">
             <tbody><tr>
@@ -30,7 +30,7 @@
 	              <td><?php print $row->adjustment_date;?></td>
 	              <td><?php print $row->reasons;?></td>
 	              <td><?php print $row->attachment;?></td>
-	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" attr_empid="<?php print $row->emp_id;?>">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" attr_empid="<?php print $row->emp_id;?>">DELETE</a></td>
+	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" attr_empid="<?php print $row->emp_id;?>">EDIT</a> <a href="javascript:void(0);" attr_photo_val="<?php print $row->attachment;?>" class="btn btn-red btn-action delBtnDb" attr_empid="<?php print $row->emp_id;?>">DELETE</a></td>
 	            </tr>
             <?php
             		}
@@ -40,13 +40,66 @@
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
-        <div>
+        <div class="pagiCont_btnCont">
+        	<div class="left"><?php print $links;?></div>        	
         	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
         	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
         </div>
         <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
 <?php print form_close();?>
+
+		<div class='editCont ihide' title='Edit Information'>
+		<?php print form_open('','onsubmit="return validate_edit_form()" enctype="multipart/form-data"');?>
+			  <div class="tbl-wrap">
+          <!-- TBL-WRAP START -->
+          <table width="100%">
+            <tbody>
+            <tr>
+              <td style="width:155px">Employee Name</td>
+              <td>
+              <input type="text" value="" name="emp_nameEdit" class="txtfield emp_nameEdit" readonly="readonly" />
+            </tr>
+            <tr>
+              <td style="width:155px">Current Basic Pay:</td>
+              <td>
+              <input type="text" value="" name="emp_idEdit" class="txtfield emp_idEdit ihide" />
+              <input type="text" value="" name="current_basic_pay_edit" class="txtfield current_basic_pay_edit"></td>
+            </tr>
+            <tr>
+              <td>New Basic Pay: </td>
+              <td><input type="text" value="" name="new_basic_pay_edit" class="txtfield new_basic_pay_edit" /></td>
+            </tr>
+            <tr>
+              <td>Effective Date: </td>
+              <td><input type="text" value="" name="effective_date_edit" class="txtfield effective_date_edit datepickerCont" /></td>
+            </tr>
+            <tr>
+              <td>Adjustment Date: </td>
+              <td><input type="text" value="" name="adjustment_date_edit" class="txtfield adjustment_date_edit datepickerCont" /></td>
+            </tr>
+            <tr>
+              <td>Reason for Adjustment: </td>
+              	<td><input type="text" value="" name="reason_for_adjustment_edit" class="txtfield reason_for_adjustment_edit" /></td>
+            </tr>
+            <tr>
+              <td>Attachment: </td>
+              	<td>
+	              	<input type="text" value="" class="txtfield attachment_val ihide" name="attachment_old_val" />
+	              	<input type="file" value="" name="userfile" class="dob_edit" />
+              	</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+	              <input type="submit" value="Update" name="update_info" class="btn" />
+              </td>
+            </tr>
+          </tbody></table>
+          <!-- TBL-WRAP END -->
+        </div>
+        <?php print form_close();?>
+        </div>
 <script>
 	function addRow(size){
 		var tbl = "<tr>";
@@ -58,7 +111,7 @@
 	    tbl += "<td><input type='text' name='effective_date[]' class='datepickerCont effective_date txtfield' id='effective_date"+size+"'></td>";
 	    tbl += "<td><input type='text' name='adjustment_date[]' class='datepickerCont adjustment_date txtfield' id='adjustment_date"+size+"'></td>";
 	    tbl += "<td><input type='text' name='reasons[]' class='reasons txtfield'></td>";
-	    tbl += "<td><input type='file' multiple name='userfile[]' class='attachment userfile' style='width:180px;' /></td>";
+	    tbl += "<td><input type='text' name='array_val[]' class='ihide' value='"+size+"' /><input type='file' multiple name='userfile"+size+"' class='attachment userfile' style='width:180px;' /></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	    tbl += "</tr>";
 	          
@@ -107,7 +160,6 @@
 				jQuery(".emp_id"+attr_no).val(ui.item.emp_id);
 				jQuery(".emp_no"+attr_no).val(ui.item.emp_no);
 				jQuery(this).attr("readonly",true);
-				return false;
 			},minLength: 0
 		});
 
@@ -199,6 +251,7 @@
     	jQuery(".delBtnDb").on("click", function(){
     	    var _this = jQuery(this);
     	    var _id = _this.attr("attr_empid");
+    	    var attr_photo_val = _this.attr("attr_photo_val");
     	    jQuery(".del_msg").dialog({
  		       width: 'inherit',
  			   draggable: false,
@@ -214,13 +267,13 @@
  							data: {
  								'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
  								'delete_basic_pay_adjustment':'1',
- 								'emp_id': _id
+ 								'emp_id': _id,
+ 								"attr_photo_val":attr_photo_val
  							},
  							success: function(data){
  								var status = jQuery.parseJSON(data);
  	                          	if(status.success == 1){
- 	                          		window.location.href = window.location.href;
- 	                          		$( this ).dialog( "close" );
+ 	                          		window.location.href = status.url;
  	                            }else{
  	                            	return false;
  	                          	}
@@ -237,10 +290,122 @@
  		    });
     	});
     }
+
+	function _edit_information(){
+		jQuery(".editBtnDb").on("click", function(){
+			var _this = jQuery(this);
+			var emp_id = _this.attr("attr_empid");
+			$.ajax({
+				url: window.location.href,
+				type: "POST",
+				data: {
+					get_information: "1",
+					emp_id: emp_id,
+					'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>")
+				},
+				success: function(data){
+		        	  var status = jQuery.parseJSON(data);
+						if(status.success == 1){
+							jQuery(".editCont").dialog({
+							   	draggable: false,
+							   	modal: true,
+							   	width:'auto',
+							   	minWidth:'400',
+							   	dialogClass:'transparent'
+							});
+							jQuery(".emp_nameEdit").val(status.emp_name);
+							jQuery(".emp_idEdit").val(status.emp_id);
+							jQuery(".current_basic_pay_edit").blur().empty().val(status.current_basic_pay);
+							jQuery(".new_basic_pay_edit").empty().val(status.new_basic_pay);
+							jQuery(".effective_date_edit").val(status.effective_date);
+							jQuery(".adjustment_date_edit").val(status.adjustment_date);
+							jQuery(".reason_for_adjustment_edit").val(status.reasons);
+							jQuery(".attachment_val").val(status.attachment);
+							jQuery(".editCont input").removeClass("emp_str");
+                        }else{
+							alert("- Invalid parameter");
+							return false;
+                        }
+				}
+			});
+		});
+	}
+
+	function validate_edit_form(){
+		//jQuery(".updateBtn").on("click", function(){
+			var emp_idEdit = jQuery.trim(jQuery(".emp_idEdit").val());
+		    var current_basic_pay_edit = jQuery.trim(jQuery(".current_basic_pay_edit").val());
+		    var new_basic_pay_edit = jQuery.trim(jQuery(".new_basic_pay_edit").val());
+		    var effective_date_edit = jQuery.trim(jQuery(".effective_date_edit").val());
+		    var adjustment_date_edit = jQuery.trim(jQuery(".adjustment_date_edit").val());
+		    var reason_for_adjustment_edit = jQuery.trim(jQuery(".reason_for_adjustment_edit").val());
+		    var attachment_val = jQuery.trim(jQuery(".attachment_val").val());
+		    var error = "";
+		    if(current_basic_pay_edit==""){
+		        error = 1;
+		        jQuery(".current_basic_pay_edit").addClass('emp_str');
+		    }else{
+		        jQuery(".current_basic_pay_edit").removeClass('emp_str');
+		    }
+		    
+		    if(new_basic_pay_edit==""){
+		        error = 1;
+		        jQuery(".new_basic_pay_edit").addClass('emp_str');
+		    }else{
+		        jQuery(".new_basic_pay_edit").removeClass('emp_str');
+		    }
+
+		    if(effective_date_edit==""){
+		        error = 1;
+		        jQuery(".effective_date_edit").addClass('emp_str');
+		    }else{
+		        jQuery(".effective_date_edit").removeClass('emp_str');
+		    }
+
+		    if(adjustment_date_edit==""){
+		        error = 1;
+		        jQuery(".adjustment_date_edit").addClass('emp_str');
+		    }else{
+		        jQuery(".adjustment_date_edit").removeClass('emp_str');
+		    }
+
+		    if(reason_for_adjustment_edit==""){
+		        error = 1;
+		        jQuery(".reason_for_adjustment_edit").addClass('emp_str');
+		    }else{
+		        jQuery(".reason_for_adjustment_edit").removeClass('emp_str');
+		    }
+
+		    if(attachment_val==""){
+		        error = 1;
+		        jQuery(".attachment_val").addClass('emp_str');
+		    }else{
+		        jQuery(".attachment_val").removeClass('emp_str');
+		    }
+
+		    if(error == 1){
+				return false;
+		    }
+		//});
+	}
+
+	function pagination(){
+		jQuery("#pagination li").each(function(){
+		    jQuery(this).find("a").addClass("btn");;
+		});
+	}
 	
     jQuery(function(){
     	_addRowBtn();
     	_successContBox();
     	_delete_empDb();
+    	_edit_information();
+    	_datepicker();
+    	pagination();
 	});
 </script>
+<div class="footer-grp-btn">
+ <!-- FOOTER-GRP-BTN START -->
+ <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
+ <!-- FOOTER-GRP-BTN END -->
+ </div>

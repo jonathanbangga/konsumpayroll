@@ -665,22 +665,23 @@ var kpay = {
 							height: 150,
 							modal: true,
 							buttons: {
-							"Yes": function () {
-								jQuery.post(urls,{
-								'delete':true,
-								'admin_id':ids,
-								'ZGlldmlyZ2luamM':jQuery.cookie(token),
-								},function(d){
-									alert("User has been deleted");
-									jQuery(".option_alert").dialog("close");
-									jQuery(".admin_list_id"+ids).hide('slow',function(){
-										window.location.href ="/admin/users/all_admin/";
+								"Yes": function () {
+									jQuery.post(urls,
+									{
+									'delete':true,
+									'admin_id':ids,
+									'ZGlldmlyZ2luamM':jQuery.cookie(token),
+									},function(d){
+										alert("User has been deleted");
+										jQuery(".option_alert").dialog("close");
+										jQuery(".admin_list_id"+ids).hide('slow',function(){
+											window.location.href ="/admin/users/all_admin/";
+										});
 									});
-								});
-							},
-							No: function () {
-								jQuery(".option_alert").dialog("close");
-							}
+								},
+								No: function () {
+									jQuery(".option_alert").dialog("close");
+								}
 							}
 						});						
 					});
@@ -832,6 +833,14 @@ window.alert = function(msg){
    	   }
    });
 }
+
+function hightlight_success(){
+	var icheck = jQuery.trim(jQuery(".highlight_message").text());
+	if(icheck){
+		jQuery(".successContBox").fadeIn("slow");
+	}
+}
+		
 
 jQuery(function() {
 	kpay.hr.company_sidebar();

@@ -27,8 +27,6 @@
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
-			
-			$this->authentication->check_if_logged_in();
 		}
 		
 		/**
@@ -38,7 +36,19 @@
 			$data['page_title'] = "Basic Information";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
-			$data['employee'] = $this->hr_emp->basic_emp_view_all_active_user($this->company_id);
+			// init pagination
+			$uri = "/{$this->uri->segment(1)}/hr/emp_basic_information/index";
+			$total_rows = $this->hr_emp->basic_emp_view_all_active_user_count($this->company_id);
+			$per_page =2;
+			$segment=5;
+			
+			init_pagination($uri,$total_rows,$per_page,$segment);
+
+			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$data["links"] = $this->pagination->create_links();
+			// end pagination
+			
+			$data['employee'] = $this->hr_emp->basic_emp_view_all_active_user($per_page, $page, $this->company_id);
 			
 			if($this->input->post('add')){
 				$this->form_validation->set_rules('uname', 'Username', 'trim|required|xss_clean');
@@ -131,8 +141,8 @@
 						$insert_account_sql = $this->jmodel->insert_data('accounts',$insert_account);
 					}
 					
-					$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
-					redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+					$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
+					redirect($this->uri->uri_string());
 				//}
 			}
 			
@@ -158,7 +168,7 @@
 					$delete_me = $this->hr_emp->update_basic_emp($emp_id,$this->company_id);
 					
 					if($delete_me){
-						$this->session->set_flashdata('message', '<p class="save_alert">Successfully deleted!</p>');
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully deleted!</div>');
 						echo json_encode(array("success"=>1));
 						return false;
 					}
@@ -230,7 +240,7 @@
 					);
 					$update_info = $this->jmodel->update_data('employee',$update_array,$emp_idEdit,'emp_id');
 					if($update_info){
-						$this->session->set_flashdata('message', '<p class="save_alert">Successfully updated!</p>');
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
 						echo json_encode(array("success"=>1));
 						return false;
 					}else{

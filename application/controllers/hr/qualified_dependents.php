@@ -33,7 +33,7 @@
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "201 File";
+			$data['page_title'] = "Qualified Dependents";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
 			$data['employee'] = $this->hr_emp->employee_list($this->company_id);
@@ -122,8 +122,9 @@
 
 					$sql_insert_dept = $this->jmodel->insert_data('employee_qualifid_dependents',$insert_dependents);
 				}
-				$this->session->set_flashdata('message', '<p class="save_alert">Successfully saved!</p>');
-				redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3));
+				
+				$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
+				redirect($this->uri->uri_string());
 			}
 			
 			$this->layout->set_layout($this->theme);	
@@ -132,5 +133,5 @@
 	
 	}
 
-/* End of file sss_tbl.php */
-/* Location: ./application/controllers/hr/sss_tbl.php */
+/* End of file Qualified_dependents.php */
+/* Location: ./application/controllers/hr/Qualified_dependents.php */

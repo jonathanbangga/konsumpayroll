@@ -1,6 +1,6 @@
 <?php print form_open('','onsubmit="return validate_form()"');?>
 <div class="tbl-wrap">	
-		  <div class="successContBox ihide"><?php print $this->session->flashdata('message');?></div>
+		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
           <table style="width:1580px;" class="tbl emp_conList">
             <tbody><tr>
@@ -41,8 +41,8 @@
           </tbody></table>
           <!-- TBL-WRAP END -->
         </div>
-        <div>
-        	<input type="submit" class="btn left" value="DELETE" onclick="javascript:return false;"/>
+        <div class="pagiCont_btnCont">
+        	<div class="left"><?php print $links;?></div>
         	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
         	<input type="submit" name="save" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
@@ -161,7 +161,6 @@
 					jQuery(".emp_id"+attr_no).val(ui.item.emp_id);
 					jQuery(".emp_no"+attr_no).val(ui.item.emp_no);
 					jQuery(this).attr("readonly",true);
-					return false;
 				},minLength: 0
 			});
 
@@ -427,7 +426,7 @@
 	function _successContBox(){
 		var successContBox = jQuery.trim(jQuery(".successContBox").text());
 		if(successContBox != ""){
-		    jQuery(".successContBox").css("display","block");
+		    jQuery(".successContBox").css("display","inline-block");
 		    setTimeout(function(){
 		        jQuery(".successContBox").fadeOut('100');
 		    },3000);
@@ -516,6 +515,13 @@
 		    }
 		});
 	}
+
+	function pagination(){
+		jQuery("#pagination li").each(function(){
+		    jQuery(this).find("a").addClass("btn");;
+		});
+	}
+	
 	jQuery(function(){
 		_addRowBtn();
 		_name_listing();
@@ -525,6 +531,12 @@
 		_datepicker();
 		_successContBox();
 		_update_information();
+		pagination();
 	});
 </script>
 <?php print form_close();?>
+<div class="footer-grp-btn">
+ <!-- FOOTER-GRP-BTN START -->
+ <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
+ <!-- FOOTER-GRP-BTN END -->
+ </div>
