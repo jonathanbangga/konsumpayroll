@@ -30,7 +30,11 @@
 			13th Month Pay
 		</a>
 	</li>
-	<li><a href="#">De Minimis</a></li>
+	<li <?php if($uri=='de_minimis'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/de_minimis">
+			De Minimis
+		</a>
+	</li>
 	<li <?php if($uri=='accural'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/accural">
 			Accural

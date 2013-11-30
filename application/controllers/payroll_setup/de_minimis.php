@@ -22,7 +22,22 @@ class De_minimis extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
+		$data['sql_dm'] = $this->de_minimis_model->get_de_minimis();
 		$this->layout->view('pages/payroll_setup/de_minimis_view',$data);
+	}
+	
+	public function ajax_add_de_minimiss(){
+		$mul = mysql_real_escape_string($this->input->post('mul'));
+		$dma = mysql_real_escape_string($this->input->post('dma'));
+		$ceiling = mysql_real_escape_string($this->input->post('ceiling'));
+		$this->de_minimis_model->add_de_minimis($mul,$dma,$ceiling);
+	}
+	
+	public function ajax_update_de_minimiss(){
+		$mul = mysql_real_escape_string($this->input->post('mul'));
+		$dma = mysql_real_escape_string($this->input->post('dma'));
+		$ceiling = mysql_real_escape_string($this->input->post('ceiling'));
+		$this->de_minimis_model->update_de_minimis($mul,$dma,$ceiling);
 	}
 	
 }
