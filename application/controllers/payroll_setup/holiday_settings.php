@@ -35,6 +35,20 @@ class Holiday_settings extends CI_Controller {
 		}
 	}
 	
+	public function ajax_delete_holiday_settings(){
+		$holiday_id = $this->input->post('holiday_id');
+		$this->holiday_settings_model->delete_holiday_settings($holiday_id);
+	}
+	
+	public function ajax_update_holiday_settings(){
+		$holiday_id = $this->input->post('holiday_id');
+		$holiday = $this->input->post('holiday');
+		$type = $this->input->post('type');
+		$date = $this->input->post('date');
+		$this->holiday_settings_model->update_holiday_settings($holiday_id,$holiday,$type,$date);
+		
+	}
+	
 }
 
 /* End of file */

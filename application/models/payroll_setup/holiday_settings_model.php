@@ -35,6 +35,27 @@ class Holiday_settings_model extends CI_Model {
 			)
 		");
 	}
+	
+	public function delete_holiday_settings($holiday_id){
+		$this->db->query("
+			DELETE 
+			FROM `holiday`
+			WHERE `holiday_id` = {$holiday_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_holiday_settings($holiday_id,$holiday_name,$type,$date){
+		$this->db->query("
+			UPDATE `holiday`
+			SET
+				`holiday_name` = '{$holiday_name}',
+				`type` = '{$type}',
+				`date` = '{$date}'
+			WHERE `holiday_id` = {$holiday_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */
