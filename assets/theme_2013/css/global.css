@@ -660,4 +660,28 @@ input[type="button"].btn {
 .add-accural-item h1 {
 	padding-bottom:20px;
 }
+.withholdingtax-imba td {
+	vertical-align:text-top;
+}
+.workday-imba .txtfield {
+	font-style:normal;
+	text-align:center;
+	color:#333333;
+}
+.tbl th.workday-head-imba{
+background-color:#3f92b4;
+text-align:left;
+padding:0;
+}
+.tbl th.workday-head-imba table{
+width:100%;
+}
+.tbl th.workday-head-imba table th{
+background-color:#3f92b4;
+border-bottom:0;
+}
+.text-nomal{
+color:#333333;
+font-style:normal;
+}
 /* nov 27 2013 end */

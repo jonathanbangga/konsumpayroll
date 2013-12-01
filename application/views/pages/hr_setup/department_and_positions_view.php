@@ -1,3 +1,4 @@
+<div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <p>To generate payroll reports by department, select the department from the list and click arrow right otherwise<br>
           add department if it still doesn't exist.</p>
@@ -17,7 +18,7 @@
 						$str_checked = ($check_dept->num_rows()>0)?'checked="checked"':"";
 				?>
 						<li class="li_dept">
-								<input class="txtfield dept_id right" name="dept_id[]" type="checkbox" value="<?php echo $row->dept_id ?>" <?php echo $str_checked; ?>>
+								<input class="dept_id right" name="dept_id[]" type="checkbox" value="<?php echo $row->dept_id ?>" <?php echo $str_checked; ?>>
 								<span class="dept_name"><?php echo $row->department_name; ?></span>
 						</li>	  
 					<?php
@@ -75,6 +76,8 @@
           <div class="clearB"></div>
           <!-- TBL-WRAP END -->
         </div>
+		
+		</div>
         
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->

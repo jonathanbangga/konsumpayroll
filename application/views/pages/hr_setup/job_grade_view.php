@@ -1,6 +1,6 @@
-<div style="display:none;" class="highlight_message">Message</div>
- <!-- RBOX START -->
+<!-- RBOX START -->
      <div class="main-content">
+	 <div style="display:none;" class="highlight_message">Message</div>
        <!-- MAIN-CONTENT START -->
      <p>Add all your levels for approvers. This is used for leave approval/entitlement. </p>
       <div class="tbl-wrap">
