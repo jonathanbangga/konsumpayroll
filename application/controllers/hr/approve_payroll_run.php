@@ -27,7 +27,7 @@
 			parent::__construct();
 			$this->load->model("hr/approve_payroll_run_model","payroll_run");
 			$this->theme = $this->config->item('default');
-			$this->menu = "content_holders/hr_company_sidebar_menu";
+			$this->menu = "content_holders/user_hr_owner_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->per_page = 10;
@@ -48,12 +48,11 @@
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$uri = "/".$this->uri->segment(1)."/hr/approve_payroll_run/lists/";
 			$total_rows = $this->payroll_run->payroll_run_count($this->company_info->company_id);
-			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 	       	init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 	 		$data['pagi'] = $this->pagination->create_links();
 	 		$data['success'] = 	$this->session->flashdata("success");
-			$data['leave_application'] = $this->payroll_run->payroll_run_list($this->company_info->company_id,$this->per_page,$page);
-			
+			$data['application'] = $this->payroll_run->payroll_run_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));		
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_payroll_run_view', $data);
 		}

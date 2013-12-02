@@ -1,3 +1,41 @@
+	<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright"><a href="#" class="jfilter">FILTER</a></div></div></td>
+			            <td>Date from</td>
+			            <td> 
+			                <input type="text" class="inputs date_isearch" id="jdate_from">
+			            </td>
+			            <td>Date to</td>
+			            <td>
+			                <input type="text" class="inputs date_isearch" id="jdate_to">
+			            </td>
+			            <td>
+			                <input type="submit" value="GO" class="btn" id="jleave_search">
+			            </td>
+			        </tr>
+		    	</tbody>
+			</table>
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td>
+		                    <input type="text" name="search" id="jleave_search" class="inputs">
+		                </td>
+		
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<!-- end filter container -->
+	<div class="clearB"></div>
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 			<div class="highlight_message"><?php echo $success;?></div>
@@ -12,6 +50,7 @@
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Leave Type</th>
 					<th style="width:170px;">Date From</th>
+					<th style="width:170px;">Date To</th>
 					<th style="width:170px;">Days/Hours</th>
 					<th style="width:170px;">Reasons</th>
 					<th style="width:170px;">Status</th>
@@ -20,51 +59,62 @@
 					<th style="width:170px;">Leave Balance</th>
 				</tr>
 				<?php 
-					if($leave_application){
-						foreach($leave_application as $key=>$approvers):
+					if($application){
+						foreach($application as $key=>$approvers):
 				?>
-				<tr>
-					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->leaves_id;?>">
-					<?php echo $approvers->leaves_id;?>
+				<tr class="jleave_list">
+					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>">
+				
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						<input type="hidden" id="account_id" name="update_account_id" value="<?php echo base64_encode($approvers->account_id);?>">
-						<input type="hidden" name="update_email[]" value="<?php echo $approvers->email;?>" class="inp_user">
-						<div class="users_text"><?php echo $approvers->email;?></div>
-					</td>
+					
 					<td>
 						
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->leave_type;?></div>
+						<div class="users_text"><?php echo $approvers->leave_type_id;?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->as_of;?></div>
+						<div class="users_text"><?php echo idates($approvers->date_start);?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->detail;?></div>
+						<div class="users_text"><?php echo idates_time($approvers->date_start);?></div>
 					</td>
 					<td>
-						<div class="users_text">&nbsp;</div>
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->leave_application_status;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->attachments;?></div>
 					</td>
+					<td>
+						<div class="users_text"><?php echo $approvers->note;?></div>
+					</td>
+					<td>
+						<div class="users_text"></div>
+					</td>
+					
 				</tr>
 				
 				<?php 		
 						endforeach;
+					}else{
+				?>
+					<tr>
+						<td colspan="11">
+							<?php echo msg_empty();?>
+						</td>
+					</tr>
+				<?php 
 					}
 				?>
 			</tbody> 
@@ -72,12 +122,15 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php # echo $pagi;?></p>
-	<p>
+	<?php if($application){?>
+	<div class="left pagi-lefts">
 	<a id="leave_approve" href="javascript:void(0);" class="btn">APPROVE</a>
 	<a id="leave_reject" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
-	<p>&nbsp;</p>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
+	<div class="clearB"></div>
+	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
 	<!-- FOOTER-GRP-BTN START -->
@@ -182,12 +235,15 @@
 			return checked_fields;
 		}
 		
-
+		// DATEPICKERS
+		
+		
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			hightlight_success();
+			idate_ranges();
 		});
 	</script>
 	

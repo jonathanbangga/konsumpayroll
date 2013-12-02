@@ -20,8 +20,8 @@
 					<th style="width:170px;">Status</th>
 				</tr>
 				<?php 
-					if($leave_application){
-						foreach($leave_application as $key=>$approvers):
+					if($application){
+						foreach($application as $key=>$approvers):
 				?>
 				<tr>
 					<td><input type="checkbox" name="timesheets_id[]" class="timesheets_id" value="<?php echo $approvers->timesheets_id;?>">
@@ -58,6 +58,14 @@
 				
 				<?php 		
 						endforeach;
+					}else{
+				?>
+				<tr>
+					<td colspan="11">
+						<?php echo msg_empty();?>
+					</td>
+				</tr>
+				<?php 
 					}
 				?>
 			</tbody> 
@@ -65,12 +73,14 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php # echo $pagi;?></p>
-	<p>
+	<?php if($application){?>
+	<div class="left pagi-lefts">
 	<a id="timesheet_approve" href="javascript:void(0);" class="btn">APPROVE</a>
 	<a id="timesheet_reject" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
-	<p>&nbsp;</p>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
+	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
 	<!-- FOOTER-GRP-BTN START -->

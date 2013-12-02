@@ -16,13 +16,6 @@
 		 */
 		public function payroll_run_list($company_id,$limit=10,$start=0){
 			if(is_numeric($company_id)){
-				$query2 = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM payroll_run pr
-							LEFT JOIN employee e on e.emp_id = pr.emp_id 
-							LEFT JOIN accounts a on a.account_id = e.account_id 
-							WHERE pr.company_id = '{$this->db->escape_str($company_id)}' AND pr.deleted = '0'
-						"
-				);
 				$this->db->select("*");
 				$this->db->from("payroll_run pr");
 				$this->db->join("employee e","e.emp_id = pr.emp_id","left");

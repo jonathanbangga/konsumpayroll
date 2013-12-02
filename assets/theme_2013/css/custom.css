@@ -43,7 +43,11 @@ span.errors{
 /** fields **/
 
 .emp_fields,.cost_inputs{
-/* padding:5px;  */
+ padding:3px; 
+}
+
+.inputs{
+	padding:3px;
 }
 
 
@@ -126,3 +130,50 @@ input.btn[type="submit"] {
 	width:200px;
 }
 /** hr users input **/
+/** pagination purposes **/
+
+#pagination  a{
+    background: none repeat scroll 0 0 #44829C;
+    border: 0 none;
+    border-radius: 2px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 10px;
+    line-height: 19px;
+    min-width: 40px;
+    padding: 4px 14px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.pagi-rights{
+	width:auto;
+}
+
+/** end paginations purposes **/
+
+/** bogart application css **/
+/** leave application css **/
+.text_search{
+	padding-right:10px;
+}
+
+.jfilter {
+    line-height: 31px;
+}
+.date_isearch{
+	width:80px;
+	margin:0 5px;
+}
+.ipadright{
+	margin-right:5px;
+}
+.ipadleft{
+	margin-left:5px;
+}
+
+/** end leave application css **/
+
+
+/** end application css **/

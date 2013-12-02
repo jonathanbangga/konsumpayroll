@@ -21,18 +21,19 @@
 					<th style="width:170px;">Status</th>
 				</tr>
 				<?php 
-					if($leave_application){
-						foreach($leave_application as $key=>$approvers):
+					if($application){
+						foreach($application as $key=>$approvers):
 				?>
 				<tr>
 					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>">
+					
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td>
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
-						
+	
 						<div class="users_text"><?php echo $approvers->overtime_type_id;?></div>
 					</td>
 					<td>
@@ -66,6 +67,14 @@
 				
 				<?php 		
 						endforeach;
+					}else{
+				?>
+				<tr>
+					<td colspan="12">
+						<?php echo msg_empty();?>
+					</td>
+				</tr>
+				<?php 
 					}
 				?>
 			</tbody> 
@@ -73,12 +82,17 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php # echo $pagi;?></p>
-	<p>
+	<?php if($application){?>
+	<div class="left pagi-lefts">
 	<a id="overtime_approve" href="javascript:void(0);" class="btn">APPROVE</a>
 	<a id="overtime_reject" href="javascript:void(0);" class="btn">REJECT</a>
-	</p>
-	<p>&nbsp;</p>
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
+	<br /><br />
+	<div class="clearB"></div>
+	
+	
+	<?php }?>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
 	<!-- FOOTER-GRP-BTN START -->

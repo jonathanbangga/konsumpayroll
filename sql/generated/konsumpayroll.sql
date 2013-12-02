@@ -506,15 +506,34 @@ CREATE TABLE IF NOT EXISTS `employee_deductions` (
   `deduction_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
-  `deducation_type` varchar(80) NOT NULL,
-  `recurring` varchar(80) NOT NULL,
+  `deduction_type_id` varchar(80) NOT NULL,
+  `recurring` enum('Yes','No') NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `valid_from` date NOT NULL,
   `valid_until` date NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`deduction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_amortization_schedule`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_amortization_schedule` (
+  `employee_amortization_schedule_id` int(55) NOT NULL AUTO_INCREMENT,
+  `payroll_date` date NOT NULL,
+  `payment` decimal(10,2) NOT NULL,
+  `interest` decimal(10,2) NOT NULL,
+  `principal` decimal(10,2) NOT NULL,
+  `emp_loan_id` int(55) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_amortization_schedule_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
@@ -522,28 +541,25 @@ CREATE TABLE IF NOT EXISTS `employee_deductions` (
 -- Table structure for table `employee_earnings`
 --
 
+
 CREATE TABLE IF NOT EXISTS `employee_earnings` (
   `earnings_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
   `minimum_wage_earner` varchar(80) NOT NULL,
   `statutory_min_wage` decimal(10,2) NOT NULL,
-  `entitled_to_basic_pay` varchar(80) NOT NULL,
-  `basic_pay_amount` decimal(10,2) NOT NULL,
+  `entitled_to_basic_pay` enum('Yes','No') NOT NULL,
   `pay_rate_type` enum('Month','Half Month') NOT NULL,
   `timesheet_required` enum('Yes','No') NOT NULL,
   `entitled_to_overtime` enum('Yes','No') NOT NULL,
-  `entitled_to_night_differential_pay` int(11) NOT NULL,
+  `entitled_to_night_differential_pay` enum('Yes','No') NOT NULL,
   `night_diff_rate` int(11) NOT NULL,
   `entitled_to_commission` varchar(80) NOT NULL,
   `entitled_to_holiday_or_premium_pay` varchar(80) NOT NULL,
-  `no_work_no_pay_on_special_day` varchar(80) NOT NULL,
-  `no_work_no_pay_on_regular_day` varchar(80) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`earnings_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 -- --------------------------------------------------------
 
 --
@@ -554,13 +570,12 @@ CREATE TABLE IF NOT EXISTS `employee_fixed_allowances` (
   `fixed_allowance_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
-  `allowance_type` varchar(80) NOT NULL,
+  `allowance_type_id` varchar(80) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`fixed_allowance_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 -- --------------------------------------------------------
 
 --
@@ -571,20 +586,57 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `leave_type_id` int(11) NOT NULL,
-  `leave_type` varchar(80) NOT NULL,
-  `remaining_hours` time NOT NULL,
+  `remaining_hours` varchar(255) NOT NULL,
   `as_of` date NOT NULL,
-  `detail` text NOT NULL,
   `company_id` int(11) NOT NULL,
-  `notes` text NOT NULL,
-  `leaves_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_leaves_application`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
+  `employee_leaves_application_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `leave_type_id` int(11) NOT NULL,
+  `reasons` text NOT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `date_return` datetime NOT NULL,
+  `note` text NOT NULL,
+  `leave_application_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `attachments` text NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`employee_leaves_application_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `employee_training_details`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_training_details` (
+  `employee_training_details_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
+  `date_from` date NOT NULL,
+  `date_to` date NOT NULL,
+  `course_name` varchar(55) NOT NULL,
+  `organizer` varchar(55) NOT NULL,
+  `cost` decimal(10,2) NOT NULL,
+  `training_hours` int(11) NOT NULL,
+  PRIMARY KEY (`employee_training_details_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `employee_loans`
 --
@@ -593,20 +645,22 @@ CREATE TABLE IF NOT EXISTS `employee_loans` (
   `employee_loans_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `loan_no` int(11) NOT NULL,
-  `loan_type` enum('SSS Salary Loan','Company Loan','Philhealth Loan','Pagibig Loan') NOT NULL,
+  `loan_type_id` int(11) NOT NULL,
   `date_granted` date NOT NULL,
   `principal` decimal(10,2) NOT NULL,
-  `terms` decimal(10,2) NOT NULL,
+  `terms` varchar(55) NOT NULL,
   `interest_rates` decimal(10,2) NOT NULL,
   `penalty_rates` decimal(10,2) NOT NULL,
   `beginning_balance` decimal(10,2) NOT NULL,
+  `bank_route` varchar(255) NOT NULL,
+  `bank_account` varchar(255) NOT NULL,
+  `account_type` varchar(255) NOT NULL,
   `monthly_amortization` decimal(10,2) NOT NULL,
-  `loan_type_status` enum('New','Existing') NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`employee_loans_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -623,7 +677,66 @@ CREATE TABLE IF NOT EXISTS `employee_qualifid_dependents` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`qualified_dependents_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_payroll_information`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_payroll_information` (
+  `employee_payroll_information_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `sub_department_id` int(11) NOT NULL,
+  `employment_type` enum('Apprentice','Real/Fixed') NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `date_hired` date NOT NULL,
+  `last_date` date NOT NULL,
+  `tax_status` varchar(255) NOT NULL,
+  `payment_method` enum('Cash','Debit') NOT NULL,
+  `bank_route` varchar(255) NOT NULL,
+  `bank_account` int(20) NOT NULL,
+  `account_type` varchar(255) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `default_project` enum('Real','Real Regular') NOT NULL,
+  `timeSheet_approval_grp` varchar(255) NOT NULL,
+  `overtime_approval_grp` varchar(255) NOT NULL,
+  `leave_approval_grp` varchar(255) NOT NULL,
+  `expense_approval_grp` varchar(255) NOT NULL,
+  `eBundy_approval_grp` varchar(255) NOT NULL,
+  `sss_contribution_amount` int(255) NOT NULL,
+  `hdmf_contribution_amount` int(255) NOT NULL,
+  `philhealth_contribution_amount` int(255) NOT NULL,
+  `witholding_tax` enum('Yes','No') NOT NULL,
+  `cost_center` varchar(255) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_payroll_information_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_payment_history`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_payment_history` (
+  `employee_payment_history_id` int(55) NOT NULL AUTO_INCREMENT,
+  `employee_loans_id` int(55) NOT NULL,
+  `interest` decimal(10,2) NOT NULL,
+  `principal` decimal(10,2) NOT NULL,
+  `credit_balance_on_principal` varchar(55) NOT NULL,
+  `credit_balance_on_interest` varchar(55) NOT NULL,
+  `penalty` varchar(55) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_payment_history_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -688,7 +801,7 @@ CREATE TABLE IF NOT EXISTS `employee_shifts_schedule` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`shifts_schedule_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -709,7 +822,7 @@ CREATE TABLE IF NOT EXISTS `employee_termination` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`termination_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -1064,7 +1177,7 @@ CREATE TABLE IF NOT EXISTS `leave_type` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leave_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
