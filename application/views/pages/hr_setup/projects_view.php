@@ -1,5 +1,5 @@
-<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
+<div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>List down all your projects to track all your employees' timesheet, overtime and reports per projects.<br>
         Assign employees to this projects, if not applicable to your company use default project for all.</p>

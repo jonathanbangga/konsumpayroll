@@ -18,7 +18,7 @@ class Earnings_model extends CI_Model {
 		");
 	}
 	
-	public function add_earnings($earning_name,$taxable,$max_non_taxable,$withholding_tax_rate){
+	public function add_earnings($earning_name="",$taxable="",$max_non_taxable="",$withholding_tax_rate=""){
 		$this->db->query("
 			INSERT INTO 
 			`earnings` (
@@ -29,11 +29,11 @@ class Earnings_model extends CI_Model {
 				`company_id`
 			)
 			VALUES (
-				'{$earning_name}',
-				'{$taxable}',
-				'{$max_non_taxable}',
-				'{$withholding_tax_rate}',
-				'{$this->company_id}'
+				'".mysql_real_escape_string($earning_name)."',
+				'".mysql_real_escape_string($taxable)."',
+				'".mysql_real_escape_string($max_non_taxable)."',
+				'".mysql_real_escape_string($withholding_tax_rate)."',
+				'".mysql_real_escape_string($this->company_id)."'
 			)
 		");
 	}
@@ -47,13 +47,13 @@ class Earnings_model extends CI_Model {
 		");
 	}
 	
-	public function update_earnings($earning_id,$earning_name,$taxable,$max_non_taxable,$withholding_tax_rate){
+	public function update_earnings($earning_id,$earning_name="",$taxable="",$max_non_taxable="",$withholding_tax_rate=""){
 		$this->db->query("
 			UPDATE `earnings`
-			SET `earning_name` = '{$earning_name}',
-				`taxable` = '{$taxable}',
-				`max_non_taxable` = '{$max_non_taxable}',
-				`withholding_tax_rate` = '{$withholding_tax_rate}'
+			SET `earning_name` = '".mysql_real_escape_string($earning_name)."',
+				`taxable` = '".mysql_real_escape_string($taxable)."',
+				`max_non_taxable` = '".mysql_real_escape_string($max_non_taxable)."',
+				`withholding_tax_rate` = '".mysql_real_escape_string($withholding_tax_rate)."'
 			WHERE `earning_id` = {$earning_id}
 			AND `company_id` = {$this->company_id}
 		");

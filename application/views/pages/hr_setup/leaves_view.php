@@ -1,6 +1,6 @@
-<div style="display:none;" class="highlight_message">Message</div>
 <!-- RBOX START -->
       <div class="main-content">
+	  <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>Lorem Ipsum Bungot Unsa Ibutang Diri</p>
         <div class="tbl-wrap">

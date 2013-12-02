@@ -1,5 +1,5 @@
-<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
+<div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>Add all project locations to be able to create reports per locations. You would also be able to<br>
         create mulitple locations.</p>

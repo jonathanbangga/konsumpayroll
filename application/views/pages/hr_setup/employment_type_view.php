@@ -1,5 +1,5 @@
-<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
+<div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>Move employment type from left to right those that are applicable to your company. If there are employment <br>
           type your company has that are not on the list, click on add type button. To select multiple list hold ctrl key from<br>

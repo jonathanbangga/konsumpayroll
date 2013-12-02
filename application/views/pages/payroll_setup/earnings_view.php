@@ -1,5 +1,5 @@
-<div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
+<div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
