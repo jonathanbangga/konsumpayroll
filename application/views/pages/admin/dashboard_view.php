@@ -35,10 +35,15 @@
 		<ul>
 		<?php 
 			if($notification){
+				$noti_date = "";
 				foreach($notification as $noti):
-				$payroll_system = $this->activity_logs->check_psa_id($noti->name);
-				$name = $payroll_system ? strtolower($payroll_system->name) : "error";
-				 echo '<li>'.$name .' will expire in November 17, 2013</li>';
+					if($noti_date !=idates($noti->date)) {	
+						echo " <div class=\"activity-date\">".idates($noti->date)."</div>";
+					}
+					$noti_date = idates($noti->date);
+					$payroll_system = $this->activity_logs->check_psa_id($noti->name);
+					$name = $payroll_system ? strtolower($payroll_system->name) : "error";
+				 	echo '<li>'.$name .' will expire in '.$noti_date .'</li>';
 				endforeach;
 			}else{
 		?>

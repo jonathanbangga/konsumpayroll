@@ -1,6 +1,5 @@
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide"></div>
-		<?php echo validation_errors();?>
 		<?php echo form_open("",array("onsubmit"=>"return save_users();"));?>
 		<!-- TBL-WRAP START -->
 		<table class="tbl emp_users_list" style="width:1610px;">
@@ -78,11 +77,12 @@
 		<span class="ihides unameContBoxTrick"></span>
 		<!-- TBL-WRAP END -->
 	</div>
-	<p><?php echo $pagi;?></p>
-	<p>
+		
+	<div class="left pagi-lefts">
 	<a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a>
-	<input type="submit" name="save" value="SAVE" class="btn" />
-	</p>
+	<input type="submit" name="save" value="SAVE" class="btn ihide" />
+	</div>
+	<div class="right pagi-rights"><?php  echo $pagi;?></div>
 	<p>&nbsp;</p>
 	<?php echo form_close();?>
 	<div class="footer-grp-btn">
@@ -153,6 +153,7 @@
 				    html +='</tr>'; 
 			    jQuery(".emp_users_list").append(html); 
 			    search_name();
+			    jQuery("input[name='save']").show();
 			});
 		}
 

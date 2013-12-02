@@ -16,12 +16,41 @@
 		 */
 		public function leave_application_list($company_id,$limit=10,$start=0){
 			if(is_numeric($company_id)){
+				$start = intval($start);
+				$limit = intval($limit);
 				$query = $this->db->query(
 						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves el
 							LEFT JOIN employee e on e.emp_id = el.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
 							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leaves_status = 'pending'
-							 LIMIT {$start},{$limit}
+							 LIMIT {$start},{$limit} 
+						"
+				);
+				$result = $query->result();
+				$query->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Leave date sorting 
+		 * @param int $company_id
+		 * @param int $limit
+		 * @param int $start
+		 */
+		public function leave_application_date_sort($company_id,$limit=10,$start=0){
+			if(is_numeric($company_id)){
+				$start = intval($start);
+				$limit = intval($limit);
+				$query = $this->db->query(
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves el
+							LEFT JOIN employee e on e.emp_id = el.emp_id 
+							LEFT JOIN accounts a on a.account_id = e.account_id 
+							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leaves_status = 'pending'
+			
+							 LIMIT {$start},{$limit} 
 						"
 				);
 				$result = $query->result();

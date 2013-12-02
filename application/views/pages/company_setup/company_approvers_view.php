@@ -184,6 +184,8 @@
 			var emp_level = array_fields("input[name='level[]']");
 			// VALIDATES ERROR JS 
 			ierror_field(".emp_fields");
+			ierror_duplicate("input[name='emp_id[]']");
+			ierror_duplicate("input[name='level[]']");
 			if(ierror_mark(".emp_fields") > 0){
 				return false;
 			}else{

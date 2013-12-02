@@ -31,8 +31,7 @@
 		}
 		
 		
-		public function index(){
-			
+		public function index(){		
 			if($this->company_id){
 			$data['company_principal'] = $this->principal->fetch_principals($this->company_id);
 			$data['error'] = "";

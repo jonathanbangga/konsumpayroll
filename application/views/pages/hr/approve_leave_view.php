@@ -1,3 +1,41 @@
+	<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright"><a href="#" class="jfilter">FILTER</a></div></div></td>
+			            <td>Date from</td>
+			            <td> 
+			                <input type="text" class="inputs date_isearch" id="jdate_from">
+			            </td>
+			            <td>Date to</td>
+			            <td>
+			                <input type="text" class="inputs date_isearch" id="jdate_to">
+			            </td>
+			            <td>
+			                <input type="submit" value="GO" class="btn" id="jleave_search">
+			            </td>
+			        </tr>
+		    	</tbody>
+			</table>
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td>
+		                    <input type="text" name="search" id="jleave_search" class="inputs">
+		                </td>
+		
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<!-- end filter container -->
+	<div class="clearB"></div>
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 			<div class="highlight_message"><?php echo $success;?></div>
@@ -23,16 +61,12 @@
 					if($application){
 						foreach($application as $key=>$approvers):
 				?>
-				<tr>
+				<tr class="jleave_list">
 					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->leaves_id;?>">
 					
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						<input type="hidden" id="account_id" name="update_account_id" value="<?php echo base64_encode($approvers->account_id);?>">
-						<input type="hidden" name="update_email[]" value="<?php echo $approvers->email;?>" class="inp_user">
-						<div class="users_text"><?php echo $approvers->email;?></div>
-					</td>
+					
 					<td>
 						
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
@@ -47,20 +81,24 @@
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->detail;?></div>
+						<div class="users_text"><?php echo $approvers->remaining_hours;?></div>
+					</td>
+					<td>
+						<div class="users_text"><?php echo $approvers->reason;?></div>
+					</td>
+					<td>
+						<div class="users_text"><?php echo $approvers->leaves_status;?></div>
 					</td>
 					<td>
 						<div class="users_text">&nbsp;</div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->notes;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text">&nbsp;</div>
 					</td>
-					<td>
-						&nbsp;
-					</td>
+					
 				</tr>
 				
 				<?php 		
@@ -193,12 +231,15 @@
 			return checked_fields;
 		}
 		
-
+		// DATEPICKERS
+		
+		
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			hightlight_success();
+			idate_ranges();
 		});
 	</script>
 	
