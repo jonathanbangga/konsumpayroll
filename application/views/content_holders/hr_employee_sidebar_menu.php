@@ -19,5 +19,5 @@
 	      </ul>
         </li>
         <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_loan_list/">Loans</a></li>
-        <li><a href="#">Shift</a></li>
+        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_shift">Shift</a></li>
       </ul>

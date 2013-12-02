@@ -25,7 +25,7 @@
 			$this->load->model('employee_model','employee');
 			$this->company_id = 1;
 			
-			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
+			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
 		}
 		

@@ -56,6 +56,7 @@
         	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
         </div>
+        
         <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
 <?php print form_close();?>
 		<div class='editCont ihide' title='Edit Information'>
@@ -490,7 +491,7 @@
 
 	        function pagination(){
 	    		jQuery("#pagination li").each(function(){
-	    		    jQuery(this).find("a").addClass("btn");;
+	    		    jQuery(this).find("a").addClass("btn");
 	    		});
 	    	}
 	        
@@ -508,3 +509,25 @@
  <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
  <!-- FOOTER-GRP-BTN END -->
  </div>
+ 
+ <table cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+            <td width = "10%">ID</td>
+            <td width = "20%">NAME</td>
+            <td width = "20%">SHORT DESCRIPTION</td>
+            <td width = "30%">LONG DESCRIPTION</td>
+            <td width = "10%">STATUS</td>
+            <td width = "10%">PARENTID</td>
+    </tr>
+
+            <?php foreach($csvData as $field){?>
+                <tr>
+                    <td><?php echo $field['id']?></td>
+                    <td><?php echo $field['name']?></td>
+                    <td><?php echo $field['shortdesc']?></td>
+                    <td><?php echo $field['longdesc']?></td>
+                    <td><?php echo $field['status']?></td>
+                    <td><?php echo $field['parentid']?></td>
+                </tr>
+            <?php }?>
+</table>

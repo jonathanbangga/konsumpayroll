@@ -41,7 +41,7 @@
 			$uri = "/{$this->uri->segment(1)}/hr/emp_amortization_schedule/index/{$this->loan_no}/";
 			$total_rows = $this->hr_emp->emp_amortization_sched_counter($this->company_id, $this->loan_no);
 			
-			$per_page =10;
+			$per_page = $this->config->item('per_page');
 			$segment=6;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);

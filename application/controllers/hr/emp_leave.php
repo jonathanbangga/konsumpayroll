@@ -40,7 +40,7 @@
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_leave/index";
 			$total_rows = $this->hr_emp->emp_fixed_allowances_counter($this->company_id);
-			$per_page =2;
+			$per_page = $this->config->item('per_page');
 			$segment=5;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);

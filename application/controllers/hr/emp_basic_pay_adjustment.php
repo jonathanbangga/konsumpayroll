@@ -39,7 +39,7 @@
 			
 			$uri = "/{$this->uri->segment(1)}/hr/emp_basic_pay_adjustment/index";
 			$total_rows = $this->hr_emp->basic_pay_adjustment_count($this->company_id);
-			$per_page =2;
+			$per_page = $this->config->item('per_page');
 			$segment=5;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);
