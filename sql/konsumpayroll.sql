@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2013 at 07:21 AM
+-- Generation Time: Dec 02, 2013 at 10:35 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `assigned_company` (
   `payroll_system_account_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`assigned_company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `assigned_company`
@@ -261,7 +261,11 @@ INSERT INTO `assigned_company` (`assigned_company_id`, `company_id`, `payroll_sy
 (22, 2, 2, '0'),
 (23, 3, 2, '0'),
 (24, 4, 2, '0'),
-(25, 5, 2, '0');
+(25, 5, 2, '0'),
+(26, 6, 2, '0'),
+(27, 7, 2, '0'),
+(28, 8, 2, '0'),
+(29, 9, 2, '0');
 
 -- --------------------------------------------------------
 
@@ -356,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `company`
@@ -367,7 +371,11 @@ INSERT INTO `company` (`company_id`, `subscription_date`, `company_name`, `numbe
 (2, '2013-11-25 09:31:33', 'callcenter', 0, 'callcenter', 'callcenter', '', 'callcenter', 'callcenter', '', '6000', 'government', 'callcenter', 'callcenter', '', 'callcenter', 'callcenter', '', '', '', '', '', '', 'f256113e23b7f80d6446243d76464588.jpg', 'Active', '0'),
 (3, '2013-11-26 03:09:53', 'jacc lending', 0, 'jacclending', 'jacc lending', '', 'jacc lending', 'jacc lending', '', 'jacc lending', 'government', 'jacc lending', 'jacc lending', '', 'jacc lending', 'jacc lending', '', '', '', '', '', '', '61b8f68da84aa44ad7fa33eb9af870a4.jpg', 'Active', '0'),
 (4, '2013-11-26 08:05:26', 'kons', 0, 'kons', 'kons', '', 'kons', 'kons', '', 'kons', 'private', 'kons', 'kons', '', 'kons', 'kons', '', '', '', '', '', '', 'c2685a2d6b3c6119a0ab1777e6a43279.jpg', 'Active', '0'),
-(5, '2013-12-02 03:22:40', 'akonemo', 0, 'akonemo', 'akonemo', '', 'akonemo', 'akonemo', '', 'akonemo', 'private', 'akonemo', 'akonemo', '', 'akonemo', 'akonemo', '', '', '', '', '', '', '76e54263392fe0e4a901c28a630d5e3f.png', 'Active', '0');
+(5, '2013-12-02 03:22:40', 'akonemo', 0, 'akonemo', 'akonemo', '', 'akonemo', 'akonemo', '', 'akonemo', 'private', 'akonemo', 'akonemo', '', 'akonemo', 'akonemo', '', '', '', '', '', '', '76e54263392fe0e4a901c28a630d5e3f.png', 'Active', '0'),
+(6, '2013-12-02 08:12:49', 'callcentershit', 0, 'callcentershit', 'callcentershit', '', 'callcentershit', 'callcentershit', '', 'callcentershit', 'government', 'callcentershit', 'callcentershit', '', 'callcentershit', 'callcentershit', '', '', '', '', '', '', '2aef08d806e30cb060129df12931bcd6.jpg', 'Active', '0'),
+(7, '2013-12-02 08:15:31', 'callcentershit2', 0, 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'private', 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'callcentershit2', '', '', '', '', '', '', '6d3e1fc9ae0b508d5ee9db7a94ac385a.jpg', 'Active', '0'),
+(8, '2013-12-02 08:16:34', '$dir.$id.', 0, '$dir.$id.', '$dir.$id.', '', '$dir.$id.', '$dir.$id.', '', '$dir.$id.', 'government', '$dir.$id.', '$dir.$id.', '', '$dir.$id.', '$dir.$id.', '', '', '', '', '', '', '4ba42d6bc44891ba5b1900d3788eac37.jpg', 'Active', '0'),
+(9, '2013-12-02 08:17:31', '$dir.$id.$dir.$id.$dir.$id.$dir.$id.', 0, '$dir.$id.$dir.$', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.$dir.$id.', 'government', '$dir.$id.$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '', '', '', '', '', '34d0807f2a96a1796286b82bfefdc57b.jpg', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -737,7 +745,21 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
   `attachments` text NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`employee_leaves_application_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `employee_leaves_application`
+--
+
+INSERT INTO `employee_leaves_application` (`employee_leaves_application_id`, `company_id`, `emp_id`, `leave_type_id`, `reasons`, `date_start`, `date_end`, `date_return`, `note`, `leave_application_status`, `attachments`, `deleted`) VALUES
+(1, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(2, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(3, 4, 4, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(4, 4, 4, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(5, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(6, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(7, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(8, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0');
 
 -- --------------------------------------------------------
 
@@ -873,7 +895,7 @@ CREATE TABLE IF NOT EXISTS `employee_termination` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`termination_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -907,6 +929,25 @@ INSERT INTO `employee_timesheets` (`timesheets_id`, `emp_id`, `company_id`, `dat
 (2, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'approve', '0'),
 (3, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0'),
 (4, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_training_details`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_training_details` (
+  `employee_training_details_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
+  `date_from` date NOT NULL,
+  `date_to` date NOT NULL,
+  `course_name` varchar(55) NOT NULL,
+  `organizer` varchar(55) NOT NULL,
+  `cost` decimal(10,2) NOT NULL,
+  `training_hours` int(11) NOT NULL,
+  PRIMARY KEY (`employee_training_details_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 

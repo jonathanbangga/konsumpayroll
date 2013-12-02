@@ -50,6 +50,7 @@
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Leave Type</th>
 					<th style="width:170px;">Date From</th>
+					<th style="width:170px;">Date To</th>
 					<th style="width:170px;">Days/Hours</th>
 					<th style="width:170px;">Reasons</th>
 					<th style="width:170px;">Status</th>
@@ -62,8 +63,8 @@
 						foreach($application as $key=>$approvers):
 				?>
 				<tr class="jleave_list">
-					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->leaves_id;?>">
-					
+					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>">
+				
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					
@@ -73,30 +74,33 @@
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->leave_type;?></div>
+						<div class="users_text"><?php echo $approvers->leave_type_id;?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->as_of;?></div>
+						<div class="users_text"><?php echo idates($approvers->date_start);?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->remaining_hours;?></div>
+						<div class="users_text"><?php echo idates_time($approvers->date_start);?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo $approvers->reason;?></div>
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo $approvers->leaves_status;?></div>
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						<div class="users_text">&nbsp;</div>
+						<div class="users_text"><?php echo $approvers->leave_application_status;?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo $approvers->notes;?></div>
+						<div class="users_text"><?php echo $approvers->attachments;?></div>
 					</td>
 					<td>
-						<div class="users_text">&nbsp;</div>
+						<div class="users_text"><?php echo $approvers->note;?></div>
+					</td>
+					<td>
+						<div class="users_text"></div>
 					</td>
 					
 				</tr>

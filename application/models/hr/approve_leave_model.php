@@ -19,10 +19,10 @@
 				$start = intval($start);
 				$limit = intval($limit);
 				$query = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves el
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves_application el
 							LEFT JOIN employee e on e.emp_id = el.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
-							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leaves_status = 'pending'
+							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leave_application_status = 'pending'
 							 LIMIT {$start},{$limit} 
 						"
 				);
@@ -40,16 +40,18 @@
 		 * @param int $limit
 		 * @param int $start
 		 */
-		public function leave_application_date_sort($company_id,$limit=10,$start=0){
+		public function leave_application_date_sort($company_id,$limit=10,$start=0,$date_from,$date_to){
 			if(is_numeric($company_id)){
+				$date_from = $this->db->escape($date_from);
+				$date_to = $this->db->escape($date_to);
 				$start = intval($start);
 				$limit = intval($limit);
 				$query = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves el
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves_application el
 							LEFT JOIN employee e on e.emp_id = el.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
-							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leaves_status = 'pending'
-			
+							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leave_application_status = 'pending'
+							AND el.date_start >= {$date_from}	AND el.date_start <={$date_to} 	
 							 LIMIT {$start},{$limit} 
 						"
 				);
@@ -68,7 +70,7 @@
 		 */
 		public function leave_application_count($company_id){
 			if(is_numeric($company_id)){
-				$query = $this->db->query("SELECT count(*) as val FROM employee_leaves WHERE leaves_status  = 'pending' 
+				$query = $this->db->query("SELECT count(*) as val FROM employee_leaves_application WHERE leave_application_status  = 'pending' 
 						AND company_id = '{$this->db->escape_str($company_id)}' AND deleted='0'
 				");
 				$row = $query->row();

@@ -47,7 +47,7 @@
 		$dir = "uploads/companies/";
 		if($id !=""){
 			if(!is_dir($dir.$id)) {
-				$folder = array("folder"=>$id);
+				$folder = array("folder"=>$id,"pdf"=>$id."/pdf","excel"=>$id."/excel");
 				foreach($folder as $key){				
 					mkdir($dir.$key,0755,true);
 				}
