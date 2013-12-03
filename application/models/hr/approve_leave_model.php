@@ -82,6 +82,24 @@
 			}
 		}
 		
+		public function leave_application_date_count($company_id,$date_from,$date_to){
+			if(is_numeric($company_id)){
+				$date_from = $this->db->escape($date_from);
+				$date_to = $this->db->escape($date_to);
+				$query = $this->db->query("SELECT count(*) as val FROM employee_leaves_application WHERE leave_application_status  = 'pending' 
+						AND company_id = '{$this->db->escape_str($company_id)}' AND deleted='0'  AND date_start >= {$date_from}	AND date_start <={$date_to} 	
+				");
+				$row = $query->row();
+				$num_row = $query->num_rows();
+				$query->free_result();
+				return $num_row ? $row->val : 0;
+			}else{
+				return false;
+			}
+		}
+		
+		
+		
 		/**
 		 * Update fields
 		 * @param string $database

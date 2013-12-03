@@ -61,7 +61,7 @@
 		public function lists_dates(){
 			$uri = "/".$this->uri->segment(1)."/hr/approve_leave/lists_dates/".$this->uri->segment(5)."/".$this->uri->segment(6);
 			$page = is_numeric($this->uri->segment(7)) ? abs($this->uri->segment(7)) : 1;
-			$total_rows = $this->leave->leave_application_count($this->company_info->company_id);
+			$total_rows = $this->leave->leave_application_date_count($this->company_info->company_id,$this->uri->segment(5),$this->uri->segment(6));
 			init_pagination($uri,$total_rows,$this->per_page,7);
 			
 			$data['page_title'] = "Approve Leave"; 
