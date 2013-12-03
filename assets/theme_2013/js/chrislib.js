@@ -858,7 +858,20 @@ function hightlight_success(){
 	}
 }
 		
+// plugin style scripting
 
+$.fn.enter = function(fn) {  
+    return this.each(function() { 
+		var el = jQuery(this);
+        el.bind('enterPress', fn);
+        el.keyup(function(e){
+            if(e.keyCode == 13){ el.trigger("enterPress"); }
+        });
+    });  
+}; 
+
+// end plugin style
+		
 jQuery(function() {
 	kpay.hr.company_sidebar();
 });

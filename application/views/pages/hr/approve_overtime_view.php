@@ -1,3 +1,40 @@
+	<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+		
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright">FILTER</div></div></td>
+			            <td>DATE FROM</td>
+			            <td> 
+			                <input type="text" class="inputs date_isearch" id="jdate_from" value="" readonly="readonly">
+			            </td>
+			            <td>DATE TO</td>
+			            <td>
+			                <input type="text" class="inputs date_isearch" id="jdate_to" value="" readonly="readonly">
+			            </td>
+			            <td>
+			                <input type="submit" value="GO" class="btn" id="jleave_go">
+			            </td>
+			        </tr>
+		    	</tbody>
+			</table>
+		
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td><input type="text" name="search" id="jleave_search" class="inputs ipadright"></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<div class="clearB"></div>
+	<!-- end filter container -->
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 			<div class="highlight_message"><?php echo $success;?></div>
@@ -8,7 +45,7 @@
 			<tbody>
 				<tr>
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
-					<th style="width:170px;">Emp ID</th>
+					<th style="width:170px;">Employee ID</th>
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Overtime Type</th>
 					<th style="width:170px;">Overtime Date</th>
@@ -38,14 +75,14 @@
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_date_applied);?></div>
+						<div class="users_text"><?php echo idates($approvers->overtime_date_applied);?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo idates_only($approvers->overtime_from);?></div>
+						<div class="users_text"><?php echo idates($approvers->overtime_from);?></div>
 					</td>
 					<td>
-						<div class="users_text"><?php echo idates_only($approvers->overtime_to);?></div>
+						<div class="users_text"><?php echo idates($approvers->overtime_to);?></div>
 					</td>
 					<td>
 						<div class="users_text"><?php echo $approvers->no_of_hours;?></div>
@@ -60,7 +97,7 @@
 						<div class="users_text"><?php echo $approvers->notes;?></div>
 					</td>
 					<td>
-						<div class="users_text">Status</div>
+						<div class="users_text"><?php echo $approvers->overtime_status;?></div>
 					</td>
 					
 				</tr>
@@ -197,12 +234,36 @@
 			var checked_fields = array_fields("input[name='overtime_id[]']:checked");
 			return checked_fields;
 		}
+
+		// SEARCH BY NAME
+		function search_by_name(){
+			$('#jleave_search').enter(function(e){
+				console.log("christopher cuizon");
+			});		
+		}
+		
+		// SEARCH BY DATE
+		function search_by_date(){
+			jQuery(document).on("click","#jleave_go",function(e){
+			    var d_from = jQuery("#jdate_from").val();
+			    var d_to = jQuery("#jdate_to").val();
+				if(d_from =="" || d_to == ""){
+					alert("Required Dates");	
+				}else{
+			   	 	window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_overtime/lists_dates/"+d_from+"/"+d_to;
+				}
+			});
+		}
+		
 		
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			hightlight_success();
+			search_by_name();
+			idate_ranges();
+			search_by_date();
 		});
 	</script>
 	

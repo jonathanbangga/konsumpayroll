@@ -31,7 +31,7 @@
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page = 5;
+			$this->per_page =10;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -53,6 +53,24 @@
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$data['success'] = $this->session->flashdata("success");
 			$data['application'] = $this->overtime->overtime_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/approve_overtime_view', $data);
+		}
+		
+		/**
+		 * LIST OVERTIME VIA DATE
+		 * @return amazing
+		 */
+		public function lists_dates(){
+			$uri = "/".$this->uri->segment(1)."/hr/approve_overtime/lists_dates/".$this->uri->segment(5)."/".$this->uri->segment(6);
+			$page = is_numeric($this->uri->segment(7)) ? $this->uri->segment(7) : 1;
+			$total_rows = $this->overtime->overtime_application_count_date($this->company_info->company_id,idates_only($this->uri->segment(5)),idates_only($this->uri->segment(6)));
+			init_pagination($uri,$total_rows,$this->per_page,7);
+			$data['pagi'] = $this->pagination->create_links();
+			$data['page_title'] = "Overtime Application"; 
+			$data['sidebar_menu'] =$this->sidebar_menu;	
+			$data['success'] = $this->session->flashdata("success");
+			$data['application'] = $this->overtime->overtime_list_by_date($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page),idates_only($this->uri->segment(5)),idates_only($this->uri->segment(6)));
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_overtime_view', $data);
 		}
