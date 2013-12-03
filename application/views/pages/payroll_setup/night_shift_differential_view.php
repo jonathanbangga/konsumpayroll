@@ -8,12 +8,17 @@
           <table border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td style="width:45px;">From</td>
-              <td><select style="width:60px;" class="txtselect" name="">
-                  <option>08</option>
+              <td>
+				<select style="width:60px;" class="txtselect" name="">
+					<?php for($i=1;$i<=12;$i++){ ?>
+						<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+					<?php } ?>
                 </select>
                 :
                 <select style="width:60px;" class="txtselect" name="">
-                  <option>00</option>
+					<?php for($i=0;$i<=60;$i++){ ?>
+						<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+					<?php } ?>
                 </select>
                 <select style="width:60px;" class="txtselect" name="">
                   <option>AM</option>
@@ -38,11 +43,11 @@
         <p> Night Differential Rate (%)
           <input style="width:55px; margin-left:5px;" class="txtfield" name="" type="text">
         </p>
+		<a href="javascript:void(0);" class="btn" id="save">SAVE</a>
         <!-- MAIN-CONTENT END -->
       </div>
       <div class="footer-grp-btn">
         <!-- FOOTER-GRP-BTN START -->
         <a class="btn btn-gray left" href="#">BACK</a> <a class="btn btn-gray right" href="#"> CONTINUE</a>
-        <input style="margin-right:10px;" class="btn right" name="" type="button" value="SAVE">
         <!-- FOOTER-GRP-BTN END -->
       </div>
