@@ -63,7 +63,8 @@
 											"payroll_cloud_id" 	=> $this->db->escape_str($emp_id),
 											"password"			=> md5(idates_now()),
 											"account_type_id"	=> 2, // 2 which is users only
-											"user_type_id"		=> 3  // 3 Defines as HR on user_type table
+											"user_type_id"		=> 3, // 3 Defines as HR on user_type table
+											"payroll_system_account_id" => $this->session->userdata("psa_id")
 								);	
 								$account_id = $this->approvers->save_fields("accounts",$account_fields);
 								// CREATE EMPLOYEE

@@ -64,6 +64,33 @@
 		}
 		
 		/**
+		 * CHECKS APPLICATION LEAVE FOR EVERY COMPANY by employe name
+		 * @param int $company_id
+		 * @return object
+		 */
+		public function leave_application_list_name($company_id,$limit=10,$start=0,$employee_name){
+			if(is_numeric($company_id)){
+				$start = intval($start);
+				$limit = intval($limit);
+				$employee_name =$employee_name;
+				$query = $this->db->query(
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves_application el
+							LEFT JOIN employee e on e.emp_id = el.emp_id 
+							LEFT JOIN accounts a on a.account_id = e.account_id 
+							WHERE el.company_id = '{$this->db->escape_str($company_id)}' AND el.deleted = '0' AND el.leave_application_status = 'pending'
+							AND concat(e.first_name,' ',e.last_name) like '%{$employee_name}%' 
+							 LIMIT {$start},{$limit} 
+						"
+				);
+				$result = $query->result();
+				$query->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
 		 * Count Leaves application for pagination purposes only
 		 * @param int $company_id
 		 * @return integer
