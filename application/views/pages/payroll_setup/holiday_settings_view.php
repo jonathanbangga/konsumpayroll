@@ -69,7 +69,7 @@
 		</p>
 		<p>
 			Date:<br />
-			<input class="txtfield" id="edit_date" type="text">
+			<input class="txtfield date" id="edit_date" type="text">
 		</p>
 	</div>
 </div>
@@ -79,8 +79,12 @@
 
 <script>
 jQuery(document).ready(function(){
+
 	// load highlight message script
 	redirect_highlight_message();
+	
+	// invoke datepicker
+	jQuery( ".date" ).datepicker();
 	
 	// add holiday
 	jQuery("#add-more").click(function(){
@@ -97,12 +101,12 @@ jQuery(document).ready(function(){
 				'<td><input class="txtfield date" type="text"></td>'+
 				'</td>'+
 				'<td>'+
-					'<a href="javascript:void(0);" class="btn btn-gray btn-action">EDIT</a>'+ 
 					'<a href="javascript:void(0);" class="btn btn-red btn-action btn-remove">REMOVE</a>'+
 				'</td>'+
 			'</tr>';
 		jQuery("#save").show();
 		jQuery(".tbl tbody").append(str);
+		jQuery( ".date" ).datepicker();
 	});
 	
 	// remove holiday row

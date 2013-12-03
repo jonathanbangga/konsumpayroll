@@ -1,24 +1,38 @@
 [Quick Notes]
-// ajax json
-// javascript (client side) 
-jQuery.ajax({
-	type: "POST",
-	url: "test.php",
-	data: {
-		data1: data1,
-		data2: data2
-	},
-	dataType: 'json'
-}).done(function(ret){
-	// do something
-});
-// PHP (server side)
-$arr = array(
-	"project_name"=>$loc->project_name,
-	"location"=>$loc->location,
-	"description"=>$loc->description
-);
-echo json_encode($arr);
+	// jc - start
+
+		// ajax json
+		// javascript (client side) 
+		jQuery.ajax({
+			type: "POST",
+			url: "test.php",
+			data: {
+				data1: data1,
+				data2: data2
+			},
+			dataType: 'json'
+		}).done(function(ret){
+			// do something
+		});
+		
+		// PHP (server side)
+		$arr = array(
+			"project_name"=>$loc->project_name,
+			"location"=>$loc->location,
+			"description"=>$loc->description
+		);
+		echo json_encode($arr);
+		
+		
+		
+
+		// invoke date picker
+		$( ".date" ).datepicker();
+
+		// formate date picker dates to database date format yyyy-mm-dd
+		$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date[$index])));
+
+	// jc - end
 
 HOW TO ADD ACTIVITY LOGS
 
@@ -44,4 +58,6 @@ Example
 		1) ADDED A TABLE  WHICH IS CALLED employee_timesheets gamita lng tan
 		2) PLEASE USE expenses table for employee expenses
 		3) Please use overtime table for employee overtime
+		
+
 		

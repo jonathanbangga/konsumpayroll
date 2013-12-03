@@ -32,9 +32,13 @@ class Company_list extends CI_Controller {
 		$this->layout->view('pages/dashboard/company_list_view', $data);
 	}
 	
-	public function we(){
-	//	$this->session->set_userdata("company_id","34");
-	p($this->session->all_userdata());
+	public function manage($company_id,$sub_domain){
+		$newdata = array(
+		   'company_id2'  => $company_id,
+		   'sub_domain2'  => $sub_domain,
+		);
+		$this->ci->session->set_userdata($newdata);
+		redirect("/{$sub_domain}/hr/emp_basic_information");
 	}
 	
 }
