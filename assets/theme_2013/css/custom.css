@@ -43,7 +43,11 @@ span.errors{
 /** fields **/
 
 .emp_fields,.cost_inputs{
-/* padding:5px;  */
+ padding:3px; 
+}
+
+.inputs{
+	padding:3px;
 }
 
 
@@ -148,3 +152,28 @@ input.btn[type="submit"] {
 }
 
 /** end paginations purposes **/
+
+/** bogart application css **/
+/** leave application css **/
+.text_search{
+	padding-right:10px;
+}
+
+.jfilter {
+    line-height: 31px;
+}
+.date_isearch{
+	width:80px;
+	margin:0 5px;
+}
+.ipadright{
+	margin-right:5px;
+}
+.ipadleft{
+	margin-left:5px;
+}
+
+/** end leave application css **/
+
+
+/** end application css **/

@@ -1,3 +1,43 @@
+	<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+		
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright">FILTER</div></div></td>
+			            <td>DATE FROM</td>
+			            <td> 
+			                <input type="text" class="inputs date_isearch" id="jdate_from" value="<?php echo $this->uri->segment(5);?>" readonly="readonly">
+			            </td>
+			            <td>DATE TO</td>
+			            <td>
+			                <input type="text" class="inputs date_isearch" id="jdate_to" value="<?php echo $this->uri->segment(6);?>" readonly="readonly">
+			            </td>
+			            <td>
+			                <input type="submit" value="GO" class="btn" id="jleave_go">
+			            </td>
+			        </tr>
+		    	</tbody>
+			</table>
+		
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td>
+		                    <input type="text" name="search" id="jleave_search" class="inputs">
+		                </td>
+		
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<!-- end filter container -->
+	<div class="clearB"></div>
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 			<div class="highlight_message"><?php echo $success;?></div>
@@ -12,6 +52,7 @@
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Leave Type</th>
 					<th style="width:170px;">Date From</th>
+					<th style="width:170px;">Date To</th>
 					<th style="width:170px;">Days/Hours</th>
 					<th style="width:170px;">Reasons</th>
 					<th style="width:170px;">Status</th>
@@ -23,44 +64,47 @@
 					if($application){
 						foreach($application as $key=>$approvers):
 				?>
-				<tr>
-					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->leaves_id;?>">
-					
+				<tr class="jleave_list">
+					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>">
+				
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						<input type="hidden" id="account_id" name="update_account_id" value="<?php echo base64_encode($approvers->account_id);?>">
-						<input type="hidden" name="update_email[]" value="<?php echo $approvers->email;?>" class="inp_user">
-						<div class="users_text"><?php echo $approvers->email;?></div>
-					</td>
+					
 					<td>
 						
 						<div class="users_text"><?php echo $approvers->full_name;?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->leave_type;?></div>
+						<div class="users_text"><?php echo $approvers->leave_type_id;?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->as_of;?></div>
+						<div class="users_text"><?php echo idates($approvers->date_start);?></div>
 					</td>
 					<td>
 						
-						<div class="users_text"><?php echo $approvers->detail;?></div>
+						<div class="users_text"><?php echo idates_time($approvers->date_start);?></div>
 					</td>
 					<td>
-						<div class="users_text">&nbsp;</div>
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->reasons;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->leave_application_status;?></div>
 					</td>
 					<td>
-						&nbsp;
+						<div class="users_text"><?php echo $approvers->attachments;?></div>
 					</td>
+					<td>
+						<div class="users_text"><?php echo $approvers->note;?></div>
+					</td>
+					<td>
+						<div class="users_text"></div>
+					</td>
+					
 				</tr>
 				
 				<?php 		
@@ -192,13 +236,29 @@
 			var checked_fields = array_fields("input[name='leave_ids[]']:checked");
 			return checked_fields;
 		}
-		
 
+
+		
+		// DATEPICKERS
+		function search_date(){
+			jQuery(document).on("click","#jleave_go",function(e){
+			    var d_from = jQuery("#jdate_from").val();
+			    var d_to = jQuery("#jdate_to").val();
+				if(d_from =="" || d_to == ""){
+				alert("Required Dates");	
+				}else{
+			    window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
+				}
+			});
+		}
+		
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			hightlight_success();
+			idate_ranges();
+			search_date();
 		});
 	</script>
 	

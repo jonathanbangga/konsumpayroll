@@ -370,8 +370,7 @@ var kpay = {
 									jQuery.post(urls,{"delete":'true',"id":fid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(re){
 										jQuery(".option_alert").dialog('close');
 										alert("You have successfully updated");
-										window.location.href = "/admin/company_setup/add";	
-										
+										window.location.href = "/admin/company_setup/add";		
 									});
 								},
 								"No": function () {
@@ -807,6 +806,24 @@ function ierror_duplicate(fields){
 	});
 	return dup;
 }
+
+function idate_ranges(){
+	$( "#jdate_from, #jdate_to" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		dateFormat:'yy-mm-dd',
+		onSelect: function( selectedDate ) {
+			if(this.id == 'jdate_from'){
+			  var dateMin = $('#jdate_from').datepicker("getDate");
+			  var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); 
+			  var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); 
+			  $('#jdate_to').datepicker("option","minDate",rMin);
+			  $('#jdate_to').datepicker("option","maxDate",rMax);                    
+			}	
+		}
+	});
+}
+
 
 // overwrite comments
 window.alert = function(msg){
