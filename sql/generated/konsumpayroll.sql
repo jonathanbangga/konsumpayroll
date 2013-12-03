@@ -1425,7 +1425,7 @@ CREATE TABLE IF NOT EXISTS `payroll_system_account` (
 --
 
 INSERT INTO `payroll_system_account` (`payroll_system_account_id`, `account_id`, `name`, `sub_domain`, `subscription_date`, `subscription_end_date`, `status`) VALUES
-(2, 2, 'konsum TECHNOLOGY', 'konsum-technology', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active');
+(2, 2, 'konsum TECHNOLOGY', 'konsum_technology', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active');
 
 -- --------------------------------------------------------
 
