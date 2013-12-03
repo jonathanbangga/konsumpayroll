@@ -370,8 +370,7 @@ var kpay = {
 									jQuery.post(urls,{"delete":'true',"id":fid,"ZGlldmlyZ2luamM":jQuery.cookie(token)},function(re){
 										jQuery(".option_alert").dialog('close');
 										alert("You have successfully updated");
-										window.location.href = "/admin/company_setup/add";	
-										
+										window.location.href = "/admin/company_setup/add";		
 									});
 								},
 								"No": function () {

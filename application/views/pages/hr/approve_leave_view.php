@@ -1,24 +1,26 @@
 	<!--  filter container -->
 	<div class="filter_menus">
 		<div class="left">
+		
 			<table>
 		    	<tbody>
 			        <tr>
-			            <td><div class="ipadright"><a href="#" class="jfilter">FILTER</a></div></div></td>
-			            <td>Date from</td>
+			            <td><div class="ipadright">FILTER</div></div></td>
+			            <td>DATE FROM</td>
 			            <td> 
-			                <input type="text" class="inputs date_isearch" id="jdate_from">
+			                <input type="text" class="inputs date_isearch" id="jdate_from" value="<?php echo $this->uri->segment(5);?>" readonly="readonly">
 			            </td>
-			            <td>Date to</td>
+			            <td>DATE TO</td>
 			            <td>
-			                <input type="text" class="inputs date_isearch" id="jdate_to">
+			                <input type="text" class="inputs date_isearch" id="jdate_to" value="<?php echo $this->uri->segment(6);?>" readonly="readonly">
 			            </td>
 			            <td>
-			                <input type="submit" value="GO" class="btn" id="jleave_search">
+			                <input type="submit" value="GO" class="btn" id="jleave_go">
 			            </td>
 			        </tr>
 		    	</tbody>
 			</table>
+		
 		</div>
 		<div class="right" style="">
 		    <table>
@@ -234,9 +236,21 @@
 			var checked_fields = array_fields("input[name='leave_ids[]']:checked");
 			return checked_fields;
 		}
+
+
 		
 		// DATEPICKERS
-		
+		function search_date(){
+			jQuery(document).on("click","#jleave_go",function(e){
+			    var d_from = jQuery("#jdate_from").val();
+			    var d_to = jQuery("#jdate_to").val();
+				if(d_from =="" || d_to == ""){
+				alert("Required Dates");	
+				}else{
+			    window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
+				}
+			});
+		}
 		
 		jQuery(function(){
 			check_all();
@@ -244,6 +258,7 @@
 			reject_this();
 			hightlight_success();
 			idate_ranges();
+			search_date();
 		});
 	</script>
 	

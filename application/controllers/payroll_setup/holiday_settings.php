@@ -31,7 +31,8 @@ class Holiday_settings extends CI_Controller {
 		$type = $this->input->post('type');
 		$date = $this->input->post('date');
 		foreach($holiday as $index=>$val){
-			$this->holiday_settings_model->add_holiday_settings($val,$type[$index],$date[$index]);
+			$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date[$index])));
+			$this->holiday_settings_model->add_holiday_settings($val,$type[$index],$date2);
 		}
 	}
 	
@@ -45,7 +46,8 @@ class Holiday_settings extends CI_Controller {
 		$holiday = $this->input->post('holiday');
 		$type = $this->input->post('type');
 		$date = $this->input->post('date');
-		$this->holiday_settings_model->update_holiday_settings($holiday_id,$holiday,$type,$date);
+		$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date)));
+		$this->holiday_settings_model->update_holiday_settings($holiday_id,$holiday,$type,$date2);
 		
 	}
 	

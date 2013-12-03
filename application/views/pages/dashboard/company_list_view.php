@@ -10,7 +10,7 @@
               </td>
               <td style="width:340px;"><h1><?php echo $row->company_name;?></h1></td>
               <td style="width:200px;" class="txtright">
-              <a class="btn btn-gray" href="<?php echo "/".$row->sub_domain."/hr/emp_basic_information"?>">MANAGE</a> 
+              <a class="btn btn-gray" href="<?php echo "/{$sub_domain}/dashboard/company_list/manage/{$row->company_id}/{$row->sub_domain}"; ?>">MANAGE</a> 
               <a class="btn btn-red" href="#">DELETE</a>
               </td>
             </tr>

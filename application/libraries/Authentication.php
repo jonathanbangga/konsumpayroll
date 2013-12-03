@@ -13,6 +13,7 @@ class Authentication {
 	
 		$sql = $this->ci->account_model->get_account($user,$pass,$account_type);
 		
+		// admin
 		if($account_type==1){
 			// if account exist
 			if($sql->num_rows()>0){
