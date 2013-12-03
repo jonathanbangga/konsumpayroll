@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2013 at 10:35 AM
+-- Generation Time: Dec 03, 2013 at 03:28 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -567,8 +567,8 @@ CREATE TABLE IF NOT EXISTS `department` (
 CREATE TABLE IF NOT EXISTS `earnings` (
   `earning_id` int(11) NOT NULL AUTO_INCREMENT,
   `earning_name` varchar(80) NOT NULL,
-  `taxable` enum('Yes','No') NOT NULL,
-  `max_non_taxable_amount_per_month` decimal(10,2) NOT NULL,
+  `taxable` int(11) NOT NULL,
+  `max_non_taxable` decimal(10,2) NOT NULL,
   `withholding_tax_rate` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -895,7 +895,7 @@ CREATE TABLE IF NOT EXISTS `employee_termination` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`termination_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -947,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `employee_training_details` (
   `cost` decimal(10,2) NOT NULL,
   `training_hours` int(11) NOT NULL,
   PRIMARY KEY (`employee_training_details_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1214,11 +1214,10 @@ CREATE TABLE IF NOT EXISTS `hours_worked` (
 CREATE TABLE IF NOT EXISTS `hr_setup_properties` (
   `hr_setup_properties_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
-  `include_hr_for_confirmation` int(11) NOT NULL,
   `leave_day_num_of_hours` int(11) NOT NULL,
   `month_num_of_workdays` int(11) NOT NULL,
   PRIMARY KEY (`hr_setup_properties_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1299,7 +1298,7 @@ CREATE TABLE IF NOT EXISTS `leave_type` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leave_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
