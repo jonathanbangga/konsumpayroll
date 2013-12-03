@@ -44,12 +44,29 @@
 		}
 		
 		public function lists(){
-			$uri = "/".$this->uri->segment(1)."/hr/approve_time_sheets//lists/";
+			$uri = "/".$this->uri->segment(1)."/hr/approve_time_sheets/lists/";
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 			$total_rows = $this->timesheets->timesheets_application_count($this->company_info->company_id);
 			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
-			
+			$data['page_title'] = "Timesheets Application"; 
+			$data['sidebar_menu'] =$this->sidebar_menu;	
+			$data['success'] = $this->session->flashdata("success");
+			$data['application'] = $this->timesheets->timesheets_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/approve_time_sheets_view', $data);
+		}
+		
+		/**
+		 * LIST VIA DATES
+		 * CHECKS VIA DATES AND PASS THE DATA TO
+		 */
+		public function lists_dates(){
+			$uri = "/".$this->uri->segment(1)."/hr/approve_time_sheets/lists/";
+			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+			$total_rows = $this->timesheets->timesheets_application_count($this->company_info->company_id);
+			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
+			$data['pagi'] = $this->pagination->create_links();
 			$data['page_title'] = "Timesheets Application"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$data['success'] = $this->session->flashdata("success");

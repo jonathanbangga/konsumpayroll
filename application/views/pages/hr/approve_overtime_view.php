@@ -62,46 +62,19 @@
 						foreach($application as $key=>$approvers):
 				?>
 				<tr>
-					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>">
-					
-					</td>
+					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						<div class="users_text"><?php echo $approvers->full_name;?></div>
-					</td>
-					<td>
-	
-						<div class="users_text"><?php echo $approvers->overtime_type_id;?></div>
-					</td>
-					<td>
-						
-						<div class="users_text"><?php echo idates($approvers->overtime_date_applied);?></div>
-					</td>
-					<td>
-						
-						<div class="users_text"><?php echo idates($approvers->overtime_from);?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo idates($approvers->overtime_to);?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->no_of_hours;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->with_nsd_hours;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->reason;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->notes;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->overtime_status;?></div>
-					</td>
-					
-				</tr>
-				
+					<td><div class="users_text"><?php echo $approvers->full_name;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->overtime_type_id;?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->overtime_date_applied);?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->overtime_from);?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->overtime_to);?></div></td>
+					<td><div class="users_text"><?php echo $approvers->no_of_hours;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->with_nsd_hours;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->reason;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->notes;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->overtime_status;?></div></td>
+				</tr>	
 				<?php 		
 						endforeach;
 					}else{
@@ -238,8 +211,14 @@
 		// SEARCH BY NAME
 		function search_by_name(){
 			$('#jleave_search').enter(function(e){
-				console.log("christopher cuizon");
-			});		
+		        if(jQuery(this).val() !=""){
+		        	var search = jQuery("#jleave_search").val();
+		        	window.location.href = "/kons/hr/approve_overtime/lists_names/"+search; 
+		        }else{
+		           
+		        }
+			  
+			});
 		}
 		
 		// SEARCH BY DATE
@@ -264,9 +243,6 @@
 			search_by_name();
 			idate_ranges();
 			search_by_date();
+			search_by_name();
 		});
 	</script>
-	
-	
-	
-	

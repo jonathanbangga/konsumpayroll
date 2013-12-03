@@ -1,3 +1,40 @@
+<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+		
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright">FILTER</div></div></td>
+			            <td>DATE FROM</td>
+			            <td> 
+			                <input type="text" class="inputs date_isearch" id="jdate_from" value="" readonly="readonly">
+			            </td>
+			            <td>DATE TO</td>
+			            <td>
+			                <input type="text" class="inputs date_isearch" id="jdate_to" value="" readonly="readonly">
+			            </td>
+			            <td>
+			                <input type="submit" value="GO" class="btn" id="jleave_go">
+			            </td>
+			        </tr>
+		    	</tbody>
+			</table>
+		
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td><input type="text" name="search" id="jleave_search" class="inputs ipadright"></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<div class="clearB"></div>
+	<!-- end filter container -->
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 			<div class="highlight_message"><?php echo $success;?></div>
@@ -8,7 +45,7 @@
 			<tbody>
 				<tr>
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
-					<th style="width:170px;">Emp ID</th>
+					<th style="width:170px;">Employee ID</th>
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Date From</th>
 					<th style="width:170px;">Date To</th>
@@ -24,38 +61,18 @@
 						foreach($application as $key=>$approvers):
 				?>
 				<tr>
-					<td><input type="checkbox" name="timesheets_id[]" class="timesheets_id" value="<?php echo $approvers->timesheets_id;?>">
-					</td>
+					<td><input type="checkbox" name="timesheets_id[]" class="timesheets_id" value="<?php echo $approvers->timesheets_id;?>"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>	
-						<div class="users_text"><?php echo $approvers->full_name;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo idates_only($approvers->date_from);?></div>
-					</td>
-					<td>	
-						<div class="users_text"><?php echo idates_only($approvers->date_to);?></div>
-					</td>
-					<td>				
-						<div class="users_textdesc"><?php echo $approvers->hoursworked;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->tardiness;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->undertime;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->timesheet;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->note;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->timesheets_status;?></div>
-					</td>
+					<td><div class="users_text"><?php echo $approvers->full_name;?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->date_from);?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->date_to);?></div></td>
+					<td><div class="users_textdesc"><?php echo $approvers->hoursworked;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->tardiness;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->undertime;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->timesheet;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->note;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->timesheets_status;?></div></td>
 				</tr>
-				
 				<?php 		
 						endforeach;
 					}else{
@@ -185,12 +202,42 @@
 			var checked_fields = array_fields("input[name='timesheets_id[]']:checked");
 			return checked_fields;
 		}
+
+		// SEARCH BY NAME
+		function search_by_name(){
+			$('#jleave_search').enter(function(e){
+		        if(jQuery(this).val() !=""){
+		        	var search = jQuery("#jleave_search").val();
+		        	window.location.href = "/kons/hr/approve_time_sheets/lists_names/"+search; 
+		        }else{
+		           
+		        }
+			  
+			});
+		}
+		
+		// SEARCH BY DATE
+		function search_by_date(){
+			jQuery(document).on("click","#jleave_go",function(e){
+			    var d_from = jQuery("#jdate_from").val();
+			    var d_to = jQuery("#jdate_to").val();
+				if(d_from =="" || d_to == ""){
+					alert("Required Dates");	
+				}else{
+			   	 	window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_time_sheets/lists_dates/"+d_from+"/"+d_to;
+				}
+			});
+		}
 		
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			hightlight_success();
+			search_by_name();
+			search_by_date();
+			idate_ranges();
+			
 		});
 	</script>
 	
