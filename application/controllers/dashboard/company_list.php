@@ -37,7 +37,7 @@ class Company_list extends CI_Controller {
 		   'company_id2'  => $company_id,
 		   'sub_domain2'  => $sub_domain,
 		);
-		$this->ci->session->set_userdata($newdata);
+		$this->session->set_userdata($newdata);
 		redirect("/{$sub_domain}/hr/emp_basic_information");
 	}
 	
