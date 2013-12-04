@@ -1,3 +1,34 @@
+	<!--  filter container -->
+	<div class="filter_menus">
+		<div class="left">
+		
+			<table>
+		    	<tbody>
+			        <tr>
+			            <td><div class="ipadright">FILTER</div></td>
+			            <td>DATE FROM</td>
+			            <td><input type="text" class="inputs date_isearch" id="jdate_from" value="" readonly="readonly"></td>
+			            <td>DATE TO</td>
+			            <td><input type="text" class="inputs date_isearch" id="jdate_to" value="" readonly="readonly"></td>
+			            <td> <input type="submit" value="GO" class="btn" id="jleave_go"></td>
+			        </tr>
+		    	</tbody>
+			</table>
+		
+		</div>
+		<div class="right" style="">
+		    <table>
+		        <tbody>
+		            <tr>
+		                <td><div class="text_search">SEARCH</div></td>
+		                <td><input type="text" name="search" id="jleave_search" class="inputs ipadright"></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<div class="clearB"></div>
+	<!-- end filter container -->
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide">
 		<div class="highlight_message"><?php echo $success;?></div>
@@ -24,34 +55,16 @@
 					foreach($application as $key=>$approvers):
 			?>
 				<tr>
-					<td>
-						<input type="checkbox" name="payroll_run_id[]" class="mark_timeshit" value="<?php echo $approvers->payroll_run_id;?>">
-					</td>
+					<td><input type="checkbox" name="payroll_run_id[]" class="mark_timeshit" value="<?php echo $approvers->payroll_run_id;?>"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>	
-						<div class="users_text"><?php echo $approvers->first_name." ".$approvers->last_name;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo idates_only($approvers->period_from);?></div>
-					</td>
-					<td>	
-						<div class="users_text"><?php echo idates_only($approvers->period_to);?></div>
-					</td>
-					<td>				
-						<div class="users_textdesc"><?php echo $approvers->run_by;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->payroll_group_id;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->details;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->note;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->payroll_run_status;?></div>
-					</td>
+					<td><div class="users_text"><?php echo $approvers->first_name." ".$approvers->last_name;?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->period_from);?></div></td>
+					<td><div class="users_text"><?php echo idates($approvers->period_to);?></div></td>
+					<td><div class="users_textdesc"><?php echo $approvers->run_by;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->payroll_group_id;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->details;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->note;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->payroll_run_status;?></div></td>
 				</tr>		
 			<?php 		
 					endforeach;
@@ -71,14 +84,13 @@
 		<!-- TBL-WRAP END -->
 	</div>
 	<?php if($application){?>
-	<div class="left pagi-lefts">
-	<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
-	<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
-	</div>
-	<div class="right pagi-rights"><?php  echo $pagi;?></div>
-	<br /><br />
-	<div class="clearB"></div>
-	
+		<div class="left pagi-lefts">
+		<a id="approve_payroll_run" href="javascript:void(0);" class="btn">APPROVE</a>
+		<a id="reject_payroll_run" href="javascript:void(0);" class="btn">REJECT</a>
+		</div>
+		<div class="right pagi-rights"><?php  echo $pagi;?></div>
+		<br /><br />
+		<div class="clearB"></div>
 	
 	<?php }?>
 	<?php echo form_close();?>
@@ -193,11 +205,41 @@
 			return checked_fields;
 		}
 
+		// SEARCH BY NAME
+		function search_by_name(){
+			$('#jleave_search').enter(function(e){
+		        if(jQuery(this).val() !=""){
+		        	var search = jQuery("#jleave_search").val();
+		        	window.location.href = "/kons/hr/approve_payroll_run/lists_names/"+search; 
+		        }else{
+		           
+		        }
+			  
+			});
+		}
+		
+		// SEARCH BY DATE
+		function search_by_date(){
+			jQuery(document).on("click","#jleave_go",function(e){
+			    var d_from = jQuery("#jdate_from").val();
+			    var d_to = jQuery("#jdate_to").val();
+				if(d_from =="" || d_to == ""){
+					alert("Required Dates");	
+				}else{
+			   	 	window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_payroll_run/lists_dates/"+d_from+"/"+d_to;
+				}
+			});
+		}
+		
+
 		jQuery(function(){
 			check_all();
 			approve_this();
 			reject_this();
 			return_success();	
+			search_by_name();
+			search_by_date();
+			idate_ranges();
 		});
 	</script>
 	
