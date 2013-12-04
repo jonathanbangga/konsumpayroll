@@ -21,7 +21,7 @@
 					<td><span class="expense_type_span"><?php echo $e->expense_type_name; ?></span></td>
 					<td><span class="min_amount_span"><?php echo $e->minimum_amount; ?></span></td>
 					<td><span class="max_amount_span"><?php echo $e->maximum_amount; ?></span></td>
-					<td>If above max</td>
+					<td><span class="req_receipt" style="display:none;"><?php echo $e->require_receipt; ?></span><?php echo ($e->require_receipt==1)?"yes":"no"; ?></td>
 					<td>
 						<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit">EDIT</a> 
 						<a href="javascript:void(0);" class="btn btn-red btn-action btn-delete">DELETE</a>
@@ -68,6 +68,13 @@
 			Maximum Amount:<br />
 			<input class="txtfield" id="edit_max_amount" type="text">
 		</p>
+		<p>
+			<select class="txtselect" id="edit_req_receipt">
+				<option value="-1">Select</option>
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+			</select>
+		</p>
 	</div>
 </div>
 	  
@@ -92,7 +99,13 @@ jQuery(document).ready(function(){
 				'<td><input style="width:115px;" class="txtfield expense_type" name="" type="text"></td>'+
 				'<td><input style="width:115px;" class="txtfield min_amount" name="" type="text"></td>'+
 				'<td><input style="width:115px;" class="txtfield max_amount" name="" type="text"></td>'+
-				'<td><select style="width:115px;" class="txtselect req_receipt" name=""></select></td>'+
+				'<td>'+
+					'<select class="txtselect req_receipt" name="">'+
+						'<option value="-1">Select</option>'+
+						'<option value="1">Yes</option>'+
+						'<option value="0">No</option>'+
+					'</select>'+
+				'</td>'+
 				'<td><a href="javascript:void(0);" class="btn btn-red btn-action btn-remove">REMOVE</a></td>'+
              '</tr>';
 		jQuery("#save").show();
@@ -127,6 +140,10 @@ jQuery(document).ready(function(){
 		jQuery(".max_amount").each(function(index){
 			max_amount[index] = jQuery(this).val();
 		});
+		var req_receipt = new Array();
+		jQuery(".req_receipt").each(function(index){
+			req_receipt[index] = jQuery(this).val();
+		});
 		if(empty==true){
 			alert("Some Holiday fields are empty");
 		}else{
@@ -138,6 +155,7 @@ jQuery(document).ready(function(){
 					expense_type: expense_type, 
 					min_amount: min_amount,
 					max_amount: max_amount,
+					req_receipt: req_receipt,
 					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 				}
 			}).done(function(ret){
@@ -185,9 +203,16 @@ jQuery(document).ready(function(){
 		var expense_type = obj.parents("tr").find(".expense_type_span").html();
 		var minimum_amount = obj.parents("tr").find(".min_amount_span").html();
 		var maximum_amount = obj.parents("tr").find(".max_amount_span").html();
+		var req_receipt = obj.parents("tr").find(".req_receipt").html();
 		jQuery("#edit_expense_type").val(expense_type);
 		jQuery("#edit_min_amount").val(minimum_amount);
 		jQuery("#edit_max_amount").val(maximum_amount);
+		jQuery("#edit_req_receipt").val(req_receipt);
+		jQuery("#req_receipt option").each(function(){
+			if(jQuery(this).val()==req_receipt){
+				jQuery(this).prop("selected",true);
+			}
+		});
 		jQuery("#project-details-dialog").dialog({
 			modal: true,
 			show: {
@@ -198,6 +223,7 @@ jQuery(document).ready(function(){
 					var expense_type = jQuery("#edit_expense_type").val();
 					var minimum_amount = jQuery("#edit_min_amount").val();
 					var maximum_amount = jQuery("#edit_max_amount").val();
+					var req_receipt = jQuery("#edit_req_receipt").val();
 					// ajax call
 					jQuery.ajax({
 						type: "POST",
@@ -207,6 +233,7 @@ jQuery(document).ready(function(){
 							expense_type: expense_type,
 							minimum_amount: minimum_amount,
 							maximum_amount: maximum_amount,
+							req_receipt: req_receipt,
 							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 						}
 					}).done(function(ret){

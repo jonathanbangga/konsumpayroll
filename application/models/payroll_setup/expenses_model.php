@@ -18,20 +18,22 @@ class Expenses_model extends CI_Model {
 		");
 	}
 	
-	public function add_expense_type($expense_type_name,$minimum_amount,$maximum_amount){
+	public function add_expense_type($expense_type_name="",$minimum_amount="",$maximum_amount="",$require_receipt=""){
 		$this->db->query("
 			INSERT INTO
 			`expense_type` (
 				`expense_type_name`,
 				`minimum_amount`,
 				`maximum_amount`,
+				`require_receipt`,
 				`company_id`
 			)
 			VALUES (
 				'{$expense_type_name}',
 				'{$minimum_amount}',
 				'{$maximum_amount}',
-				{$this->company_id}
+				'{$require_receipt}',
+				'{$this->company_id}'
 			)
 		");
 	}
@@ -45,13 +47,14 @@ class Expenses_model extends CI_Model {
 		");
 	}
 	
-	public function update_expense_type($expense_type_id,$expense_type_name,$minimum_amount,$maximum_amount){
+	public function update_expense_type($expense_type_id,$expense_type_name="",$minimum_amount="",$maximum_amount="",$req_receipt=""){
 		$this->db->query("
 			UPDATE `expense_type` 
 			SET
 				`expense_type_name` = '{$expense_type_name}',
 				`minimum_amount` = '{$minimum_amount}',
-				`maximum_amount` = '{$maximum_amount}'
+				`maximum_amount` = '{$maximum_amount}',
+				`require_receipt` = '{$req_receipt}'
 			WHERE `expense_type_id` = {$expense_type_id}
 			AND `company_id` = {$this->company_id}
 		");
