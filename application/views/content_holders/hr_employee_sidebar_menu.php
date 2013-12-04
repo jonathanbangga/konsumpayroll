@@ -3,7 +3,7 @@
 	        <ul style="margin-left: 20px;">
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_basic_information">Basic Information</a></li>
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_earnings">Employment History</a></li>
-		        <li><a href="<?php print $this->uri->segment(1)?>/hr/qualified_dependents">Qualified Dependents</a></li>
+		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_qualified_dependents">Qualified Dependents</a></li>
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_training_details">Training Details</a></li>
 		      </ul>
         </li>

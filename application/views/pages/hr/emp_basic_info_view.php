@@ -35,7 +35,7 @@
 	              <td><?php print $row->gender;?></td>
 	              <td><?php print $row->marital_status;?></td>
 	              <td><?php print $row->address;?></td>
-	              <td><?php print $row->contact_no;?></td>
+	              <td><?php print $row->home_no;?></td>
 	              <td><?php print $row->tin;?></td>	
 	              <td><?php print $row->sss;?></td>
 	              <td><?php print $row->hdmf;?></td>
@@ -44,6 +44,8 @@
 	            </tr>
             <?php 			
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='15' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -170,6 +172,9 @@
 					dob_datepicker();
 					check_uname();
 					remove_row();
+
+					// remove msg_empty
+					_remove_msg_emp();
 				});
             }
             
@@ -326,7 +331,7 @@
 						          success: function(data){
 						        	  	var status = jQuery.parseJSON(data);
 			                          	if(status.success == 1){
-			                          		window.location.href = window.location.href;
+			                          		window.location.href = status.url;
 			                            }else{
 			                            	return false;
 		                              	}
@@ -468,7 +473,7 @@
 							success: function(data){
 								var status = jQuery.parseJSON(data);
 	                          	if(status.success == 1){
-	                          		window.location.href = window.location.href;
+	                          		window.location.href = status.url;
 	                            }else{
 	                            	return false;
                               	}
@@ -489,6 +494,10 @@
                 }
 	        }
 
+	        function _remove_msg_emp(){
+	        	jQuery(".msg_empt_cont").remove();
+	        }
+	        
 	        function pagination(){
 	    		jQuery("#pagination li").each(function(){
 	    		    jQuery(this).find("a").addClass("btn");

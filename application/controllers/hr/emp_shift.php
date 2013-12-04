@@ -23,11 +23,19 @@
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
-			$this->company_id = 1;
+			
 			$this->emp_id = $this->uri->segment(5);
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
 			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4);
+		
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**
@@ -193,7 +201,7 @@
 						return false;
 					}else{
 						print "
-							<tr class='shift_row_list'>
+							<tr class='shift_row_list no_result_cont'>
 				              <td colspan='13' style='text-align:left;'>No results found</td>
 				            </tr>
 						";
@@ -227,7 +235,7 @@
 						return false;
 					}else{
 						print "
-							<tr class='shift_row_list'>
+							<tr class='shift_row_list no_result_cont'>
 				              <td colspan='13' style='text-align:left;'>No results found</td>
 				            </tr>
 						";

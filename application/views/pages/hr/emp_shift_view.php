@@ -42,6 +42,8 @@
 	            </tr>
             <?php 			
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='13' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -98,7 +100,7 @@
         </div>
         <script>
         	function addNewEmp(size){
-            	var tbl = "<tr>";
+            	var tbl = "<tr class='shift_row_list'>";
 		        tbl += "<td><input readonly='readonly' type='text' name='emp_id[]' class='ihide txtfield emp_id"+size+"' /></td>";
 			    tbl += "<td><input type='text' name='emp_name[]' class='txtfield emp_name emp_name"+size+"' class_val='class_val"+size+"' attr_uname_val='"+size+"'></td>";
 			    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
@@ -131,6 +133,12 @@
 					check_uname();
 					remove_row();
 					_datepicker();
+
+					// remove msg_empty
+					_remove_msg_emp();
+
+					// remove no result item
+					_remove_no_result();
 				});
             }
             
@@ -454,6 +462,12 @@
 
 							// call edit function
 							_get_information();
+
+							// remove msg_empty
+							_remove_msg_emp();
+
+							// hide save btn
+							_hide_save_btn();
 						}
 	        	    });
 				});
@@ -480,10 +494,28 @@
 
 							// call edit function
 							_get_information();
+
+							// remove msg_empty
+							_remove_msg_emp();
+
+							// hide save btn
+							_hide_save_btn();
 						}
 	        	    });
 				});
 			}
+
+	        function _remove_msg_emp(){
+	        	jQuery(".msg_empt_cont").remove();
+	        }
+
+	        function _remove_no_result(){
+	        	jQuery(".no_result_cont").remove();
+	        }
+
+	        function _hide_save_btn(){
+				jQuery(".saveBtn").hide();
+		    }
 	        
 			jQuery(function(){
 				_addRowBtn();

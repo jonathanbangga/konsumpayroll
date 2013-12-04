@@ -27,14 +27,14 @@
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
 			$this->url = $url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4)."/".$this->uri->segment(5);
-		
-			
+
 			$this->company_info = whose_company();
-			$this->company_id = $this->company_info->company_id;
+			
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
-    			return false;
+				return false;
 			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**

@@ -41,6 +41,8 @@
 	            </tr>
             <?php
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='7' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -118,6 +120,9 @@
 			remove_row();
 			_datepicker();
 			change_employee();
+
+			// remove msg_empty
+			_remove_msg_emp();
 		});
 	}
 
@@ -345,6 +350,10 @@
 		});
 	}
 
+	function _remove_msg_emp(){
+    	jQuery(".msg_empt_cont").remove();
+    }
+	
 	function pagination(){
 		jQuery("#pagination li").each(function(){
 		    jQuery(this).find("a").addClass("btn");;

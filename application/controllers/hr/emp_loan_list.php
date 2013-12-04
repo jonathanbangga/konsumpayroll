@@ -23,10 +23,17 @@
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
-			$this->company_id = 1;
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
 			$this->menu = 'content_holders/company_menu';
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**
@@ -49,7 +56,6 @@
 			// end pagination
 			
 			$data['emp_loan'] = $this->hr_emp->emp_loan_comp($per_page, $page, $this->company_id);
-			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_loan_list_view', $data);
 		}
