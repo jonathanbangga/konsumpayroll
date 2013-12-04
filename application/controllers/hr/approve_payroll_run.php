@@ -70,8 +70,7 @@
 	       	init_pagination($uri,$total_rows,$this->per_page,6);
 	 		$data['pagi'] = $this->pagination->create_links();
 	 		$data['success'] = 	$this->session->flashdata("success");
-			$data['application'] = $this->payroll_run->payroll_run_list_by_names($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page),$this->uri->segment(5));
-			echo $this->db->last_query();		
+			$data['application'] = $this->payroll_run->payroll_run_list_by_names($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page),$this->uri->segment(5));				
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_payroll_run_view', $data);
 		}
