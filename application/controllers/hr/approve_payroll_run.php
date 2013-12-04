@@ -30,7 +30,7 @@
 			$this->menu = "content_holders/user_hr_owner_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
-			$this->per_page = 1;
+			$this->per_page = 10;
 			$this->segment = 5;
 			$this->subdomain = $this->uri->segment(1);
 			if(count($this->company_info) == 0){
