@@ -28,6 +28,8 @@
 	            </tr>
             <?php
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='7' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -91,7 +93,7 @@
 	    tbl += "<td><input readonly='readonly' type='text' name='emp_id[]' class='ihide txtfield emp_id"+size+"' /></td>";
 	    tbl += "<td><input type='text' name='emp_name[]' class='txtfield emp_name emp_name"+size+"' class_val='class_val"+size+"' attr_uname_val='"+size+"'></td>";
 	    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
-	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_type[]'><?php foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type[]', $row_ltype->leave_type_name); ?>'><?php print $row_ltype->leave_type_name;?></option><?php } ?></select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_type[]'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type[]', $row_ltype->leave_type_name); ?>'><?php print $row_ltype->leave_type_name;?></option><?php } }?></select></td>";
 	    tbl += "<td><input type='text' name='remaining_hours[]' class='remaining_hours txtfield'></td>";
 	    tbl += "<td><input type='text' name='as_of[]' class='as_of txtfield datepickerCont' id='as_of"+size+"' /></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
@@ -112,6 +114,9 @@
 			remove_row();
 			_name_listing();
 			_datepicker();
+
+			// remove msg_empty
+			_remove_msg_emp();
 		});
 	}
 
@@ -335,6 +340,10 @@
 		});
 	}
 
+	function _remove_msg_emp(){
+    	jQuery(".msg_empt_cont").remove();
+    }
+	
 	function pagination(){
 		jQuery("#pagination li").each(function(){
 		    jQuery(this).find("a").addClass("btn");;

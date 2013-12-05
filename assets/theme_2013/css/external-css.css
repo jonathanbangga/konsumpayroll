@@ -22,6 +22,9 @@
 	min-width: 0;	
 }
 
-.pagiCont_btnCont {
-	padding-bottom: 30px;
+.pagiCont_btnCont #pagination {
+	padding-bottom: 50px;
+}
+.addRowBtn {
+	margin-bottom: 23px;
 }

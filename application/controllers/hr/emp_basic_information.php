@@ -23,10 +23,19 @@
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
-			$this->company_id = 1;
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = 'content_holders/user_hr_owner_menu';
+			
+			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4);
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**
@@ -39,7 +48,7 @@
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_basic_information/index";
 			$total_rows = $this->hr_emp->basic_emp_view_all_active_user_count($this->company_id);
-			$per_page =2;
+			$per_page = $this->config->item('per_page');
 			$segment=5;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);
@@ -142,7 +151,7 @@
 					}
 					
 					$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
-					redirect($this->uri->uri_string());
+					redirect($this->url);
 				//}
 			}
 			
@@ -169,7 +178,7 @@
 					
 					if($delete_me){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully deleted!</div>');
-						echo json_encode(array("success"=>1));
+						echo json_encode(array("success"=>1,"url"=>$this->url));
 						return false;
 					}
 				}
@@ -190,7 +199,7 @@
 								"gender"=>$emp_res->gender,
 								"marital_status"=>$emp_res->marital_status,
 								"address"=>$emp_res->address,
-								"contact_no"=>$emp_res->contact_no,
+								"contact_no"=>$emp_res->home_no,
 								"mobile_no"=>$emp_res->mobile_no,
 								"home_no"=>$emp_res->home_no,
 								"tin"=>$emp_res->tin,
@@ -232,7 +241,7 @@
 						'gender'=>$gender_edit,
 						'marital_status'=>$marital_status_edit,
 						'address'=>$address_edit,
-						'contact_no'=>$contact_no_edit,
+						'home_no'=>$contact_no_edit,
 						'tin'=>$tin_edit,
 						'sss'=>$sss_edit,
 						'hdmf'=>$hdmf_edit,
@@ -241,13 +250,18 @@
 					$update_info = $this->jmodel->update_data('employee',$update_array,$emp_idEdit,'emp_id');
 					if($update_info){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
-						echo json_encode(array("success"=>1));
+						echo json_encode(array("success"=>1,"url"=>$this->url));
 						return false;
 					}else{
 						echo json_encode(array("success"=>0));
 					}
 				}
 			}
+			
+			$this->load->library('csvreader');
+	        $resultcsv =   $this->csvreader->parse_file('uploads/Test.csv');//path to csv file
+	
+	        $data['csvData'] =  $resultcsv;
 			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_basic_info_view', $data);

@@ -39,7 +39,7 @@
 		public function leave_application($comp_id,$emp_id){
 			$sql = $this->db->query("
 				SELECT *FROM `leave` l
-				LEFT JOIN leave_type lt ON l.leave_type_id = lt.leave_type_id
+				LEFT JOIN `leave_type` lt ON l.leave_type = lt.leave_type_id
 				WHERE l.company_id = {$comp_id}
 				AND l.emp_id = {$emp_id}
 			");
@@ -83,11 +83,19 @@
 		 * @param unknown_type $emp_id
 		 */
 		public function overtime($comp_id,$emp_id){
-			$sql = $this->db->query("
+			/*$sql2 = $this->db->query("
 				SELECT *FROM `overtime` o
 				LEFT JOIN overtime_type ot ON o.overtime_type_id = ot.overtime_type_id
 				LEFT JOIN location l ON o.location_id = l.location_id
 				LEFT JOIN project p ON l.project_id = p.project_id 
+				WHERE o.company_id = {$comp_id}
+				AND o.emp_id = {$emp_id}
+			");*/
+			
+			$sql = $this->db->query("
+				SELECT *FROM `overtime` o
+				LEFT JOIN overtime_type ot ON o.overtime_type_id = ot.overtime_type_id
+			
 				WHERE o.company_id = {$comp_id}
 				AND o.emp_id = {$emp_id}
 			");

@@ -1,34 +1,40 @@
-<div class="tbl-wrap">
-	<table>
-		<tr>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Salary Brackets</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Range of Compensation From</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Range of Compensation To</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Monthly Salary Credit</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Emp Monthly Contri Ss</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Emp Monthly Contri Ec</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Employee Ss</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Total</td>
-		</tr>
-		<?php 
-			if($sss_tbl != null){
-				foreach($sss_tbl as $row){
-		?>
-			<tr>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->salary_brackets;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->range_compensation_from;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->range_compensation_to;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->monthly_salary_credit;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->employer_monthly_contribution_ss;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->employer_monthly_contribution_ec;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->employee_ss;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;">Total</td>
-			</tr>
-		<?php 		
-				}
-			}else{
-				print msg_empty();
-			}
-		?>
-	</table>
-</div>
+		<div class="tbl-wrap">	
+		  <?php print $this->session->flashdata('message');?>
+          <!-- TBL-WRAP START -->
+          <table class="tbl emp_conList">
+            <tbody><tr>
+              <th style="width:50px;"></th>
+              <th style="width:170px;">Salary Brackets</th>
+              <th style="width:170px;">Range of Compensation From</th>
+              <th style="width:170px;">Range of Compensation To</th>
+              <th style="width:170px;">Monthly Salary Credit</th>
+              <th style="width:170px;">Emp Monthly Contri Ss</th>
+              <th style="width:170px;">Emp Monthly Contri Ec</th>
+              <th style="width:170px;">Employee Ss</th>
+              <th style="width:170px;">Total</th>
+            </tr>
+            <?php 
+            	if($sss_tbl != NULL){
+            		$counter = 1;
+            		foreach($sss_tbl as $row){
+            ?>
+	            <tr>
+	              	<td><?php print $counter++;?></td>
+              	  	<td><?php print $row->salary_brackets;?></td>
+					<td><?php print $row->range_compensation_from;?></td>
+					<td><?php print $row->range_compensation_to;?></td>
+					<td><?php print $row->monthly_salary_credit;?></td>
+					<td><?php print $row->employer_monthly_contribution_ss;?></td>
+					<td><?php print $row->employer_monthly_contribution_ec;?></td>
+					<td><?php print $row->employee_ss;?></td>
+					<td>Total</td>
+	            </tr>
+            <?php
+            		}
+            	}else{
+            		print "<tr><td colspan='9'>".msg_empty()."</td></tr>";
+            	}
+            ?>
+          </tbody></table>
+          <!-- TBL-WRAP END -->
+        </div>

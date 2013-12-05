@@ -2,13 +2,12 @@
         <div class="tbl-wrap">
         <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:100%" class="tbl">
+          <table style="width:auto" class="tbl">
             <tr>
-              <th style="width:50px;"></th>
-              <th style="width:130px">Employee Number</th>
+              <th style="width:width:auto;"></th>
+              <th style="width:width:auto">Employee Number</th>
               <th>Employee Name</th>
-              <th style="width:150px">Details</th>
-              <th style="width:170px">Action</th>
+              <th style="width:width:auto">Action</th>
             </tr>
             <?php 
             	if($employee != null){
@@ -20,16 +19,17 @@
 	              <td><?php print $counter++;?></td>
 	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print ucfirst($row->first_name)." ".ucfirst($row->last_name);?></td>
-	              <td></td>	
 	              <td><a attr_empid = "<?php print $row->emp_id;?>" class="btn btn-gray btn-action view_emp_dep_btn" href="javascript:void(0);">VIEW</a></td>
 	            </tr>
             <?php 	}	
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='4' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </table>
           	<div class="emp_dep_contbox ihide" title="Add Employee Dependents">
           	<?php print form_open('','onsubmit="return check_dep()"');?>
-          		<h1 class="emp_name_dep custom_h1"></h1><span class="ihide emp_idVal"></span>
+          		<h1 class="emp_name_dep custom_h1"></h1><span class="ihide emp_idVal emp_idMain"></span>
 				  <table style="width:100%" class="tbl emp_dept_contList">
 		            <tbody>
 			            <tr>
@@ -50,6 +50,10 @@
           <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this dependent?</div>
           <!-- TBL-WRAP END -->
         </div>
+          <div class="pagiCont_btnCont">
+          	<div class="left"><?php print $links;?></div>
+          	<div class="clearB"></div>
+          </div>
         <div class='editCont ihide' title='Edit Information'>
 			  <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
@@ -99,13 +103,17 @@
 			}
 
 	        function add_emp_dependent_form(size){
-				var _form = '<tr class="clear_tbl append_td_dep"><td></td><td><input name="dept_name[]" type="text" class="txtfield dept_name" id="dept_name'+size+'"></td><td><input type="text" name="dob[]" class="txtfield dob" id="dob'+size+'" readonly="readonly"></td><td><a href="javascript:void(0);" style="width:127px;" class="btn btn-red btn-action delBtnRow custom_white">DELETE</a></td></tr>';
+		        var emp_id_val = jQuery.trim(jQuery(".emp_idMain").text());
+				var _form = '<tr class="clear_tbl append_td_dep"><td><input name="emp_id_add[]" value='+emp_id_val+' type="text" class="txtfield ihide"></td><td><input name="dept_name_add[]" type="text" class="txtfield dept_name" id="dept_name'+size+'"></td><td><input type="text" name="dob_add[]" class="txtfield dob" id="dob'+size+'" readonly="readonly"></td><td><a href="javascript:void(0);" style="width:127px;" class="btn btn-red btn-action delBtnRow custom_white">DELETE</a></td></tr>';
 				return _form;
 			}
 	        
 			function view_dep(){
 				jQuery(".view_emp_dep_btn").click(function(){
 					clear_tbl();
+
+					// remove no item row
+					_remove_msg_emp();
 					jQuery(".save_btn,.del_btn_dep").hide();
 				    var _this = jQuery(this),
 				    emp_id =  jQuery(this).attr("attr_empid"),
@@ -136,9 +144,10 @@
                     						dialogClass:'transparent'
                     					});
                     					
-                                        check_dep();
+                                        //check_dep();
                                         _delete_dependentsDb();
                                         get_information();
+
 										return false;
 									}
 							});
@@ -154,20 +163,35 @@
 					yearRange: "-100:+0"
 				});
 			}
+
+			function shuffle_str(str) {
+			    var a = str.split(""),
+			        n = a.length;
+
+			    for(var i = n - 1; i > 0; i--) {
+			        var j = Math.floor(Math.random() * (i + 1));
+			        var tmp = a[i];
+			        a[i] = a[j];
+			        a[j] = tmp;
+			    }
+			    return a.join("");
+			}
 			
 			function add_new_dep(){
 				jQuery(".add_new_dep").click(function(){
-					var size = jQuery(".dob").length + 1;
+					var size = shuffle_str("1234frds");
 					var dep_form = add_emp_dependent_form(size);
 			        jQuery(".emp_dept_contList tbody").append(dep_form);
 			        jQuery(".save_btn").css("display","inline");
 			        dob_datepicker();
 			        remove_row();
+
+			     	// remove no item row
+					_remove_msg_emp();
 				});	
 			}
 
 	        function check_dep(){
-	        	//jQuery(".save_new_dep").click(function(){
 	        	    jQuery(".emp_dept_contList tr input:text").each(function(){
 	        	        var _this = jQuery(this);
 	        	        var txtfield = _this.val();
@@ -178,87 +202,9 @@
 	        	        }
 	        	    });
 	        	    
-	        	    //if(!jQuery(".emp_dept_contList tr input:text").hasClass("emp_str")){
         	    	if(jQuery(".emp_dept_contList tr input:text").hasClass("emp_str")){
-	        	    	//save_dep();
 	        	    	return false;
 	        	    }
-	        	//});
-	        }
-
-	        function save_dep2(){
-	        	urls = window.location.href;
-			    //jQuery(".emp_dept_contList tr.append_td_dep").each(function(){
-			    jQuery(".emp_dept_contList tr").each(function(){
-				    //if(jQuery(this).hasClass("append_td_dep")){
-				    	var _this = jQuery(this);
-				    	var dept_name = jQuery(this).find(".dept_name").val();
-						var dob = jQuery(this).find(".dob").val();
-						var emp_id = jQuery.trim(jQuery(".emp_idVal").text());
-						if(jQuery.trim(dept_name) && jQuery.trim(dob)){
-							if(jQuery.trim(dept_name) != "" && jQuery.trim(dob) != ""){
-								$.ajax({
-									url:urls,
-									type: "POST",
-									data:{
-										'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
-										'emp_id':emp_id,
-										'dept_name':dept_name,
-										'dob':dob,
-										'add_qual_dep':'1'
-										},success: function(data) {
-		                                    var status = jQuery.parseJSON(data);
-		                                    if(status.success == 1){
-		                                    	//_this.find(".dept_name").val("");
-		                                    	//_this.find(".dob").val("");
-		                                    	//jQuery(".emp_dept_contList .clear_tbl").each(function(){
-												//	jQuery(this).remove();
-		                                        //    });
-												//jQuery(".emp_dept_contList tbody").append(status.table);
-												//window.location.href = urls;
-		                                    }
-										}
-								});
-							}
-						}
-				    //}
-			    });
-	        }
-
-
-	        function save_dep(){
-	        	var dept_size = jQuery(".dept_name").length;
-	        	var dob_size = jQuery(".dob").length;
-
-	        	for(var a=1;a<=dept_size;a++){
-	        	    var dept_name = jQuery("#dept_name"+a).val();
-	        	    var dob = jQuery("#dob"+a).val();
-	        	    var emp_id = jQuery.trim(jQuery(".emp_idVal").text());
-
-	        	    var urls = window.location.href;
-	        	    $.ajax({
-						url:urls,
-						type: "POST",
-						data:{
-							'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
-							'emp_id':emp_id,
-							'dept_name':dept_name,
-							'dob':dob,
-							'add_qual_dep':'1'
-							},success: function(data) {
-                                var status = jQuery.parseJSON(data);
-                                if(status.success == 1){
-                                	//_this.find(".dept_name").val("");
-                                	//_this.find(".dob").val("");
-                                	//jQuery(".emp_dept_contList .clear_tbl").each(function(){
-									//	jQuery(this).remove();
-                                    //    });
-									//jQuery(".emp_dept_contList tbody").append(status.table);
-									//window.location.href = urls;
-                                }
-							}
-					});
-	        	}
 	        }
 	        
 	        function _successContBox(){
@@ -307,8 +253,7 @@
 	     							success: function(data){
 	     								var status = jQuery.parseJSON(data);
 	     	                          	if(status.success == 1){
-	     	                          		window.location.href = window.location.href;
-	     	                          		$( this ).dialog( "close" );
+	     	                          		window.location.href = status.url;
 	     	                            }else{
 	     	                            	return false;
 	     	                          	}
@@ -397,8 +342,7 @@
 							success: function(data){
 								var status = jQuery.parseJSON(data);
  	                          	if(status.success == 1){
- 	                          		window.location.href = window.location.href;
- 	                          		$( this ).dialog( "close" );
+ 	                          		window.location.href = status.url;
  	                            }else{
  	                            	return false;
  	                          	}
@@ -408,6 +352,10 @@
 	        	});
 	        }
 
+	        function _remove_msg_emp(){
+	        	jQuery(".msg_empt_cont").remove();
+	        }
+	        
 	        function dob_datepicker(){
 				jQuery(".dep_dob, .dob").datepicker({
 					changeMonth: true,
@@ -424,7 +372,6 @@
 				_successContBox();
 				update_information();
 				dob_datepicker();
-				//check_dep();
 			});
        	</script>
 <div class="footer-grp-btn">
