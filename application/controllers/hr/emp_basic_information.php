@@ -25,7 +25,7 @@
 			$this->load->model('hr/hr_employee_model','hr_emp');
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = 'content_holders/user_hr_owner_menu';
 			
 			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4);
 			

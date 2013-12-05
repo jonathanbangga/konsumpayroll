@@ -25,7 +25,7 @@
 			$this->load->model('hr/hr_employee_model','hr_emp');
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = 'content_holders/user_hr_owner_menu';
 			
 			$this->company_info = whose_company();
 			
