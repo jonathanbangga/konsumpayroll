@@ -254,7 +254,7 @@
 			    {
 			        if(jQuery(this).val() !=""){
 			        var search = jQuery("#jleave_search").val();
-			        window.location.href = "/kons/hr/approve_leave/lists_names/"+search; 
+			        window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
 			        }else{
 			           
 			        }

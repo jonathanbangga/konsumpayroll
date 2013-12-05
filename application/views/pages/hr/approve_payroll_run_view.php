@@ -210,11 +210,10 @@
 			$('#jleave_search').enter(function(e){
 		        if(jQuery(this).val() !=""){
 		        	var search = jQuery("#jleave_search").val();
-		        	window.location.href = "/kons/hr/approve_payroll_run/lists_names/"+search; 
+		        	window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_payroll_run/lists_names/"+search; 
 		        }else{
 		           
-		        }
-			  
+		        }	  
 			});
 		}
 		
@@ -230,13 +229,12 @@
 				}
 			});
 		}
-		
 
 		jQuery(function(){
 			check_all();
-			approve_this();
+			approve_this(); 
 			reject_this();
-			return_success();	
+			return_success();	 
 			search_by_name();
 			search_by_date();
 			idate_ranges();

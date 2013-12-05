@@ -182,7 +182,7 @@
 	/**
 	 * Replaces spaces with underscore
 	 * Enter description here ...
-	 * @param unknown_type $text
+	 * @param string $text
 	 */
 	function replace_space($text) { 
 	    $text = strtolower(htmlentities($text)); 
