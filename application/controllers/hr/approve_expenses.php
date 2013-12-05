@@ -50,8 +50,7 @@
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 			$total_rows = $this->expense->expense_application_count($this->company_info->company_id);
 			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
-			$data['pagi'] = $this->pagination->create_links();
-			
+			$data['pagi'] = $this->pagination->create_links();		
 			$data['page_title'] = "Expense Application"; 
 			$data['sidebar_menu'] =$this->sidebar_menu;	
 			$data['success']	= $this->session->flashdata("success");

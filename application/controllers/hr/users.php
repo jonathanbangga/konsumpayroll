@@ -16,7 +16,10 @@ class Users extends CI_Controller {
 	var $num_pagi;
 	var $segment_url;
 	var $sidebar_menu;
-	
+	var $company_info;
+	var $per_page;
+	var $segment;
+	var $subdomain;
 	public function __construct() {
 		parent::__construct();
 		$this->theme = $this->config->item('default');
@@ -24,25 +27,31 @@ class Users extends CI_Controller {
 		$this->num_pagi = 3;
 		$this->segment_url = 4;
 		$this->authentication->check_if_logged_in();	
-		$this->menu = 'content_holders/company_menu';
+		$this->menu = "content_holders/user_hr_owner_menu";
 		$this->sidebar_menu = 'content_holders/hr_approver_sidebar_menu';
-	}
-
-	public function index(){
-		$data['page_title'] = "Manage Users";
-		$company_info = whose_company();
-		if($company_info == false){
+		$this->company_info =  whose_company();
+		$this->per_page = 2;
+		$this->segment = 5;
+		$this->subdomain = $this->uri->segment(1);
+		if($this->company_info == false){
 			show_error("Company subdomain is invalid");
 			return false;
 		}
+	}
+
+	public function index(){
+		$url = "/{$this->subdomain}/hr/users/index";
+		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+		$data['page_title'] = "Manage Users";	
 		$data['sidebar_menu'] =$this->sidebar_menu;	
-		init_pagination("/{$this->uri->segment(1)}/hr/users/index",10,1,5);
+		$data['total_rows'] = $this->users->fetch_approvers_users_count($this->company_info->company_id);
+		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
 		$data['pagi'] = $this->pagination->create_links();
+		$data['company_info'] = $this->company_info;
+		$data['approval_group'] = $this->users->fetch_approval_group($this->company_info->company_id);
+		$data['approval_process'] = $this->users->approval_process($this->company_info->company_id);
+		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
 		
-		$data['company_info'] = $company_info;
-		$data['approval_group'] = $this->users->fetch_approval_group($company_info->company_id);
-		$data['approval_process'] = $this->users->approval_process($company_info->company_id);
-		$data['approvers_list'] = $this->users->fetch_approvers_users($company_info->company_id);
 		// save
 		
 			if($this->input->post('save')){
@@ -84,12 +93,12 @@ class Users extends CI_Controller {
 							"first_name" 	=> $this->db->escape_str($emp_first[$key]),
 							"middle_name"	=> $this->db->escape_str($emp_middle[$key]),
 							"account_id"	=> $this->db->escape_str($account_id),
-							"company_id"	=> $company_info->company_id
+							"company_id"	=> $this->company_info->company_id
 						);
 						$emp_id = $this->users->save_fields("employee",$fields);
 						// CREATE COMPANY APPROVERS
 						$approvers_fields = array(
-							"company_id"	=> $company_info->company_id,
+							"company_id"	=> $this->company_info->company_id,
 							"account_id"	=> $account_id,
 							"level"			=> "",
 							"deleted"		=> '0'
@@ -102,7 +111,7 @@ class Users extends CI_Controller {
 								$appgroups_fields = array(
 									"approval_process_id" => $approval_process_id[$key],
 									"emp_id"		=> $employee_info->emp_id,
-									"company_id"	=> $company_info->company_id
+									"company_id"	=> $this->company_info->company_id
 								);
 								$this->users->save_fields("approval_groups",$appgroups_fields);
 							}
@@ -135,11 +144,8 @@ class Users extends CI_Controller {
 		}
 		echo json_encode($data); 
 	}
-	
-	public function we(){
-		p($this->session->all_userdata());
-	}
+
 }
 
-/* End of file dashboard.php */
-/* Location: ./application/controllers/admin/dashboard.php */
+/* End of file users.php */
+/* Location: ./application/controllers/hr/users.php */

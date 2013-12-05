@@ -125,6 +125,7 @@ input.btn[type="submit"] {
 /** hr users input **/
 .inp_user{
 	width:200px;
+	padding:3px;
 }
 .users_text{
 	width:200px;

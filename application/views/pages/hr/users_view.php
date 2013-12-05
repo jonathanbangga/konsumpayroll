@@ -96,10 +96,8 @@
 			foreach($approval_process as $key_process=>$val_process){
 				$options .='<option value="'.$val_process->approval_process_id.'">'.$val_process->name.'</option>';	
 			}
-		}
-	
-	?>
-	
+		}	
+	?>	
 	<script type="text/javascript">
 		//token
 		var itokens = "<?php echo itoken_cookie();?>";
@@ -108,8 +106,7 @@
 			jQuery(document).on("click",".jdel_users_append",function(e){
 			    e.preventDefault();
 			    var el = jQuery(this);
-			    el.parents("tr").remove();
-			
+			    el.parents("tr").remove();	
 			});
 		}
 
@@ -211,12 +208,10 @@
 			return false;
 		}
 
-		
 		jQuery(function(){
 			add_users();
 			delete_users();
 			search_name();
 			clear_payroll_group();
 		});
-	
 	</script>
