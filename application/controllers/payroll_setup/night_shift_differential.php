@@ -21,7 +21,22 @@ class Night_shift_differential extends CI_Controller {
 		$data['page_title'] = "Night Shift Differential Settings";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
+		$data['sql_nsd'] = $this->night_shift_differential_model->get_night_shift_differential_settings();
 		$this->layout->view('pages/payroll_setup/night_shift_differential_view',$data);
+	}
+	
+	public function ajax_add_nsd_settings(){
+		$nsd_from = date("H:i:s",strtotime($this->input->post('nsd_from')));
+		$nsd_to = date("H:i:s",strtotime($this->input->post('nsd_to')));
+		$nsd_rate = $this->input->post('nsd_rate');
+		$this->night_shift_differential_model->set_night_shift_differential_settings($nsd_from,$nsd_to,$nsd_rate);
+	}
+	
+	public function ajax_update_nsd_settings(){
+		$nsd_from = date("H:i:s",strtotime($this->input->post('nsd_from')));
+		$nsd_to = date("H:i:s",strtotime($this->input->post('nsd_to')));
+		$nsd_rate = $this->input->post('nsd_rate');
+		$this->night_shift_differential_model->update_night_shift_differential_settings($nsd_from,$nsd_to,$nsd_rate);
 	}
 	
 }

@@ -238,7 +238,7 @@ jQuery(document).ready(function(){
 		var loc_id = obj.parents("tr").find(".loc_id").val();
 		var loc = obj.parents("tr").find(".loc").html();
 		var desc = obj.parents("tr").find(".desc").html();
-		jQuery(".edit_proj option").each(function(){
+		jQuery("#edit_proj option").each(function(){
 		   if(jQuery(this).val()==proj_id){
 			jQuery(this).prop("selected","selected");
 		   }else{

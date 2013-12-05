@@ -8,11 +8,11 @@
 			            <td><div class="ipadright">FILTER</div></div></td>
 			            <td>DATE FROM</td>
 			            <td> 
-			                <input type="text" class="inputs date_isearch" id="jdate_from" value="<?php echo $this->uri->segment(5);?>" readonly="readonly">
+			                <input type="text" class="inputs date_isearch" id="jdate_from" value="" readonly="readonly">
 			            </td>
 			            <td>DATE TO</td>
 			            <td>
-			                <input type="text" class="inputs date_isearch" id="jdate_to" value="<?php echo $this->uri->segment(6);?>" readonly="readonly">
+			                <input type="text" class="inputs date_isearch" id="jdate_to" value="" readonly="readonly">
 			            </td>
 			            <td>
 			                <input type="submit" value="GO" class="btn" id="jleave_go">
@@ -27,10 +27,7 @@
 		        <tbody>
 		            <tr>
 		                <td><div class="text_search">SEARCH</div></td>
-		                <td>
-		                    <input type="text" name="search" id="jleave_search" class="inputs">
-		                </td>
-		
+		                <td><input type="text" name="search" id="jleave_search" class="inputs ipadright"></td>
 		            </tr>
 		        </tbody>
 		    </table>
@@ -48,7 +45,7 @@
 			<tbody>
 				<tr>
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
-					<th style="width:170px;">Emp ID</th>
+					<th style="width:170px;">Employee ID</th>
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Leave Type</th>
 					<th style="width:170px;">Date From</th>
@@ -66,7 +63,6 @@
 				?>
 				<tr class="jleave_list">
 					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>">
-				
 					</td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					
@@ -240,7 +236,7 @@
 
 		
 		// DATEPICKERS
-		function search_date(){
+		function search_by_date(){
 			jQuery(document).on("click","#jleave_go",function(e){
 			    var d_from = jQuery("#jdate_from").val();
 			    var d_to = jQuery("#jdate_to").val();
@@ -251,6 +247,22 @@
 				}
 			});
 		}
+		// search name
+		function search_by_name(){
+			$('#jleave_search').keyup(function(e){
+			    if(e.keyCode == 13)
+			    {
+			        if(jQuery(this).val() !=""){
+			        var search = jQuery("#jleave_search").val();
+			        window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
+			        }else{
+			           
+			        }
+			    }else{
+			      
+			    }
+			});
+		}
 		
 		jQuery(function(){
 			check_all();
@@ -258,7 +270,8 @@
 			reject_this();
 			hightlight_success();
 			idate_ranges();
-			search_date();
+			search_by_date();
+			search_by_name();
 		});
 	</script>
 	

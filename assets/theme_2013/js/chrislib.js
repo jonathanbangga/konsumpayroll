@@ -1,3 +1,9 @@
+/*
+*	@version : Azelot
+*	@author: Christopher Cuizon
+*	@plugin name : chrislib
+*	@credits : github.com/bigfoot/konsumpayroll
+*/
 var kpay = {
 		overall:{
 			show_pops: function(classhere){
@@ -67,16 +73,16 @@ var kpay = {
 				},
 				save_approver: function(urls,token){
 					var fields = {
-									"lname":jQuery("input[name='lname']:visible").val(),
-									"fname":jQuery("input[name='fname']:visible").val(),
-									"mname":jQuery("input[name='mname']:visible").val(),
-									"fax":jQuery("input[name='fax']:visible").val(),
-									"email":jQuery("input[name='email']:visible").val(),
-									"contact_no":jQuery("input[name='contact_no']:visible").val(),
-									"username":jQuery("input[name='username']:visible").val(),
-									"ZGlldmlyZ2luamM": jQuery.cookie(token),
-									"submit":"true"
-								};
+						"lname":jQuery("input[name='lname']:visible").val(),
+						"fname":jQuery("input[name='fname']:visible").val(),
+						"mname":jQuery("input[name='mname']:visible").val(),
+						"fax":jQuery("input[name='fax']:visible").val(),
+						"email":jQuery("input[name='email']:visible").val(),
+						"contact_no":jQuery("input[name='contact_no']:visible").val(),
+						"username":jQuery("input[name='username']:visible").val(),
+						"ZGlldmlyZ2luamM": jQuery.cookie(token),
+						"submit":"true"
+					};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);	
 						if(res.success == '0'){
@@ -267,11 +273,11 @@ var kpay = {
 			cost_center:{
 				add_costcenter: function(urls,token,center_code,description){
 					var fields = {
-							"cost_center_code[]":center_code,
-							"cost_center_description[]":description,
-							"ZGlldmlyZ2luamM":jQuery.cookie(token),
-							"submit":"true"
-							};
+						"cost_center_code[]":center_code,
+						"cost_center_description[]":description,
+						"ZGlldmlyZ2luamM":jQuery.cookie(token),
+						"submit":"true"
+					};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
 						if(res.success == 0)
@@ -286,11 +292,11 @@ var kpay = {
 				},
 				delete_costcenter: function(urls,token,cost_center_id,company_id){
 					var fields = {
-							"cost_center_id":cost_center_id,
-							"company_id":company_id,
-							"ZGlldmlyZ2luamM":jQuery.cookie(token),
-							"delete":'true'
-							};
+						"cost_center_id":cost_center_id,
+						"company_id":company_id,
+						"ZGlldmlyZ2luamM":jQuery.cookie(token),
+						"delete":'true'
+					};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
 						if(res.success == 0)
@@ -678,7 +684,7 @@ var kpay = {
 										});
 									});
 								},
-								No: function () {
+								"No": function () {
 									jQuery(".option_alert").dialog("close");
 								}
 							}
@@ -696,24 +702,24 @@ var kpay = {
 							height: 150,
 							modal: true,
 							buttons: {
-							"Yes": function () {
-								jQuery("#jcomp_"+ids).remove();
-								jQuery(".option_alert").dialog("close");
-								jQuery.post(urls,{
-								'delete':true,
-								'user_id':ids,
-								'ZGlldmlyZ2luamM':jQuery.cookie(token),
-								},function(d){
-									alert("User has been deleted");
+								"Yes": function () {
+									jQuery("#jcomp_"+ids).remove();
 									jQuery(".option_alert").dialog("close");
-									jQuery(".admin_list_id"+ids).hide('slow',function(){
-										window.location.href ="/admin/users/all_admin/";
+									jQuery.post(urls,{
+									'delete':true,
+									'user_id':ids,
+									'ZGlldmlyZ2luamM':jQuery.cookie(token),
+									},function(d){
+										alert("User has been deleted");
+										jQuery(".option_alert").dialog("close");
+										jQuery(".admin_list_id"+ids).hide('slow',function(){
+											window.location.href ="/admin/users/all_admin/";
+										});
 									});
-								});
-							},
-							No: function () {
-								jQuery(".option_alert").dialog("close");
-							}
+								},
+								No: function () {
+									jQuery(".option_alert").dialog("close");
+								}
 							}
 						});						
 					});
@@ -807,6 +813,7 @@ function ierror_duplicate(fields){
 	return dup;
 }
 
+// DATE RANGES FROM AND TO
 function idate_ranges(){
 	$( "#jdate_from, #jdate_to" ).datepicker({
 		defaultDate: "+1w",
@@ -818,39 +825,39 @@ function idate_ranges(){
 			  var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); 
 			  var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); 
 			  $('#jdate_to').datepicker("option","minDate",rMin);
-			  $('#jdate_to').datepicker("option","maxDate",rMax);                    
+			 // $('#jdate_to').datepicker("option","maxDate",rMax);                    
 			}	
 		}
 	});
 }
 
 
-// overwrite comments
+// overwrite alert functionalities
 window.alert = function(msg){
    jQuery(".source_error").html(msg);
    jQuery(".source_error").dialog({
-	   width: 'inherit',
-	   draggable: false,
-	   modal: true,
-	  
-	   minWidth:'400',
-	   maxWidth:'600',
-		width:'350',
-	   dialogClass:'transparent',
+		width: 'inherit',
+		draggable: false,
+		modal: true,
+		minWidth:'400',
+		maxWidth:'600',
+		width:'300',
+		dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
 				$( this ).dialog( "close" );
 			}
 		},
-	   open : function() {
+		open : function() {
 		   jQuery('.source_error').dialog("option", "title" ,"Warning");
-	   },
-	   overlay: {
-   		   opacity: 0
-   	   }
+		},
+		overlay: {
+		   opacity: 0
+		}
    });
 }
 
+// HIGHTLIGHT SUCCESS 
 function hightlight_success(){
 	var icheck = jQuery.trim(jQuery(".highlight_message").text());
 	if(icheck){
@@ -858,7 +865,20 @@ function hightlight_success(){
 	}
 }
 		
+// plugin style scripting
 
+$.fn.enter = function(fn) {  
+    return this.each(function() { 
+		var el = jQuery(this);
+        el.bind('enterPress',fn);
+        el.keyup(function(e){
+            if(e.keyCode == 13){ el.trigger("enterPress"); }
+        });
+    });  
+}; 
+
+// end plugin style
+		
 jQuery(function() {
 	kpay.hr.company_sidebar();
 });
