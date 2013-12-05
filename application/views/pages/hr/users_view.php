@@ -11,8 +11,6 @@
 					<th style="width:170px;">First Name</th>
 					<th style="width:170px;">Middle Name</th>
 					<th style="width:170px;">Last Name</th>
-					<th style="width:170px;">Password</th>
-					<th style="width:170px;">Retype password</th>
 					<th style="width:170px;">Payroll Group</th>
 					<th style="width:170px;">Permission</th>
 					<th style="width:170px">Action</th>
@@ -22,7 +20,7 @@
 						foreach($approvers_list as $key=>$approvers):
 				?>
 				<tr>
-					<td><?php echo $key+1;?></td>
+					<td> <?php  echo ($this->uri->segment(5))? $key+$this->uri->segment(5)+4:$key+1;?></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td>
 						<input type="hidden" id="account_id" name="update_account_id" value="<?php echo base64_encode($approvers->account_id);?>">
@@ -41,14 +39,7 @@
 						<input type="hidden" name="update_last_name[]" value="<?php echo $approvers->last_name;?>" class="inp_user">
 						<div class="users_text"><?php echo $approvers->last_name;?></div>
 					</td>
-					<td>
-						<input type="hidden" name="update_password[]" class="inp_userlist">
-						<div class="users_text">&nbsp;</div>
-					</td>
-					<td>
-						<input type="hidden" name="update_retype_password[]" class="inp_userlist">
-						<div class="users_text">&nbsp;</div>
-					</td>
+					
 					<td>
 						<input type="hidden" name="update_payroll_group[]" class="inp_userlist">
 						<div class="users_text">
@@ -65,7 +56,7 @@
 					<td>
 						<input type="hidden" class="inp_userlist" name="update_permission[]">
 					</td>
-					<td> <a class="btn btn-gray btn-action" href="#" edit_approvers="<?php echo $approvers->account_id;?>" >EDIT</a> </td>
+					<td> <a class="btn btn-gray btn-action jmanage_users" href="javascript:void(0);" edit_approvers="<?php echo $approvers->account_id;?>" >EDIT</a> </td>
 				</tr>
 				
 				<?php 		
@@ -80,7 +71,7 @@
 		
 	<div class="left pagi-lefts">
 	<a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a>
-	<input type="submit" name="save" value="SAVE" class="btn ihide" />
+		<input type="submit" name="save" value="SAVE" class="btn ihide" />
 	</div>
 	<div class="right pagi-rights"><?php  echo $pagi;?></div>
 	<p>&nbsp;</p>
@@ -89,6 +80,50 @@
 	<!-- FOOTER-GRP-BTN START -->
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>
 	<!-- FOOTER-GRP-BTN END -->
+	</div>
+	
+	<div class="ihide">
+		<div class="jedit_users" title="EDIT USERS">
+		<?php echo form_open("",array("onsubmit"=>"return submit_edit_users();"));?>
+				<table>
+					<tr>
+						<td style="width:120px;">Payroll Cloud ID</td>
+						<td>
+						<input type="hidden" name="jaccount_id" id="jaccount_id">
+						<div id="jpayroll_cloud_id"></div></td>
+					</tr>
+					<tr>
+						<td>Email Address</td>
+						<td>
+						<input type="hidden" name="old_jemail_address" class="txtfield input_width">
+						<input type="text" name="jemail_address" class="txtfield input_width"></td>
+					</tr>
+					<tr>
+						<td>First Name</td>
+						<td><input type="text" name="jfname" class="txtfield input_width"></td>
+					</tr>
+					<tr>
+						<td>Middle Name</td>
+						<td><input type="text" name="jmname" class="txtfield input_width"></td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td><input type="text" name="jlname" class="txtfield input_width"></td>
+					</tr>
+					<tr>
+						<td>Payroll Group</td>
+						<td><select name="jpayroll_group" id="jpayroll_group" class="txtselect input_width"></select></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td class="flright">
+							<input type="submit" name="update" value="UPDATE" class="btn" id="submit_users">
+							<input type="button" name="cancel" value="CANCEL" class="btn" id="update_users">
+						</td>
+					</tr>
+				</table>
+			<?php echo form_close();?>
+		</div>
 	</div>
 	<?php 
 		$options = "<option value=\"\">Please select group</option>";
@@ -139,8 +174,6 @@
 				    html +='<td><input type="text" class="inp_user" name="first_name[]"></td>';
 				    html +='<td><input type="text" class="inp_user" name="middle_name[]"></td>';
 				    html +='<td><input type="text" class="inp_user" name="last_name[]"></td>';    
-				    html +='<td><input type="text" class="inp_user" name="password[]"></td>'; 
-				    html +='<td><input type="text" class="inp_user" name="retype_password[]"></td>';
 				    html +='<td><input type="hidden" class="inp_user" name="payroll_groups[]">';
 				    html +='<select name="approval_process_id[]" class="inp_user">'+$select_options+'</select>';
 					html +='<input type="hidden" class="inp_user" name="approval_process_ids[]" readonly="readonly">';
@@ -208,10 +241,70 @@
 			return false;
 		}
 
+		//EDIT USERS
+		function edit_users(){
+			jQuery(document).on("click",".jmanage_users",function(e){
+				e.preventDefault();
+				var el = jQuery(this);
+				var account_id = el.attr("edit_approvers");
+				var urls = "/<?php echo $this->subdomain;?>/hr/users/check_users/";
+				var fields = {
+					"account_id":account_id,
+					"ZGlldmlyZ2luamM":jQuery.cookie(itokens),
+				};	
+				// checker
+				jQuery.post(urls,fields,function(json){
+					var res = jQuery.parseJSON(json);	
+					if(res){
+						var options= '<?php echo $options;?>';
+						jQuery("#jpayroll_cloud_id").text(res.payroll_cloud_id);
+						jQuery("input[name='jemail_address']").empty().val(res.email);
+						jQuery("input[name='old_jemail_address']").empty().val(res.email);
+						jQuery("input[name='jfname']").empty().val(res.first_name);
+						jQuery("input[name='jmname']").empty().val(res.middle_name);
+						jQuery("input[name='jlname']").empty().val(res.last_name);
+						jQuery("#jpayroll_group").html(options);
+						jQuery("#jaccount_id").empty().val(res.account_id);
+					}
+				});	
+				kpay.overall.show_pops(".jedit_users");	
+			});
+			jQuery(document).on("click","#update_users",function(e){
+				jQuery(".jedit_users").dialog('close');
+			});
+		}
+
+		function submit_edit_users(){
+			var urls =  "/<?php echo $this->subdomain;?>/hr/users/update_users/";
+			var fields = {
+				"jaccount_id":jQuery("input[name='jaccount_id']").val(),
+				"jemail_address":jQuery("input[name='jemail_address']").val(),
+				"old_jemail_address":jQuery("input[name='old_jemail_address']").val(),
+				"jfname":jQuery("input[name='jfname']").val(),
+				"jmname":jQuery("input[name='jmname']").val(),
+				"jlname":jQuery("input[name='jlname']").val(),
+				"jpayroll_group":jQuery("input[name='jpayroll_group']").val(),
+				"ZGlldmlyZ2luamM":jQuery.cookie(itokens),
+				"update":true
+			};	
+			jQuery.post(urls,fields,function(json){
+				var res = jQuery.parseJSON(json);	
+				if(res.success == '0'){
+					alert(res.error);
+				}else{
+					jQuery(".success_messages").empty().html("<p>Successfully Updated</p>");
+					kpay.overall.show_success(".success_messages");
+				}
+				console.log(res);
+			});		
+			return false;
+		}
+
 		jQuery(function(){
 			add_users();
 			delete_users();
 			search_name();
 			clear_payroll_group();
+			edit_users();
 		});
 	</script>
