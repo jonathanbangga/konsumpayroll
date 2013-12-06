@@ -21,7 +21,24 @@ class Loans extends CI_Controller {
 		$data['page_title'] = "Loans";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
+		$data['l_sql'] = $this->loans_model->get_loans();
 		$this->layout->view('pages/payroll_setup/loans_view',$data);
+	}
+	
+	public function ajax_add_loans(){
+		$loan = mysql_real_escape_string($this->input->post('loan'));
+		$this->loans_model->add_loans($loan);
+	}
+	
+	public function ajax_delete_loans(){
+		$load_id = $this->input->post('loan_id');
+		$this->loans_model->delete_loans($load_id);
+	}
+	
+	public function ajax_update_loans(){
+		$load_id = $this->input->post('loan_id');
+		$loan = mysql_real_escape_string($this->input->post('loan'));
+		$this->loans_model->update_loans($load_id,$loan);
 	}
 	
 }
