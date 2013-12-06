@@ -31,7 +31,7 @@
 						LEFT JOIN employee e on e.account_id = ca.account_id
 						LEFT JOIN accounts a on a.account_id = e.account_id
 						WHERE ca.company_id = {$this->db->escape_str($comp_id)} and ca.deleted = '0' 
-						AND e.deleted = '0' AND a.deleted = '0' ORDER BY ca.level DESC
+						AND e.deleted = '0' AND a.deleted = '0' ORDER BY ca.level DESC 
 						";
 				if($limit){
 					$sql .=" LIMIT {$start},{$limit}";
@@ -44,6 +44,22 @@
 			}else{
 				return false;
 			}
+		}
+		
+		public function fetch_approvers_users_count($comp_id){
+			if(is_numeric($comp_id)){
+				$query = $this->db->query("SELECT DISTINCT count(*) as val FROM company_approvers ca 
+							LEFT JOIN employee e on e.account_id = ca.account_id
+							LEFT JOIN accounts a on a.account_id = e.account_id
+							WHERE ca.company_id = {$this->db->escape_str($comp_id)} and ca.deleted = '0' 
+							AND e.deleted = '0' AND a.deleted = '0'");
+				$row = $query->row();
+				$num_rows = $query->num_rows();
+				$query->free_result();
+				return ($num_rows) ? $row->val : 0;
+			}else{
+				return false;
+			}		
 		}
 		
 		/**

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2013 at 03:28 AM
+-- Generation Time: Dec 06, 2013 at 06:41 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `token` varchar(250) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `accounts`
@@ -61,12 +61,24 @@ INSERT INTO `accounts` (`account_id`, `payroll_cloud_id`, `payroll_system_accoun
 (23, 'sdfsdfsd', 0, '4297f44b13955235245b2497399d7a93', 2, '123123', 3, '', '0'),
 (24, '1006007143', 0, '85545f99b90383f151150a9424dc9851', 2, 'website.qa@gmail.com', 3, '', '0'),
 (25, '10060071434', 0, '85545f99b90383f151150a9424dc9851', 2, 'website.qa3@gmail.com', 3, '', '0'),
-(26, '1006007143d', 0, '85545f99b90383f151150a9424dc9851', 2, 'website.qa4@gmail.com', 3, '', '0'),
+(26, '1006007143d', 0, '85545f99b90383f151150a9424dc9851', 2, 'jaymilcarredo@gmail.com', 3, '', '0'),
 (27, 'haha@yahoo.com', 3, 'ac5ea27c0e088bfcc6d5283c53746128', 2, 'haha@yahoo.com', 2, '', '0'),
 (28, '12234567890234567892', 0, '1ab331350769d33013e15806ddf260c5', 2, 'chris@techgrowthglobal.com', 3, '', '1'),
 (29, '12234567890234567892', 0, '1ab331350769d33013e15806ddf260c5', 2, '', 3, '', '1'),
 (30, '12234567890234567892', 0, '1ab331350769d33013e15806ddf260c5', 2, '', 3, '', '1'),
-(31, '112344444', 0, '1f4f3059ee37bec5e053ec6a7e3aeba3', 2, '', 3, '', '0');
+(31, '112344444', 0, '1f4f3059ee37bec5e053ec6a7e3aeba3', 2, '', 3, '', '0'),
+(32, '1006007145', 0, 'ecf70ae11fa4f29d87a96ded477739f8', 2, '', 3, '', '0'),
+(33, '123123123', 2, 'c6d57ad4535dd5250044d5f3bd570567', 2, '', 3, '', '0'),
+(34, '23333333333', 2, 'c6d57ad4535dd5250044d5f3bd570567', 2, '', 3, '', '0'),
+(35, '2222222', 0, 'f5bb0c8de146c67b44babbf4e6584cc0', 2, 'website.qa45@gmail.com', 3, '', '0'),
+(36, '222222213213', 0, 'f5bb0c8de146c67b44babbf4e6584cc0', 2, 'website.qa445@gmail.com', 3, '', '0'),
+(37, '2222222333', 0, '1bec5bd5a5f7d955acba078a359f4183', 2, 'website.qa344@gmail.com', 3, '', '0'),
+(38, '100600714343', 0, '3119546afe85c9ab71aae9c98cccef6c', 2, '10060071434@yhaoo.com', 3, '', '0'),
+(39, '100000000000', 2, '7b591a2a55585e166465a838c28a2c5f', 2, 'christophercuizons@techgrowthglobal.com', 3, '', '0'),
+(40, '100600714346', 2, '782d39787e5b5f58fd8f8426aa49e3a7', 2, 'email32@email.com', 3, '', '0'),
+(41, '100600714347', 2, '782d39787e5b5f58fd8f8426aa49e3a7', 2, 'email33@email.com', 3, '', '0'),
+(42, '10060071412323', 2, '679a77cf6ab36fe241b81b497a444e5f', 2, '', 3, '', '0'),
+(43, '10060071412325', 2, 'cf52405d7da749a787ab0140b9c00a27', 2, '', 3, '', '0');
 
 -- --------------------------------------------------------
 
@@ -101,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`activity_logs_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `activity_logs`
@@ -113,7 +125,9 @@ INSERT INTO `activity_logs` (`activity_logs_id`, `name`, `date`, `company_id`, `
 (3, 'administrator has added a company', '2013-11-25 08:34:17', 1, '0'),
 (4, 'administrator has added a company', '2013-11-30 07:27:42', 0, '0'),
 (5, 'administrator has added a company', '2013-11-30 08:42:33', 0, '0'),
-(6, 'administrator has added a company', '2013-12-02 03:22:49', 5, '0');
+(6, 'administrator has added a company', '2013-12-02 03:22:49', 5, '0'),
+(7, 'administrator has added a company', '2013-12-03 03:35:30', 10, '0'),
+(8, 'administrator has added a company', '2013-12-05 10:04:08', 12, '0');
 
 -- --------------------------------------------------------
 
@@ -165,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `approval_groups` (
   `level` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   PRIMARY KEY (`approval_group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `approval_groups`
@@ -178,7 +192,11 @@ INSERT INTO `approval_groups` (`approval_group_id`, `approval_process_id`, `emp_
 (4, 11, 12, 0, 1),
 (5, 16, 13, 0, 4),
 (6, 16, 14, 0, 4),
-(7, 17, 15, 0, 4);
+(7, 17, 15, 0, 4),
+(8, 16, 23, 0, 4),
+(9, 16, 24, 0, 4),
+(10, 16, 25, 0, 4),
+(11, 16, 26, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -250,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `assigned_company` (
   `payroll_system_account_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`assigned_company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `assigned_company`
@@ -265,7 +283,10 @@ INSERT INTO `assigned_company` (`assigned_company_id`, `company_id`, `payroll_sy
 (26, 6, 2, '0'),
 (27, 7, 2, '0'),
 (28, 8, 2, '0'),
-(29, 9, 2, '0');
+(29, 9, 2, '0'),
+(30, 10, 2, '0'),
+(31, 11, 2, '0'),
+(32, 12, 2, '0');
 
 -- --------------------------------------------------------
 
@@ -360,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `company`
@@ -375,7 +396,10 @@ INSERT INTO `company` (`company_id`, `subscription_date`, `company_name`, `numbe
 (6, '2013-12-02 08:12:49', 'callcentershit', 0, 'callcentershit', 'callcentershit', '', 'callcentershit', 'callcentershit', '', 'callcentershit', 'government', 'callcentershit', 'callcentershit', '', 'callcentershit', 'callcentershit', '', '', '', '', '', '', '2aef08d806e30cb060129df12931bcd6.jpg', 'Active', '0'),
 (7, '2013-12-02 08:15:31', 'callcentershit2', 0, 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'private', 'callcentershit2', 'callcentershit2', '', 'callcentershit2', 'callcentershit2', '', '', '', '', '', '', '6d3e1fc9ae0b508d5ee9db7a94ac385a.jpg', 'Active', '0'),
 (8, '2013-12-02 08:16:34', '$dir.$id.', 0, '$dir.$id.', '$dir.$id.', '', '$dir.$id.', '$dir.$id.', '', '$dir.$id.', 'government', '$dir.$id.', '$dir.$id.', '', '$dir.$id.', '$dir.$id.', '', '', '', '', '', '', '4ba42d6bc44891ba5b1900d3788eac37.jpg', 'Active', '0'),
-(9, '2013-12-02 08:17:31', '$dir.$id.$dir.$id.$dir.$id.$dir.$id.', 0, '$dir.$id.$dir.$', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.$dir.$id.', 'government', '$dir.$id.$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '', '', '', '', '', '34d0807f2a96a1796286b82bfefdc57b.jpg', 'Active', '0');
+(9, '2013-12-02 08:17:31', '$dir.$id.$dir.$id.$dir.$id.$dir.$id.', 0, '$dir.$id.$dir.$', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.$dir.$id.', 'government', '$dir.$id.$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '$dir.$id.$dir.$id.', '$dir.$id.$dir.$id.', '', '', '', '', '', '', '34d0807f2a96a1796286b82bfefdc57b.jpg', 'Active', '0'),
+(10, '2013-12-03 03:35:21', 'Company Information', 0, 'CompanyInformat', 'Company Information', '', 'Company Information', 'Company Information', '', 'Company Information', 'government', 'Company Information', 'Company Information', '', 'Company Information', 'Company Information', '', '', '', '', '', '', 'ab7217c9b9d36f447dd3dc436acedc62.jpg', 'Active', '0'),
+(11, '2013-12-03 06:04:34', 'Information', 0, 'Information', 'Information', '', 'Information', 'Information', '', 'Information', 'government', 'Information', 'Information', '', 'Information', 'Information', '', '', '', '', '', '', '02595883c736e846e9cb188dc04efca8.jpg', 'Active', '0'),
+(12, '2013-12-05 10:03:59', 'Information2', 0, 'Information2', 'Information2', '', 'Information2', 'Information2', '', 'Information2', 'government', 'Information2', 'Information2', '', 'Information2', 'Information2', '', '', '', '', '', '', '0a99b80823479f4e117f099c464ca7e3.jpg', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -390,7 +414,7 @@ CREATE TABLE IF NOT EXISTS `company_approvers` (
   `level` tinyint(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`company_approvers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
 
 --
 -- Dumping data for table `company_approvers`
@@ -415,7 +439,16 @@ INSERT INTO `company_approvers` (`company_approvers_id`, `account_id`, `company_
 (86, 28, 5, 3, '1'),
 (87, 29, 5, 2, '1'),
 (88, 30, 5, 1, '1'),
-(89, 31, 5, 2, '0');
+(89, 31, 5, 2, '0'),
+(90, 32, 10, 2, '0'),
+(91, 33, 11, 2, '0'),
+(92, 34, 11, 4, '0'),
+(93, 38, 4, 0, '0'),
+(94, 39, 4, 0, '0'),
+(95, 40, 4, 0, '0'),
+(96, 41, 4, 0, '0'),
+(97, 42, 12, 1, '0'),
+(98, 43, 12, 2, '0');
 
 -- --------------------------------------------------------
 
@@ -615,7 +648,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`emp_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `employee`
@@ -625,7 +658,7 @@ INSERT INTO `employee` (`emp_id`, `account_id`, `payroll_group_id`, `permission_
 (1, 12, 13, 0, 1, 0, 0, 0, 'marquez', 'christopher', 'cuizon', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (2, 13, 14, 0, 1, 0, 0, 0, 'vergara', 'allan', 'mercado', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (3, 14, 0, 0, 4, 0, 0, 0, 'cuizon', 'jojane', 'montalban', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(4, 15, 0, 0, 4, 0, 0, 0, 'alcomendras', 'jojane', 'montalban', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(4, 15, 0, 0, 4, 0, 0, 0, 'alcomendras1', 'jojane', 'montalban', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (5, 16, 0, 0, 1, 0, 0, 0, 'gallanida', 'kris', 'edward', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (6, 17, 0, 0, 1, 0, 0, 0, '123123', 'christopher', '123123213', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (7, 18, 0, 0, 1, 0, 0, 0, '123123', 'christopher', '123123213', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
@@ -636,11 +669,20 @@ INSERT INTO `employee` (`emp_id`, `account_id`, `payroll_group_id`, `permission_
 (12, 23, 0, 0, 1, 0, 0, 0, '312312', '123123', '23123', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Inactive', '1'),
 (13, 24, 0, 0, 4, 0, 0, 0, '100600714', '100600714', '100600714', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (14, 25, 0, 0, 4, 0, 0, 0, 'latang monggos', '100600714', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
-(15, 26, 0, 0, 4, 0, 0, 0, 'latang monggos', '100600714', 'lata', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(15, 26, 0, 0, 4, 0, 0, 0, 'mendoza', 'jaymila', 'carredo', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
 (16, 28, 0, 0, 5, 0, 0, 0, 'banga', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '123123', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
 (17, 29, 0, 0, 5, 0, 0, 0, 'marquez', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
 (18, 30, 0, 0, 5, 0, 0, 0, 'latang monggos', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '1'),
-(19, 31, 0, 0, 5, 0, 0, 0, 'mendoza2', 'madonna', 'mendzon', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0');
+(19, 31, 0, 0, 5, 0, 0, 0, 'mendoza2', 'madonna', 'mendzon', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(20, 32, 0, 0, 10, 0, 0, 0, 'latang monggos', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(21, 33, 0, 0, 11, 0, 0, 0, 'Information', 'Information', 'Information', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(22, 34, 0, 0, 11, 0, 0, 0, 'Information', 'Information', 'Information', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(23, 38, 0, 0, 4, 0, 0, 0, '10060071434', '10060071434', '10060071434', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(24, 39, 0, 0, 4, 0, 0, 0, 'cuizon345', 'christopher234', 'cuizons234', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(25, 40, 0, 0, 4, 0, 0, 0, 'jojane', 'jojane', 'jojane', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(26, 41, 0, 0, 4, 0, 0, 0, 'jojane', 'jojane', 'jojane', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(27, 42, 0, 0, 12, 0, 0, 0, 'cuizon', 'christopher', 'marquez', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0'),
+(28, 43, 0, 0, 12, 0, 0, 0, 'cuizon', 'christine ', 'reyes', '0000-00-00', 'Male', 'Married', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -752,14 +794,14 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
 --
 
 INSERT INTO `employee_leaves_application` (`employee_leaves_application_id`, `company_id`, `emp_id`, `leave_type_id`, `reasons`, `date_start`, `date_end`, `date_return`, `note`, `leave_application_status`, `attachments`, `deleted`) VALUES
-(1, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(2, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(3, 4, 4, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(4, 4, 4, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(5, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(6, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(7, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(8, 4, 4, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0');
+(1, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'reject', 'asjlfsdfsd', '0'),
+(2, 4, 5, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'approve', 'asjlfsdfsd', '0'),
+(3, 4, 5, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(4, 4, 6, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(5, 4, 7, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(6, 4, 6, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(7, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
+(8, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0');
 
 -- --------------------------------------------------------
 
@@ -925,10 +967,10 @@ CREATE TABLE IF NOT EXISTS `employee_timesheets` (
 --
 
 INSERT INTO `employee_timesheets` (`timesheets_id`, `emp_id`, `company_id`, `date_applied`, `date_from`, `date_to`, `hoursworked`, `tardiness`, `undertime`, `timesheet`, `note`, `timesheets_status`, `deleted`) VALUES
-(1, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'approve', '0'),
-(2, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'approve', '0'),
-(3, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0'),
-(4, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0');
+(1, 4, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-26 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'pending', '0'),
+(2, 5, 4, '0000-00-00', '2013-11-29 00:00:00', '2013-12-23 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'pending', '0'),
+(3, 6, 4, '0000-00-00', '2013-11-30 00:00:00', '2013-12-11 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0'),
+(4, 7, 4, '0000-00-00', '2013-11-28 00:00:00', '2013-12-02 02:03:23', '03:00:00', '04:00:00', '04:00:00', 'my timesheet we', 'my timesheet we', 'reject', '0');
 
 -- --------------------------------------------------------
 
@@ -1032,16 +1074,16 @@ CREATE TABLE IF NOT EXISTS `expenses` (
 
 INSERT INTO `expenses` (`expense_id`, `emp_id`, `expense_type`, `project`, `details`, `min`, `max`, `expense_date`, `payroll_date`, `amount`, `company_id`, `expense_status`, `deleted`) VALUES
 (1, 4, '1', 'regular', 'A couple of things to note here. First off, you’ll notice that I’m using an static class member to store the type of the request. That’s because we’re getting the response format correctly, but we cannot tell the rest of the application about it. At this early point of the application execution, the config class is not yet loaded so we need to use another hook. With that in mind, we’ll need to make it static so it’s not overridden when we call the next hook.', 1000000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 11123.00, 4, 'approve', '0'),
-(2, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(3, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(4, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(5, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(6, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(7, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(8, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(9, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(10, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0'),
-(11, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'reject', '0');
+(2, 5, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-01 00:00:00', '2013-11-11 00:00:00', 99999999.99, 4, 'reject', '0'),
+(3, 5, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-23 00:00:00', '2013-11-06 07:18:39', 99999999.99, 4, 'approve', '0'),
+(4, 8, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-25 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'approve', '0'),
+(5, 8, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'pending', '0'),
+(6, 8, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-12-10 00:00:00', 99999999.99, 4, 'pending', '0'),
+(7, 11, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'pending', '0'),
+(8, 11, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-16 00:00:00', 99999999.99, 4, 'pending', '0'),
+(9, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'pending', '0'),
+(10, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'approve', '0'),
+(11, 4, 'company', 'regular', 'test', 1000000.00, 99999999.99, '2013-11-13 00:00:00', '2013-11-20 00:00:00', 99999999.99, 4, 'approve', '0');
 
 -- --------------------------------------------------------
 
@@ -1079,7 +1121,7 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`government_registration_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `government_registration`
@@ -1087,7 +1129,9 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
 
 INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo_code`, `sss_id`, `hdmf`, `phil_health`, `category`, `company_id`, `status`, `deleted`) VALUES
 (1, '12234567890234567892', '1234567890123456789', '2345678901234567234', '1234567890234567834', '45678902312345678923', 'regular', 1, 'Active', '0'),
-(2, '12234567890234567892', '12234567890234567892', '12234567890234567892', '12234567890234567892', '12234567890234567892', 'regular', 5, 'Active', '0');
+(2, '12234567890234567892', '12234567890234567892', '12234567890234567892', '12234567890234567892', '12234567890234567892', 'regular', 5, 'Active', '0'),
+(3, '1222222', '1222222', '1222222', '1222222', '1222222', 'regular', 10, 'Active', '0'),
+(4, '11111111111111', '11111111111111', '11111111111111', '11111111111111', '11111111111111', 'regular', 12, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1484,16 +1528,16 @@ CREATE TABLE IF NOT EXISTS `overtime` (
 
 INSERT INTO `overtime` (`overtime_id`, `emp_id`, `overtime_date_applied`, `overtime_from`, `overtime_to`, `overtime_type_id`, `rate`, `project`, `project_location`, `start_time`, `end_time`, `no_of_hours`, `with_nsd_hours`, `company_id`, `reason`, `notes`, `status`, `overtime_status`, `deleted`) VALUES
 (1, 4, '2013-11-27 01:05:13', '0000-00-00 00:00:00', '2013-11-20 09:26:27', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 2, 10, 4, 'reason', 'notes', 'Active', 'pending', '0'),
-(2, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
-(3, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
-(4, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
-(5, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
+(2, 5, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
+(3, 6, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
+(4, 5, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
+(5, 7, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
 (6, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
 (7, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
 (8, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
 (9, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
 (10, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0'),
-(11, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'pending', '0');
+(11, 4, '2013-11-27 10:35:40', '2013-11-29 10:20:46', '2013-11-30 12:25:48', '1', 400.00, 'project location', 'project location', '06:00:00', '08:00:00', 9, 10, 4, 'weeeeeeeee', 'afasdfsd', 'Active', 'reject', '0');
 
 -- --------------------------------------------------------
 
@@ -1569,16 +1613,16 @@ CREATE TABLE IF NOT EXISTS `payroll_run` (
 --
 
 INSERT INTO `payroll_run` (`payroll_run_id`, `company_id`, `emp_id`, `period_from`, `period_to`, `run_by`, `payroll_group_id`, `details`, `note`, `payroll_run_status`, `deleted`) VALUES
-(1, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(2, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(3, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(4, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(5, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(6, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(7, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(8, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(9, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(10, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
+(1, 4, 4, '2013-11-29 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(2, 4, 5, '2013-11-29 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(3, 4, 5, '2013-12-10 09:20:16', '2013-12-15 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(4, 4, 6, '2013-12-05 09:20:16', '2013-12-20 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(5, 4, 6, '2013-11-01 09:20:16', '2013-11-10 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(6, 4, 7, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(7, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(8, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(9, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
+(10, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'pending', '0'),
 (11, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
 (12, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
 (13, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
@@ -1590,7 +1634,7 @@ INSERT INTO `payroll_run` (`payroll_run_id`, `company_id`, `emp_id`, `period_fro
 (19, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
 (20, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
 (21, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0'),
-(22, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'approve', '0');
+(22, 4, 4, '2013-11-28 09:20:16', '2013-11-30 09:11:27', 'christopher cuizon', 1, 'this is a detail page', 'note here', 'reject', '0');
 
 -- --------------------------------------------------------
 
@@ -1826,6 +1870,51 @@ CREATE TABLE IF NOT EXISTS `time_sheet` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`time_sheet_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `users_roles_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `users_account_type` int(11) NOT NULL,
+  `roles` varchar(60) NOT NULL,
+  `payroll_setup` int(2) NOT NULL,
+  `payroll_setup_view` int(2) NOT NULL,
+  `payroll_setup_edit` int(2) NOT NULL,
+  `payroll_setup_delete` int(2) NOT NULL,
+  `employee` int(2) NOT NULL,
+  `employee_view` int(2) NOT NULL,
+  `employee_edit` int(2) NOT NULL,
+  `employee_delete` int(2) NOT NULL,
+  `approval` int(2) NOT NULL,
+  `approval_view` int(2) NOT NULL,
+  `approval_edit` int(2) NOT NULL,
+  `approval_delete` int(2) NOT NULL,
+  `inquiry` int(2) NOT NULL,
+  `inquiry_view` int(2) NOT NULL,
+  `inquiry_edit` int(2) NOT NULL,
+  `inquiry_delete` int(2) NOT NULL,
+  `reports` int(2) NOT NULL,
+  `reports_view` int(2) NOT NULL,
+  `reports_edit` int(2) NOT NULL,
+  `reports_delete` int(2) NOT NULL,
+  `tables` int(2) NOT NULL,
+  `tables_view` int(2) NOT NULL,
+  `tables_edit` int(2) NOT NULL,
+  `tables_delete` int(2) NOT NULL,
+  PRIMARY KEY (`users_roles_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`users_roles_id`, `company_id`, `users_account_type`, `roles`, `payroll_setup`, `payroll_setup_view`, `payroll_setup_edit`, `payroll_setup_delete`, `employee`, `employee_view`, `employee_edit`, `employee_delete`, `approval`, `approval_view`, `approval_edit`, `approval_delete`, `inquiry`, `inquiry_view`, `inquiry_edit`, `inquiry_delete`, `reports`, `reports_view`, `reports_edit`, `reports_delete`, `tables`, `tables_view`, `tables_edit`, `tables_delete`) VALUES
+(1, 0, 2, 'weeeeeeee', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 

@@ -125,6 +125,7 @@ input.btn[type="submit"] {
 /** hr users input **/
 .inp_user{
 	width:200px;
+	padding:3px;
 }
 .users_text{
 	width:200px;
@@ -164,7 +165,7 @@ input.btn[type="submit"] {
 }
 .date_isearch{
 	width:80px;
-	margin:0 5px;
+	margin:0 5px 0 0;
 }
 .ipadright{
 	margin-right:5px;
@@ -177,3 +178,21 @@ input.btn[type="submit"] {
 
 
 /** end application css **/
+
+/** users css **/
+.input_width{
+	width:245px;
+}
+.flright{
+	text-align:right;
+}
+select#jpayroll_group{
+	width:263px;
+}
+/** end users css **/
+/** permissions **/
+#select_assign option,#select_choosen option{
+	margin:0;
+	padding:3px;
+}
+/** end permissions **/
