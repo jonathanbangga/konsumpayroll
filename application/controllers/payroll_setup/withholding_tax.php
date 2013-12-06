@@ -21,7 +21,18 @@ class Withholding_tax extends CI_Controller {
 		$data['page_title'] = "Withholding Tax";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
+		$data['wt_sql'] = $this->withholding_tax_model->get_withholding_tax_settings();
 		$this->layout->view('pages/payroll_setup/withholding_tax_view',$data);
+	}
+	
+	public function ajax_set_withholding_tax(){
+		$comp = $this->input->post('comp');
+		$this->withholding_tax_model->set_withholding_tax_settings($comp);
+	}
+	
+	public function ajax_update_withholding_tax(){
+		$comp = $this->input->post('comp');
+		$this->withholding_tax_model->update_withholding_tax_settings($comp);
 	}
 	
 }
