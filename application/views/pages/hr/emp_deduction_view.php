@@ -32,6 +32,8 @@
 	            </tr>
             <?php
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='9' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -105,7 +107,7 @@
 	    tbl += "<td><input readonly='readonly' type='text' name='emp_id[]' class='ihide txtfield emp_id"+size+"' /></td>";
 	    tbl += "<td><input type='text' name='emp_name[]' class='txtfield emp_name emp_name"+size+"' class_val='class_val"+size+"' attr_uname_val='"+size+"'></td>";
 	    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
-	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='deduction_type[]'><?php foreach($emp_deduction_type as $row_deductiontype){?> <option value='<?php print $row_deductiontype->deduction_id;?><?php echo set_select('deduction_type[]', $row_deductiontype->deduction_name); ?>'><?php print $row_deductiontype->deduction_name;?></option><?php } ?></select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='deduction_type[]'><?php if($emp_deduction_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($emp_deduction_type as $row_deductiontype){?> <option value='<?php print $row_deductiontype->deduction_id;?><?php echo set_select('deduction_type[]', $row_deductiontype->deduction_name); ?>'><?php print $row_deductiontype->deduction_name;?></option><?php } } ?></select></td>";
 	    tbl += "<td><input type='text' name='amount[]' class='amount txtfield'></td>";
 	    tbl += "<td><input type='text' name='valid_from[]' class='valid_from txtfield datepickerCont'></td>";
 	    tbl += "<td><input type='text' name='valid_to[]' class='valid_to txtfield datepickerCont'></td>";
@@ -128,6 +130,9 @@
 			remove_row();
 			_name_listing();
 			_datepicker();
+			
+			// remove msg_empty
+			_remove_msg_emp();
 		});
 	}
 
@@ -357,6 +362,10 @@
 		});
 	}
 
+	function _remove_msg_emp(){
+    	jQuery(".msg_empt_cont").remove();
+    }
+	
 	function pagination(){
 		jQuery("#pagination li").each(function(){
 		    jQuery(this).find("a").addClass("btn");;

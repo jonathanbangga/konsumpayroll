@@ -23,11 +23,18 @@
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
-			$this->company_id = 1;
 			
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = 'content_holders/user_hr_owner_menu';
 			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4);
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**
@@ -40,7 +47,7 @@
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_payroll_information/index";
 			$total_rows = $this->hr_emp->emp_payroll_info_counter($this->company_id);
-			$per_page =2;
+			$per_page = $this->config->item('per_page');
 			$segment=5;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);

@@ -1,5 +1,5 @@
 <p>Employee Name: <?php print $fullname;?></p>
-<p>Employee Number: <?php print $payroll_cloud_id." ".$emp_id;?></p>
+<p>Employee Number: <?php print $payroll_cloud_id;?></p>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -49,6 +49,8 @@
 	            </tr>
             <?php
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='14' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -158,6 +160,9 @@
 			_name_listing();
 			_datepicker();
 			change_employee();
+
+			// remove msg_empty
+			_remove_msg_emp();
 		});
 	}
 
@@ -459,6 +464,10 @@
 		});
 	}
 
+	function _remove_msg_emp(){
+    	jQuery(".msg_empt_cont").remove();
+    }
+	
 	function change_employee(){
 		jQuery(".emp_name").focus(function(){
 		    var _this = jQuery(this);

@@ -31,7 +31,7 @@
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page = 1;
+			$this->per_page = 10;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -70,6 +70,22 @@
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/approve_leave_view', $data);
 		}
+		
+		
+		public function lists_names(){
+			$uri = "/".$this->uri->segment(1)."/hr/approve_leave/lists_names/".$this->uri->segment(5);
+			$page = is_numeric($this->uri->segment(6)) ? abs($this->uri->segment(6)) : 1;
+			$total_rows = $this->leave->leave_application_count_name($this->company_info->company_id,$this->uri->segment(5));
+			init_pagination($uri,$total_rows,$this->per_page,6);		
+			$data['page_title'] = "Approve Leave"; 
+			$data['sidebar_menu'] =$this->sidebar_menu;			
+			$data['success'] = $this->session->flashdata("success");	
+			$data['pagi'] = $this->pagination->create_links();
+			$data['application'] = $this->leave->leave_application_list_name($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page),$this->uri->segment(5));
+			$this->layout->set_layout($this->theme);	
+			$this->layout->view('pages/hr/approve_leave_view', $data);
+		}
+		
 		
 		public function approve(){
 			if($this->input->is_ajax_request()){

@@ -26,6 +26,8 @@ $config['type_accountant'] = "4";
 // UPLOAD PATH IMAGE
 $config['upload_companies'] = "./upload/companies";
 
+// jINIT PAGI PER PAGE
+$config['per_page'] = 10;
 
 /* End of file konsumpayroll_templates.php */
 /* Location: ./application/config/konsumpayroll_templates.php */

@@ -18,11 +18,13 @@
 	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print ucwords($row->first_name)." ".ucwords($row->last_name);?></td>
 	              <td>
-	              	<a href="/<?php print $this->uri->segment(1);?>/hr/emp_loan/index/<?php print $row->emp_id;?>/" class="btn editBtnDb" attr_empid="<?php print $row->emp_id;?>">VIEW LOANS</a> 
+	              	<a href="/<?php print $this->uri->segment(1);?>/hr/emp_loan/index/<?php print $row->emp_id;?>" class="btn editBtnDb" attr_empid="<?php print $row->emp_id;?>">VIEW LOANS</a> 
               	</td>
 	            </tr>
             <?php 			
             		}
+            	}else{
+            		print "<tr class='msg_empt_cont'><td colspan='4' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
@@ -30,8 +32,6 @@
         </div>
         <div class="pagiCont_btnCont">
 	        	<div class="left"><?php print $links;?></div>
-	        	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
-	        	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;	
 	        	<div class="clearB"></div>
         	</div>
         <script>

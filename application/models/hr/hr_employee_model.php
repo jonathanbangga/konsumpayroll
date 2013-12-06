@@ -15,7 +15,11 @@
 		 */
 		public function qual_dept($emp_id,$comp_id){
 			$sql = $this->db->query("
-				SELECT *FROM employee_qualifid_dependents eqd
+				SELECT 
+				eqd.qualified_dependents_id as qualified_dependents_id,
+				eqd.dependents_name as dependents_name,
+				eqd.dob as dob
+				FROM employee_qualifid_dependents eqd
 				LEFT JOIN employee e ON eqd.emp_id = e.emp_id
 				WHERE eqd.emp_id = '{$emp_id}' 
 				AND eqd.company_id = '{$comp_id}'
@@ -40,7 +44,7 @@
 				}
 				return $table;
 			}else{
-				return "";//"<tr class='clear_tbl'><td colspan='4'>".msg_empty()."</td></tr>";
+				return "<tr class='msg_empt_cont'><td colspan='4' style='text-align:left;'>".msg_empty()."</td></tr>";
 			}
 		}
 		
@@ -253,23 +257,65 @@
 		}
 		
 		/**
-		 * Employee List
+		 * Employee List Counter
 		 * @param unknown_type $comp_id
 		 */
-		public function employee_list($comp_id){
+		public function employee_for_dep_list_counter($comp_id){
 			$sql = $this->db->query("
-				SELECT *FROM employee e
+				SELECT 
+				COUNT(emp_id) AS emp_id
+				FROM employee e
 				LEFT JOIN accounts a ON e.account_id = a.account_id
 				WHERE e.company_id = '{$comp_id}'
 				AND e.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
-				$results = $sql->result();
+				$row = $sql->row();
 				$sql->free_result();
-				return $results;
+				return $row->emp_id;
 			}else{
 				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee List
+		 * @param unknown_type $comp_id
+		 */
+		public function employee_list($limit, $start, $comp_id){
+			if($start==0){
+				$sql = $this->db->query("
+					SELECT *FROM employee e
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
+					LIMIT ".$limit."
+				");
+				
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}
+			}else{
+				$sql = $this->db->query("
+					SELECT *FROM employee e
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
+					LIMIT ".$start.",".$limit."
+				");
+				
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}
 			}
 		}
 		
@@ -280,7 +326,11 @@
 		 */
 		public function dep_res($dep_id,$comp_id){
 			$sql = $this->db->query("
-				SELECT *FROM employee_qualifid_dependents eqd
+				SELECT 
+				eqd.qualified_dependents_id as qualified_dependents_id,
+				eqd.dependents_name as dependents_name,
+				eqd.dob as dob
+				FROM employee_qualifid_dependents eqd
 				LEFT JOIN employee e ON eqd.emp_id = e.emp_id
 				WHERE eqd.company_id = '{$comp_id}'
 				AND eqd.qualified_dependents_id = '{$dep_id}'
@@ -702,7 +752,6 @@
 				LEFT JOIN leave_type lt ON el.leave_type_id = lt.leave_type_id
 				WHERE el.company_id = '{$comp_id}'
 				AND e.status = 'Active'
-				LIMIT ".$limit."
 			");
 			
 			if($sql->num_rows() > 0){
@@ -1824,16 +1873,34 @@
 		 * @param unknown_type $comp_id
 		 */
 		public function emp_loan_counter_comp($comp_id){
-			$sql = $this->db->query("
+			/*
+			 * $sql2 = $this->db->query("
 				SELECT *
 				FROM employee_loans el
 				WHERE company_id = '{$comp_id}'
 				AND status = 'Active'
 				GROUP BY el.emp_id
+			")
+			if($sql->num_rows() > 0){
+				return $sql->num_rows();
+			}else{
+				return FALSE;
+			}
+			*/;
+			
+			$sql = $this->db->query("
+				SELECT
+				COUNT(emp_id) as total
+				FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
-				return $sql->num_rows();
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->total;
 			}else{
 				return FALSE;
 			}
@@ -1845,7 +1912,7 @@
 		 */
 		public function emp_loan_comp($limit, $start, $comp_id){
 			if($start==0){
-				$sql = $this->db->query("
+				/* $sql = $this->db->query("
 					SELECT 
 					*FROM employee_loans el
 					LEFT JOIN employee e ON el.emp_id = e.emp_id
@@ -1854,6 +1921,15 @@
 					WHERE el.company_id = '{$comp_id}'
 					AND e.status = 'Active'
 					GROUP BY e.emp_id
+					LIMIT ".$limit."
+				"); */
+				
+				$sql = $this->db->query("
+					SELECT					
+					*FROM employee e
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
 					LIMIT ".$limit."
 				");
 				
@@ -1865,7 +1941,7 @@
 					return FALSE;
 				}
 			}else{
-				$sql = $this->db->query("
+				/* $sql = $this->db->query("
 					SELECT 
 					*FROM employee_loans el
 					LEFT JOIN employee e ON el.emp_id = e.emp_id
@@ -1873,6 +1949,15 @@
 					WHERE el.company_id = '{$comp_id}'
 					AND e.status = 'Active'
 					GROUP BY e.emp_id
+					LIMIT ".$start.",".$limit."
+				"); */
+				
+				$sql = $this->db->query("
+					SELECT
+					*FROM employee e
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -2175,6 +2260,280 @@
 				return TRUE;
 			}else{
 				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Shift Information Counter
+		 * @param unknown_type $limit
+		 * @param unknown_type $start
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_shift_counter($comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				COUNT(ess.shifts_schedule_id) as total
+				FROM employee_shifts_schedule ess
+				LEFT JOIN employee e ON ess.emp_id = e.emp_id
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->total;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Shift Information
+		 * @param unknown_type $limit
+		 * @param unknown_type $start
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_shift($limit, $start, $comp_id){
+			if($start==0){
+				$sql = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN employee e ON ess.emp_id = e.emp_id
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
+					LIMIT ".$limit."
+				");
+				
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}	
+			}else{
+				$sql = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN employee e ON ess.emp_id = e.emp_id
+					LEFT JOIN accounts a ON e.account_id = a.account_id
+					WHERE e.company_id = '{$comp_id}'
+					AND e.status = 'Active'
+					LIMIT ".$start.",".$limit."
+				");
+				
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}	
+			}
+		}
+		
+		/**
+		 * Employee for Shift Information
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_shift_listing($comp_id){
+			$emp_train_det = $this->db->query("
+				SELECT *FROM employee_deductions
+				WHERE company_id = '{$comp_id}'
+			");
+			
+			$result_emp_train_det = $emp_train_det->result();
+			$result_array = "";
+			if($emp_train_det->num_rows() > 0){
+				foreach($result_emp_train_det as $row){
+					$result_array .= $row->emp_id.",";
+				}
+				$emp_val_notin = substr($result_array, 0, -1);	
+			}else{
+				$emp_val_notin = 0;
+			}
+			
+			$sql2 = $this->db->query("
+				SELECT *FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
+				AND e.emp_id NOT IN({$emp_val_notin});
+			");
+			
+			$sql = $this->db->query("
+				SELECT *FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Display Employee Shift Information
+		 * @param unknown_type $shifts_schedule_id
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_shift_info($shifts_schedule_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN employee e ON ess.emp_id = e.emp_id
+				WHERE ess.shifts_schedule_id = '{$shifts_schedule_id}'
+				AND ess.company_id = '{$comp_id}'
+				AND ess.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->row();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Shift Information
+		 * @param unknown_type $shifts_schedule_id
+		 * @param unknown_type $valid_from
+		 * @param unknown_type $until
+		 * @param unknown_type $sunday
+		 * @param unknown_type $monday
+		 * @param unknown_type $tuesday
+		 * @param unknown_type $wednesday
+		 * @param unknown_type $thursday
+		 * @param unknown_type $friday
+		 * @param unknown_type $saturday
+		 * @param unknown_type $comp_id
+		 */
+		public function update_shift_info(
+				$shifts_schedule_id,
+				$valid_from,
+				$until,
+				$sunday,
+				$monday,
+				$tuesday,
+				$wednesday,
+				$thursday,
+				$friday,
+				$saturday,
+				$comp_id){
+			$sql = $this->db->query("
+				UPDATE employee_shifts_schedule
+				SET valid_from = '{$valid_from}', 
+				until = '{$until}', 
+				Sunday = '{$sunday}', 
+				Monday = '{$monday}', 
+				Tuesday = '{$tuesday}',
+				Wednesday = '{$wednesday}',
+				Thursday = '{$thursday}',
+				Friday = '{$friday}',
+				Saturday = '{$saturday}'
+				WHERE shifts_schedule_id = '{$shifts_schedule_id}'
+				AND company_id = '{$comp_id}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Search Shift Employee Information
+		 * @param unknown_type $emp_no
+		 * @param unknown_type $emp_name
+		 */
+		public function search_shift_emp_name($emp_name){
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN employee e ON ess.emp_id = e.emp_id
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE concat(e.first_name,' ',e.last_name) LIKE '%{$emp_name}%'
+				AND e.status = 'Active'
+				LIMIT 10
+			");
+			$results = $sql->result();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $results;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Search Shift Employee Information
+		 * @param unknown_type $emp_no
+		 * @param unknown_type $emp_name
+		 */
+		public function search_shift_emp_no($emp_no){
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN employee e ON ess.emp_id = e.emp_id
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE a.payroll_cloud_id LIKE '%{$emp_no}%'
+				AND e.status = 'Active'
+				LIMIT 10
+			");
+			$results = $sql->result();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $results;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Check Employee Loan ID
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $comp_id
+		 */
+		public function check_emp_loan_id($emp_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee
+				WHERE emp_id = '{$emp_id}'
+				AND company_id = '{$comp_id}'
+				AND status = 'Active'
+			");
+			$results = $sql->result();
+			if($sql->num_rows() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Check Employee Amortization Schedule ID		 
+		 * @param unknown_type $amor_sched_id
+		 * @param unknown_type $comp_id
+		 */
+		public function check_amortization_sched_id($amor_sched_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND employee_amortization_schedule_id = '{$amor_sched_id}'
+				AND status = 'Active'
+			");
+			$results = $sql->result();
+			if($sql->num_rows() > 0){
+				return true;
+			}else{
+				return false;
 			}
 		}
 		

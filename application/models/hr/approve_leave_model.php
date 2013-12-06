@@ -72,7 +72,7 @@
 			if(is_numeric($company_id)){
 				$start = intval($start);
 				$limit = intval($limit);
-				$employee_name =$employee_name;
+				$employee_name =$this->db->escape_like_str($employee_name);
 				$query = $this->db->query(
 						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_leaves_application el
 							LEFT JOIN employee e on e.emp_id = el.emp_id 
@@ -109,6 +109,13 @@
 			}
 		}
 		
+		/**
+		 * LEave application count date sort
+		 * @param int $company_id
+		 * @param date $date_from
+		 * @param date $date_to
+		 * @return integer
+		 */
 		public function leave_application_date_count($company_id,$date_from,$date_to){
 			if(is_numeric($company_id)){
 				$date_from = $this->db->escape($date_from);
@@ -125,8 +132,30 @@
 			}
 		}
 		
-		
-		
+		/**
+		 * Leave application get count by name
+		 * Enter description here ...
+		 * @param unknown_type $company_id
+		 */
+		public function leave_application_count_name($company_id,$employee_name){
+			if(is_numeric($company_id) && $employee_name !=""){
+				$employee_name = $this->db->escape_like_str($employee_name);
+				$query = $this->db->query(
+					"SELECT count(*) as val FROM employee_leaves_application ela
+					LEFT JOIN employee e on e.emp_id = ela.emp_id
+					WHERE ela.leave_application_status  = 'pending' 
+					AND ela.company_id = '{$this->db->escape_str($company_id)}' AND ela.deleted='0' 
+					AND concat(e.first_name,' ',e.last_name) like '%{$employee_name}%'"
+				);
+				$row = $query->row();
+				$num_row = $query->num_rows();
+				$query->free_result();
+				return $num_row ? $row->val : 0;
+			}else{
+				return false;
+			}
+		}
+
 		/**
 		 * Update fields
 		 * @param string $database

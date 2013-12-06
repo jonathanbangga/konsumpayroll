@@ -23,24 +23,38 @@
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
-			$this->company_id = 1;
 			$this->emp_id = $this->uri->segment(5);
 			$this->sidebar_menu = 'content_holders/hr_employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = 'content_holders/user_hr_owner_menu';
 			$this->url = $url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4)."/".$this->uri->segment(5);
+		
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
 		}
 		
 		/**
 		 * index page
 		 */
 		public function index() {
+			
+			$check_employee_id = $this->hr_emp->check_emp_loan_id($this->uri->segment(5),$this->company_id);
+			if($check_employee_id == FALSE){
+				show_error("Invalid employee");
+				return false;
+			}
+			
 			$data['page_title'] = "Add Loans";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_loan/index/{$this->emp_id}/";
 			$total_rows = $this->hr_emp->emp_loan_counter($this->company_id, $this->emp_id);
-			$per_page =2;
+			$per_page = $this->config->item('per_page');
 			$segment=6;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);
