@@ -37,7 +37,7 @@
         <!-- FOOTER-GRP-BTN END -->
       </div>
 	  
-<div id="add-more" class="jdialog"  title="Add more">
+<div id="add-more" class="jdialog"  title="Add">
 	<div class="inner_div">
 		<p>
 			Enter Loan:<br />
@@ -72,6 +72,9 @@
 <script>
 jQuery(document).ready(function(){
 
+	// load highlight message script
+	redirect_highlight_message();
+
 	// add loan
 	jQuery("#btn-add").click(function(){
 		jQuery("#loan").val("");
@@ -85,7 +88,7 @@ jQuery(document).ready(function(){
 					var error = "";
 					var loan = jQuery("#loan").val();
 					error += (loan=="")?"Loan field is empty":"";
-					if(loan!=""){
+					if(error==""){
 						// ajax call
 						jQuery.ajax({
 							type: "POST",
@@ -95,7 +98,7 @@ jQuery(document).ready(function(){
 								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 							}
 						}).done(function(ret){
-							jQuery.cookie("msg", "Loan has been deleted");
+							jQuery.cookie("msg", "Loan has been Added");
 							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/loans";
 						});	
 					}else{
@@ -157,19 +160,26 @@ jQuery(document).ready(function(){
 				'update': function() {
 					var loan_id = obj.parents("tr:first").find(".loan_id").val();
 					var loan = jQuery("#edit_loan").val();
-					// ajax call
-					jQuery.ajax({
-						type: "POST",
-						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/loans/ajax_update_loans",
-						data: {
-							loan_id: loan_id,
-							loan: loan,
-							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-						}
-					}).done(function(ret){
-						jQuery.cookie("msg", "Loan has been updated");
-						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/loans";
-					});				
+					var error = "";
+					error += (loan=="")?"Loan field is empty":"";
+					if(error==""){
+						// ajax call
+						jQuery.ajax({
+							type: "POST",
+							url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/loans/ajax_update_loans",
+							data: {
+								loan_id: loan_id,
+								loan: loan,
+								<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+							}
+						}).done(function(ret){
+							jQuery.cookie("msg", "Loan has been updated");
+							window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/loans";
+						});	
+					}else{
+						alert(error);
+					}
+								
 				}
 			}
 		});
