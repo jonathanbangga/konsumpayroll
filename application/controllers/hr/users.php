@@ -226,6 +226,67 @@ class Users extends CI_Controller {
 	}
 	// END CALLBACK
 	
+	/**
+	 * ADDS PERMISSIONS 
+	 * add permissions to the susers
+	 */
+	public function permissions(){
+		$data['page_title'] = "Roles";	
+		if($this->input->is_ajax_request()){
+			if($this->input->post('submit')){
+				$this->form_validation->set_rules('user_roles_type','Account type','required|trim|xss_clean');
+				$this->form_validation->set_rules('roles','Role','required|trim|xss_clean|callback_roles_check');
+				$this->form_validation->set_rules('hidden_roles[]','Assign Right','required|trim|xss_clean');
+				if($this->form_validation->run() == true){
+					if( $this->db->escape_str($this->input->post('user_roles_type')) == 1){
+						$roles_assign =$this->input->post('hidden_roles');
+						$fields = array(
+							"company_id"	=> $this->company_info->company_id,
+							"roles"			=> $this->db->escape_str($this->input->post('roles')),
+							"users_account_type" => $this->db->escape_str($this->input->post('user_roles_type'))
+						);
+						if($roles_assign){
+							foreach($roles_assign as $key=>$val):
+								$fields[$val] = 1; 
+							endforeach;
+						}
+						$this->users->save_fields("user_roles",$fields);
+						echo json_encode(array("success"=>"1","error"=>""));	
+						return false;	
+					}else{
+						echo json_encode(array("success"=>"1","error"=>""));	
+						return false;
+					}
+				}else{
+					echo json_encode(array("success"=>"0","error"=>validation_errors('<span class="error_zone">',"</span>")));
+					return false;
+				}
+			}
+		}
+		$data['sidebar_menu'] =$this->sidebar_menu;	
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/hr/roles_view', $data);
+	}
+	
+	// CALLBACK permissions
+	/**
+	 * Roles check callback is already been used
+	 * @param string $str
+	 * @return calbacks
+	 */
+	public function roles_check($str){
+		$query = $this->db->query("SELECT * FROM user_roles WHERE company_id = {$this->company_info->company_id} AND roles='{$str}'");
+		$row = $query->row();
+		if($row){
+			$this->form_validation->set_message('roles_check','%s name is already exist');
+			return false;
+		}else{
+			return true;
+		}
+	}
+	// END CALL BACK Permissions
+	
+	
 }
 
 /* End of file users.php */

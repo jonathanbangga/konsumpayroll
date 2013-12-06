@@ -1754,6 +1754,45 @@ CREATE TABLE IF NOT EXISTS `de_minimis` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `users_roles_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `users_account_type` int(11) NOT NULL,
+  `roles` varchar(60) NOT NULL,
+  `payroll_setup` int(2) NOT NULL,
+  `payroll_setup_view` int(2) NOT NULL,
+  `payroll_setup_edit` int(2) NOT NULL,
+  `payroll_setup_delete` int(2) NOT NULL,
+  `employee` int(2) NOT NULL,
+  `employee_view` int(2) NOT NULL,
+  `employee_edit` int(2) NOT NULL,
+  `employee_delete` int(2) NOT NULL,
+  `approval` int(2) NOT NULL,
+  `approval_view` int(2) NOT NULL,
+  `approval_edit` int(2) NOT NULL,
+  `approval_delete` int(2) NOT NULL,
+  `inquiry` int(2) NOT NULL,
+  `inquiry_view` int(2) NOT NULL,
+  `inquiry_edit` int(2) NOT NULL,
+  `inquiry_delete` int(2) NOT NULL,
+  `reports` int(2) NOT NULL,
+  `reports_view` int(2) NOT NULL,
+  `reports_edit` int(2) NOT NULL,
+  `reports_delete` int(2) NOT NULL,
+  `tables` int(2) NOT NULL,
+  `tables_view` int(2) NOT NULL,
+  `tables_edit` int(2) NOT NULL,
+  `tables_delete` int(2) NOT NULL,
+  PRIMARY KEY (`users_roles_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
 -- --------------------------------------------------------
 
 --

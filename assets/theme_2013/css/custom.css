@@ -190,3 +190,9 @@ select#jpayroll_group{
 	width:263px;
 }
 /** end users css **/
+/** permissions **/
+#select_assign option,#select_choosen option{
+	margin:0;
+	padding:3px;
+}
+/** end permissions **/
