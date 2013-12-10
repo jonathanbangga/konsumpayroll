@@ -193,3 +193,15 @@
 	    return $text;
 	}
 	
+	/**
+	 * Prices amount global
+	 * @param numeric $amount
+	 */
+	function iprice($amount){
+		if($amount >= 0){
+			return number_format($amount,2);
+		}else{
+			return false;
+		}
+	}
+	
