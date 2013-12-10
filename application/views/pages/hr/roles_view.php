@@ -106,6 +106,7 @@
 
 		// SAVES ROLES
 		function save_roles(){
+			jQuery("body").css("cursor","wait");
 			var urls = "/<?php echo $this->subdomain;?>/hr/users/permissions";
 			var fields = {
 				"user_roles_type":jQuery("select[name='user_roles_type']").val(),
@@ -115,6 +116,7 @@
 				"submit":"true"
 			};
 			kpay.overall.ajax_save(urls,fields);
+			jQuery("body").css("cursor","auto");
 			return false;
 		}
 

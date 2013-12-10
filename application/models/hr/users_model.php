@@ -139,6 +139,40 @@
 		}
 		
 		/**
+		 * Permission type 
+		 * checks the permission all
+		 * @param int $comp_id
+		 * @return objec
+		 */
+		public function permission_type($comp_id){
+			if(is_numeric($comp_id)){
+				$query = $this->db->query("SELECT * FROM `user_roles` WHERE company_id = {$this->db->escape_str($comp_id)} AND deleted='0'");
+				$result = $query->result();
+				$query->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
+		public function permission_define($company_id,$account_id){
+			if(is_numeric($company_id) && is_numeric($account_id)){
+				$query = $this->db->query(
+					"	SELECT ur.users_roles_id,ca.company_id,ur.roles  FROM `user_roles` ur
+						LEFT JOIN company_approvers ca on ca.users_roles_id = ur.users_roles_id
+						WHERE ca.company_id = '{$this->db->escape_str($company_id)}' AND ca.account_id = '{$this->db->escape_str($account_id)}' 
+						AND ur.deleted ='0' AND ca.deleted = '0'
+					"
+				);
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
 		 * Get employee info
 		 * Enter description here ...
 		 * @param int $account_id

@@ -50,6 +50,7 @@ class Users extends CI_Controller {
 		$data['company_info'] = $this->company_info;
 		$data['approval_group'] = $this->users->fetch_approval_group($this->company_info->company_id);
 		$data['approval_process'] = $this->users->approval_process($this->company_info->company_id);
+		$data['permission_type'] = $this->users->permission_type($this->company_info->company_id);
 		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
 		// save
 			if($this->input->post('save')){
@@ -70,7 +71,7 @@ class Users extends CI_Controller {
 						$this->form_validation->set_rules("middle_name[".$k."]","Employee Middle Name (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("last_name[".$k."]","Employee Last Name (".$k."):","required|trim|xss_clean");
 						//$this->form_validation->set_rules("password[".$k."]","Employee password (".$k."):","required|trim|xss_clean");
-						$this->form_validation->set_rules("approval_process_id[".$k."]","Employee Payroll group (".$k."):","required|trim|xss_clean");
+						//$this->form_validation->set_rules("approval_process_id[".$k."]","Employee Payroll group (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("permission[".$k."]","Permission (".$k."):","trim|xss_clean");
 					}		
 				}		
@@ -99,7 +100,8 @@ class Users extends CI_Controller {
 							"company_id"	=> $this->company_info->company_id,
 							"account_id"	=> $account_id,
 							"level"			=> "",
-							"deleted"		=> '0'
+							"deleted"		=> '0',
+							"users_roles_id"=>$this->db->escape_str($emp_permission[$key])
 						);
 						$this->users->save_fields("company_approvers",$approvers_fields);
 						// ADD PAYROLL TO APPROVAL PROCESS
@@ -170,7 +172,7 @@ class Users extends CI_Controller {
 				$this->form_validation->set_rules("jfname","First Name","required|trim|xss_clean");
 				$this->form_validation->set_rules("jmname","Middle Name","required|trim|xss_clean");
 				$this->form_validation->set_rules("jlname","Last Name","required|trim|xss_clean");
-				$this->form_validation->set_rules("jpayroll_group","Payroll Group","trim|xss_clean");
+				$this->form_validation->set_rules("jpermisssion","Payroll Group","trim|xss_clean");
 				if($this->form_validation->run() == true){	
 					$where = array("account_id"=>$this->db->escape_str($this->input->post('jaccount_id')));
 					// EMPLOYEE UPDATES
@@ -185,6 +187,11 @@ class Users extends CI_Controller {
 						"email"			=>$this->db->escape_str($this->input->post('jemail_address'))
 					);
 					$this->users->update_fields("accounts",$fields_account,$where);
+					// COMPANY APPROVERS
+					$fields_company_approvers = array(
+						"users_roles_id" => $this->db->escape_str($this->input->post('jpermisssion'))
+					);
+					$this->users->update_fields("company_approvers",$fields_company_approvers,$where);
 					// RETURN JSON 
 					echo json_encode(array("success"=>"1","error"=>""));
 					return false;

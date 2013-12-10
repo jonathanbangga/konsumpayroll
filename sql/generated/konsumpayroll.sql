@@ -308,10 +308,11 @@ CREATE TABLE IF NOT EXISTS `company_approvers` (
   `company_approvers_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
+  `users_roles_id` int(11) NOT NULL,
   `level` tinyint(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`company_approvers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
 
 -- --------------------------------------------------------
 
