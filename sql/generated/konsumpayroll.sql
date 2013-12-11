@@ -235,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `effective_date` datetime NOT NULL,
   `adjustment_date` datetime NOT NULL,
   `reasons` text NOT NULL,
+  `attachment` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`basic_pay_id`)
@@ -308,10 +309,11 @@ CREATE TABLE IF NOT EXISTS `company_approvers` (
   `company_approvers_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
+  `users_roles_id` int(11) NOT NULL,
   `level` tinyint(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`company_approvers_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
 
 -- --------------------------------------------------------
 
@@ -586,14 +588,13 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `leave_type_id` int(11) NOT NULL,
-  `remaining_hours` varchar(255) NOT NULL,
+  `leave_credits` varchar(255) NOT NULL,
   `as_of` date NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 -- --------------------------------------------------------
 
 --
@@ -609,13 +610,39 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
   `date_return` datetime NOT NULL,
+  `date_filed` date NOT NULL,
   `note` text NOT NULL,
+  `total_leave_requested` varchar(55) NOT NULL,
   `leave_application_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `attachments` text NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`employee_leaves_application_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_overtime_application`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_overtime_application` (
+  `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `overtime_date_applied` date NOT NULL,
+  `overtime_from` date NOT NULL,
+  `overtime_to` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `no_of_hours` float NOT NULL,
+  `with_nsd_hours` float NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `notes` text NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `overtime_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`overtime_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -955,7 +982,7 @@ CREATE TABLE IF NOT EXISTS `expense_type` (
   `expense_type_name` varchar(80) NOT NULL,
   `minimum_amount` decimal(10,2) NOT NULL,
   `maximum_amount` decimal(10,2) NOT NULL,
-  `require_receipt` decimal(10,2) NOT NULL,
+  `require_receipt` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1388,6 +1415,20 @@ CREATE TABLE IF NOT EXISTS `payroll_approver` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `payroll_group_setup`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_group_setup` (
+  `payroll_group_setup_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `period_type` varchar(250) NOT NULL,
+  `pay_rate_type` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_group_setup_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `payroll_group`
@@ -1481,17 +1522,49 @@ CREATE TABLE IF NOT EXISTS `permission` (
 
 CREATE TABLE IF NOT EXISTS `phil_health` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `salary_bracket` decimal(10,2) NOT NULL,
-  `range_of_compensation_from` decimal(10,2) NOT NULL,
-  `range_of_compensation_to` decimal(10,2) NOT NULL,
-  `monthly_salary_credit` decimal(10,2) NOT NULL,
-  `employer_contribution1` decimal(10,2) NOT NULL,
-  `employer_contribution2` decimal(10,2) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `salary_range` varchar(250) NOT NULL,
+  `salary_base` decimal(10,2) NOT NULL,
+  `total_monthly_premium` decimal(10,2) NOT NULL,
+  `employee_share` decimal(10,2) NOT NULL,
+  `employer_share` decimal(10,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+
+--
+-- Dumping data for table `phil_health`
+--
+
+INSERT INTO `phil_health` (`id`, `salary_range`, `salary_base`, `total_monthly_premium`, `employee_share`, `employer_share`, `status`, `deleted`) VALUES
+(1, '8,999.99 and below', 8000.00, 200.00, 100.00, 100.00, 'Active', '0'),
+(2, '9,000.00 - 9,999.99', 9000.00, 225.00, 112.50, 112.50, 'Active', '0'),
+(3, '10,000.00 - 10,999.99', 10000.00, 250.00, 125.00, 125.00, 'Active', '0'),
+(4, '11,000.00 - 11,999.99', 11000.00, 275.00, 137.50, 137.50, 'Active', '0'),
+(5, '12,000.00 - 12,999.99', 12000.00, 300.00, 150.00, 150.00, 'Active', '0'),
+(6, '13,000.00 - 13,999.99', 13000.00, 325.00, 162.50, 162.50, 'Active', '0'),
+(7, '14,000.00 - 14,999.99', 14000.00, 350.00, 175.00, 175.00, 'Active', '0'),
+(8, '15,000.00 - 15,999.99', 15000.00, 375.00, 187.50, 187.50, 'Active', '0'),
+(9, '16,000.00 - 16,999.99', 16000.00, 400.00, 200.00, 200.00, 'Active', '0'),
+(10, '17,000.00 - 17,999.99', 17000.00, 425.00, 212.50, 212.50, 'Active', '0'),
+(11, '18,000.00 - 18,999.99', 18000.00, 450.00, 225.00, 225.00, 'Active', '0'),
+(12, '19,000.00 - 19,999.99', 19000.00, 475.00, 237.50, 237.50, 'Active', '0'),
+(13, '20,000.00 - 20,999.99', 20000.00, 500.00, 250.00, 250.00, 'Active', '0'),
+(14, '21,000.00 - 21,999.99', 21000.00, 525.00, 262.50, 262.50, 'Active', '0'),
+(15, '22,000.00 - 22,999.99', 22000.00, 550.00, 275.00, 275.00, 'Active', '0'),
+(16, '23,000.00 - 23,999.99', 23000.00, 575.00, 287.00, 287.00, 'Active', '0'),
+(17, '24,000.00 - 24,999.99', 24000.00, 600.00, 300.00, 300.00, 'Active', '0'),
+(18, '25,000.00 - 25,999.99', 25000.00, 625.00, 312.50, 312.50, 'Active', '0'),
+(19, '26,000.00 - 26,999.99', 26000.00, 650.00, 325.00, 325.00, 'Active', '0'),
+(20, '27,000.00 - 27,999.99', 27000.00, 675.00, 337.50, 337.50, 'Active', '0'),
+(21, '28,000.00 - 28,999.99', 28000.00, 700.00, 350.00, 350.00, 'Active', '0'),
+(22, '29,000.00 - 30,999.99', 29000.00, 725.00, 362.50, 362.50, 'Active', '0'),
+(23, '30,000.00 - 31,999.99', 30000.00, 750.00, 375.00, 375.00, 'Active', '0'),
+(24, '31,000.00 - 31,999.99', 31000.00, 775.00, 387.50, 387.50, 'Active', '0'),
+(25, '32,000.00 - 32,999.99', 32000.00, 800.00, 400.00, 400.00, 'Active', '0'),
+(26, '33,000.00 - 33,999.99', 33000.00, 825.00, 412.50, 412.50, 'Active', '0'),
+(27, '34,000.00 - 34,999.99', 34000.00, 850.00, 425.00, 425.00, 'Active', '0'),
+(28, '35,000.00 - and up', 35000.00, 875.00, 437.50, 437.50, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1609,11 +1682,48 @@ CREATE TABLE IF NOT EXISTS `sss` (
   `employer_monthly_contribution_ss` decimal(10,2) NOT NULL,
   `employer_monthly_contribution_ec` decimal(10,2) NOT NULL,
   `employee_ss` decimal(10,2) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `weight` int(2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+
+
+--
+-- Dumping data for table `sss`
+--
+
+INSERT INTO `sss` (`id`, `salary_brackets`, `range_compensation_from`, `range_compensation_to`, `monthly_salary_credit`, `employer_monthly_contribution_ss`, `employer_monthly_contribution_ec`, `employee_ss`, `total`, `weight`, `status`, `deleted`) VALUES
+(1, 21323.00, 1000.00, 1249.99, 1000.00, 70.70, 10.00, 33.00, 70.00, 0, 'Active', '0'),
+(2, 8888.00, 1250.00, 1749.99, 1500.00, 106.00, 10.00, 50.00, 156.00, 0, 'Active', '0'),
+(3, 8888.00, 1750.00, 2249.99, 2000.00, 141.30, 10.00, 66.70, 208.00, 0, 'Active', '0'),
+(4, 8888.00, 2250.00, 2749.99, 2500.00, 176.70, 10.00, 83.30, 260.00, 0, 'Active', '0'),
+(5, 8888.00, 2750.00, 3249.99, 3000.00, 212.00, 10.00, 100.00, 312.00, 0, 'Active', '0'),
+(6, 8888.00, 3250.00, 3749.99, 3500.00, 247.30, 10.00, 116.70, 364.00, 0, 'Active', '0'),
+(7, 8888.00, 3750.00, 4249.99, 4000.00, 282.70, 10.00, 133.30, 416.00, 0, 'Active', '0'),
+(8, 8888.00, 4250.00, 4749.99, 4500.00, 318.90, 10.00, 150.00, 468.00, 0, 'Active', '0'),
+(9, 8888.00, 4750.00, 5249.99, 5000.00, 353.80, 10.00, 166.70, 520.00, 0, 'Active', '0'),
+(10, 8888.00, 5250.00, 5749.99, 5500.00, 388.70, 10.00, 183.30, 572.00, 0, 'Active', '0'),
+(11, 8888.00, 5750.00, 6249.99, 6000.00, 424.00, 10.00, 200.00, 624.00, 0, 'Active', '0'),
+(12, 8888.00, 6250.00, 6749.99, 6500.00, 459.30, 10.00, 216.70, 676.00, 0, 'Active', '0'),
+(13, 8888.00, 6750.00, 7249.99, 7000.00, 494.70, 10.00, 233.30, 728.00, 0, 'Active', '0'),
+(14, 8888.00, 7250.00, 7749.99, 7500.00, 530.00, 10.00, 250.00, 780.00, 0, 'Active', '0'),
+(15, 8888.00, 7750.00, 8249.99, 8000.00, 565.30, 10.00, 266.70, 832.00, 0, 'Active', '0'),
+(16, 8888.00, 8250.00, 8749.99, 8500.00, 600.70, 10.00, 283.30, 884.00, 0, 'Active', '0'),
+(17, 8888.00, 8750.00, 9249.99, 9000.00, 636.00, 10.00, 300.00, 936.00, 0, 'Active', '0'),
+(18, 8888.00, 9250.00, 9749.99, 9500.00, 671.30, 10.00, 316.70, 988.00, 0, 'Active', '0'),
+(19, 8888.00, 9750.00, 10299.99, 10000.00, 706.70, 10.00, 330.30, 1040.00, 0, 'Active', '0'),
+(20, 8888.00, 10250.00, 10749.99, 10500.00, 742.00, 10.00, 350.00, 1092.00, 0, 'Active', '0'),
+(21, 8888.00, 10750.00, 11249.99, 11000.00, 777.30, 10.00, 366.70, 1144.00, 0, 'Active', '0'),
+(22, 8888.00, 11250.00, 11749.99, 11500.00, 812.70, 10.00, 383.30, 1196.00, 0, 'Active', '0'),
+(23, 8888.00, 11750.00, 12249.99, 12000.00, 848.00, 10.00, 400.00, 1248.00, 0, 'Active', '0'),
+(24, 8888.00, 12250.00, 12749.99, 12500.00, 883.30, 10.00, 416.70, 1300.00, 0, 'Active', '0'),
+(25, 8888.00, 12750.00, 13249.99, 13000.00, 918.70, 10.00, 483.30, 1352.00, 0, 'Active', '0'),
+(26, 8888.00, 13250.00, 13749.99, 13500.00, 954.00, 10.00, 450.00, 1404.00, 0, 'Active', '0'),
+(27, 8888.00, 13750.00, 14249.99, 14000.00, 989.30, 10.00, 466.70, 1456.00, 0, 'Active', '0'),
+(28, 8888.00, 14250.00, 14749.99, 14500.00, 1024.70, 10.00, 483.30, 1508.00, 0, 'Active', '0'),
+(29, 8888.00, 14750.00, 14749.00, 15000.00, 1060.00, 30.00, 500.00, 1560.00, 0, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1753,6 +1863,45 @@ CREATE TABLE IF NOT EXISTS `de_minimis` (
   PRIMARY KEY (`de_minimis_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `users_roles_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `users_account_type` int(11) NOT NULL,
+  `roles` varchar(60) NOT NULL,
+  `payroll_setup` int(2) NOT NULL,
+  `payroll_setup_view` int(2) NOT NULL,
+  `payroll_setup_edit` int(2) NOT NULL,
+  `payroll_setup_delete` int(2) NOT NULL,
+  `employee` int(2) NOT NULL,
+  `employee_view` int(2) NOT NULL,
+  `employee_edit` int(2) NOT NULL,
+  `employee_delete` int(2) NOT NULL,
+  `approval` int(2) NOT NULL,
+  `approval_view` int(2) NOT NULL,
+  `approval_edit` int(2) NOT NULL,
+  `approval_delete` int(2) NOT NULL,
+  `inquiry` int(2) NOT NULL,
+  `inquiry_view` int(2) NOT NULL,
+  `inquiry_edit` int(2) NOT NULL,
+  `inquiry_delete` int(2) NOT NULL,
+  `reports` int(2) NOT NULL,
+  `reports_view` int(2) NOT NULL,
+  `reports_edit` int(2) NOT NULL,
+  `reports_delete` int(2) NOT NULL,
+  `tables` int(2) NOT NULL,
+  `tables_view` int(2) NOT NULL,
+  `tables_edit` int(2) NOT NULL,
+  `tables_delete` int(2) NOT NULL,
+  PRIMARY KEY (`users_roles_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 

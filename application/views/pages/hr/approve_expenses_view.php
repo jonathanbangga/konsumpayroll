@@ -5,14 +5,11 @@
 			<table>
 		    	<tbody>
 			        <tr>
-			            <td><div class="ipadright">FILTER</div></div></td>
-			            <td>DATE FROM</td>
 			            <td> 
-			                <input type="text" class="inputs date_isearch" id="jdate_from" value="" readonly="readonly">
+			                <input type="text" class="txtfield date_isearch" id="jdate_from" placeholder="Date From" readonly="readonly">
 			            </td>
-			            <td>DATE TO</td>
 			            <td>
-			                <input type="text" class="inputs date_isearch" id="jdate_to" value="" readonly="readonly">
+			                <input type="text" class="txtfield date_isearch" id="jdate_to"  placeholder="Date To" readonly="readonly">
 			            </td>
 			            <td>
 			                <input type="submit" value="GO" class="btn" id="jleave_go">
@@ -25,14 +22,14 @@
 		<div class="right" style="">
 		    <table>
 		        <tbody>
-		            <tr>
-		                <td><div class="text_search">SEARCH</div></td>
-		                <td><input type="text" name="search" id="jleave_search" class="inputs ipadright"></td>
+		            <tr>		             
+		                <td><input type="text" name="search" id="jleave_search" class="ipadright txtfield" placeholder="Employee Name"></td>
 		            </tr>
 		        </tbody>
 		    </table>
 		</div>
 	</div>
+	<!-- end filter container -->
 	<div class="clearB"></div>
 	<!-- end filter container -->
 	<div class="tbl-wrap">	

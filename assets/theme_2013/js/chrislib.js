@@ -117,8 +117,8 @@ var kpay = {
 										if(result.success == '0'){
 											alert(result.error);
 										}else{
-										jQuery(".success_messages").empty().html("<p>You have Successfully deleted company approver</p>");
-										kpay.overall.show_success(".success_messages");
+											jQuery(".success_messages").empty().html("<p>You have Successfully deleted company approver</p>");
+											kpay.overall.show_success(".success_messages");
 										}
 									});
 								},
@@ -280,8 +280,7 @@ var kpay = {
 					};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
-						if(res.success == 0)
-						{
+						if(res.success == 0){
 							alert(res.error);
 						}else{
 							jQuery(".success_messages").empty().html("<p>You have Successfully added cost center</p>");
@@ -299,14 +298,12 @@ var kpay = {
 					};
 					jQuery.post(urls,fields,function(json){
 						var res = jQuery.parseJSON(json);
-						if(res.success == 0)
-						{
+						if(res.success == 0){
 							alert(res.error);
 						}else{
 							jQuery(".success_messages").empty().html("<p>You have Successfully deleted cost center</p>");
 							kpay.overall.show_success(".success_messages");
-						}
-						
+						}		
 					});
 					return false;
 				},
@@ -467,8 +464,7 @@ var kpay = {
 								var res = jQuery.parseJSON(json);  
 								console.log(res);
 								jQuery("#psa_name").empty().val(res.psa.name);
-								jQuery("#old_psa_name").empty().val(res.psa.name);
-								
+								jQuery("#old_psa_name").empty().val(res.psa.name);							
 								jQuery("#psa_id").empty().val(res.psa.payroll_system_account_id);
 								jQuery("#old_account_id").empty().val(res.psa.account_id);
 								jQuery("select[name='jowner']").html(res.options);
@@ -523,8 +519,7 @@ var kpay = {
 							jQuery("input[id^='edit_email']").val(jres.email);
 							jQuery("input[id^='edit_owner']").val(jres.owner_name);
 							jQuery("input[id^='edit_old_email']").val(jres.email);
-							jQuery("input[id^='edit_account_id']").val(jres.account_id);
-							
+							jQuery("input[id^='edit_account_id']").val(jres.account_id);		
 						});
 					});
 				},
@@ -571,14 +566,14 @@ var kpay = {
 							height: 150,
 							modal: true,
 							buttons: {
-							"Yes": function () {
-								jQuery("#jcomp_"+ids).remove();
-								jQuery.post(urls,{"company_owner_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
-								jQuery(".option_alert").dialog("close");
-							},
-							No: function () {
-								jQuery(".option_alert").dialog("close");
-							}
+								"Yes": function () {
+									jQuery("#jcomp_"+ids).remove();
+									jQuery.post(urls,{"company_owner_id":ids,"ZGlldmlyZ2luamM":jQuery.cookie(token),"delete":"true"});
+									jQuery(".option_alert").dialog("close");
+								},
+								'No': function () {
+									jQuery(".option_alert").dialog("close");
+								}
 							}
 						});						
 					});

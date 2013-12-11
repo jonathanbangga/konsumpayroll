@@ -19,7 +19,7 @@
 				$start = intval($start);
 				$limit = intval($limit);
 				$query = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM overtime o
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_overtime_application o
 							LEFT JOIN employee e on e.emp_id = o.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
 							WHERE o.company_id = '{$this->db->escape_str($company_id)}' AND o.deleted = '0' AND o.overtime_status = 'pending' 
@@ -50,7 +50,7 @@
 				$date_from = $this->db->escape($date_from);
 				$date_to = $this->db->escape($date_to);
 				$query = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM overtime o
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_overtime_application o
 							LEFT JOIN employee e on e.emp_id = o.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
 							WHERE o.company_id = '{$this->db->escape_str($company_id)}' AND o.deleted = '0' AND o.overtime_status = 'pending' 
@@ -80,7 +80,7 @@
 				$limit = intval($limit);
 				$employee_name = $this->db->escape_like_str($employee_name);
 				$query = $this->db->query(
-						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM overtime o
+						"	SELECT *,concat(e.first_name,' ',e.last_name) as full_name FROM employee_overtime_application o
 							LEFT JOIN employee e on e.emp_id = o.emp_id 
 							LEFT JOIN accounts a on a.account_id = e.account_id 
 							WHERE o.company_id = '{$this->db->escape_str($company_id)}' AND o.deleted = '0' AND o.overtime_status = 'pending' 
@@ -107,7 +107,7 @@
 			if(is_numeric($company_id)){
 				$date_from = $this->db->escape($date_from);
 				$date_to = $this->db->escape($date_to);
-				$query = $this->db->query("SELECT count(*) as val FROM overtime WHERE overtime_status  = 'pending' 
+				$query = $this->db->query("SELECT count(*) as val FROM employee_overtime_application WHERE overtime_status  = 'pending' 
 						AND company_id = '{$this->db->escape_str($company_id)}' AND deleted='0' 
 						AND overtime_from >= {$date_from}	AND overtime_to <={$date_to}
 				");
@@ -129,7 +129,7 @@
 		public function overtime_application_count_name($company_id,$employee_name){
 			if(is_numeric($company_id)){
 				$employee_name = $this->db->escape_like_str($employee_name);
-				$query = $this->db->query("SELECT count(*) as val FROM overtime o 
+				$query = $this->db->query("SELECT count(*) as val FROM employee_overtime_application o 
 						LEFT JOIN employee e on e.emp_id = o.emp_id 
 						WHERE o.overtime_status  = 'pending' 
 						AND o.company_id = '{$this->db->escape_str($company_id)}' AND o.deleted='0' 
@@ -151,7 +151,7 @@
 		 */
 		public function overtime_application_count($company_id){
 			if(is_numeric($company_id)){
-				$query = $this->db->query("SELECT count(*) as val FROM overtime WHERE overtime_status  = 'pending' 
+				$query = $this->db->query("SELECT count(*) as val FROM employee_overtime_application WHERE overtime_status  = 'pending' 
 						AND company_id = '{$this->db->escape_str($company_id)}' AND deleted='0'
 				");
 				$row = $query->row();
