@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
 	// load highlight message script
 	redirect_highlight_message();
 
-	// add hours type
+	// add payroll group
 	jQuery("#add-more").click(function(){
 		jQuery("#empty").hide();
 		str = ''+
@@ -139,7 +139,7 @@ jQuery(document).ready(function(){
 		jQuery( ".date" ).datepicker();
 	});
 	
-	// remove hours type row
+	// remove payroll group row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".payroll_group").length==0){
@@ -148,7 +148,7 @@ jQuery(document).ready(function(){
 		}
 	});
 	
-	// save hours type
+	// save payroll group
 	jQuery("#save").click(function(){
 		var empty = false;
 		var payroll_group = new Array();
@@ -186,7 +186,7 @@ jQuery(document).ready(function(){
 		}	
 	});
 	
-	// delete hours type
+	// delete payroll group
 	jQuery(".btn-delete").click(function(){
 		var obj = jQuery(this);
 		jQuery("#confirm-delete-dialog").dialog({
@@ -217,7 +217,7 @@ jQuery(document).ready(function(){
 		});
 	});
 	
-	// edit project
+	// edit payroll group
 	jQuery(".btn-edit").click(function(){
 		var obj = jQuery(this);
 		var pg_id = obj.parents("tr").find(".pg_id").val();
