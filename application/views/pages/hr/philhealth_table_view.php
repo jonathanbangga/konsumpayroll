@@ -3,14 +3,12 @@
           <!-- TBL-WRAP START -->
           <table class="tbl emp_conList">
             <tbody><tr>
-              
-              <th style="width:40px;">Salary Brackets</th>
-              <th style="width:170px;">Range of Compensation From</th>
-              <th style="width:170px;">Range of Compensation To</th>
-              <th style="width:170px;">Monthly Salary Credit</th>
-              <th style="width:170px;">Employee Contribution 1</th>
-              <th style="width:170px;">Employee Contribution 2</th>
-              <th style="width:170px;">Total</th>
+              <th style="width:170px;">Salary Bracket</th>
+              <th style="width:170px;">Salary Range</th>
+              <th style="width:170px;">Salary Base</th>
+              <th style="width:170px;">Total Monthly Premium</th>
+              <th style="width:170px;">Employee Share</th>
+              <th style="width:170px;">Employer Share</th>
             </tr>
             <?php 
             	if($philhealth_tbl != NULL){
@@ -20,12 +18,11 @@
 	            <tr>
 	            	
 	              	<td><?php print $counter++;?></td>
-					<td><?php print iprice($row->range_of_compensation_from);?></td>
-					<td><?php print iprice($row->range_of_compensation_to);?></td>
-					<td><?php print iprice($row->monthly_salary_credit);?></td>
-					<td><?php print iprice($row->employer_contribution1);?></td>
-					<td><?php print iprice($row->employer_contribution2);?></td>
-					<td><?php print iprice($row->total);?></td>
+					<td><?php print $row->salary_range;?></td>
+					<td><?php print iprice($row->salary_base);?></td>
+					<td><?php print iprice($row->total_monthly_premium);?></td>
+					<td><?php print iprice($row->employee_share);?></td>
+					<td><?php print iprice($row->employer_share);?></td>
 	            </tr>
             <?php
             		}
