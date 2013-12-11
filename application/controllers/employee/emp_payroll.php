@@ -21,7 +21,7 @@
 		public function __construct() {
 			parent::__construct();
 			$this->theme = $this->config->item('default');
-			$this->load->model('employee_model','employee');
+			$this->load->model('employee/employee_model','employee');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->emp_id = $this->uri->segment(5);
 			

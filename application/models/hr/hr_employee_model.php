@@ -849,12 +849,19 @@
 				$emp_val_notin = 0;
 			}
 			
-			$sql = $this->db->query("
+			/*$sql = $this->db->query("
 				SELECT *FROM employee e
 				LEFT JOIN accounts a ON e.account_id = a.account_id
 				WHERE e.company_id = '{$comp_id}'
 				AND e.status = 'Active'
 				AND e.emp_id NOT IN({$emp_val_notin});
+			");*/
+			
+			$sql = $this->db->query("
+				SELECT *FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -878,7 +885,7 @@
 			$sql = $this->db->query("
 				UPDATE employee_leaves
 				SET leave_type_id = '{$leave_type}', 
-				remaining_hours = '{$remaining_hours_edit}', 
+				leave_credits = '{$remaining_hours_edit}', 
 				as_of = '{$as_of_edit}'
 				WHERE emp_id = '{$emp_idEdit}'
 				AND company_id = '{$comp_id}'
@@ -2521,12 +2528,19 @@
 		 * @param unknown_type $amor_sched_id
 		 * @param unknown_type $comp_id
 		 */
-		public function check_amortization_sched_id($amor_sched_id,$comp_id){
-			$sql = $this->db->query("
+		public function check_amortization_sched_id($emp_loan_id,$comp_id){
+			/* $sql = $this->db->query("
 				SELECT 
 				*FROM employee_amortization_schedule
 				WHERE comp_id = '{$comp_id}'
 				AND employee_amortization_schedule_id = '{$amor_sched_id}'
+				AND status = 'Active'
+			"); */
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_loans
+				WHERE company_id = '{$comp_id}'
+				AND employee_loans_id = '{$emp_loan_id}'
 				AND status = 'Active'
 			");
 			$results = $sql->result();
@@ -2534,6 +2548,123 @@
 				return true;
 			}else{
 				return false;
+			}
+		}
+		
+		/**
+		 * Employee Loan Amount
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function loan_amount($loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_loans
+				WHERE company_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				return $row->principal;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Total Principal Amount Amortization
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function total_princiapl_amortization($loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND emp_loan_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$result = $sql->result();
+			if($sql->num_rows() > 0){
+				$total_val = 0;
+				foreach($result as $row){
+					$total_val = $total_val + $row->principal;
+				}
+				return $total_val;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Get Interest and Principal Value
+		 * @param unknown_type $get_kapila_ka_row
+		 * @param unknown_type $comp_id
+		 */
+		public function get_interest_principal($amotization_id, $get_kapila_ka_row,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND emp_loan_id = '{$amotization_id}'
+				AND status = 'Active'
+				LIMIT {$get_kapila_ka_row},1
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+
+		/**
+		 * Get Interest and Principal Value from Payment History
+		 * Enter description here ...
+		 * @param unknown_type $amotization_id
+		 * @param unknown_type $comp_id
+		 */
+		public function kapila_ka_row_interest_principal($loan_id, $comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_payment_history
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$kapila_ka_row_res = $sql->num_rows() + 1;
+				return $kapila_ka_row_res;
+			}else{
+				$kapila_ka_row_res = 1;
+				return $kapila_ka_row_res;
+			}
+		}
+		
+		/**
+		 * Payment Debit Amount / Remaining Cash Amount
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function payment_debit_amount($loan_id, $comp_id){
+			$sql = $this->db->query("
+				SELECT *
+				FROM `employee_payment_history`
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+				ORDER BY employee_payment_history_id DESC
+				LIMIT 1
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $row->remaining_cash_amount;
+			}else{
+				return 0;
 			}
 		}
 		

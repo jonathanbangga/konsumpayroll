@@ -20,23 +20,97 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
-			$this->load->model('employee_model','employee');
-			$this->company_id = 1;
-			$this->emp_id = 3;
+			$this->load->model('employee/employee_model','employee');
+			$this->company_id = 2;
+			$this->emp_id = 78;
 			
-			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3);
+			$this->theme = $this->config->item('jb_employee_temp');
+			$this->menu = $this->config->item('jb_employee_menu');
 		}
 		
 		/**
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "Leave Application";
-			$data['leave'] = $this->employee->leave_application($this->company_id,$this->emp_id);
-			$data['sidebar_menu'] =$this->sidebar_menu;
+			$data['page_title'] = "Leave History";
+			
+			// init pagination
+			$uri = "/{$this->uri->segment(1)}/employee/emp_leave/index";
+			$total_rows = $this->employee->leave_application_counter($this->company_id, $this->emp_id);
+			$per_page = $this->config->item('per_page');
+			$segment=5;
+			
+			init_pagination($uri,$total_rows,$per_page,$segment);
+
+			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$data["links"] = $this->pagination->create_links();
+			// end pagination
+			
+			$data['leave'] = $this->employee->leave_application($per_page, $page, $this->company_id, $this->emp_id);
+			$data['leave_type'] = $this->employee->leave_type($this->company_id);
+			
+			if($this->input->post('save_my_leave')){
+				$leave_type = $this->input->post('leave_type');
+				$reason = $this->input->post('reason');
+				$start_date = $this->input->post('start_date');
+				$start_date_hr = $this->input->post('start_date_hr');
+				$start_date_min = $this->input->post('start_date_min'); 
+				$start_date_sec = $this->input->post('start_date_sec');
+				$end_date = $this->input->post('end_date');
+				$end_date_hr = $this->input->post('end_date_hr');
+				$end_date_min = $this->input->post('end_date_min');
+				$end_date_sec = $this->input->post('end_date_sec');
+				$return_date = $this->input->post('return_date');
+				$return_date_hr = $this->input->post('return_date_hr');
+				$return_date_min = $this->input->post('return_date_min');
+				$return_date_sec = $this->input->post('return_date_sec');
+				
+				$this->form_validation->set_rules("leave_type", 'Leave Type', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("reason", 'Reason', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("start_date", 'Start Date', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("start_date_hr", 'Start Date Hour', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("start_date_min", 'Start Date Minute', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("start_date_sec", 'Start Date Second', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("end_date", 'End Date', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("end_date_hr", 'End Date Hour', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("end_date_min", 'End Date Minute', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("end_date_sec", 'End Date Second', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("return_date", 'Return Date', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("return_date_hr", 'Return Date Hour', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("return_date_min", 'Return Date Minute', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("return_date_sec", 'Return Date Second', 'trim|required|xss_clean');
+				
+				if ($this->form_validation->run()==true){
+					$concat_start_date = $start_date." ".$start_date_hr.":".$start_date_min.":".$start_date_sec;
+					$concat_end_date = $end_date." ".$end_date_hr.":".$end_date_min.":".$end_date_sec;
+					$concat_return_date = $return_date." ".$return_date_hr.":".$return_date_min.":".$return_date_sec;
+					
+					$save_employee_leave = array(
+						"company_id"=>$this->company_id,
+						"emp_id"=>$this->emp_id,
+						"date_filed"=>date("Y-m-d"),
+						"leave_type_id"=>$leave_type,
+						"reasons"=>$reason,
+						"date_start"=>$concat_start_date,
+						"date_end"=>$concat_end_date,
+						"date_return"=>$concat_return_date,
+						"note"=>"",
+						"leave_application_status"=>"pending",
+						"attachments"=>""
+					);
+					
+					$insert_employee_leave = $this->jmodel->insert_data('employee_leaves_application',$save_employee_leave);
+
+					if($insert_employee_leave){
+						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
+						redirect($this->url);
+					}
+				}
+				
+			}
+			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/employee/leave_table_view', $data);
 		}
