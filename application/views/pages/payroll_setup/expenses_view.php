@@ -1,8 +1,10 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Payroll group is important in creating payroll. You need to group your employees according to their shift,<br>
-        workday, hours type, pay rate type and or different rest days.</p>
+        <p>You can also allow employees to reimburse expenses they have incurred in certain transactions like transportation for meeting with client.
+Select the type of expenses from the default or add other expense type.
+Indicate the minimum and maximum amount allowed and whether receipt is required. 
+Define different expense type for company expense and chargeable to client expenses.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">
