@@ -617,6 +617,30 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
   PRIMARY KEY (`employee_leaves_application_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_overtime_application`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_overtime_application` (
+  `overtime_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `overtime_date_applied` date NOT NULL,
+  `overtime_from` date NOT NULL,
+  `overtime_to` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `no_of_hours` float NOT NULL,
+  `with_nsd_hours` float NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `notes` text NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `overtime_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`overtime_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 

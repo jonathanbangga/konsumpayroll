@@ -42,7 +42,7 @@
 		public function index() {
 			$data['page_title'] = "HDMF TABLE";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$hdmf_val = array('company_id'=>$this->company_info->company_id);
+			$hdmf_val = array('status'=>'active');
 			$data['hdmf_tbl'] = $this->jmodel->display_data_where_result('hdmf',$hdmf_val);	
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/hdmf_table_view', $data);

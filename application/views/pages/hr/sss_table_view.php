@@ -27,7 +27,7 @@
 					<td><?php print iprice($row->employer_monthly_contribution_ss);?></td>
 					<td><?php print iprice($row->employer_monthly_contribution_ec);?></td>
 					<td><?php print iprice($row->employee_ss);?></td>
-					<td>Total</td>
+					<td><?php print iprice($row->total);?></td>
 	            </tr>
             <?php
             		}

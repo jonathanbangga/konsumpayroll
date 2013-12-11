@@ -31,7 +31,7 @@
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =10;
+			$this->per_page =1;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -115,7 +115,7 @@
 								"overtime_id"=>$val,
 								"company_id"=>$this->company_info->company_id
 							);
-							$this->overtime->update_field("overtime",$fields,$where);
+							$this->overtime->update_field("employee_overtime_application",$fields,$where);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>"","field"=>$where));		
@@ -148,7 +148,7 @@
 								"overtime_id"=>$val,
 								"company_id"=>$this->company_info->company_id
 							);
-							$this->overtime->update_field("overtime",$fields,$where);
+							$this->overtime->update_field("employee_overtime_application",$fields,$where);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>"","field"=>$where));		

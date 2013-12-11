@@ -40,7 +40,7 @@
 		public function index() {
 			$data['page_title'] = "PHILHEALTH TABLE";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$phil_health = array('company_id'=>$this->company_info->company_id);
+			$phil_health = array('status'=>'active');
 			$data['philhealth_tbl'] = $this->jmodel->display_data_where_result('phil_health',$phil_health);
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/philhealth_table_view', $data);

@@ -41,10 +41,10 @@
 		 */
 		public function index() {
 			$data['page_title'] = "Withholding Tax - Monthly";
-			$withholding_tax_val = array('company_id'=>$this->company_info->company_id,'tax_type'=>'Monthly');
+			$withholding_tax_val = array('status'=>'active','tax_type'=>'Monthly');
 			$data['withholding_tax'] = $this->jmodel->display_data_where_result('withholding_tax',$withholding_tax_val);
 			
-			$withholding_tax_status = array('company_id'=>$this->company_info->company_id,'tax_type'=>'Monthly');
+			$withholding_tax_status = array('status'=>'active','tax_type'=>'Monthly');
 			$data['withholding_tax_status'] = $this->jmodel->display_data_where_result('withholding_tax_status',$withholding_tax_status);
 			
 			$data['sidebar_menu'] =$this->sidebar_menu;

@@ -17,14 +17,14 @@
 		?>
 			<tr>
 				<td ><?php print $row->tax_name;?></td>
-				<td ><?php print $row->tax1;?></td>
-				<td ><?php print $row->tax2;?></td>
-				<td ><?php print $row->tax3;?></td>
-				<td ><?php print $row->tax4;?></td>
-				<td ><?php print $row->tax5;?></td>
-				<td ><?php print $row->tax6;?></td>
-				<td ><?php print $row->tax7;?></td>
-				<td ><?php print $row->tax8;?></td>
+				<td ><?php print iprice($row->tax1);?></td>
+				<td ><?php print iprice($row->tax2);?></td>
+				<td ><?php print iprice($row->tax3);?></td>
+				<td ><?php print iprice($row->tax4);?></td>
+				<td ><?php print iprice($row->tax5);?></td>
+				<td ><?php print iprice($row->tax6);?></td>
+				<td ><?php print iprice($row->tax7);?></td>
+				<td ><?php print iprice($row->tax8);?></td>
 			</tr>
 		<?php 		
 				}
@@ -39,7 +39,7 @@
 	<table class="tbl">
 		<tr>
 			<th >Tax Status</th>
-			<th >1</th>
+			<th style="width: 76px;">1</th>
 			<th >2</th>
 			<th >3</th>
 			<th >4</th>
@@ -54,14 +54,14 @@
 		?>
 			<tr>
 				<td ><?php print $row->tax_name;?></td>
-				<td ><?php print $row->amount_excess1;?></td>
-				<td ><?php print $row->amount_excess2;?></td>
-				<td ><?php print $row->amount_excess3;?></td>
-				<td ><?php print $row->amount_excess4;?></td>
-				<td ><?php print $row->amount_excess5;?></td>
-				<td ><?php print $row->amount_excess6;?></td>
-				<td ><?php print $row->amount_excess7;?></td>
-				<td ><?php print $row->amount_excess8;?></td>
+				<td ><?php print iprice($row->amount_excess1);?></td>
+				<td ><?php print iprice($row->amount_excess2);?></td>
+				<td ><?php print iprice($row->amount_excess3);?></td>
+				<td ><?php print iprice($row->amount_excess4);?></td>
+				<td ><?php print iprice($row->amount_excess5);?></td>
+				<td ><?php print iprice($row->amount_excess6);?></td>
+				<td ><?php print iprice($row->amount_excess7);?></td>
+				<td ><?php print iprice($row->amount_excess8);?></td>
 			</tr>
 		<?php 		
 				}

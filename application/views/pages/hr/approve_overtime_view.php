@@ -43,8 +43,7 @@
 				<tr>
 					<th style="width:50px;"><input type="checkbox" name="checkall" /></th>
 					<th style="width:170px;">Employee ID</th>
-					<th style="width:170px;">Employee Name</th>
-					<th style="width:170px;">Overtime Type</th>
+					<th style="width:170px;">Employee Name</th>	
 					<th style="width:170px;">Overtime Date</th>
 					<th style="width:170px;">Date From</th>
 					<th style="width:170px;">Date To</th>
@@ -62,7 +61,6 @@
 					<td><input type="checkbox" class="overtime_id" name="overtime_id[]" value="<?php echo $approvers->overtime_id;?>"></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->full_name;?></div></td>
-					<td><div class="users_text"><?php echo $approvers->overtime_type_id;?></div></td>
 					<td><div class="users_text"><?php echo idates($approvers->overtime_date_applied);?></div></td>
 					<td><div class="users_text"><?php echo idates($approvers->overtime_from);?></div></td>
 					<td><div class="users_text"><?php echo idates($approvers->overtime_to);?></div></td>

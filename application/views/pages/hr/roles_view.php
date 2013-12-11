@@ -94,13 +94,10 @@
       		jQuery(document).on("click","#sign_right",function(e){
       		    e.preventDefault();
       		    var clone_select = jQuery("#select_choosen option:selected").clone();
-      		    jQuery("#select_assign").append(clone_select);
-      		 	
+      		    jQuery("#select_assign").append(clone_select);		 	
       		    jQuery("#select_choosen option:selected").remove();
-
       		  	var roles_choose = jQuery("#select_choosen option").clone().attr("selected","selected");
     			jQuery("#hidden_roles").html(roles_choose); 
-      		
       		});
         }
 
