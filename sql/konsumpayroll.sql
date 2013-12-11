@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2013 at 07:47 AM
+-- Generation Time: Dec 11, 2013 at 08:43 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -327,6 +327,7 @@ CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `effective_date` datetime NOT NULL,
   `adjustment_date` datetime NOT NULL,
   `reasons` text NOT NULL,
+  `attachment` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`basic_pay_id`)
@@ -748,7 +749,7 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `leave_type_id` int(11) NOT NULL,
-  `remaining_hours` varchar(255) NOT NULL,
+  `leave_credits` varchar(255) NOT NULL,
   `as_of` date NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
@@ -771,7 +772,9 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
   `date_return` datetime NOT NULL,
+  `date_filed` date NOT NULL,
   `note` text NOT NULL,
+  `total_leave_requested` varchar(55) NOT NULL,
   `leave_application_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `attachments` text NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
@@ -782,15 +785,15 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
 -- Dumping data for table `employee_leaves_application`
 --
 
-INSERT INTO `employee_leaves_application` (`employee_leaves_application_id`, `company_id`, `emp_id`, `leave_type_id`, `reasons`, `date_start`, `date_end`, `date_return`, `note`, `leave_application_status`, `attachments`, `deleted`) VALUES
-(1, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'reject', 'asjlfsdfsd', '0'),
-(2, 4, 5, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'approve', 'asjlfsdfsd', '0'),
-(3, 4, 5, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(4, 4, 6, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(5, 4, 7, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(6, 4, 6, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(7, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0'),
-(8, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', 'wataaaa', 'pending', 'asjlfsdfsd', '0');
+INSERT INTO `employee_leaves_application` (`employee_leaves_application_id`, `company_id`, `emp_id`, `leave_type_id`, `reasons`, `date_start`, `date_end`, `date_return`, `date_filed`, `note`, `total_leave_requested`, `leave_application_status`, `attachments`, `deleted`) VALUES
+(1, 4, 4, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'reject', 'asjlfsdfsd', '0'),
+(2, 4, 5, 1, 'reasons lang', '2013-12-05 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'approve', 'asjlfsdfsd', '0'),
+(3, 4, 5, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0'),
+(4, 4, 6, 1, 'reasons lang', '2013-12-06 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0'),
+(5, 4, 7, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0'),
+(6, 4, 6, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0'),
+(7, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0'),
+(8, 4, 20, 1, 'reasons lang', '2013-12-07 18:37:20', '2013-12-04 09:24:40', '2013-12-10 15:37:42', '0000-00-00', 'wataaaa', '', 'pending', 'asjlfsdfsd', '0');
 
 -- --------------------------------------------------------
 
@@ -1118,7 +1121,7 @@ CREATE TABLE IF NOT EXISTS `expense_type` (
   `expense_type_name` varchar(80) NOT NULL,
   `minimum_amount` decimal(10,2) NOT NULL,
   `maximum_amount` decimal(10,2) NOT NULL,
-  `require_receipt` decimal(10,2) NOT NULL,
+  `require_receipt` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1623,6 +1626,21 @@ CREATE TABLE IF NOT EXISTS `payroll_group` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`payroll_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_group_setup`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_group_setup` (
+  `payroll_group_setup_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `period_type` varchar(250) NOT NULL,
+  `pay_rate_type` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_group_setup_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 

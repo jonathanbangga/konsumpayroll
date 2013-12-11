@@ -235,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `basic_pay_adjustment` (
   `effective_date` datetime NOT NULL,
   `adjustment_date` datetime NOT NULL,
   `reasons` text NOT NULL,
+  `attachment` text NOT NULL,
   `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`basic_pay_id`)
@@ -587,14 +588,13 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
   `leaves_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_id` int(11) NOT NULL,
   `leave_type_id` int(11) NOT NULL,
-  `remaining_hours` varchar(255) NOT NULL,
+  `leave_credits` varchar(255) NOT NULL,
   `as_of` date NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 -- --------------------------------------------------------
 
 --
@@ -610,12 +610,14 @@ CREATE TABLE IF NOT EXISTS `employee_leaves_application` (
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
   `date_return` datetime NOT NULL,
+  `date_filed` date NOT NULL,
   `note` text NOT NULL,
+  `total_leave_requested` varchar(55) NOT NULL,
   `leave_application_status` enum('pending','approve','reject') NOT NULL DEFAULT 'pending',
   `attachments` text NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`employee_leaves_application_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -980,7 +982,7 @@ CREATE TABLE IF NOT EXISTS `expense_type` (
   `expense_type_name` varchar(80) NOT NULL,
   `minimum_amount` decimal(10,2) NOT NULL,
   `maximum_amount` decimal(10,2) NOT NULL,
-  `require_receipt` decimal(10,2) NOT NULL,
+  `require_receipt` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -1411,6 +1413,20 @@ CREATE TABLE IF NOT EXISTS `payroll_approver` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_contacts_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `payroll_group_setup`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_group_setup` (
+  `payroll_group_setup_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `period_type` varchar(250) NOT NULL,
+  `pay_rate_type` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_group_setup_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
