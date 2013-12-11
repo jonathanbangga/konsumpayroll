@@ -11,7 +11,7 @@
 					<th style="width:170px;">First Name</th>
 					<th style="width:170px;">Middle Name</th>
 					<th style="width:170px;">Last Name</th>
-					<th style="width:170px;">Payroll Group</th>
+					<th style="width:170px;" class="ihide">Payroll Group</th>
 					<th style="width:170px;">Permission</th>
 					<th style="width:170px">Action</th>
 				</tr>
@@ -38,27 +38,17 @@
 					<td>
 						<input type="hidden" name="update_last_name[]" value="<?php echo $approvers->last_name;?>" class="inp_user">
 						<div class="users_text"><?php echo $approvers->last_name;?></div>
-					</td>
-					
+					</td>					
 					<td>
-						<input type="hidden" name="update_payroll_group[]" class="inp_userlist">
-						<div class="users_text">
-							<?php 
-								$approver_group =  $this->users->approver_groups($company_info->company_id,$approvers->emp_id);
-								if($approver_group){
-									echo $approver_group->name;
-								}else{
-									echo "None";
-								}
-							?>&nbsp;
-						</div>
-					</td>
-					<td>
-						<input type="hidden" class="inp_userlist" name="update_permission[]">
+						<?php 
+							$permission_list =  $this->users->permission_define($company_info->company_id,$approvers->account_id);		
+							if($permission_list){
+								echo $permission_list->roles;	
+							}
+						?>
 					</td>
 					<td> <a class="btn btn-gray btn-action jmanage_users" href="javascript:void(0);" edit_approvers="<?php echo $approvers->account_id;?>" >EDIT</a> </td>
 				</tr>
-				
 				<?php 		
 						endforeach;
 					}
@@ -76,7 +66,7 @@
 	<div class="right pagi-rights"><?php  echo $pagi;?></div>
 	<p>&nbsp;</p>
 	<?php echo form_close();?>
-	<div class="footer-grp-btn">
+	<div class="footer-grp-btn ihide">
 	<!-- FOOTER-GRP-BTN START -->
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>
 	<!-- FOOTER-GRP-BTN END -->
@@ -112,7 +102,7 @@
 					</tr>
 					<tr>
 						<td>Payroll Group</td>
-						<td><select name="jpayroll_group" id="jpayroll_group" class="txtselect input_width"></select></td>
+						<td><select name="jpermisssion" id="jpermisssion" class="txtselect input_width"></select></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
@@ -126,10 +116,10 @@
 		</div>
 	</div>
 	<?php 
-		$options = "<option value=\"\">Please select group</option>";
+		$options = "<option value=\"\">Please select permission</option>";
 		if($approval_process){
-			foreach($approval_process as $key_process=>$val_process){
-				$options .='<option value="'.$val_process->approval_process_id.'">'.$val_process->name.'</option>';	
+			foreach($permission_type as $key_permission=>$val_permission){
+				$options .='<option value="'.$val_permission->users_roles_id.'">'.$val_permission->roles.'</option>';	
 			}
 		}	
 	?>	
@@ -174,11 +164,11 @@
 				    html +='<td><input type="text" class="inp_user" name="first_name[]"></td>';
 				    html +='<td><input type="text" class="inp_user" name="middle_name[]"></td>';
 				    html +='<td><input type="text" class="inp_user" name="last_name[]"></td>';    
-				    html +='<td><input type="hidden" class="inp_user" name="payroll_groups[]">';
+				    html +='<td style="display:none;"><input type="hidden" class="inp_user" name="payroll_groups[]">';
 				    html +='<select name="approval_process_id[]" class="inp_user">'+$select_options+'</select>';
 					html +='<input type="hidden" class="inp_user" name="approval_process_ids[]" readonly="readonly">';
 					html +='</td>';
-				    html +='<td><input type="text" class="inp_user" name="permission[]"></td>';
+				    html +='<td><select class="inp_user" name="permission[]">'+$select_options+'</select></td>';
 				    html +='<td><a href="#" class="btn btn-red btn-action jdel_users_append">REMOVE</a></td>';
 				    html +='</tr>'; 
 			    jQuery(".emp_users_list").append(html); 
@@ -208,15 +198,15 @@
 			var password = array_fields("input[name='password[]']");
 			var retype_password = array_fields("input[name='retype_password[]']");
 			var approval_process_id = array_fields("select[name='approval_process_id[]']");
-			var permission = array_fields("input[name='permission[]']");
+			var permission = array_fields("select[name='permission[]']");
 			ierror_field("input[name='payroll_cloud_id[]']");
 			ierror_field("input[name='email[]']");
 			ierror_field("input[name='first_name[]']");
 			ierror_field("input[name='middle_name[]']");
 			ierror_field("input[name='last_name[]']");
-			ierror_field("input[name='password[]']");
-			ierror_field("select[name='approval_process_id[]']");
-			ierror_field("input[name='retype_password[]']");			
+			//ierror_field("input[name='password[]']");
+			//ierror_field("select[name='approval_process_id[]']");
+			//ierror_field("input[name='retype_password[]']");			
 			ierror_duplicate("input[name='payroll_cloud_id[]']");
 			ierror_duplicate("input[name='email[]']");
 			if(ierror_mark(".inp_user") > 0){
@@ -228,9 +218,9 @@
 						"first_name[]":first_name,
 						"middle_name[]":middle_name,
 						"last_name[]":last_name,
-						"password[]":password,
-						"retype_password[]":retype_password,
-						"approval_process_id[]":approval_process_id,
+						//"password[]":password,
+						//"retype_password[]":retype_password,
+						//"approval_process_id[]":approval_process_id,
 						"permission[]":permission,
 						"ZGlldmlyZ2luamM":jQuery.cookie(itokens),
 						"save":"true"
@@ -263,7 +253,7 @@
 						jQuery("input[name='jfname']").empty().val(res.first_name);
 						jQuery("input[name='jmname']").empty().val(res.middle_name);
 						jQuery("input[name='jlname']").empty().val(res.last_name);
-						jQuery("#jpayroll_group").html(options);
+						jQuery("#jpermisssion").html(options);
 						jQuery("#jaccount_id").empty().val(res.account_id);
 					}
 				});	
@@ -283,7 +273,7 @@
 				"jfname":jQuery("input[name='jfname']").val(),
 				"jmname":jQuery("input[name='jmname']").val(),
 				"jlname":jQuery("input[name='jlname']").val(),
-				"jpayroll_group":jQuery("input[name='jpayroll_group']").val(),
+				"jpermisssion":jQuery("select[name='jpermisssion']").val(),
 				"ZGlldmlyZ2luamM":jQuery.cookie(itokens),
 				"update":true
 			};	
