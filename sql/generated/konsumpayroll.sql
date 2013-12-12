@@ -1047,17 +1047,16 @@ INSERT INTO `gsis` (`id`, `type_of_insurance_coverage`, `personal_share_life`, `
 CREATE TABLE IF NOT EXISTS `hdmf` (
   `hdmf_id` int(11) NOT NULL AUTO_INCREMENT,
   `salary_bracket_id` int(11) NOT NULL,
-  `range_of_compensation_from` decimal(10,2) NOT NULL,
-  `range_of_compensation_to` decimal(10,2) NOT NULL,
-  `monthly_salary_credit` decimal(10,2) NOT NULL,
-  `employer_contribution1` decimal(10,2) NOT NULL,
-  `employee_contribution2` decimal(10,2) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `range_of_compensation_from` decimal(12,2) NOT NULL,
+  `range_of_compensation_to` decimal(12,2) NOT NULL,
+  `monthly_salary_credit` decimal(12,2) NOT NULL,
+  `employer_contribution1` decimal(12,2) NOT NULL,
+  `employee_contribution2` decimal(12,2) NOT NULL,
+  `total` decimal(12,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`hdmf_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `hdmf`
