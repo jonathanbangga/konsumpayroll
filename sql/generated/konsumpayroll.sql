@@ -1017,16 +1017,26 @@ CREATE TABLE IF NOT EXISTS `government_registration` (
 
 CREATE TABLE IF NOT EXISTS `gsis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_id` int(11) NOT NULL,
   `type_of_insurance_coverage` varchar(100) NOT NULL,
-  `personal_share_life` decimal(10,2) NOT NULL,
-  `personal_share_retirement` decimal(10,2) NOT NULL,
-  `gov_share_life` decimal(10,2) NOT NULL,
-  `gov_share_retirement` varchar(50) NOT NULL,
+  `personal_share_life` varchar(80) NOT NULL,
+  `personal_share_retirement` varchar(80) NOT NULL,
+  `gov_share_life` varchar(80) NOT NULL,
+  `gov_share_retirement` varchar(80) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `gsis`
+--
+
+INSERT INTO `gsis` (`id`, `type_of_insurance_coverage`, `personal_share_life`, `personal_share_retirement`, `gov_share_life`, `gov_share_retirement`, `status`, `deleted`) VALUES
+(1, 'regular', '2%', '7%', '2%', '10%', 'Active', '0'),
+(2, 'Employees Compensation Funds', '0%', '0%', '0%', '1% Not to Exceed P100', 'Active', '0');
+
 
 -- --------------------------------------------------------
 
@@ -1037,16 +1047,23 @@ CREATE TABLE IF NOT EXISTS `gsis` (
 CREATE TABLE IF NOT EXISTS `hdmf` (
   `hdmf_id` int(11) NOT NULL AUTO_INCREMENT,
   `salary_bracket_id` int(11) NOT NULL,
-  `range_of_compensation_from` decimal(10,2) NOT NULL,
-  `range_of_compensation_to` decimal(10,2) NOT NULL,
-  `monthly_salary_credit` decimal(10,2) NOT NULL,
-  `employer_contribution1` decimal(10,2) NOT NULL,
-  `employee_contribution2` decimal(10,2) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `range_of_compensation_from` decimal(12,2) NOT NULL,
+  `range_of_compensation_to` decimal(12,2) NOT NULL,
+  `monthly_salary_credit` decimal(12,2) NOT NULL,
+  `employer_contribution1` decimal(12,2) NOT NULL,
+  `employee_contribution2` decimal(12,2) NOT NULL,
+  `total` decimal(12,2) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`hdmf_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `hdmf`
+--
+
+INSERT INTO `hdmf` (`hdmf_id`, `salary_bracket_id`, `range_of_compensation_from`, `range_of_compensation_to`, `monthly_salary_credit`, `employer_contribution1`, `employee_contribution2`, `total`, `status`, `deleted`) VALUES
+(1, 1, 0.00, 999999999.00, 100.00, 100.00, 100.00, 200.00, 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1645,7 +1662,7 @@ CREATE TABLE IF NOT EXISTS `rank` (
 CREATE TABLE IF NOT EXISTS `rest_day` (
   `rest_day_id` int(11) NOT NULL AUTO_INCREMENT,
   `payroll_group_id` int(11) NOT NULL,
-  `rest_day_name` varchar(80) NOT NULL,
+  `rest_day` varchar(80) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,

@@ -13,9 +13,9 @@
 		?>
 			<tr>
 				<td><?php print $row->type_of_insurance_coverage;?></td>
-				<td><?php print iprice($row->personal_share_life);?></td>
-				<td><?php print iprice($row->personal_share_retirement);?></td>
-				<td><?php print iprice($row->gov_share_life);?></td>
+				<td><?php print $row->personal_share_life;?></td>
+				<td><?php print $row->personal_share_retirement;?></td>
+				<td><?php print $row->gov_share_life;?></td>
 				<td><?php print $row->gov_share_retirement;?></td>
 			</tr>
 		<?php 		
