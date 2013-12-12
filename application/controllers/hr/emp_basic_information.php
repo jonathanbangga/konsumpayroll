@@ -258,10 +258,10 @@
 				}
 			}
 			
-			$this->load->library('csvreader');
+			/* $this->load->library('csvreader');
 	        $resultcsv =   $this->csvreader->parse_file('uploads/Test.csv');//path to csv file
 	
-	        $data['csvData'] =  $resultcsv;
+	        $data['csvData'] =  $resultcsv; */
 			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/emp_basic_info_view', $data);
