@@ -22,8 +22,6 @@
 			parent::__construct();
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
-			$this->load->model('employee_model','employee');
-			
 			$this->sidebar_menu = 'content_holders/hr_tables_sidebar_menu';
 			$this->menu = 'content_holders/user_hr_owner_menu';
 			$this->company_info =  whose_company();
