@@ -89,7 +89,7 @@
 							'emp_id' => $emp_id[$key],
 							'company_id' => $this->company_id,
 							'leave_type_id' => $leave_type[$key],
-							'remaining_hours' => $remaining_hours[$key],
+							'leave_credits' => $remaining_hours[$key],
 							'as_of' => $as_of[$key]
 						);
 

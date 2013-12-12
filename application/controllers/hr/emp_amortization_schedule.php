@@ -67,6 +67,10 @@
 			
 			$data['emp_amortization'] = $this->hr_emp->emp_amortization_sched($per_page, $page, $this->company_id, $this->loan_no);
 			
+			// Employee Loan Amount
+			$loan_id = $this->uri->segment(5);
+			$data['loan_amount'] = $this->hr_emp->loan_amount($loan_id,$this->company_id);
+			
 			$query = $this->hr_emp->emp_loan_no_group($this->company_id, $this->loan_no);
 			$data['emp_info'] = $query;
 			

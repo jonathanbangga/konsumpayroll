@@ -30,7 +30,7 @@
 	              <td><?php print number_format($row->payment, 2);?></td>
 	              <td>
 	              	<?php 
-	              		$total_loan_balance = 15000 - $zero_value; 
+	              		$total_loan_balance = $loan_amount - $zero_value; 
 	              		print number_format($total_loan_balance, 2);
 	              	?>
               	  </td>

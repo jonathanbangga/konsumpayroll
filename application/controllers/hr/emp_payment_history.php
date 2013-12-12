@@ -41,6 +41,13 @@
 		 * index page
 		 */
 		public function index() {
+			
+			$check_emp_loan_id = $this->hr_emp->check_amortization_sched_id($this->loan_no,$this->company_id);
+			if($check_emp_loan_id == FALSE){
+				show_error("Invalid parameter");
+				return false;
+			}
+			
 			$data['page_title'] = "Payment History";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
@@ -59,36 +66,63 @@
 			
 			$data['emp_payment_history'] = $this->hr_emp->emp_payment_history($per_page, $page, $this->company_id, $this->loan_no);
 			
+			// Total Principal Amortization Schedule
+			$data['total_princiapl_amortization'] = $this->hr_emp->total_princiapl_amortization($this->loan_no,$this->company_id);
+			
+			// Employee Loan Amount
+			$data['loan_amount'] = $this->hr_emp->loan_amount($this->loan_no,$this->company_id);
+			
 			$query = $this->hr_emp->emp_loan_no_group($this->company_id, $this->loan_no);
 			$data['emp_info'] = $query;
 			
+			// Get Interest and Principal Value
+			$loan_id = $this->loan_no;
+			$get_kapila_ka_row = $this->hr_emp->kapila_ka_row_interest_principal($loan_id, $this->company_id); 
+			$get_interest_principal = $this->hr_emp->get_interest_principal($loan_id, $get_kapila_ka_row, $this->company_id);
+			if($get_interest_principal != FALSE){
+				$data['interest'] = $get_interest_principal->interest;
+				$data['principal'] = $get_interest_principal->principal;
+			}
+			
+			// Remaining Cash Amount
+			$debit_amount = $this->hr_emp->payment_debit_amount($this->loan_no, $this->company_id);
+			$data['debit_amount'] = $debit_amount;
+			
 			if($this->input->post('add')){
 				$loan_no = $this->input->post('loan_no');
-				$interest = $this->input->post('interest');				
+				$payment = $this->input->post('payment');
+				$interest = $this->input->post('interest');
 				$principal = $this->input->post('principal');
-				$credit_bal_principal = $this->input->post('credit_bal_principal');
-				$credit_bal_interest = $this->input->post('credit_bal_interest');
 				$penalty = $this->input->post('penalty');
+				$installment_value = $this->input->post('installment_value');
+				$remaining_cash_amount = $this->input->post('remaining_cash_amount');
 				
 				foreach($loan_no as $key2=>$val){
 					$this->form_validation->set_rules("loan_no[{$key2}]", 'Loan No', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("payment[{$key2}]", 'Payment', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("interest[{$key2}]", 'Interest', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("principal[{$key2}]", 'Principal', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("credit_bal_principal[{$key2}]", 'Credit Balance Principal', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("credit_bal_interest[{$key2}]", 'Credit Balance Interest', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("penalty[{$key2}]", 'Penalty', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("installment_value[{$key2}]", 'Installment', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("remaining_cash_amount[{$key2}]", 'Remaining Cash Amount', 'trim|required|xss_clean');
 				}
 				
 				if ($this->form_validation->run()==true){
 					
 					foreach($loan_no as $key=>$val){
+						if($payment[$key] > ($interest[$key] + $principal[$key])){
+							$new_remaining_cash_amount = $payment[$key] - ($interest[$key] + $principal[$key]);
+						}else{
+							$new_remaining_cash_amount = 0;
+						}
+						
                 	    $add_emp_payment_history = array(								
 							'employee_loans_id' => $loan_no[$key],
+                	    	'payment' => $payment[$key],
                 	    	'interest' => $interest[$key],
 							'principal' => $principal[$key],
-							'credit_balance_on_principal' => $credit_bal_principal[$key],
-                	    	'credit_balance_on_interest' => $credit_bal_interest[$key],
                 	    	'penalty' => $penalty[$key],
+                	    	'remaining_cash_amount' => $new_remaining_cash_amount,
                 	    	'comp_id' => $this->company_id
 						);
 

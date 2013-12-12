@@ -22,7 +22,7 @@
 			parent::__construct();
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
-			$this->load->model('employee_model','employee');
+			$this->load->model('employee/employee_model','employee');
 			$this->company_id = 1;
 			
 			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';

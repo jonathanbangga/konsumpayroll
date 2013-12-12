@@ -10,27 +10,43 @@
           <table style="width:1240px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
+              <th style="width:170px;">Payment</th>
               <th style="width:170px;">Interest</th>
               <th style="width:170px;">Principal</th>
-              <th style="width:170px;">Credit Balance on Principal</th>
-              <th style="width:170px;">Credit Balance on Interest</th>
               <th style="width:170px">Penalty</th>
+              <th style="width:170px;">Credit Balance on Principal</th>
               <th style="width:170px;">Loan Balance</th>
               <th style="width:170px">Action</th>
             </tr>
             <?php 
             	if($emp_payment_history != NULL){
             		$counter = 1;
+            		$credit_balance_principal = 0;
+            		$interest_val = 0;
+            		$principal_val = 0;
             		foreach($emp_payment_history as $row){
+            			
+            			// For Credit Balance On Principal
+            			$credit_balance_principal = ($credit_balance_principal + $row->principal);
+            			$balance_principal =  $total_princiapl_amortization - $credit_balance_principal;
+            			
+            			// Interest Total Amount
+            			$interest_val = $interest_val + $row->interest;
+            			
+            			// Principal Total Amount
+            			$principal_val = $principal_val + $row->principal;
+            			
+            			// For Loan Balance
+            			$loan_balance = $loan_amount - ( $interest_val + $principal_val);
             ?>
-	            <tr>
+	            <tr class="payment_row_cont">
 	              <td><?php print $counter++;?></td>
-	              <td><?php print $row->interest;?></td>
-	              <td><?php print $row->principal;?></td>
-	              <td><?php print $row->credit_balance_on_principal;?></td>
-	              <td><?php print $row->credit_balance_on_interest;?></td>
-	              <td><?php print $row->penalty;?></td>
-	              <td>Loan Balance</td>
+	              <td><?php print number_format($row->payment, 2);?></td>
+	              <td><?php print number_format($row->interest, 2);?></td>
+	              <td><?php print number_format($row->principal, 2);?></td>
+	              <td><?php print number_format($row->penalty, 2);?></td>
+	              <td><span class="ihide"><?php print $total_princiapl_amortization." - ".$credit_balance_principal." = ";?></span><?php print number_format($balance_principal, 2);?></td>
+	              <td><?php print number_format($loan_balance, 2);?></td>
 	              <td>
 	              	<a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" employee_payment_history_id="<?php print $row->employee_payment_history_id;?>" >EDIT</a> 
 	              	<a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" employee_payment_history_id="<?php print $row->employee_payment_history_id;?>" >DELETE</a>
@@ -38,18 +54,66 @@
 	            </tr>
             <?php
             		}
-            	}else{
-            		print "<tr class='msg_empt_cont'><td colspan='8' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
+            <?php
+				if($debit_amount == 0){
+					$new_interest_value = $interest;
+					$new_principal_value = $principal;
+					$new_remaining_cash_amount = $debit_amount;
+				}else{
+					// Total Remaining Cash Amount
+	            	$total_debit_amount_value = $debit_amount - $interest;
+	            	
+	            	// Compute New Interest Amount
+	            	if($total_debit_amount_value > 0){
+	            		$new_interest_value = 0;
+	            	}else{
+	            		// Returns the absolute value of number or convert to positive integer
+						$new_interest_value = abs($total_debit_amount_value);
+	            	}
+	            	
+	            	// Compute New Principal Amount
+	            	if($total_debit_amount_value > 0){
+	            		// Total Principal is greater than Remaining Cash Amount 
+	            		if($principal >= $total_debit_amount_value){
+	            			$new_principal_value = $principal - $total_debit_amount_value;
+	            			// Compute New Remaining Cash Amount
+	            			$new_remaining_cash_amount = 0;
+	            		}else{
+	            			// Total Remaining Cash Amount is greater than Principal
+	            			 $new_principal_value = 0;
+	            			 $new_remaining_cash_amount = $total_debit_amount_value - $principal;
+	            		}
+	            	}
+				}
+            ?>
+            <tr>
+		    <td><input readonly='readonly' type='text' name='loan_no[]' class='ihide txtfield loan_no"+size+"' value='<?php print $emp_info->employee_loans_id;?>' /></td>
+		    <td><input type='text' name='payment[]' class='payment txtfield'></td>
+		    <td><input type='text' name='interest[]' class='interest txtfield' value="<?php print $new_interest_value;?>" /></td>
+		    <td><input type='text' name='principal[]' class='principal txtfield' value="<?php print $new_principal_value;?>" /></td>
+		    <td><input type='text' name='penalty[]' class='penalty txtfield'></td>
+		    <td>
+			    <span class="">Installment:
+			    <?php print $interest." + ".$principal;?>
+			    	<input type="text" name="installment_value[]" style="width:auto;" value="<?php print $interest + $principal;?>" />
+	            </span>
+            </td>
+		    <td><span class="">Remaining Cash Amount: <?php print $debit_amount;?></span></td>
+		    <td><span>New Cash Amount:
+		    	<input type="text" name="remaining_cash_amount[]" style="width:auto;" value="<?php print $new_remaining_cash_amount;?>" />
+		    </span>
+		    </td>
+		   </tr>
           </tbody></table>
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
         <div class="pagiCont_btnCont">
         	<div class="left"><?php print $links;?></div>
-        	<input type="submit" class="btn right addRowBtn" value="ADD ROW" onclick="javascript:return false;" />
-        	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
+        	<input type="submit" class="btn right addRowBtn ihide" value="ADD ROW" onclick="javascript:return false;" />
+        	<input type="submit" name="add" class="btn right saveBtn" value="SAVE" style="margin-bottom:20px;" />
         	<div class="clearB"></div>
         </div>
         <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
@@ -72,11 +136,10 @@
               <input type="text" name="employee_payment_history_id" class="txtfield employee_payment_history_id ihide" />
               <input type='text' name='interest' class='payment txtfield'></td>
               </tr>
-		    <tr>
             <tr>
               <td style="width:155px">Principal</td>
               <td>
-              <input type="text" name="principal" class="principal txtfield" />
+              <input type="text" name="principal" class="principal txtfield" /></td>
             </tr>
               <tr><td style="width:155px">Credit Balance on Principal</td>
               <td><input type='text' name='credit_balance_on_principal' class='credit_balance_on_principal txtfield'></td></tr>
@@ -101,11 +164,11 @@
 	function addRow(size){
 		var tbl = "<tr>";
 	    tbl += "<td><input readonly='readonly' type='text' name='loan_no[]' class='ihide txtfield loan_no"+size+"' value='<?php print $emp_info->employee_loans_id;?>' /></td>";
+	    tbl += "<td><input type='text' name='payment[]' class='payment txtfield'></td>";
 	    tbl += "<td><input type='text' name='interest[]' class='interest txtfield'></td>";
 	    tbl += "<td><input type='text' name='principal[]' class='principal txtfield'></td>";
-	    tbl += "<td><input type='text' name='credit_bal_principal[]' class='credit_bal_principal txtfield'></td>";
-	    tbl += "<td><input type='text' name='credit_bal_interest[]' class='credit_bal_interest txtfield'></td>";
 	    tbl += "<td><input type='text' name='penalty[]' class='penalty txtfield'></td>";
+	    tbl += "<td></td>";
 	    tbl += "<td></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	    tbl += "</tr>";
@@ -149,7 +212,7 @@
 		    var _this = jQuery(this);
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
-		        var input_text_size = jQuery("input[name='emp_id[]']").length;
+		        var input_text_size = jQuery("input[name='loan_no[]']").length;
 				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
 		    });
 		});

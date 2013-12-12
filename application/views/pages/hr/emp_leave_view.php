@@ -2,15 +2,16 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:1070px;" class="tbl emp_conList">
+          <table style="width:1173px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
               <th style="width:170px;">Employee Name</th>
               <th style="width:170px;">Employee Number</th>
               <th style="width:170px;">Leave Type</th>
-              <th style="width:170px;">Remaining Hours</th>
+              <th style="width:170px;">Leave Credits</th>
+              <th style="width:173px;">Remaining Leave Credits</th>
               <th style="width:170px;">As of</th>
-              <th style="width:170px">Action</th>
+              <th style="width:100px">Action</th>
             </tr>
             <?php 
             	if($emp_leave != NULL){
@@ -22,9 +23,10 @@
 	              <td><?php print ucwords($row->first_name)." ".ucwords($row->last_name);?></td>
 	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print $row->leave_type_name;?></td>
-	              <td><?php print $row->remaining_hours;?></td>
+	              <td><?php print $row->leave_credits;?></td>
+	              <td></td>
 	              <td><?php print $row->as_of;?></td>
-	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" attr_empid="<?php print $row->emp_id;?>">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" attr_empid="<?php print $row->emp_id;?>">DELETE</a></td>
+	              <td><a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" attr_empid="<?php print $row->emp_id;?>">DELETE</a></td>
 	            </tr>
             <?php
             		}
@@ -95,8 +97,9 @@
 	    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
 	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_type[]'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type[]', $row_ltype->leave_type_name); ?>'><?php print $row_ltype->leave_type_name;?></option><?php } }?></select></td>";
 	    tbl += "<td><input type='text' name='remaining_hours[]' class='remaining_hours txtfield'></td>";
+	    tbl += "<td></td>";
 	    tbl += "<td><input type='text' name='as_of[]' class='as_of txtfield datepickerCont' id='as_of"+size+"' /></td>";
-	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
+	    tbl += "<td><a href='javascript:void(0);' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	    tbl += "</tr>";
 	          
 	      // alert(tbl);
