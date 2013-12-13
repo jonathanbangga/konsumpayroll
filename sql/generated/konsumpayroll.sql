@@ -977,6 +977,7 @@ CREATE TABLE IF NOT EXISTS `payroll_calendar` (
   `payroll_calendar_id` int(11) NOT NULL AUTO_INCREMENT,
   `semi_monthly` int(11) NOT NULL,
   `monthly` int(11) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
   `payroll_date` date NOT NULL,
   `cut_off_from` date NOT NULL,
   `cut_off_to` date NOT NULL,
