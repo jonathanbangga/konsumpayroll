@@ -21,7 +21,19 @@ class Rest_day extends CI_Controller {
 		$data['page_title'] = "Rest Day";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
+		$data['pg_sql'] = $this->rest_day_model->get_payroll_group();
 		$this->layout->view('pages/payroll_setup/rest_day_view',$data);
+	}
+	
+	public function ajax_set_rest_day(){
+		$pg_id = $this->input->post('pg_id');
+		$rest_day = $this->input->post('rest_day');
+		$this->rest_day_model->add_rest_day($pg_id,$rest_day);
+	}
+	
+	public function ajax_unset_rest_day(){
+		$rd_id = $this->input->post('rd_id');
+		$this->rest_day_model->delete_rest_day($rd_id);
 	}
 	
 }

@@ -1,6 +1,8 @@
 <?php $uri =  $this->uri->segment(3); ?>
 <ul>
-	<li><a href="#">Payroll Group</a></li>
+	<li <?php if($uri=='payroll_group'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group">Payroll Group</a>
+	</li>
 	<li><a href="#">Payroll Calendar</a></li>
 	<li <?php if($uri=='hours_type'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/hours_type">
