@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2013 at 08:43 AM
+-- Generation Time: Dec 13, 2013 at 03:05 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -1167,10 +1167,10 @@ INSERT INTO `government_registration` (`government_registration_id`, `tin`, `rdo
 CREATE TABLE IF NOT EXISTS `gsis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type_of_insurance_coverage` varchar(100) NOT NULL,
-  `personal_share_life` decimal(10,2) NOT NULL,
-  `personal_share_retirement` decimal(10,2) NOT NULL,
-  `gov_share_life` decimal(10,2) NOT NULL,
-  `gov_share_retirement` varchar(50) NOT NULL,
+  `personal_share_life` varchar(80) NOT NULL,
+  `personal_share_retirement` varchar(80) NOT NULL,
+  `gov_share_life` varchar(80) NOT NULL,
+  `gov_share_retirement` varchar(80) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`id`)
@@ -1181,8 +1181,8 @@ CREATE TABLE IF NOT EXISTS `gsis` (
 --
 
 INSERT INTO `gsis` (`id`, `type_of_insurance_coverage`, `personal_share_life`, `personal_share_retirement`, `gov_share_life`, `gov_share_retirement`, `status`, `deleted`) VALUES
-(1, 'gsis oh yeah', 1313.00, 4123.00, 2341.00, 'sss', 'Active', '0'),
-(2, 'gsis oh yeah', 1313.00, 4123.00, 2341.00, 'sss', 'Active', '0');
+(1, 'regular', '2%', '7%', '2%', '10%', 'Active', '0'),
+(2, 'Employees Compensation Funds', '0%', '0%', '0%', '1% Not to Exceed P100', 'Active', '0');
 
 -- --------------------------------------------------------
 
@@ -1202,7 +1202,7 @@ CREATE TABLE IF NOT EXISTS `hdmf` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`hdmf_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `hdmf`
@@ -1492,6 +1492,28 @@ CREATE TABLE IF NOT EXISTS `nightshift_differential` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nightshift_differential_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `nightshift_differential_settings` (
+  `nightshift_differential_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_time` time NOT NULL,
+  `to_time` time NOT NULL,
+  `rate` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`nightshift_differential_settings_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `nightshift_differential_settings`
+--
+
+INSERT INTO `nightshift_differential_settings` (`nightshift_differential_settings_id`, `from_time`, `to_time`, `rate`, `company_id`) VALUES
+(1, '08:30:00', '23:30:00', 10, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notification`
 --
 
@@ -1610,6 +1632,32 @@ CREATE TABLE IF NOT EXISTS `payroll_approver` (
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`company_contacts_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_assigned_bank_accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_assigned_bank_accounts` (
+  `payroll_assigned_bank_accounts_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `bank_name` varchar(250) NOT NULL,
+  `branch` varchar(250) NOT NULL,
+  `bank_account_no` varchar(250) NOT NULL,
+  `bank_account_type` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_assigned_bank_accounts_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `payroll_assigned_bank_accounts`
+--
+
+INSERT INTO `payroll_assigned_bank_accounts` (`payroll_assigned_bank_accounts_id`, `payroll_group_id`, `bank_name`, `branch`, `bank_account_no`, `bank_account_type`, `company_id`) VALUES
+(1, 7, 'bank3', 'branch3', 'bank_an3', 'Current', 1),
+(2, 8, 'bank2', 'branch2', 'bank_an2', 'Savings', 1),
+(3, 9, '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1894,7 +1942,7 @@ CREATE TABLE IF NOT EXISTS `rank` (
 CREATE TABLE IF NOT EXISTS `rest_day` (
   `rest_day_id` int(11) NOT NULL AUTO_INCREMENT,
   `payroll_group_id` int(11) NOT NULL,
-  `rest_day_name` varchar(80) NOT NULL,
+  `rest_day` varchar(80) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
@@ -2082,7 +2130,7 @@ INSERT INTO `user_type` (`user_type_id`, `user_type`, `deleted`) VALUES
 
 CREATE TABLE IF NOT EXISTS `withholding_tax` (
   ` 	withholding_tax_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tax_name` enum('Initial Tax','Additional Tax (%)') NOT NULL,
+  `tax_name` enum('Initial Tax','Additional Tax') NOT NULL,
   `tax_type` enum('Monthly','Weekly','Semi Monthly','Daily') NOT NULL,
   `tax1` decimal(10,2) NOT NULL,
   `tax2` decimal(10,2) NOT NULL,
@@ -2092,20 +2140,24 @@ CREATE TABLE IF NOT EXISTS `withholding_tax` (
   `tax6` decimal(10,2) NOT NULL,
   `tax7` decimal(10,2) NOT NULL,
   `tax8` decimal(10,2) NOT NULL,
+  `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (` 	withholding_tax_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `withholding_tax`
 --
 
-INSERT INTO `withholding_tax` (` 	withholding_tax_id`, `tax_name`, `tax_type`, `tax1`, `tax2`, `tax3`, `tax4`, `tax5`, `tax6`, `tax7`, `tax8`, `status`) VALUES
-(1, 'Initial Tax', 'Monthly', 0.00, 0.00, 41.67, 208.33, 708.33, 1875.00, 4166.67, 10416.67, 'Active'),
-(2, 'Initial Tax', 'Semi Monthly', 0.00, 0.00, 20.83, 104.17, 357.17, 937.50, 2083.33, 5208.33, 'Active'),
-(3, 'Additional Tax (%)', 'Semi Monthly', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 'Active'),
-(4, 'Initial Tax', 'Daily', 123123.00, 817391.00, 4661273.00, 27837.00, 723623.00, 72321.00, 273273.00, 23123.00, 'Active'),
-(5, 'Additional Tax (%)', 'Monthly', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 'Active');
+INSERT INTO `withholding_tax` (` 	withholding_tax_id`, `tax_name`, `tax_type`, `tax1`, `tax2`, `tax3`, `tax4`, `tax5`, `tax6`, `tax7`, `tax8`, `company_id`, `status`) VALUES
+(1, 'Initial Tax', 'Monthly', 0.00, 0.00, 41.67, 208.33, 708.33, 1875.00, 4166.67, 10416.67, 0, 'Active'),
+(2, 'Initial Tax', 'Semi Monthly', 0.00, 0.00, 20.83, 104.17, 357.17, 937.50, 2083.33, 5208.33, 0, 'Active'),
+(3, 'Additional Tax', 'Semi Monthly', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 0, 'Active'),
+(4, 'Initial Tax', 'Daily', 0.00, 0.00, 9.62, 48.08, 163.46, 432.69, 961.54, 2403.85, 0, 'Active'),
+(5, 'Additional Tax', 'Monthly', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 0, 'Active'),
+(6, 'Additional Tax', 'Daily', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 0, 'Active'),
+(7, 'Initial Tax', 'Weekly', 0.00, 0.00, 1.65, 8.25, 28.05, 74.26, 165.02, 412.54, 0, 'Active'),
+(8, 'Additional Tax', 'Weekly', 0.00, 5.00, 10.00, 15.00, 20.00, 25.00, 30.00, 32.00, 0, 'Active');
 
 -- --------------------------------------------------------
 
@@ -2117,20 +2169,46 @@ CREATE TABLE IF NOT EXISTS `withholding_tax_annual` (
   `withholding_tax_id` int(11) NOT NULL AUTO_INCREMENT,
   `salary_bracket` int(11) NOT NULL,
   `range_of_tax_from` decimal(10,2) NOT NULL,
-  `range_of_tax_to` decimal(10,2) NOT NULL,
+  `range_of_tax_to` varchar(55) NOT NULL,
   `initial_tax` decimal(10,2) NOT NULL,
   `additional_tax` decimal(10,2) NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`withholding_tax_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `withholding_tax_annual`
 --
 
 INSERT INTO `withholding_tax_annual` (`withholding_tax_id`, `salary_bracket`, `range_of_tax_from`, `range_of_tax_to`, `initial_tax`, `additional_tax`, `company_id`, `status`) VALUES
-(1, 12313, 412313.00, 11123.00, 1313123.00, 13123123.00, 4, 'Active');
+(1, 1, 1.00, '10000.00', 0.00, 5.00, 0, 'Active'),
+(2, 2, 10000.01, '30000.00', 500.00, 10.00, 0, 'Active'),
+(3, 3, 30000.01, '70000.00', 2500.00, 15.00, 0, 'Active'),
+(4, 4, 70000.01, '140000.00', 8500.00, 20.00, 0, 'Active'),
+(5, 5, 140000.01, '250000.00', 225000.00, 25.00, 0, 'Active'),
+(6, 6, 250000.01, '500000.00', 50000.00, 30.00, 0, 'Active'),
+(7, 7, 500000.01, 'over', 125000.00, 32.00, 0, 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `withholding_tax_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `withholding_tax_settings` (
+  `withholding_tax_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `compensation_type` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`withholding_tax_settings_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `withholding_tax_settings`
+--
+
+INSERT INTO `withholding_tax_settings` (`withholding_tax_settings_id`, `compensation_type`, `company_id`) VALUES
+(1, 'Regular Taxable Compenstation Income', 2);
 
 -- --------------------------------------------------------
 
@@ -2150,35 +2228,58 @@ CREATE TABLE IF NOT EXISTS `withholding_tax_status` (
   `amount_excess6` decimal(10,2) NOT NULL,
   `amount_excess7` decimal(10,2) NOT NULL,
   `amount_excess8` decimal(10,2) NOT NULL,
+  `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   PRIMARY KEY (`withholding_tax_status_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
 --
 -- Dumping data for table `withholding_tax_status`
 --
 
-INSERT INTO `withholding_tax_status` (`withholding_tax_status_id`, `tax_name`, `tax_type`, `amount_excess1`, `amount_excess2`, `amount_excess3`, `amount_excess4`, `amount_excess5`, `amount_excess6`, `amount_excess7`, `amount_excess8`, `status`) VALUES
-(1, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(6, 'S', 'Monthly', 1.00, 4167.00, 5000.00, 6667.00, 10000.00, 15833.00, 25000.00, 41667.00, 'Active'),
-(7, 'M', 'Monthly', 1.00, 4167.00, 5000.00, 6667.00, 10000.00, 15833.00, 25000.00, 45833.00, 'Active'),
-(8, 'S-1', 'Monthly', 1.00, 6250.00, 7083.00, 8750.00, 12083.00, 17917.00, 27803.00, 47917.00, 'Active'),
-(9, 'S-2', 'Monthly', 1.00, 8333.00, 9167.00, 10833.00, 14167.00, 20000.00, 29167.00, 50000.00, 'Active'),
-(10, 'S-3', 'Monthly', 1.00, 10417.00, 11250.00, 12917.00, 16250.00, 22083.00, 31250.00, 52083.00, 'Active'),
-(11, 'S-4', 'Monthly', 1.00, 12500.00, 13333.00, 15000.00, 18333.00, 24167.00, 33333.00, 54167.00, 'Active'),
-(12, 'M-1', 'Monthly', 1.00, 6250.00, 7083.00, 8750.00, 12083.00, 17917.00, 27083.00, 47917.00, 'Active'),
-(13, 'M-2', 'Monthly', 1.00, 8333.00, 9167.00, 10833.00, 14167.00, 20000.00, 29167.00, 50000.00, 'Active'),
-(14, 'M-3', 'Monthly', 1.00, 10417.00, 11250.00, 12917.00, 16250.00, 22083.00, 31250.00, 52083.00, 'Active'),
-(15, 'M-4', 'Monthly', 1.00, 12500.00, 13333.00, 15000.00, 18333.00, 24167.00, 33333.00, 54167.00, 'Active'),
-(16, 'Z', 'Semi Monthly', 0.00, 0.00, 417.00, 1250.00, 2917.00, 5833.00, 10417.00, 20833.00, 'Active'),
-(17, 'S', 'Semi Monthly', 1.00, 2083.00, 2500.00, 3333.00, 5000.00, 71917.00, 12500.00, 22917.00, 'Active'),
-(18, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(19, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(20, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(21, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(22, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(23, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active'),
-(24, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 'Active');
+INSERT INTO `withholding_tax_status` (`withholding_tax_status_id`, `tax_name`, `tax_type`, `amount_excess1`, `amount_excess2`, `amount_excess3`, `amount_excess4`, `amount_excess5`, `amount_excess6`, `amount_excess7`, `amount_excess8`, `company_id`, `status`) VALUES
+(1, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(6, 'S', 'Monthly', 1.00, 4167.00, 5000.00, 6667.00, 10000.00, 15833.00, 25000.00, 41667.00, 0, 'Active'),
+(7, 'M', 'Monthly', 1.00, 4167.00, 5000.00, 6667.00, 10000.00, 15833.00, 25000.00, 45833.00, 0, 'Active'),
+(8, 'S-1', 'Monthly', 1.00, 6250.00, 7083.00, 8750.00, 12083.00, 17917.00, 27803.00, 47917.00, 0, 'Active'),
+(9, 'S-2', 'Monthly', 1.00, 8333.00, 9167.00, 10833.00, 14167.00, 20000.00, 29167.00, 50000.00, 0, 'Active'),
+(10, 'S-3', 'Monthly', 1.00, 10417.00, 11250.00, 12917.00, 16250.00, 22083.00, 31250.00, 52083.00, 0, 'Active'),
+(11, 'S-4', 'Monthly', 1.00, 12500.00, 13333.00, 15000.00, 18333.00, 24167.00, 33333.00, 54167.00, 0, 'Active'),
+(12, 'M-1', 'Monthly', 1.00, 6250.00, 7083.00, 8750.00, 12083.00, 17917.00, 27083.00, 47917.00, 0, 'Active'),
+(13, 'M-2', 'Monthly', 1.00, 8333.00, 9167.00, 10833.00, 14167.00, 20000.00, 29167.00, 50000.00, 0, 'Active'),
+(14, 'M-3', 'Monthly', 1.00, 10417.00, 11250.00, 12917.00, 16250.00, 22083.00, 31250.00, 52083.00, 0, 'Active'),
+(15, 'M-4', 'Monthly', 1.00, 12500.00, 13333.00, 15000.00, 18333.00, 24167.00, 33333.00, 54167.00, 0, 'Active'),
+(16, 'Z', 'Semi Monthly', 0.00, 0.00, 417.00, 1250.00, 2917.00, 5833.00, 10417.00, 20833.00, 0, 'Active'),
+(17, 'S', 'Semi Monthly', 1.00, 2083.00, 2500.00, 3333.00, 5000.00, 71917.00, 12500.00, 22917.00, 0, 'Active'),
+(18, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(19, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(20, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(21, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(22, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(23, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(24, 'Z', 'Monthly', 1.00, 0.00, 833.00, 2500.00, 5833.00, 11667.00, 20833.00, 10416.67, 0, 'Active'),
+(25, 'Z', 'Daily', 1.00, 0.00, 33.00, 99.00, 231.00, 462.00, 825.00, 1650.00, 0, 'Active'),
+(26, 'S', 'Daily', 1.00, 165.00, 198.00, 264.00, 396.00, 627.00, 990.00, 1815.00, 0, 'Active'),
+(27, 'M', 'Daily', 1.00, 165.00, 198.00, 264.00, 396.00, 627.00, 990.00, 1815.00, 0, 'Active'),
+(28, 'S-1', 'Daily', 1.00, 248.00, 281.00, 347.00, 479.00, 710.00, 1073.00, 1898.00, 0, 'Active'),
+(29, 'S-2', 'Daily', 1.00, 330.00, 363.00, 429.00, 561.00, 792.00, 1155.00, 1980.00, 0, 'Active'),
+(30, 'S-3', 'Daily', 1.00, 413.00, 446.00, 512.00, 644.00, 875.00, 1238.00, 2063.00, 0, 'Active'),
+(31, 'S-4', 'Daily', 1.00, 495.00, 528.00, 594.00, 726.00, 957.00, 1320.00, 2145.00, 0, 'Active'),
+(32, 'M-1', 'Daily', 1.00, 248.00, 281.00, 347.00, 479.00, 710.00, 1073.00, 1898.00, 0, 'Active'),
+(33, 'M-2', 'Daily', 1.00, 330.00, 363.00, 429.00, 561.00, 792.00, 1155.00, 1980.00, 0, 'Active'),
+(34, 'M-3', 'Daily', 1.00, 413.00, 446.00, 512.00, 644.00, 875.00, 1238.00, 2063.00, 0, 'Active'),
+(35, 'M-4', 'Daily', 1.00, 495.00, 528.00, 594.00, 726.00, 957.00, 1320.00, 2145.00, 0, 'Active'),
+(36, 'Z', 'Weekly', 1.00, 0.00, 192.00, 577.00, 1346.00, 2692.00, 4808.00, 9615.00, 0, 'Active'),
+(37, 'S', 'Weekly', 1.00, 962.00, 1154.00, 1539.00, 2308.00, 3654.00, 5769.00, 10577.00, 0, 'Active'),
+(38, 'M', 'Weekly', 1.00, 962.00, 1154.00, 1538.00, 2308.00, 3654.00, 5769.00, 10577.00, 0, 'Active'),
+(39, 'S-1', 'Weekly', 1.00, 962.00, 1154.00, 1538.00, 2308.00, 3654.00, 5769.00, 10577.00, 0, 'Active'),
+(40, 'S-2', 'Weekly', 1.00, 1923.00, 2115.00, 2500.00, 3268.00, 4615.00, 6731.00, 11538.00, 0, 'Active'),
+(41, 'S-3', 'Weekly', 1.00, 2404.00, 2596.00, 2981.00, 3750.00, 5096.00, 7212.00, 12019.00, 0, 'Active'),
+(42, 'S-4', 'Weekly', 1.00, 2885.00, 3077.00, 3462.00, 4231.00, 5577.00, 7692.00, 12500.00, 0, 'Active'),
+(43, 'M-1', 'Weekly', 1.00, 1442.00, 1635.00, 2019.00, 2788.00, 4315.00, 6250.00, 11058.00, 0, 'Active'),
+(44, 'M-2', 'Weekly', 1.00, 1923.00, 2115.00, 2500.00, 3268.00, 4615.00, 6731.00, 11538.00, 0, 'Active'),
+(45, 'M-3', 'Weekly', 1.00, 2404.00, 2596.00, 2981.00, 3750.00, 5096.00, 7212.00, 12019.00, 0, 'Active'),
+(46, 'M-4', 'Weekly', 1.00, 2885.00, 3077.00, 3462.00, 4231.00, 5577.00, 7692.00, 12500.00, 0, 'Active');
 
 -- --------------------------------------------------------
 
