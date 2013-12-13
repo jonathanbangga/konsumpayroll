@@ -518,7 +518,7 @@
  <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
  <!-- FOOTER-GRP-BTN END -->
  </div>
- 
+ <!--
  <table cellpadding="0" cellspacing="0" width="100%">
     <tr>
             <td width = "10%">ID</td>
@@ -540,3 +540,4 @@
                 </tr>
             <?php }?>
 </table>
+ -->

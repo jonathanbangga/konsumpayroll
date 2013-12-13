@@ -44,6 +44,7 @@
 				LEFT JOIN `leave_type` lt ON el.leave_type_id = lt.leave_type_id
 				WHERE el.company_id = {$comp_id}
 				AND el.emp_id = {$emp_id}
+				AND el.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -68,6 +69,7 @@
 					LEFT JOIN `leave_type` lt ON el.leave_type_id = lt.leave_type_id
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
+					AND el.status = 'Active'
 					LIMIT ".$limit."
 				");
 				
@@ -84,6 +86,7 @@
 					LEFT JOIN `leave_type` lt ON el.leave_type_id = lt.leave_type_id
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
+					AND el.status = 'Active'
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -109,6 +112,32 @@
 				LEFT JOIN loan_type lt ON el.loan_type_id = lt.loan_type_id
 				WHERE el.company_id = {$comp_id}
 				AND el.emp_id = {$emp_id}
+				AND el.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->result();
+				$sql->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Filter Loan Type
+		 * @param unknown_type $loan_type
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function filter_loan_type($loan_type,$comp_id,$emp_id){
+			$sql = $this->db->query("
+				SELECT *FROM `employee_loans` el
+				LEFT JOIN loan_type lt ON el.loan_type_id = lt.loan_type_id
+				WHERE el.company_id = {$comp_id}
+				AND el.emp_id = {$emp_id}
+				AND el.loan_type_id = '{$loan_type}'
+				AND el.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -139,9 +168,9 @@
 			$sql = $this->db->query("
 				SELECT *FROM `overtime` o
 				LEFT JOIN overtime_type ot ON o.overtime_type_id = ot.overtime_type_id
-			
 				WHERE o.company_id = {$comp_id}
 				AND o.emp_id = {$emp_id}
+				AND o.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -252,6 +281,355 @@
 				return $result;
 			}else{
 				return false;
+			}
+		}
+		
+		/**
+		 * Check Employee Amortization Schedule ID		 
+		 * @param unknown_type $amor_sched_id
+		 * @param unknown_type $comp_id
+		 */
+		public function check_amortization_sched_id($emp_loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_loans
+				WHERE company_id = '{$comp_id}'
+				AND employee_loans_id = '{$emp_loan_id}'
+				AND status = 'Active'
+			");
+			$results = $sql->result();
+			if($sql->num_rows() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Employee Payment History Information
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_payment_history($comp_id, $loan_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_payment_history
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Total Principal Amount Amortization
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function total_princiapl_amortization($loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND emp_loan_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$result = $sql->result();
+			if($sql->num_rows() > 0){
+				$total_val = 0;
+				foreach($result as $row){
+					$total_val = $total_val + $row->principal;
+				}
+				return $total_val;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Employee Loan Amount
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function loan_amount($loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_loans
+				WHERE company_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				return $row->principal;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Employee Loan No Information
+		 * @param unknown_type $comp_id
+		 */
+		public function emp_loan_no_group($comp_id, $loan_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_loans el
+				LEFT JOIN employee e ON el.emp_id = e.emp_id
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				LEFT JOIN loan_type lt ON el.loan_type_id = lt.loan_type_id
+				WHERE el.company_id = '{$comp_id}'
+				AND e.status = 'Active'
+				AND el.employee_loans_id = '{$loan_id}'
+				GROUP BY e.emp_id
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Get Interest and Principal Value from Payment History
+		 * Enter description here ...
+		 * @param unknown_type $amotization_id
+		 * @param unknown_type $comp_id
+		 */
+		public function kapila_ka_row_interest_principal($loan_id, $comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_payment_history
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$kapila_ka_row_res = $sql->num_rows() + 1;
+				return $kapila_ka_row_res;
+			}else{
+				$kapila_ka_row_res = 1;
+				return $kapila_ka_row_res;
+			}
+		}
+		
+		/**
+		 * Get Interest and Principal Value
+		 * @param unknown_type $get_kapila_ka_row
+		 * @param unknown_type $comp_id
+		 */
+		public function get_interest_principal($amotization_id, $get_kapila_ka_row,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND emp_loan_id = '{$amotization_id}'
+				AND status = 'Active'
+				LIMIT {$get_kapila_ka_row},1
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Payment Debit Amount / Remaining Cash Amount
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function payment_debit_amount($loan_id, $comp_id){
+			$sql = $this->db->query("
+				SELECT *
+				FROM `employee_payment_history`
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_id}'
+				AND status = 'Active'
+				ORDER BY employee_payment_history_id DESC
+				LIMIT 1
+			");
+			$row = $sql->row();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $row->remaining_cash_amount;
+			}else{
+				return 0;
+			}
+		}
+		
+		/**
+		 * Total Loan Amount from Amortization Schedule
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $loan_id
+		 */
+		public function total_loan_amount($comp_id, $loan_id){
+			$sql = $this->db->query("
+				SELECT
+				*FROM employee_amortization_schedule
+				WHERE comp_id = '{$comp_id}'
+				AND emp_loan_id = '{$loan_id}'
+				AND status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Check Employee Time Out Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function check_time_out_first($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Time In Table is empty
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $date_val
+		 * @param unknown_type $time_in
+		 */
+		public function time_in_is_empty($comp_id, $emp_id){
+			$current_datetime = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$current_datetime}'
+			");
+			if($sql->num_rows() == 0){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Time In List
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function time_in_list($comp_id, $emp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Get Information Current Time In
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function get_timein_today($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_out($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$lunch_out_val = date('H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_out = '{$lunch_out_val}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_in($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$current_time = date('H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_in = '{$current_time}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
 			}
 		}
 		

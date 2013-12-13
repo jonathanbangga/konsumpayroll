@@ -1,27 +1,29 @@
 <div class="tbl-wrap">
-	<table>
+	<table class="tbl">
 		<tr>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Salary Bracket</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Rage of Tax From</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Rage of Tax To</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Initial Tax</td>
-			<td style="padding:10px;border:1px solid #bcbcbc;">Additional Tax %</td>
+			<th>Salary Bracket</th>
+			<th>Rage of Tax From</th>
+			<th>Rage of Tax To</th>
+			<th>Initial Tax</th>
+			<th>Additional Tax %</th>
 		</tr>
 		<?php 
 			if($withholding_tax_status != null){
 				foreach($withholding_tax_status as $row){
 		?>
 			<tr>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->salary_bracket;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->range_of_tax_from;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->range_of_tax_to;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->initial_tax;?></td>
-				<td style="padding:10px;border:1px solid #bcbcbc;"><?php print $row->additional_tax;?></td>
+				<td><?php print $row->salary_bracket;?></td>
+				<td><?php print $row->range_of_tax_from;?></td>
+				<td><?php print $row->range_of_tax_to;?></td>
+				<td><?php print $row->initial_tax;?></td>
+				<td><?php print $row->additional_tax;?></td>
 			</tr>
 		<?php 		
 				}
 			}else{
+				echo "<td colspan='5'>";
 				print msg_empty();
+				echo "</td>";
 			}
 		?>
 	</table>
