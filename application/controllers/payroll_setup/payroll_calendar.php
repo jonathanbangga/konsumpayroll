@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Rest_day extends CI_Controller {
+class Payroll_calendar extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
@@ -13,28 +13,19 @@ class Rest_day extends CI_Controller {
 		$this->sidebar_menu = $this->config->item('payroll_setup_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
-		$this->load->model('payroll_setup/rest_day_model');	
+		$this->load->model('payroll_setup/payroll_calendar_model');	
 	}
 
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "Rest Day";
+		$data['page_title'] = "Payroll Calendar";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
-		$data['pg_sql'] = $this->rest_day_model->get_payroll_group();
-		$this->layout->view('pages/payroll_setup/rest_day_view',$data);
+		// data
+		$this->layout->view('pages/payroll_setup/payroll_calendar_view',$data);
 	}
 	
-	public function ajax_set_rest_day(){
-		$pg_id = $this->input->post('pg_id');
-		$rest_day = $this->input->post('rest_day');
-		$this->rest_day_model->add_rest_day($pg_id,$rest_day);
-	}
 	
-	public function ajax_unset_rest_day(){
-		$rd_id = $this->input->post('rd_id');
-		$this->rest_day_model->delete_rest_day($rd_id);
-	}
 	
 }
 
