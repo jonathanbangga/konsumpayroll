@@ -72,7 +72,7 @@
 		<input type="submit" class="btn" id="save" name="save" value="save" />
 		<?php
 		}else{
-			echo 'No Payroll Group created. click <a href='/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_group'>here</a>';
+			echo "No Payroll Group created. click <a href='/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_group'>here</a>";
 		}
 		?>
 		<?php echo form_close();?>
