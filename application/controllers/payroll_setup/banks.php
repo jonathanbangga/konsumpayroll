@@ -37,13 +37,10 @@ class Banks extends CI_Controller {
 				}
 			}	
 			setcookie('msg', "Submission has been saved");
-			$data['pg_sql'] = $this->banks_model->get_payroll_group();
-			$this->layout->view('pages/payroll_setup/banks_view',$data);
-		}else{
-			$data['pg_sql'] = $this->banks_model->get_payroll_group();
-			$this->layout->view('pages/payroll_setup/banks_view',$data);
+			
 		}
-		
+		$data['pg_sql'] = $this->banks_model->get_payroll_group();
+		$this->layout->view('pages/payroll_setup/banks_view',$data);
 	}
 	
 }
