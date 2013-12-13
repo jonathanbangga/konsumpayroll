@@ -4,6 +4,8 @@
         <p>Specify rest days for different payroll group</p>
 		<?php
 			// get payroll group
+		if($pg_sql->num_rows()>0){
+			
 			foreach($pg_sql->result() as $pg){ 
 			
 			// get assigned rest day
@@ -105,6 +107,10 @@
 			</div>
 		<?php
 			}
+			
+		}else{
+			echo "No Payroll Group created. click <a href='/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_group'>here</a>";
+		}
 		?>
 		
 
