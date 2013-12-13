@@ -3,7 +3,7 @@
           <!-- TBL-WRAP START -->
           <table class="tbl emp_conList">
             <tbody><tr>
-              <th style="width:50px;"></th>
+             
               <th style="width:170px;">Salary Brackets</th>
               <th style="width:170px;">Range of Compensation From</th>
               <th style="width:170px;">Range of Compensation To</th>
@@ -19,15 +19,15 @@
             		foreach($sss_tbl as $row){
             ?>
 	            <tr>
-	              	<td><?php print $counter++;?></td>
-              	  	<td><?php print $row->salary_brackets;?></td>
-					<td><?php print $row->range_compensation_from;?></td>
-					<td><?php print $row->range_compensation_to;?></td>
-					<td><?php print $row->monthly_salary_credit;?></td>
-					<td><?php print $row->employer_monthly_contribution_ss;?></td>
-					<td><?php print $row->employer_monthly_contribution_ec;?></td>
-					<td><?php print $row->employee_ss;?></td>
-					<td>Total</td>
+	             
+              	  	<td><?php print $counter++;?></td>
+					<td><?php print iprice($row->range_compensation_from);?></td>
+					<td><?php print iprice($row->range_compensation_to);?></td>
+					<td><?php print iprice($row->monthly_salary_credit);?></td>
+					<td><?php print iprice($row->employer_monthly_contribution_ss);?></td>
+					<td><?php print iprice($row->employer_monthly_contribution_ec);?></td>
+					<td><?php print iprice($row->employee_ss);?></td>
+					<td><?php print iprice($row->total);?></td>
 	            </tr>
             <?php
             		}

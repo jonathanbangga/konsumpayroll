@@ -493,6 +493,146 @@
 			}
 		}
 		
+		/**
+		 * Check Employee Time Out Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function check_time_out_first($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Time In Table is empty
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $date_val
+		 * @param unknown_type $time_in
+		 */
+		public function time_in_is_empty($comp_id, $emp_id){
+			$current_datetime = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$current_datetime}'
+			");
+			if($sql->num_rows() == 0){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Time In List
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function time_in_list($comp_id, $emp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return $results;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Get Information Current Time In
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function get_timein_today($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_out($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$lunch_out_val = date('H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_out = '{$lunch_out_val}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_in($comp_id, $emp_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$current_time = date('H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_in = '{$current_time}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND date = '{$date_val}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
 	}
 	
 /* End of file employee_model.php */

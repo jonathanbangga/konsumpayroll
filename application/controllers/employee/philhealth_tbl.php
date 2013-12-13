@@ -14,30 +14,34 @@
 		 * @var string
 		 */
 		var $theme;
+		var $company_info;
 		
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();	
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
-			$this->company_id = 1;
-			
 			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->menu = $this->config->item('jb_employee_menu');
+			$this->company_info =  whose_company();
+			if($this->company_info == false){
+				show_error("Company subdomain is invalid");
+				return false;
+			}	
 		}
 		
 		/**
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "Philhealth Table";
+			$data['page_title'] = "PHILHEALTH TABLE";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$phil_health = array('company_id'=>$this->company_id);
+			$phil_health = array('status'=>'active');
 			$data['philhealth_tbl'] = $this->jmodel->display_data_where_result('phil_health',$phil_health);
-			
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/employee/philhealth_table_view', $data);
 		}

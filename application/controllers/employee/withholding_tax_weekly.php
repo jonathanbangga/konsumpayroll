@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Withholding Weekly Controller
+ * Withholding Tax Weekly Controller
  *
  * @category Controller
  * @version 1.0
@@ -14,19 +14,24 @@
 		 * @var string
 		 */
 		var $theme;
+		var $company_info;
 		
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();	
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
-			$this->load->model('employee/employee_model','employee');
-			$this->company_id = 1;
 			
-			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';
+			$this->menu = $this->config->item('jb_employee_menu');
+			$this->company_info =  whose_company();
+			if($this->company_info == false){
+				show_error("Company subdomain is invalid");
+				return false;
+			}	
 		}
 		
 		/**
@@ -34,12 +39,10 @@
 		 */
 		public function index() {
 			$data['page_title'] = "Withholding Tax - Weekly";
-			$withholding_tax_val = array('company_id'=>$this->company_id,'tax_type'=>'Weekly');
+			$withholding_tax_val = array('status'=>'active','tax_type'=>'Weekly');
 			$data['withholding_tax'] = $this->jmodel->display_data_where_result('withholding_tax',$withholding_tax_val);
-			
-			$withholding_tax_status = array('company_id'=>$this->company_id,'tax_type'=>'Weekly');
+			$withholding_tax_status = array('status'=>'active','tax_type'=>'Weekly');
 			$data['withholding_tax_status'] = $this->jmodel->display_data_where_result('withholding_tax_status',$withholding_tax_status);
-			
 			$data['sidebar_menu'] =$this->sidebar_menu;
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/employee/withholding_tax_weekly_view', $data);
@@ -47,5 +50,5 @@
 	
 	}
 
-/* End of file withholding_tax_weekly.php */
-/* Location: ./application/controllers/hr/withholding_tax_weekly.php */
+/* End of file Withholding_tax_weekly.php */
+/* Location: ./application/controllers/employee/Withholding_tax_weekly.php */

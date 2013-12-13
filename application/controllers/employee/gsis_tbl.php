@@ -14,7 +14,7 @@
 		 * @var string
 		 */
 		var $theme;
-		
+		var $company_info;
 		/**
 		 * Constructor
 		 */
@@ -22,27 +22,28 @@
 			parent::__construct();
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
-			$this->load->model('employee/employee_model','employee');
-			$this->company_id = 1;
-			
-			$this->sidebar_menu = 'content_holders/company_sidebar_menu';
-			$this->menu = 'content_holders/company_menu';
+			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';
+			$this->menu = $this->config->item('jb_employee_menu');
+			$this->company_info =  whose_company();
+			if($this->company_info == false){
+				show_error("Company subdomain is invalid");
+				return false;
+			}	
 		}
 		
 		/**
 		 * index page
 		 */
 		public function index() {
-			$data['page_title'] = "GSIS Table";
+			$data['page_title'] = "GSIS TABLE";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$gsis_val = array('company_id'=>$this->company_id);
+			$gsis_val = array('status'=>'active');
 			$data['gsis_tbl'] = $this->jmodel->display_data_where_result('gsis',$gsis_val);
-			
 			$this->layout->set_layout($this->theme);	
-			$this->layout->view('pages/employee/gsis_table_view', $data);
+			$this->layout->view('pages/employee/gsis_table_view',$data);
 		}
 	
 	}
 
-/* End of file philhealth_tbl.php */
-/* Location: ./application/controllers/hr/philhealth_tbl.php */
+/* End of file Gsis_tbl.php */
+/* Location: ./application/controllers/employee/Gsis_tbl.php */
