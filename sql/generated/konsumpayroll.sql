@@ -2038,6 +2038,7 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   `tables_view` int(2) NOT NULL,
   `tables_edit` int(2) NOT NULL,
   `tables_delete` int(2) NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`users_roles_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 

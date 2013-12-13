@@ -6,7 +6,7 @@
         	$ps_url = "/{$this->session->userdata("subdomain")}/company_setup/company_information";
         	if($this->session->userdata("company_id") != ""){
         		$hs_url = "/{$this->session->userdata("sub_domain")}/hr_setup/employment_type";
-        		$ps_url = "/{$this->session->userdata("sub_domain")}/hr_setup/employment_type";
+        		$ps_url = "/{$this->session->userdata("sub_domain")}/payroll_setup/payroll_group";
         	}else{
         		
         	}
