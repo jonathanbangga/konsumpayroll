@@ -71,9 +71,9 @@
 					<td><?php echo 1;?></td>
 					<td><?php echo $val->total_credits;?></td>
 					<td><?php echo random_string('numeric',1);?></td>
-					<td><input type="text"  class="txtfield"  name="adjustments" ela_id="<?php echo $val->ela_id;?>" /></td>
+					<td><input type="text"  class="txtfield"  name="adjustments" value="<?php echo $val->note;?>" ela_id="<?php echo $val->ela_id;?>" /></td>
 					<td>10060</td>
-					<td><input type="text" class="txtfield" name="adjustments_reasons"  ela_id="<?php echo $val->ela_id;?>" /> </td>  
+					<td><input type="text" class="txtfield" name="adjustments_reasons" value="<?php echo $val->reasons;?>"  ela_id="<?php echo $val->ela_id;?>" /> </td>  
 	            </tr>	            
 	            <?php 		
 	            		endforeach;
@@ -121,13 +121,13 @@
 
 					jQuery.post(urls,fields,function(json){
 						console.log(json);
-						//var res = jQuery.parseJSON(json);	
-						//if(res.success == '0'){
-						//	alert(res.error);
-						//}else{
-							//jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
-							//kpay.overall.show_success(".success_messages");
-						//}
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+						//	kpay.overall.show_success(".success_messages");
+						}
 					});
 				});
 			}
@@ -145,13 +145,13 @@
 
 					jQuery.post(urls,fields,function(json){
 						console.log(json);
-						//var res = jQuery.parseJSON(json);	
-						//if(res.success == '0'){
-						//	alert(res.error);
-						//}else{
-							//jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+						var res = jQuery.parseJSON(json);	
+						if(res.success == '0'){
+							alert(res.error);
+						}else{
+							jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
 							//kpay.overall.show_success(".success_messages");
-						//}
+						}
 					});
 				});
 			}

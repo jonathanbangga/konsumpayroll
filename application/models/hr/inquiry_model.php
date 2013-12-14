@@ -28,10 +28,13 @@
 				$where .="AND year(ela.date_start) = '{$this->db->escape_str($year)}'";
 			}
 			if(is_numeric($company_id)){
-				$sql = "SELECT ela.emp_id,ela.employee_leaves_application_id as ela_id,ela.leave_type_id,el.leave_credits as total_credits,ela.note as adjustments,
+				$sql = "SELECT ela.emp_id,ela.employee_leaves_application_id as ela_id,
+						ela.leave_type_id,el.leave_credits as total_credits,ela.note as adjustments,
 						a.payroll_cloud_id as payroll_cloud_id,
 						concat(e.first_name,' ',e.last_name) as full_name,
-						ela.reasons as adjustments_reasons,lt.leave_type_name as leave_name
+						ela.reasons as adjustments_reasons,lt.leave_type_name as leave_name,
+						ela.note as note,
+						ela.reasons as reasons 
 						FROM employee_leaves_application ela 
 						LEFT JOIN employee e on e.emp_id = ela.emp_id 
 						LEFT JOIN accounts a on a.account_id = e.account_id 
