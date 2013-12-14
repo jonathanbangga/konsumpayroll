@@ -26,6 +26,7 @@
 			$this->theme = $this->config->item('jb_employee_temp'); // i just used this because the template has no sidebar
 			$this->sidebar_menu = 'content_holders/hr_tables_sidebar_menu';
 			$this->menu = 'content_holders/user_hr_owner_menu';
+			$this->load->helper('string');
 			$this->company_info =  whose_company();
 			if($this->company_info == false){
 				show_error("Company subdomain is invalid");
@@ -38,16 +39,86 @@
 		}
 		
 		/**
-		 * index page
+		 * inquiry REsults
 		 */
 		public function search() {
 			$data['page_title'] = "INQUIRY";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$inq = $this->inquiry->get_employee_inquiries($this->company_info->company_id,"106007477",null,null);
-			echo $this->db->last_query();
-			p($inq);
+			$data['inquiry_result'] = '';
+			$data['employees'] = $this->inquiry->fetch_all_employee($this->company_info->company_id);		
+			if($this->input->post('submit')){
+				$this->form_validation->set_rules("payroll_user","Employee number","trim|xss_clean");
+				$this->form_validation->set_rules("employee_name","Employee name","trim|xss_clean");
+				$this->form_validation->set_rules("year","Year","trim|xss_clean");
+				if($this->form_validation->run() == true){	
+					$this->session->set_userdata("payroll_user",$this->input->post('payroll_user'));
+					$this->session->set_userdata("employee_name",$this->input->post('employee_name'));
+					$this->session->set_userdata("year",$this->input->post('year'));	
+					$data['inquiry_result']  = $this->inquiry->get_employee_inquiries(
+												$this->company_info->company_id,
+												$this->input->post('payroll_user'),
+												$this->input->post('employee_name'),
+												$this->input->post('year')
+												);						
+				}else{
+					
+				}	
+			}	
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/inquiry_view', $data);
+		}
+		
+		/**
+		 * Add using ajax adjustments
+		 * Triggers ajax by adding individual adjustments
+		 */
+		public function ajax_add_adjustments(){
+			if($this->input->is_ajax_request()){
+				switch($this->input->post('type')):
+					case "add_adjustments":
+						if($this->input->post('submit')){
+							$this->form_validation->set_rules('ela_id','Application ID','required|trim|xss_clean');
+							$this->form_validation->set_rules('adjustments','Adjustments','required|trim|xss_clean');
+							if($this->form_validation->run() == true){
+								$fields = array(
+									"note" 		=>  $this->input->post('adjustments')
+								);
+								$where = array(
+									"employee_leaves_application_id" => $this->input->post('ela_id'),
+									"company_id" => $this->company_info->company_id
+								);
+								$this->inquiry->update_fields("employee_leaves_application",$fields,$where);
+								echo json_encode(array("success"=>"1","error"=>""));
+								return false;
+							}else{
+								echo json_encode(array("success"=>"0","error"=>validation_errors()));
+								return false;
+							}
+						}
+					break;
+					case "add_adjustment_reasons":	
+						if($this->input->post('submit')){
+							$this->form_validation->set_rules('ela_id','Application ID','required|trim|xss_clean');
+							$this->form_validation->set_rules('adjustments_reasons','Adjustments Reasons','required|trim|xss_clean');
+							if($this->form_validation->run() == true){
+								$fields = array(
+									"reasons" 	=>  $this->input->post('adjustments_reasons')
+								);
+								$where = array(
+									"employee_leaves_application_id" => $this->input->post('ela_id'),
+									"company_id" => $this->company_info->company_id
+								);
+								$this->inquiry->update_fields("employee_leaves_application",$fields,$where);
+								echo json_encode(array("success"=>"1","error"=>""));
+								return false;
+							}else{
+								echo json_encode(array("success"=>"0","error"=>validation_errors(),'we'=>'123'));
+								return false;
+							}
+						}
+					break;
+				endswitch;
+			}
 		}
 	
 	}
