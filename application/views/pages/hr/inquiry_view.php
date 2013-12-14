@@ -71,9 +71,9 @@
 					<td><?php echo 1;?></td>
 					<td><?php echo $val->total_credits;?></td>
 					<td><?php echo random_string('numeric',1);?></td>
-					<td><input type="text"  class="txtfield"  name="adjustments" app="<?php echo $val->ela_id;?>" /></td>
+					<td><input type="text"  class="txtfield"  name="adjustments" ela_id="<?php echo $val->ela_id;?>" /></td>
 					<td>10060</td>
-					<td><input type="text" class="txtfield" name="adjustments_reasons" /> </td>  
+					<td><input type="text" class="txtfield" name="adjustments_reasons"  ela_id="<?php echo $val->ela_id;?>" /> </td>  
 	            </tr>	            
 	            <?php 		
 	            		endforeach;
@@ -94,6 +94,8 @@
           <!-- TBL-WRAP END -->
         </div>
         <script type="text/javascript">
+        	var tokens  = "<?php echo itoken_cookie();?>";
+        	var tname = "<?php echo itoken_name();?>";
 			// AUTOCOMPLETE NAME
 			function auto_complete_name(){
 				var availableTags = [<?php echo implode(",",$names);?>];
@@ -106,26 +108,59 @@
 			}
 			// AUTOSAVES adjustments
 			function autosave_adjustments(){
-				var urls = "<?php echo $this->uri->segment(1);?>";
-				var fields = {
-						"ela_id":
-				};
-				jQuery.post(urls,fields,function(json){
-					var res = jQuery.parseJSON(json);	
-					if(res.success == '0'){
-						alert(res.error);
-					}else{
-						//jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
-						//kpay.overall.show_success(".success_messages");
-					}
+				jQuery(document).on("keyup","input[name='adjustments']",function(e){
+					var el = jQuery(this);
+					var urls = "/<?php echo $this->uri->segment(1);?>/hr/inquiry/ajax_add_adjustments";
+					var fields = {
+							"ela_id":el.attr("ela_id"),
+							"adjustments":el.val(),
+							"ZGlldmlyZ2luamM":jQuery.cookie(tokens),
+							"submit":true,
+							"type":'add_adjustments'
+					};
+
+					jQuery.post(urls,fields,function(json){
+						console.log(json);
+						//var res = jQuery.parseJSON(json);	
+						//if(res.success == '0'){
+						//	alert(res.error);
+						//}else{
+							//jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+							//kpay.overall.show_success(".success_messages");
+						//}
+					});
 				});
-
 			}
+			function autosave_adjustments_reasons(){
+				jQuery(document).on("keyup","input[name='adjustments_reasons']",function(e){
+					var el = jQuery(this);
+					var urls = "/<?php echo $this->uri->segment(1);?>/hr/inquiry/ajax_add_adjustments";
+					var fields = {
+							"ela_id":el.attr("ela_id"),
+							"adjustments_reasons":el.val(),
+							"ZGlldmlyZ2luamM":jQuery.cookie(tokens),
+							"submit":true,
+							"type":'add_adjustment_reasons'
+					};
 
+					jQuery.post(urls,fields,function(json){
+						console.log(json);
+						//var res = jQuery.parseJSON(json);	
+						//if(res.success == '0'){
+						//	alert(res.error);
+						//}else{
+							//jQuery(".success_messages").empty().html("<p>You have Successfully added</p>");
+							//kpay.overall.show_success(".success_messages");
+						//}
+					});
+				});
+			}
 			
 			jQuery(function(){
 				auto_complete_name();
 				auto_complete_id();
+				autosave_adjustments();
+				autosave_adjustments_reasons();
 			});
 		</script>
 

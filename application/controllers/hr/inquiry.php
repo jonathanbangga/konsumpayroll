@@ -67,6 +67,59 @@
 			$this->layout->set_layout($this->theme);	
 			$this->layout->view('pages/hr/inquiry_view', $data);
 		}
+		
+		/**
+		 * Add using ajax adjustments
+		 * Triggers ajax by adding individual adjustments
+		 */
+		public function ajax_add_adjustments(){
+			if($this->input->is_ajax_request()){
+				switch($this->input->post('type')):
+					case "add_adjustments":
+						if($this->input->post('submit')){
+							$this->form_validation->set_rules('ela_id','Application ID','required|trim|xss_clean');
+							$this->form_validation->set_rules('adjustments','Adjustments','required|trim|xss_clean');
+							if($this->form_validation->run() == true){
+								$fields = array(
+									"note" 		=>  $this->input->post('adjustments')
+								);
+								$where = array(
+									"employee_leaves_application_id" => $this->input->post('ela_id'),
+									"company_id" => $this->company_info->company_id
+								);
+								$this->inquiry->update_fields("employee_leaves_application",$fields,$where);
+								echo json_encode(array("success"=>"1","error"=>""));
+								return false;
+							}else{
+								echo json_encode(array("success"=>"0","error"=>validation_errors()));
+								return false;
+							}
+						}
+					break;
+					case "add_adjustment_reasons":	
+						if($this->input->post('submit')){
+							$this->form_validation->set_rules('ela_id','Application ID','required|trim|xss_clean');
+							$this->form_validation->set_rules('adjustments_reasons','Adjustments Reasons','required|trim|xss_clean');
+							if($this->form_validation->run() == true){
+								$fields = array(
+									"reasons" 	=>  $this->input->post('adjustments_reasons')
+								);
+								$where = array(
+									"employee_leaves_application_id" => $this->input->post('ela_id'),
+									"company_id" => $this->company_info->company_id
+								);
+								$this->inquiry->update_fields("employee_leaves_application",$fields,$where);
+								echo json_encode(array("success"=>"1","error"=>""));
+								return false;
+							}else{
+								echo json_encode(array("success"=>"0","error"=>validation_errors(),'we'=>'123'));
+								return false;
+							}
+						}
+					break;
+				endswitch;
+			}
+		}
 	
 	}
 

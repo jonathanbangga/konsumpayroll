@@ -78,6 +78,20 @@
 			}
 		}
 		
+		/**
+		 * Update fields
+		 * this will update all data
+		 * @param string $table
+		 * @param object $fields
+		 * @param object $where
+		 * @return integer
+		 */
+		public function update_fields($table,$fields,$where){
+			$this->db->where($where);
+			$this->db->update($table,$fields);
+			return $this->db->affected_rows();
+		}
+		
 	}
 	
 /* End of file Inquiry_model.php */
