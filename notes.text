@@ -30,7 +30,7 @@
 		$( ".date" ).datepicker();
 
 		// formate date picker dates to database date format yyyy-mm-dd
-		$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date[$index])));
+		$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date)));
 
 	// jc - end
 
