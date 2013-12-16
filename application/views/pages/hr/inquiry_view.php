@@ -17,19 +17,20 @@
 		    	<tbody>
 			        <tr >
 			            <td><div class="ipadright">
-			            	<input type="text" placeholder="Employee Number" id="payroll_user" name="payroll_user" class="txtfield hasDatepicker">
+			            	<input type="text" placeholder="Employee Number" id="payroll_user"  value="<?php echo set_value('payroll_user');?>"  autocomplete="off" name="payroll_user" class="txtfield hasDatepicker">
 			            </div>
 			            
 			            </td>
-			            <td><div class="ipadright"><input type="text"  placeholder="Employee Name" id="employee_name" name="employee_name"  class="txtfield hasDatepicker"></div></td>
+			            <td><div class="ipadright"><input type="text"  placeholder="Employee Name" value="<?php echo set_value('employee_name');?>" autocomplete="off" id="employee_name" name="employee_name"  class="txtfield hasDatepicker"></div></td>
 			            <td>
 				            <div class="ipadright">
 					            <select name="year" class="inp_user">
 					            <option value="">Please select year</option>
 					            	<?php 
 					            		for($year = 2010;$year <= 2050; $year++):
+					            		$iyear = set_value("year") == $year ? "selected=\"selected\"" : '';
 					            	?>
-					            		<option value="<?php echo $year;?>" ><?php echo $year;?></option>
+					            		<option value="<?php echo $year;?>" <?php echo $iyear;?>><?php echo $year;?></option>
 					            	<?php 
 					            		endfor;
 					            	?>
