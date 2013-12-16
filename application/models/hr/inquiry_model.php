@@ -69,8 +69,7 @@
 			if(is_numeric($company_id)){
 				$sql = "SELECT a.payroll_cloud_id,concat(e.first_name,' ',e.last_name) as full_name FROM employee e
 						LEFT JOIN accounts a on a.account_id = e.account_id
-						WHERE e.company_id = {$this->db->escape_str($company_id)}
-						
+						WHERE e.company_id = {$this->db->escape_str($company_id)}		
 				";
 				$query = $this->db->query($sql);
 				$result = $query->result();
