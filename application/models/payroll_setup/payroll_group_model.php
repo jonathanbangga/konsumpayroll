@@ -10,18 +10,18 @@ class Payroll_group_model extends CI_Model {
 		$this->company_id = $this->session->userdata('company_id');
     }
 	
-	public function get_payroll_group_setup(){
+	public function get_payroll_group(){
 		return $this->db->query("
 			SELECT *
-			FROM `payroll_group_setup`
+			FROM `payroll_group`
 			WHERE `company_id` = {$this->company_id}
 		");
 	}
 	
-	public function add_payroll_group_setup($name,$period_type="",$pay_rate_type=""){
+	public function add_payroll_group($name,$period_type="",$pay_rate_type=""){
 		$this->db->query("
 			INSERT INTO 
-			`payroll_group_setup` (
+			`payroll_group` (
 				`name`,
 				`period_type`,
 				`pay_rate_type`,
@@ -36,22 +36,22 @@ class Payroll_group_model extends CI_Model {
 		");
 	}
 	
-	public function delete_payroll_group_setup($payroll_group_setup_id){
+	public function delete_payroll_group($payroll_group_id){
 		$this->db->query("
 			DELETE 
-			FROM `payroll_group_setup`
-			WHERE `payroll_group_setup_id` = {$payroll_group_setup_id}
+			FROM `payroll_group`
+			WHERE `payroll_group_id` = {$payroll_group_id}
 			AND `company_id` = {$this->company_id}
 		");
 	}
 	
-	public function update_payroll_group_setup($payroll_group_setup_id,$name,$period_type="",$pay_rate_type=""){
+	public function update_payroll_group($payroll_group_id,$name,$period_type="",$pay_rate_type=""){
 		$this->db->query("
-			UPDATE `payroll_group_setup` 
+			UPDATE `payroll_group` 
 			SET	`name` = '".mysql_real_escape_string($name)."',
 				`period_type` = '".mysql_real_escape_string($period_type)."',
 				`pay_rate_type` = '".mysql_real_escape_string($pay_rate_type)."'
-			WHERE `payroll_group_setup_id` = {$payroll_group_setup_id}
+			WHERE `payroll_group_id` = {$payroll_group_id}
 			AND `company_id` = {$this->company_id}
 		");
 	}

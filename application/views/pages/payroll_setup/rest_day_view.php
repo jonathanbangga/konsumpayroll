@@ -9,7 +9,7 @@
 			foreach($pg_sql->result() as $pg){ 
 			
 			// get assigned rest day
-			$rd_sql = $this->rest_day_model->get_rest_day($pg->payroll_group_setup_id);
+			$rd_sql = $this->rest_day_model->get_rest_day($pg->payroll_group_id);
 		
 			$sun_ck = "";
 			$mon_ck = "";
@@ -103,7 +103,7 @@
 					  <td>&nbsp;</td>
 					</tr>
 				</table>
-				<input type="hidden" class="pg_id" value="<?php echo $pg->payroll_group_setup_id ?>" />
+				<input type="hidden" class="pg_id" value="<?php echo $pg->payroll_group_id ?>" />
 			</div>
 		<?php
 			}

@@ -14,7 +14,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 			  <!--PAYROLL-CALENDAR-ROW START -->
 			  <h5>
 				<?php echo $pg->name ?>
-				<input type="hidden" class="pg_id" name="pg_id[]" value="<?php echo $pg->payroll_group_setup_id; ?>" />
+				<input type="hidden" class="pg_id" name="pg_id[]" value="<?php echo $pg->payroll_group_id; ?>" />
 			  </h5>
 			  <table style="margin-bottom:8px;">
 				<tr>

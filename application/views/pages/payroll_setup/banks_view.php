@@ -20,7 +20,7 @@
               </tr>
 			  <?php
 				  foreach($pg_sql->result() as $pg){ 
-				  $ba_sql = $this->banks_model->get_payroll_bank_accounts($pg->payroll_group_setup_id);
+				  $ba_sql = $this->banks_model->get_payroll_bank_accounts($pg->payroll_group_id);
 				  
 				  if($ba_sql->num_rows()>0){
 					$ba = $ba_sql->row();
@@ -41,7 +41,7 @@
 				  <tr>
 					<td>
 						<?php echo $pg->name; ?>
-						<input type="hidden" name="pg_id[]" class="pg_id" value="<?php echo $pg->payroll_group_setup_id; ?>" />
+						<input type="hidden" name="pg_id[]" class="pg_id" value="<?php echo $pg->payroll_group_id; ?>" />
 						<input type="hidden" name="paba_id[]" class="paba_id" value="<?php echo $paba_id; ?>" />
 					</td>
 					<td><select style="width:115px;" class="txtselect bank" name="bank[]">

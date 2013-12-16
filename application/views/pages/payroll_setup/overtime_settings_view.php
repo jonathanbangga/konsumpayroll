@@ -66,7 +66,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 				<option value="">select</option>
 				<?php
 				foreach($lt_sql->result() as $lt){ ?>
-					<option value="<?php echo $lt->leaves_id; ?>"><?php echo $lt->leave_type; ?></option>
+					<option value="<?php echo $lt->leave_type_id; ?>"><?php echo $lt->leave_type; ?></option>
 				<?php	
 				}
 				?>
