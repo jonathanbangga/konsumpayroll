@@ -38,7 +38,7 @@
 			$data['page_title'] = "Government Registration";		
 			$data['company_info'] =  $this->company->get_government_registration($this->company_id);
 			$data['error']	= "";
-			$data['category'] = array("regular","non-regular","household","probie");
+			$data['category'] = array("regular","household");
 			$check_add_update = $this->company->gov_info($this->company_id);
 			if($this->input->post('save')) {
 				$this->form_validation->set_rules("tin","tin id","required|trim|xss_clean|is_unique[company.tin]");
