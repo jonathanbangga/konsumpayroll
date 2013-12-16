@@ -31,6 +31,15 @@
 
 		// formate date picker dates to database date format yyyy-mm-dd
 		$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date)));
+		
+		//PHP set cookie
+		setcookie('msg', "Submission has been saved");
+		
+		// Select distinct year from a date or datetime datetype from a database using sql
+		SELECT DISTINCT YEAR(  `payroll_date` ) 
+		
+		// assign event on ajax added elements
+		jQuery(document).on("change","#pcy_select",function(){});
 
 	// jc - end
 
