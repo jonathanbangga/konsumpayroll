@@ -500,19 +500,33 @@
 		 */
 		public function check_time_out_first($comp_id, $emp_id){
 			$date_val = date("Y")."-".date("m")."-".date("d");
+			$time_val = date("H:i:s");
 			$sql = $this->db->query("
 				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
-				AND date = '{$date_val}'
 				ORDER BY employee_time_in_id DESC
 				LIMIT 1
 			");
+			// AND date = '{$date_val}'
 			
 			if($sql->num_rows() > 0){
 				$row = $sql->row();
 				$sql->free_result();
-				return $row;
+				
+				// compute number of day
+				$startDate = strtotime("{$row->time_in}");
+				$endDate = strtotime("{$date_val} {$time_val}");
+				$interval = $endDate - $startDate;
+				$days = floor($interval / (60 * 60 * 24));
+				
+				// if no. of day is greater than 0, add new row for employee time in
+				if($days > 0){
+					return FALSE;
+				}else{
+					// get employee time in information
+					return $row;
+				}
 			}else{
 				return FALSE;
 			}
@@ -527,16 +541,32 @@
 		 */
 		public function time_in_is_empty($comp_id, $emp_id){
 			$current_datetime = date("Y")."-".date("m")."-".date("d");
+			$time_val = date("H:i:s");
 			$sql = $this->db->query("
 				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
-				AND date = '{$current_datetime}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
 			");
 			if($sql->num_rows() == 0){
 				return TRUE;
 			}else{
-				return FALSE;
+				$row = $sql->row();
+				$sql->free_result();
+				
+				// compute number of day
+				$startDate = strtotime("{$row->time_in}");
+				$endDate = strtotime("{$current_datetime} {$time_val}");
+				$interval = $endDate - $startDate;
+				$days = floor($interval / (60 * 60 * 24));
+				
+				// if no. of day is greater than 0, add new row for employee time in
+				if($days > 0){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
 			}
 		}
 		
@@ -550,6 +580,7 @@
 				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
+				ORDER BY employee_time_in_id DESC
 			");
 			if($sql->num_rows() > 0){
 				$results = $sql->result();
@@ -566,16 +597,265 @@
 		 * @param unknown_type $emp_id
 		 */
 		public function get_timein_today($comp_id, $emp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				
+				$date_val = date("Y")."-".date("m")."-".date("d");
+				$time_val = date("H:i:s");
+				
+				// compute number of day
+				$startDate = strtotime("{$row->time_in}");
+				$endDate = strtotime("{$date_val} {$time_val}");
+				$interval = $endDate - $startDate;
+				$days = floor($interval / (60 * 60 * 24));
+				
+				// if no. of day is greater than 0, add new row for employee time in
+				if($days > 0){
+					return FALSE;
+				}else{
+					// get employee time in information
+					return $row;
+				}
+				
+				#return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_out($comp_id, $emp_id, $employee_time_in_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$lunch_out_val = date('Y-m-d H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_out = '{$lunch_out_val}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND employee_time_in_id = '{$employee_time_in_id}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Lunch In value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_lunch_in($comp_id, $emp_id, $employee_time_in_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$current_time = date('Y-m-d H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET lunch_in = '{$current_time}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND employee_time_in_id = '{$employee_time_in_id}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Update Employee Time Out value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $lunch_out_val
+		 */
+		public function update_time_out($comp_id, $emp_id, $employee_time_in_id){
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$current_time = date('Y-m-d H:i:s');
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET time_out = '{$current_time}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND employee_time_in_id = '{$employee_time_in_id}'
+			");
+			
+			if($sql){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Check Current Time for lunch out and time out
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $min_log
+		 */
+		public function check_current_time_login($comp_id, $emp_id, $min_log){
+			$time_val = date("H:i:s");
 			$date_val = date("Y")."-".date("m")."-".date("d");
 			$sql = $this->db->query("
 				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
-				AND date = '{$date_val}'
 				ORDER BY employee_time_in_id DESC
 				LIMIT 1
 			");
 			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$time_in = $row->time_in;
+				$lunch_out = $row->lunch_out;
+				$lunch_in = $row->lunch_in;
+				$time_out = $row->time_out;
+				if($lunch_out=="0000-00-00 00:00:00"){
+					
+					// this is for lunch out
+					
+					// compute number of minutes
+					$startTime = $time_in;
+					$endTime = $time_val;
+					$minute = floor((strtotime($endTime) - strtotime($startTime)) / 60);
+					
+					// if no. of minute is greater than $min_log, add new row for employee time in
+					if($minute < $min_log){
+						return TRUE;
+					}else{
+						return FALSE;
+					}
+				}elseif($lunch_out!="0000-00-00 00:00:00" && $time_out=="0000-00-00 00:00:00"){
+					
+					// this is for time out
+					
+					// compute number of minutes
+					$startTime = $lunch_in;
+					$endTime = $time_val;
+					$minute = floor((strtotime($endTime) - strtotime($startTime)) / 60);
+					
+					// if no. of minute is greater than $min_log, add new row for employee time in
+					if($minute < $min_log){
+						return TRUE;
+					}else{
+						return FALSE;
+					}
+				}
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Check Current Time for time in and lunch in
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $min_log
+		 */
+		public function check_current_time_to_timein_lunchin($comp_id, $emp_id, $min_log){
+			$time_val = date("H:i:s");
+			$date_val = date("Y")."-".date("m")."-".date("d");
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$time_in = $row->time_in;
+				$lunch_out = $row->lunch_out;
+				$lunch_in = $row->lunch_in;
+				$time_out = $row->time_out;
+				if($lunch_in=="0000-00-00 00:00:00"){
+					// this is for lunch in
+					// compute number of minutes
+					$startTime = $lunch_out;
+					$endTime = $time_val;
+					$minute = floor((strtotime($endTime) - strtotime($startTime)) / 60);
+					
+					// if no. of minute is greater than $min_log, add new row for employee time in
+					if($minute < $min_log){
+						return TRUE;
+					}else{
+						return FALSE;
+					}
+				}
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Check if time in is not empty
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function check_time_in_is_empty($comp_id, $emp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$time_in = $row->time_in;
+				$lunch_out = $row->lunch_out;
+				$lunch_in = $row->lunch_in;
+				$time_out = $row->time_out;
+				
+				if($time_in == "0000-00-00 00:00:00" && $lunch_out == "0000-00-00 00:00:00"){
+					print $time_in;
+					return TRUE;
+				}elseif($lunch_out != "0000-00-00 00:00:00" && $lunch_in == "0000-00-00 00:00:00" && $lunch_in == "0000-00-00 00:00:00"){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
+			}else{
+				return TRUE;
+			}
+		}
+		
+		/**
+		 * Get Employee Time In Information
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $timein_id
+		 */
+		public function get_timein_info($comp_id, $emp_id, $timein_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_time_in
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND employee_time_in_id = '{$timein_id}'
+				AND status = 'Active'
+			");
 			if($sql->num_rows() > 0){
 				$row = $sql->row();
 				$sql->free_result();
@@ -586,23 +866,57 @@
 		}
 		
 		/**
-		 * Update Employee Lunch Out value
+		 * Update Employee Time In Log
 		 * @param unknown_type $comp_id
 		 * @param unknown_type $emp_id
-		 * @param unknown_type $lunch_out_val
+		 * @param unknown_type $employee_timein
+		 * @param unknown_type $time_in
+		 * @param unknown_type $lunch_out
+		 * @param unknown_type $lunch_in
+		 * @param unknown_type $time_out
+		 * @param unknown_type $reason
 		 */
-		public function update_lunch_out($comp_id, $emp_id){
-			$date_val = date("Y")."-".date("m")."-".date("d");
-			$lunch_out_val = date('H:i:s');
+		public function update_employee_time_log(
+						$comp_id, $emp_id, $employee_timein, $time_in, $lunch_out, $lunch_in, $time_out, $reason
+					){
 			$sql = $this->db->query("
 				UPDATE employee_time_in
-				SET lunch_out = '{$lunch_out_val}'
+				SET time_in = '{$time_in}', lunch_out = '{$lunch_out}', lunch_in = '{$lunch_in}', time_out = '{$time_out}', 
+				reason = '{$reason}', tax_status = 'pending', corrected = 'Yes'
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
-				AND date = '{$date_val}'
+				AND employee_time_in_id = '{$employee_timein}'
 			");
-			
 			if($sql){
+				$sql_2 = $this->db->query("
+					SELECT *FROM employee_time_in
+					WHERE comp_id = '{$comp_id}'
+					AND emp_id = '{$emp_id}'
+					AND status = 'Active'
+					ORDER BY employee_time_in_id DESC
+					LIMIT 1
+				");
+				if($sql_2->num_rows() > 0){
+					$row = $sql_2->row();
+					$sql_2->free_result();
+					if($row->time_in != "0000-00-00 00:00:00" && $row->lunch_out != "0000-00-00 00:00:00" && $row->lunch_in != "0000-00-00 00:00:00" && $row->time_out != "0000-00-00 00:00:00"){
+						$compute_timein_lunchout = (strtotime($row->lunch_out) - strtotime($row->time_in)) / 3600; 
+						$compute_lunchin_timeout = (strtotime($row->time_out) - strtotime($row->lunch_in)) / 3600;
+						$first_hours_worked = round($compute_timein_lunchout,2);
+						$second_hours_worked = round($compute_lunchin_timeout,2);
+						
+						$total_hours_worked = $first_hours_worked + $second_hours_worked;
+						$sql_update = $this->db->query("
+							UPDATE employee_time_in
+							SET total_hours = '{$total_hours_worked}'
+							WHERE comp_id = '{$comp_id}'
+							AND emp_id = '{$emp_id}'
+							AND employee_time_in_id = '{$employee_timein}'
+						");
+					}else{
+					
+					}
+				}
 				return TRUE;
 			}else{
 				return FALSE;
@@ -610,24 +924,41 @@
 		}
 		
 		/**
-		 * Update Employee Lunch Out value
+		 * Total Hours Worked
 		 * @param unknown_type $comp_id
 		 * @param unknown_type $emp_id
-		 * @param unknown_type $lunch_out_val
 		 */
-		public function update_lunch_in($comp_id, $emp_id){
-			$date_val = date("Y")."-".date("m")."-".date("d");
-			$current_time = date('H:i:s');
+		public function total_hours($comp_id, $emp_id){
 			$sql = $this->db->query("
-				UPDATE employee_time_in
-				SET lunch_in = '{$current_time}'
+				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
-				AND date = '{$date_val}'
+				AND status = 'Active'
+				ORDER BY employee_time_in_id DESC
+				LIMIT 1
 			");
-			
-			if($sql){
-				return TRUE;
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				
+				$compute_timein_lunchout = (strtotime($row->lunch_out) - strtotime($row->time_in)) / 3600; 
+				$compute_lunchin_timeout = (strtotime($row->time_out) - strtotime($row->lunch_in)) / 3600;
+				$first_hours_worked = round($compute_timein_lunchout,2);
+				$second_hours_worked = round($compute_lunchin_timeout,2);
+				
+				$total_hours_worked = $first_hours_worked + $second_hours_worked;
+				$sql_update = $this->db->query("
+					UPDATE employee_time_in
+					SET total_hours = '{$total_hours_worked}'
+					WHERE comp_id = '{$comp_id}'
+					AND emp_id = '{$emp_id}'
+					AND employee_time_in_id = '{$row->employee_time_in_id}'
+				");
+				if($sql_update){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
 			}else{
 				return FALSE;
 			}

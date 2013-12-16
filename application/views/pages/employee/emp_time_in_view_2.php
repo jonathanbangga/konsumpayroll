@@ -29,6 +29,7 @@
 		<?php print $this->session->flashdata('message');?>
 		<table class="tbl" width="933px">
 			<tr>
+				<th>Date</th>
 				<th>Time In</th>
 				<th>Lunch Out</th>
 				<th>Lunch In</th>
@@ -44,10 +45,11 @@
 					foreach($time_in_list as $row){
 			?>
 				<tr>
-					<td><span class="ihide"><?php print $row->time_in;?></span><?php print date("M d, Y g:i A",strtotime($row->time_in));?></td>
-					<td><span class="ihide"><?php print $row->lunch_out;?></span><?php print ($row->lunch_out == "0000-00-00 00:00:00") ? "00:00:00" : date("M d, Y g:i A",strtotime($row->lunch_out));?></td>
-					<td><span class="ihide"><?php print $row->lunch_in;?></span><?php print ($row->lunch_in == "0000-00-00 00:00:00") ? "00:00:00" : date("M d, Y g:i A",strtotime($row->lunch_in));?></td>
-					<td><span class="ihide"><?php print $row->time_out;?></span><?php print ($row->time_out == "0000-00-00 00:00:00") ? "00:00:00" : date("M d, Y g:i A",strtotime($row->time_out));?></td>
+					<td><span class="ihide"><?php print $row->date;?></span><?php print date("M d, Y",strtotime($row->date));?></td>
+					<td><span class="ihide"><?php print $row->time_in;?></span><?php print date("g:i A",strtotime($row->time_in));?></td>
+					<td><span class="ihide"><?php print $row->lunch_out;?></span><?php print ($row->lunch_out == "00:00:00") ? $row->lunch_out : date("g:i A",strtotime($row->lunch_out));?></td>
+					<td><span class="ihide"><?php print $row->lunch_in;?></span><?php print ($row->lunch_in == "00:00:00") ? $row->lunch_in : date("g:i A",strtotime($row->lunch_in));?></td>
+					<td><span class="ihide"><?php print $row->time_out;?></span><?php print ($row->time_out == "00:00:00") ? $row->time_out : date("g:i A",strtotime($row->time_out));?></td>
 					<td><span class="ihide"><?php print $row->total_hours;?></span><?php print $row->total_hours;?></td>
 					<td><span class="ihide"><?php print $row->corrected;?></span><?php print $row->corrected;?></td>
 					<td><span class="ihide"><?php print $row->reason;?></span><?php print $row->reason;?></td>
@@ -79,7 +81,6 @@
               <tr><td width="70px">Time In</td>
               <td>
               	<input type="hidden" name="employee_timein" class="employee_timein ihide" />
-              	<input type="text" class="txtfield datepickerCont employee_timein_date" name="employee_timein_date" />
               	<select name="time_in_hr" class="txtselect time_in_hr" style="width:60px;">
               		<?php 
               			for($hrs=00;$hrs<=12;$hrs++){
@@ -108,7 +109,6 @@
 		    <tr>
               <td>Lunch Out</td>
               	<td>
-              		<input type="text" class="txtfield datepickerCont lunch_out_date" name="lunch_out_date" />
 					<select name="lunch_out_hr" class="lunch_out_hr txtselect" style="width:60px;">
 	                    <?php 
 	              			for($hrs=00;$hrs<=12;$hrs++){
@@ -138,7 +138,6 @@
            	<tr>
               <td>Lunch In</td>
 	              <td>
-	              	<input type="text" class="txtfield datepickerCont lunch_in_date" name="lunch_in_date" />
               		<select name="lunch_in_hr" class="lunch_in_hr txtselect" style="width:60px;">
 	                  	<?php 
 	              			for($hrs=00;$hrs<=12;$hrs++){
@@ -168,7 +167,6 @@
               <tr>
               <td>Time Out</td>
 	              <td>
-	              	<input type="text" class="txtfield datepickerCont time_out_date" name="time_out_date" />
               		<select name="time_out_hr" class="time_out_hr txtselect" style="width:60px;">
 	                  	<?php 
 	              			for($hrs=00;$hrs<=12;$hrs++){
@@ -198,7 +196,7 @@
             <tr>
               <td style="vertical-align: top;">Reason</td>
               <td>
-              	<textarea name="reason" class="reason txtfield" style="height: 50px;width: 330px;"></textarea>
+              	<textarea name="reason" class="reason txtfield" style="height: 50px;width: 178px;"></textarea>
               </td>
             </tr>
             <tr>
@@ -521,39 +519,7 @@
 							}
 						});
 
-						jQuery(".employee_timein_date").val(status.time_in_date); 
-						jQuery(".lunch_out_date").val(status.lunch_out_date);
-						jQuery(".lunch_in_date").val(status.lunch_in_date);
-						jQuery(".time_out_date").val(status.time_out_date);
 						jQuery(".reason").val(status.reason);
-
-						if(jQuery(".employee_timein_date").val()=="0000-00-00"){
-							jQuery(".employee_timein_date").prop("disabled",true);
-						}else{
-							jQuery(".employee_timein_date").removeAttr("disabled");
-							// jQuery(".time_in_ampm option").eq(0).remove();
-						}
-						
-						if(jQuery(".lunch_out_date").val()=="0000-00-00"){
-							jQuery(".lunch_out_date").prop("disabled",true);
-						}else{
-							jQuery(".lunch_out_date").removeAttr("disabled");
-							// jQuery(".lunch_out_ampm option").eq(0).remove();
-						}
-
-						if(jQuery(".lunch_in_date").val()=="0000-00-00"){
-							jQuery(".lunch_in_date").prop("disabled",true);
-						}else{
-							jQuery(".lunch_in_date").removeAttr("disabled");
-							// jQuery(".lunch_in_ampm option").eq(0).remove();
-						}
-
-						if(jQuery(".time_out_date").val()=="0000-00-00"){
-							jQuery(".time_out_date").prop("disabled",true);
-						}else{
-							jQuery(".time_out_date").removeAttr("disabled");
-							// jQuery(".time_out_ampm option").eq(0).remove();
-						}
 						
 						 jQuery(".employee_timein").val(status.employee_time_in_id);
 						 jQuery(".changeLogs").dialog({
@@ -578,122 +544,15 @@
 		if(reason == ""){
 			jQuery(".reason").addClass("emp_str");
 			error = 1;
-		}else{
-			jQuery(".reason").removeClass("emp_str");
 		}
 
-		var time_in_date = jQuery(".employee_timein_date").val().split("-");
-    	var lunch_out_date = jQuery(".lunch_out_date").val().split("-");
-    	var lunch_in_date = jQuery(".lunch_in_date").val().split("-");
-    	var time_out_date = jQuery(".time_out_date").val().split("-");
-
-    	var new_time_in_date = time_in_date[1]+"/"+time_in_date[2]+"/"+time_in_date[0]+" ";
-    	var new_lunch_out_date = lunch_out_date[1]+"/"+lunch_out_date[2]+"/"+lunch_out_date[0]+" ";
-    	var new_lunch_in_date = lunch_in_date[1]+"/"+lunch_in_date[2]+"/"+lunch_in_date[0]+" ";
-    	var new_time_out_date = time_out_date[1]+"/"+time_out_date[2]+"/"+time_out_date[0]+" ";
-
-    	var time_in_hr = jQuery(".time_in_hr").val();
-    	var time_in_min = jQuery(".time_in_min").val();
-    	var time_in_ampm = jQuery(".time_in_ampm").val();
-
-    	var lunch_out_hr = jQuery(".lunch_out_hr").val();
-    	var lunch_out_min = jQuery(".lunch_out_min").val();
-    	var lunch_out_ampm = jQuery(".lunch_out_ampm").val();
-
-    	var lunch_in_hr = jQuery(".lunch_in_hr").val();
-    	var lunch_in_min = jQuery(".lunch_in_min").val();
-    	var lunch_in_ampm = jQuery(".lunch_in_ampm").val();
-
-    	var time_out_hr = jQuery(".time_out_hr").val();
-    	var time_out_min = jQuery(".time_out_min").val();
-    	var time_out_ampm = jQuery(".time_out_ampm").val();
-    	var why = "";
-    	
-    	// for lunch out trapping
-    	var new_time_in = new Date(new_time_in_date+time_in_hr+":"+time_in_min+" "+time_in_ampm);
-    	var new_lunch_out = new Date(new_lunch_out_date+lunch_out_hr+":"+lunch_out_min+" "+lunch_out_ampm);
-    	var total_lunch_out = new_lunch_out.getTime() - new_time_in.getTime();
-    	var total_lunch_out_minutes = (new_lunch_out.getTime() - new_time_in.getTime()) / 1000 / 60;
-    	
-    	if(total_lunch_out < 0){
-    	    why += "- Invalid lunch out time value <br />";
-    	}else if(total_lunch_out_minutes < <?php print $min_log;?>){
-    		why += "- Lunch out value must be greater than <?php print $min_log;?> minutes <br />";
-        }
-
-		// for lunch in trapping
-    	var new_lunch_out = new Date(new_lunch_out_date+lunch_out_hr+":"+lunch_out_min+" "+lunch_out_ampm);
-    	var new_lunch_in = new Date(new_lunch_in_date+lunch_in_hr+":"+lunch_in_min+" "+lunch_in_ampm);
-    	var total_lunch_in = new_lunch_in.getTime() - new_lunch_out.getTime();
-    	var total_lunch_in_minutes = (new_lunch_in.getTime() - new_lunch_out.getTime()) / 1000 / 60;
-    	
-    	if(total_lunch_in < 0){
-    	    why += "- Invalid lunch in time value <br />";
-    	}else if(total_lunch_in_minutes < <?php print $min_log;?>){
-    		why += "- Lunch in value must be greater than <?php print $min_log;?> minutes <br />";
-		}
-
-    	// for time out trapping
-    	var new_lunch_in = new Date(new_lunch_in_date+lunch_in_hr+":"+lunch_in_min+" "+lunch_in_ampm);
-    	var new_time_out = new Date(new_time_out_date+time_out_hr+":"+time_out_min+" "+time_out_ampm);
-    	var total_time_out = new_time_out.getTime() - new_lunch_in.getTime();
-    	var total_time_out_minutes = (new_time_out.getTime() - new_lunch_in.getTime()) / 1000 / 60;
-    	
-    	if(total_time_out < 0){
-    	    why += "- Invalid logout out time value <br />";
-    	}else if(total_time_out_minutes < <?php print $min_log;?>){
-    		why += "- Logout out value must be greater than <?php print $min_log;?> minutes <br />";
-		}
-
-		if(jQuery(".employee_timein_date").val()!="0000-00-00"){
-			if(time_in_ampm=="00"){
-				jQuery(".time_in_ampm").addClass("emp_str");
-				error = 1;
-			}else{
-				jQuery(".time_in_ampm").removeClass("emp_str");
-			}
-		}
-
-		if(jQuery(".lunch_out_date").val()!="0000-00-00"){
-			if(lunch_out_ampm=="00"){
-				jQuery(".lunch_out_ampm").addClass("emp_str");
-				error = 1;
-			}else{
-				jQuery(".lunch_out_ampm").removeClass("emp_str");
-			}
-		}
-
-		if(jQuery(".lunch_in_date").val()!="0000-00-00"){
-			if(lunch_in_ampm=="00"){
-				jQuery(".lunch_in_ampm").addClass("emp_str");
-				error = 1;
-			}else{
-				jQuery(".lunch_in_ampm").removeClass("emp_str");
-			}
-		}
-
-		if(jQuery(".time_out_date").val()!="0000-00-00"){
-			if(time_out_ampm=="00"){
-				jQuery(".time_out_ampm").addClass("emp_str");
-				error = 1;
-			}else{
-				jQuery(".time_out_ampm").removeClass("emp_str");
-			}
-		}
-		
 		if(error == 1){
 			return false;
-	    }else if(why != ""){
-	    	alert(why);
-	    	return false;
 	    }else{
 		    jQuery(".changeLogs").dialog("close");
 			jQuery(".lunch_out_hr, .lunch_out_min, .lunch_out_ampm").removeAttr("disabled");
 			jQuery(".lunch_in_hr, .lunch_in_min, .lunch_in_ampm").removeAttr("disabled");
 			jQuery(".time_out_hr, .time_out_min, .time_out_ampm").removeAttr("disabled");
-			jQuery(".lunch_out_date").removeAttr("disabled");
-			jQuery(".lunch_in_date").removeAttr("disabled");
-			jQuery(".time_out_date").removeAttr("disabled");
 	    }
 	}
 
