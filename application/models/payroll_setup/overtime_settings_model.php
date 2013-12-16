@@ -74,6 +74,49 @@ class Overtime_settings_model extends CI_Model {
 		");
 	}
 	
+	public function save_overtime_settings($automatic_recognition="",$overtime_as_leave_hours="",$leave_type_id="",$min_hours="",$increment=""){
+		$this->db->query("
+			INSERT INTO
+			`overtime_settings` (
+				`automatic_recognition`,
+				`overtime_as_leave_hours`,
+				`leave_type_id`,
+				`min_hours`,
+				`increment`,
+				`company_id`
+			)
+			VALUES (
+				'".mysql_real_escape_string($automatic_recognition)."',
+				'".mysql_real_escape_string($overtime_as_leave_hours)."',
+				'".mysql_real_escape_string($leave_type_id)."',
+				'".mysql_real_escape_string($min_hours)."',
+				'".mysql_real_escape_string($increment)."',
+				'".mysql_real_escape_string($this->company_id)."'
+			)
+		");
+	}
+	
+	public function get_overtime_settings(){
+		return $this->db->query("
+			SELECT *
+			FROM `overtime_settings`
+			WHERE `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_overtime_settings($overtime_settings_id,$automatic_recognition="",$overtime_as_leave_hours="",$leave_type_id="",$min_hours="",$increment=""){
+		$this->db->query("
+			UPDATE `overtime_settings`
+			SET
+				`automatic_recognition` = '".mysql_real_escape_string($automatic_recognition)."',
+				`overtime_as_leave_hours` = '".mysql_real_escape_string($overtime_as_leave_hours)."',
+				`leave_type_id` = '".mysql_real_escape_string($leave_type_id)."',
+				`min_hours` = '".mysql_real_escape_string($min_hours)."',
+				`increment` = '".mysql_real_escape_string($increment)."'
+			WHERE `overtime_settings_id` = {$overtime_settings_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */

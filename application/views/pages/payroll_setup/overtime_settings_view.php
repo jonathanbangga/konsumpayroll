@@ -43,30 +43,52 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
         <br>
         Do you allow automatic recognition for overtime if hours worked exceeded the required work hours?
         <table style="margin-bottom:20px;" border="0" cellspacing="0" cellpadding="0">
+		<?php
+		if($ots_sql->num_rows()>0){
+			$ots = $ots_sql->row();
+			
+			$ots_id =$ots->overtime_settings_id;
+			$ar =$ots->automatic_recognition;
+			$oalh =$ots->overtime_as_leave_hours;
+			$lt_id =$ots->leave_type_id;
+			$mh =$ots->min_hours;
+			$i =$ots->increment;
+		}else{
+			$ots_id = "";
+			$ar = "";
+			$oalh = "";
+			$lt_id = "";
+			$mh = "";
+			$i = "";
+		}
+		?>
           <tr>
-            <td style="width:60px;"><input style="margin:2px 5px 0 0;" name="automatic_recognition" id="ar_yes" type="radio" value="1">
+            <td style="width:60px;">
+			<input style="margin:2px 5px 0 0;" name="automatic_recognition" id="ar_yes" type="radio" value="1" <?php echo ($ar==="1")?'checked="checked"':""; ?> />
               Yes</td>
-            <td><input style="margin:2px 5px 0 0;" name="automatic_recognition" id="ar_no" type="radio" value="0">
+            <td><input style="margin:2px 5px 0 0;" name="automatic_recognition" id="ar_no" type="radio" value="0" <?php echo ($ar==="0")?'checked="checked"':""; ?> />
               No</td>
           </tr>
         </table>
         Do you want your approved overtime to be credited as leave hours?
         <table style="margin-bottom:20px;" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td style="width:60px;"><input style="margin:2px 5px 0 0;" name="overtime_as_leave_hours" id="oalh_yes" name="automatic_recognition" type="radio" value="1">
+            <td style="width:60px;"><input style="margin:2px 5px 0 0;" name="overtime_as_leave_hours" id="oalh_yes" type="radio" value="1" <?php echo ($oalh==="1")?'checked="checked"':""; ?> />
               Yes</td>
-            <td><input style="margin:2px 5px 0 0;" name="overtime_as_leave_hours" type="radio" id="oalh_no" value="0">
+            <td><input style="margin:2px 5px 0 0;" name="overtime_as_leave_hours" type="radio" id="oalh_no" value="0" <?php echo ($oalh==="0")?'checked="checked"':""; ?> />
               No</td>
           </tr>
         </table>
 		
-		<div style="display:none;" id="leave_type">
+		<div <?php echo ($oalh==1)?"":'style="display:none;"'; ?> id="leave_type">
 			<p>Select leave type
-			  <select style="margin-left:5px;" class="txtselect" name="">
+			  <select style="margin-left:5px;" class="txtselect" name="leave_type">
 				<option value="">select</option>
 				<?php
-				foreach($lt_sql->result() as $lt){ ?>
-					<option value="<?php echo $lt->leave_type_id; ?>"><?php echo $lt->leave_type; ?></option>
+				foreach($lt_sql->result() as $lt){ 
+				
+				?>
+					<option value="<?php echo $lt->leave_type_id; ?>" <?php echo ($lt_id==$lt->leave_type_id&&$oalh==1)?'selected="selected"':""; ?>><?php echo $lt->leave_type; ?></option>
 				<?php	
 				}
 				?>
@@ -75,12 +97,16 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 		</div>
         
         <p>Minimum hours required to be considered as overtime
-          <input style="width:40px; margin-left:5px;" class="txtfield" name="" type="text">
+          <input style="width:40px; margin-left:5px;" class="txtfield" name="min_hours" type="text" value="<?php echo $mh; ?>" />
         </p>
         <p>Credited overtime increments every (in min)
-          <input style="width:40px; margin-left:5px;" class="txtfield" name="" type="text">
+          <input style="width:40px; margin-left:5px;" class="txtfield" name="increment" type="text" value="<?php echo $i; ?>" />
         </p>
         <br>
+		
+		<input type="hidden" name="ots_id" value="<?php echo $ots_id; ?>" /> 
+		<input type="hidden" name="has_ots" value="<?php echo ($ots_sql->num_rows()>0)?1:0; ?>" /> 
+		
         <p>Overtime allowances are benefits given to employees for work rendered beyond the regular working hours.<br>
           A fixed amount is given to an employee for each workday that the minimum OT hours is met.</p>
         <div class="tbl-wrap">
