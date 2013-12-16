@@ -970,6 +970,23 @@ CREATE TABLE IF NOT EXISTS `payroll_assigned_bank_accounts` (
 
 
 --
+-- Table structure for table `payroll_calendar`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_calendar` (
+  `payroll_calendar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `semi_monthly` int(11) NOT NULL,
+  `monthly` int(11) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `payroll_date` date NOT NULL,
+  `cut_off_from` date NOT NULL,
+  `cut_off_to` date NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_calendar_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+--
 -- Table structure for table `payroll_run`
 --
 
@@ -1220,7 +1237,7 @@ CREATE TABLE IF NOT EXISTS `leaves` (
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leaves_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1254,7 @@ CREATE TABLE IF NOT EXISTS `leave_type` (
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leave_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -2038,6 +2055,7 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   `tables_view` int(2) NOT NULL,
   `tables_edit` int(2) NOT NULL,
   `tables_delete` int(2) NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`users_roles_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 

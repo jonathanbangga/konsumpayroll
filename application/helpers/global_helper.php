@@ -205,3 +205,39 @@
 		}
 	}
 	
+	/**
+	 * Intelligent exports 
+	 * This helper will help you achieve enumerous exports such as csv and xls 
+	 * @version asherot
+	 * @param string $contents
+	 * @param enum $type (@example xls, csv)
+	 * @param string $filename
+	 * @return literature modules
+	 */
+	function module_literature($contents,$type,$filename="export"){
+		if($type){
+			switch($type):
+				case "xls":
+					header('Content-type: application/vnd.ms-excel');
+				    header("Content-Disposition: attachment; filename={$filename}.xls");
+				    header("Pragma: no-cache");
+				    header("Expires: 0"); 
+					$output = $contents;
+					echo $output;
+					return true;
+				break;
+				case "csv":
+					$clean = str_replace("\t",",",$contents);
+					header('Content-type: application/csv');
+					header('Content-Disposition: attachment; filename='.$filename.'.csv');
+					$output = $clean;
+					echo $output;
+					return true;
+				break;
+			endswitch;
+		}else{
+			return false;
+		}
+	}
+	
+	

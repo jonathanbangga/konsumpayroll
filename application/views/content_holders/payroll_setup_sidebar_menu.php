@@ -1,7 +1,9 @@
 <?php $uri =  $this->uri->segment(3); ?>
 <ul>
 	<li <?php if($uri=='payroll_group'){ echo 'class="selected"'; } ?>>
-		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group">Payroll Group</a>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group">
+			Payroll Group
+		</a>
 	</li>
 	<li <?php if($uri=='payroll_calendar'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar">
@@ -36,7 +38,11 @@
 	<li <?php if($uri=='rest_day'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/rest_day">Rest Day</a>
 	</li>
-	<li><a href="#">Income</a></li>
+	<li <?php if($uri=='income'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/income">
+			Income
+		</a>
+	</li>
 	<li <?php if($uri=='earnings'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/earnings">
 			Earnings

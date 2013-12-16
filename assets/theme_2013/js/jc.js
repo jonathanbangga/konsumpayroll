@@ -1,22 +1,24 @@
 // highlight messages script
-// data
-var speed = 5000;
 // client side
-function highlight_message(msg){
-		jQuery(".highlight_message").html(msg);
-		jQuery(".highlight_message").fadeIn();
+function highlight_message(msg,container,speed){
+		var container = (container)?container:".highlight_message";
+		var speed = (speed)?speed:5000;
+		jQuery(container).html(msg);
+		jQuery(container).fadeIn();
 		setTimeout(function(){
-			jQuery(".highlight_message").fadeOut();
+			jQuery(container).fadeOut();
 		},speed);
 }
 // redirect
-function redirect_highlight_message(){
+function redirect_highlight_message(container,speed){
+	var container = (container)?container:".highlight_message";
+	var speed = (speed)?speed:5000;
 	if(jQuery.cookie("msg")!=null){
-		jQuery(".highlight_message").html(jQuery.cookie("msg"));
+		jQuery(container).html(jQuery.cookie("msg"));
 		jQuery.removeCookie("msg");
-		jQuery(".highlight_message").fadeIn();
+		jQuery(container).fadeIn();
 		setTimeout(function(){
-			jQuery(".highlight_message").fadeOut();	
+			jQuery(container).fadeOut();	
 		},speed);
 	}
 }

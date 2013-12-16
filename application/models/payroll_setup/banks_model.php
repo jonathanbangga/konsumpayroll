@@ -13,7 +13,7 @@ class Banks_model extends CI_Model {
 	public function get_payroll_group(){
 		return $this->db->query("
 			SELECT *
-			FROM `payroll_group_setup`
+			FROM `payroll_group`
 			WHERE `company_id` = {$this->company_id}
 		");
 	}
