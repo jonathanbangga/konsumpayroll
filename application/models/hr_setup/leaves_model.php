@@ -12,7 +12,7 @@ class Leaves_model extends CI_Model {
 	public function get_leaves(){
 		return $this->db->query("
 			SELECT *
-			FROM `leaves` AS l
+			FROM `leave_type` AS l
 			LEFT JOIN `position` AS p ON ( l.`position_id` = p.`position_id` ) 
 			WHERE l.`company_id` = {$this->company_id}
 		");
@@ -30,7 +30,7 @@ class Leaves_model extends CI_Model {
 	public function add_leaves($leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave){
 		$this->db->query("
 			INSERT INTO 
-			`leaves` (	
+			`leave_type` (	
 				`leave_type`,
 				`payable`,
 				`required_documents`,
@@ -66,14 +66,14 @@ class Leaves_model extends CI_Model {
 	public function delete_leaves($leaves_id){
 		return $this->db->query("
 			DELETE 
-			FROM `leaves`
-			WHERE `leaves_id` = {$leaves_id}
+			FROM `leave_type`
+			WHERE `leave_type_id` = {$leaves_id}
 		");
 	}
 	
 	public function update_leaves($leaves_id,$leave_type,$payable,$required_documents,$include_in_actual_hours_worked,$leaves_used_to_deduct_no_of_work,$leave_accrued,$period,$position_id,$years_of_service,$unused_leave,$unused_leave_upon_termination,$max_days_of_leave){
 		$this->db->query("
-			UPDATE `leaves`
+			UPDATE `leave_type`
 			SET `leave_type` = '".mysql_real_escape_string($leave_type)."',
 				`payable` = '{$payable}',
 				`required_documents` = '".mysql_real_escape_string($required_documents)."',
@@ -86,7 +86,7 @@ class Leaves_model extends CI_Model {
 				`unused_leave` = '{$unused_leave}',
 				`unused_leave_upon_termination` = '{$unused_leave_upon_termination}',
 				`max_days_of_leave` = '".mysql_real_escape_string($max_days_of_leave)."'
-			WHERE `leaves_id` = {$leaves_id}
+			WHERE `leave_type_id` = {$leaves_id}
 			AND `company_id` = {$this->company_id}
 		");
 	}

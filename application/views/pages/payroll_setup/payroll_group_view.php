@@ -29,7 +29,7 @@
 					<td>
 						<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit">EDIT</a> 
 						<a href="javascript:void(0);" class="btn btn-red btn-action btn-delete">DELETE</a>
-						<input type="hidden" class="pg_id" value="<?php echo $pg->payroll_group_setup_id; ?>" />
+						<input type="hidden" class="pg_id" value="<?php echo $pg->payroll_group_id; ?>" />
 					</td>
 				</tr>
 			  <?php
@@ -172,7 +172,7 @@ jQuery(document).ready(function(){
 			// ajax call
 			jQuery.ajax({
 				type: "POST",
-				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_add_payroll_group_setup",
+				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_add_payroll_group",
 				data: {
 					payroll_group: payroll_group, 
 					period_type: period_type,
@@ -200,7 +200,7 @@ jQuery(document).ready(function(){
 					// ajax call
 					jQuery.ajax({
 						type: "POST",
-						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_delete_payroll_group_setup",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_delete_payroll_group",
 						data: {
 							pg_id: pg_id,
 							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -248,7 +248,7 @@ jQuery(document).ready(function(){
 					// ajax call
 					jQuery.ajax({
 						type: "POST",
-						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_update_payroll_group_setup",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_group/ajax_update_payroll_group",
 						data: {
 							pg_id: pg_id,
 							payroll_group: payroll_group,

@@ -69,7 +69,7 @@ class Overtime_settings_model extends CI_Model {
 	public function get_leave_type(){
 		return $this->db->query("
 			SELECT *
-			FROM `leaves`
+			FROM `leave_type`
 			WHERE `company_id` = {$this->company_id}
 		");
 	}

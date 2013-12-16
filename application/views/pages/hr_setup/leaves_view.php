@@ -52,7 +52,7 @@
 					  <td>
 						<a href="javascript:void(0)" class="btn btn-gray btn-action btn-edit">EDIT</a>
 						<a href="javascript:void(0)" class="btn btn-red btn-action btn-delete">DELETE</a>
-						<input type="hidden" class="leaves_id" value="<?php echo $leave->leaves_id; ?>" />
+						<input type="hidden" class="leaves_id" value="<?php echo $leave->leave_type_id; ?>" />
 					</td>
 					</tr>
 			<?php
