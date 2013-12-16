@@ -117,6 +117,50 @@ class Overtime_settings_model extends CI_Model {
 			AND `company_id` = {$this->company_id}
 		");
 	}
+	
+	public function delete_overtime_type($overtime_type_id){
+		$this->db->query("
+			DELETE 
+			FROM `overtime_type`
+			WHERE `overtime_type_id` = {$overtime_type_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function delete_allowance_type($allowance_type_id){
+		$this->db->query("
+			DELETE 
+			FROM `allowance_type`
+			WHERE `allowance_type_id` = {$allowance_type_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_overtime_type($overtime_type_id,$overtime_type_name,$pay_rate,$ot_rate){
+		$this->db->query("
+			UPDATE `overtime_type`
+			SET
+				`overtime_type_name` = '".mysql_real_escape_string($overtime_type_name)."',
+				`pay_rate` = '".mysql_real_escape_string($pay_rate)."',
+				`ot_rate` = '".mysql_real_escape_string($ot_rate)."'
+			WHERE `overtime_type_id` = {$overtime_type_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function update_allowance_type($allowance_type_id,$allowance_type_name,$taxable,$maximum_non_taxable_amount,$amount,$minimum_ot_hours){
+		$this->db->query("
+			UPDATE `allowance_type`
+			SET
+				`allowance_type_name` = '".mysql_real_escape_string($allowance_type_name)."',
+				`taxable` = '".mysql_real_escape_string($taxable)."',
+				`maximum_non_taxable_amount` = '".mysql_real_escape_string($maximum_non_taxable_amount)."',
+				`amount` = '".mysql_real_escape_string($amount)."',
+				`minimum_ot_hours` = '".mysql_real_escape_string($minimum_ot_hours)."'
+			WHERE `allowance_type_id` = {$allowance_type_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */
