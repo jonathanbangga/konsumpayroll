@@ -34,6 +34,9 @@
 			}		
 		}
 		
+		/**
+		 * Index disabled redirect to search
+		 */
 		public function index(){
 			redirect($this->uri->segment(1)."/hr/inquiry/search");	
 		}
@@ -59,23 +62,8 @@
 												$this->input->post('payroll_user'),
 												$this->input->post('employee_name'),
 												$this->input->post('year')
-												);				
-
-						$contents_stored = "";							
-	            		foreach($data['inquiry_result'] as $key=>$val):
-		         		/*	echo random_string('numeric',1);
-							echo $val->leave_name;
-							echo 1;
-							echo $val->total_credits;
-							echo random_string('numeric',1);
-							echo $val->note;
-							10060
-							echo $val->reasons;*/
-	            		
-							$contents_stored .= random_string('numeric',1)." \t ".$val->leave_name." \t 1 \t".$val->total_credits." \t "
-											 .random_string('numeric',1)."\t".$val->note." \t 1000 \t ".$val->reasons;
-						endforeach;
-            		#	module_literature($contents_stored,"xls");
+												);
+					p($data['inquiry_result']);
 				}else{
 					
 				}	
@@ -137,15 +125,41 @@
 			}
 		}
 		
-		public function export($payroll_user=NULL,$employee_name=NULL,$year=NULL){
+		/**
+		 * export types
+		 * This will export what type of document to export to either XLS or CSV format
+		 * @param string $payroll_user
+		 * @param string $employee_name
+		 * @param int $year
+		 * @return data
+		 */
+		public function export($type,$payroll_user=NULL,$employee_name=NULL,$year=NULL){
+			if($payroll_user == 'no') $payroll_user = NULL; // CHECKS PAYROLL USERS
+			if($employee_name == 'no') $employee_name = NULL; // CHECK EMPLOYEE NAME
+			if($year =='no') $year = NULL; // CHECK  YEAR 
+			$employee_name = str_replace("%20"," ",$employee_name);
+			$payroll_user =  str_replace("%20"," ",$payroll_user);
 			$data['inquiry_result']  = $this->inquiry->get_employee_inquiries($this->company_info->company_id,$payroll_user,$employee_name,$year);		
-			$contents_stored = "";							
-			foreach($data['inquiry_result'] as $key=>$val):
-				$contents_stored .= random_string('numeric',1)." \t ".$val->leave_name." \t 1 \t".$val->total_credits." \t "
-							.random_string('numeric',1)."\t".$val->note." \t 1000 \t ".$val->reasons;
-			endforeach;
-			module_literature($contents_stored,"xls");
+			$contents_stored = "Period \t Leave Type \t Total Credits \t Accrued Leaves \t Used Leaves \t Adjustments \t Ending Balance \t Adjustment Reason\n";
+			if($data['inquiry_result']){					
+				foreach($data['inquiry_result'] as $key=>$val):
+					$contents_stored .= random_string('numeric',1)." \t ".$val->leave_name." \t 1 \t".$val->total_credits." \t "
+									.random_string('numeric',1)."\t".$val->note." \t 1000 \t ".$val->reasons."\n";
+				endforeach;
+			}
 			
+			if($type){
+				switch($type):
+					case "xls":
+						module_literature($contents_stored,"xls");
+					break;
+					case "csv":
+						module_literature($contents_stored,"csv");
+					break;
+				endswitch;
+			}else{
+				return false;
+			}
 		}
 	
 	}

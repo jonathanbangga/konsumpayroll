@@ -148,8 +148,6 @@
 			$this->session->set_userdata("company_id","1");
 			p($this->session->all_userdata());
 		}
-	
-		
 		
 	}
 

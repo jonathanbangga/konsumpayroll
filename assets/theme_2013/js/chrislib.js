@@ -840,7 +840,7 @@ window.alert = function(msg){
 		dialogClass:'transparent',
 		buttons: {
 			'Close': function() {
-				$( this ).dialog( "close" );
+				$( this ).dialog("close");
 			}
 		},
 		open : function() {
