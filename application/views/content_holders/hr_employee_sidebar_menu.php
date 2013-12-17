@@ -2,7 +2,7 @@
         <li class="201_file_li"><a href="javascript:void(0);">201 File</a>
 	        <ul class="ihide">
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_basic_information">Basic Information</a></li>
-		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_history">Employment History</a></li>
+		        <!-- <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_history">Employment History</a></li>  -->
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_qualified_dependents">Qualified Dependents</a></li>
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_training_details">Training Details</a></li>
 		      </ul>
