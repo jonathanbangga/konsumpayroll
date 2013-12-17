@@ -23,9 +23,15 @@ function payroll_info_li(){
 }
 
 function loan_li(){
-	// Payroll Information
+	// Employee Loan
 	jQuery(".loan_li").find("ul").show();
 	jQuery(".loan_li a").eq(0).css("background","#F2F2F2");
+}
+
+function shift_li(){
+	// Employee Shift
+	jQuery(".shift_li").find("ul").show();
+	jQuery(".shift_li a").eq(0).css("background","#F2F2F2");
 }
 
 jQuery(function(){
