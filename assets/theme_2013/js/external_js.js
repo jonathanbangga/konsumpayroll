@@ -22,6 +22,12 @@ function payroll_info_li(){
 	jQuery(".payroll_info_li a").eq(0).css("background","#F2F2F2");
 }
 
+function loan_li(){
+	// Payroll Information
+	jQuery(".loan_li").find("ul").show();
+	jQuery(".loan_li a").eq(0).css("background","#F2F2F2");
+}
+
 jQuery(function(){
 	jAccordion();
 });
