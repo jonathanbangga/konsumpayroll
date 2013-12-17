@@ -95,7 +95,7 @@
        	$config['base_url']          = base_url().$uri;
        	$config['total_rows']        = $total_rows;
        	$config['use_page_numbers']  = TRUE;
-       	$config['prev_link'] = 'Prev';
+       	$config['prev_link'] = 'Previous';
 		$config['next_link'] = 'Next';	    
 	    $config['full_tag_open'] = '<ul id="pagination">';
 		$config['full_tag_close'] = '</ul>';

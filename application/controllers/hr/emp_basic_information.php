@@ -48,7 +48,7 @@
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_basic_information/index";
 			$total_rows = $this->hr_emp->basic_emp_view_all_active_user_count($this->company_id);
-			$per_page = $this->config->item('per_page');
+			$per_page = 2;#$this->config->item('per_page');
 			$segment=5;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);

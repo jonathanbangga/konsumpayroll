@@ -1,6 +1,6 @@
-<ul>
+	<ul>
         <li><a href="javascript:void(0);">201 File</a>
-	        <ul style="margin-left: 20px;">
+	        <ul class="ihide1">
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_basic_information">Basic Information</a></li>
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_history">Employment History</a></li>
 		        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_qualified_dependents">Qualified Dependents</a></li>
@@ -8,7 +8,7 @@
 		      </ul>
         </li>
         <li><a href="javascript:void(0);">Payroll Information</a>
-		  <ul style="margin-left: 20px;">
+		  <ul class="ihide1">
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_payroll_information">Payroll Information</a></li>
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_earnings">Earnings</a></li>
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_fixed_allowances">Fixed Allowances</a></li>

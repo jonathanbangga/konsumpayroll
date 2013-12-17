@@ -235,8 +235,16 @@
 						$lunch_in = ($get_timein_info->lunch_in==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->lunch_in));
 						$time_out = ($get_timein_info->time_out==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->time_out));
 						
+						$current_time_val = date("Y-m-d H:i:s");
+						
+						$startDate = strtotime("{$get_timein_info->time_in}");
+						$endDate = strtotime("{$current_time_val}");
+						$interval = $endDate - $startDate;
+						$days = floor($interval / (60 * 60 * 24));
+						
 						print json_encode(array(
 							"success"=>1,
+							"no_of_days"=>$days,
 							"employee_time_in_id"=>$get_timein_info->employee_time_in_id,
 							"time_in_date"=>$time_in_date[0],
 							"lunch_out_date"=>$lunch_out_date[0],
