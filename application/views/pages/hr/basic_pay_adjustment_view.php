@@ -16,7 +16,7 @@
               <th style="width:170px">Action</th>
             </tr>
             <?php 
-            	if($basic_pay_adjustment == NULL){
+            	if($basic_pay_adjustment != NULL){
             		$counter = 1;
             		foreach($basic_pay_adjustment as $row){
             ?>
