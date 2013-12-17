@@ -2,13 +2,14 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:2430px;" class="tbl emp_conList">
+          <table style="width:2600px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
               <th style="width:170px;">Employee Number</th>
               <th style="width:170px;">Last Name</th>
               <th style="width:170px;">First Name</th>
               <th style="width:170px;">Middle Name</th>
+              <th style="width:170px;">Email</th>
               <th style="width:170px;">Birth Date</th>
               <th style="width:170px;">Gender</th>
               <th style="width:170px;">Marital Status</th>
@@ -31,6 +32,7 @@
 	              <td><?php print ucwords($row->last_name);?></td>
 	              <td><?php print ucwords($row->first_name);?></td>
 	              <td><?php print ucwords($row->middle_name);?></td>
+	              <td><?php print $row->email;?></td>
 	              <td><?php print $row->dob;?></td>
 	              <td><?php print $row->gender;?></td>
 	              <td><?php print $row->marital_status;?></td>
@@ -78,6 +80,13 @@
             <tr>
               <td>Middle Name: </td>
               <td><input type="text" value="" name="" class="txtfield middlename_edit" /></td>
+            </tr>
+            <tr>
+              <td>Email: </td>
+              <td>
+              <input type="hidden" value="" name="" class="txtfield account_id ihide" />
+              <input type="hidden" value="" name="" class="txtfield old_email_edit ihide" />
+              <input type="text" value="" name="" class="txtfield email_edit" /></td>
             </tr>
             <tr>
               <td>Birth Date: </td>
@@ -146,9 +155,10 @@
 		        tbl += "<td><input type='text' name='last_name[]' class='txtfield'></td>";
 		        tbl += "<td><input type='text' name='first_name[]' class='txtfield'></td>";
 		        tbl += "<td><input type='text' name='middle_name[]' class='txtfield'></td>";
-		        tbl += "<td><input type='text' name='dob[]' class='txtfield dob' id='dob"+size+"'></td>";
+		        tbl += "<td><input type='text' name='email[]' class='txtfield email_val' attr_email_val='"+size+"'></td>";
+		        tbl += "<td><input type='text' name='dob[]' class='txtfield dob' id='dob"+size+"' readonly='readonly'></td>";
 		        tbl += "<td><select class='txtselect select-medium' name='gender[]'><option value='Male <?php echo set_select('gender[]', 'Male'); ?>'>Male</option><option value='Female <?php echo set_select('gender[]', 'Female'); ?>'>Female</option></select></td>";
-		        tbl += "<td><select class='txtselect select-medium' name='marital_status[]'><option value='Married <?php echo set_select('marital_status[]', 'Married'); ?>'>Married</option><option value='Single <?php echo set_select('marital_status[]', 'Single'); ?>'>Single</option><option value='Widow <?php echo set_select('marital_status[]', 'Widow'); ?>'>Widow</option><option value='Divorce <?php echo set_select('marital_status[]', 'Divorce'); ?>'>Divorce</option></select></td>";
+		        tbl += "<td><select class='txtselect select-medium' name='marital_status[]'><option value='Single <?php echo set_select('marital_status[]', 'Single'); ?>'>Single</option><option value='Married <?php echo set_select('marital_status[]', 'Married'); ?>'>Married</option><option value='Widow <?php echo set_select('marital_status[]', 'Widow'); ?>'>Widow</option><option value='Divorce <?php echo set_select('marital_status[]', 'Divorce'); ?>'>Divorce</option></select></td>";
 		        tbl += "<td><input type='text' name='address[]' class='txtfield'></td>";
 		        tbl += "<td><input type='text' name='contact_no[]' class='txtfield'></td>";
 		        tbl += "<td><input type='text' name='tin[]' class='txtfield'></td>";
@@ -172,6 +182,7 @@
 					addNewEmp(size);
 					dob_datepicker();
 					check_uname();
+					check_email_address();
 					remove_row();
 
 					// remove msg_empty
@@ -191,16 +202,23 @@
         	    });
         	    
 				duplicate_str();
+				duplicate_str_email();
 				
 				if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
         	    	return false;
         	    }
-
-        	    
 			}
 
 			function duplicate_str(){
 				jQuery(".unameField").each(function(){
+					if(jQuery(this).hasClass("dup_str")){
+							jQuery(this).addClass("emp_str");
+						}
+				});
+			}
+
+			function duplicate_str_email(){
+				jQuery(".email_val").each(function(){
 					if(jQuery(this).hasClass("dup_str")){
 							jQuery(this).addClass("emp_str");
 						}
@@ -230,7 +248,7 @@
 			function check_uname(){
 				jQuery(".unameField").bind("keyup",function(){
 					var _this = jQuery(this);
-				    var uname_val = _this.val();
+				    var uname_val = jQuery.trim(_this.val());
 				    var attr_uname_val = _this.attr("attr_uname_val");
 				    var class_val = _this.attr("class_val");
 				    var urls = window.location.href;
@@ -264,6 +282,41 @@
 				});
 			}
 
+			function check_email_address(){
+				jQuery(".email_val").bind("keyup",function(){
+					var _this = jQuery(this);
+				    var email_val = jQuery.trim(_this.val());
+				    var attr_email_val = _this.attr("attr_email_val");
+				    var class_val = _this.attr("class_val");
+				    var urls = window.location.href;
+				    if(jQuery.trim(email_val) != ""){
+					    
+					    // validate email address
+				    	$.ajax({
+							url: urls,
+							type: "POST",
+							data: {
+								'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+								'check_email_address': '1',
+								'email_val[]': email_val
+							},
+							success: function(data){
+								var status = jQuery.parseJSON(data);
+                            	if(status.success == 1){
+									alert("<p>- The Email Address field must contain a unique value.</p>");
+									_this.addClass("emp_str");
+									_this.addClass("dup_str");
+									return false;
+	                            }else{
+	                            	_this.removeClass("emp_str");
+	                            	_this.removeClass("dup_str");
+                                }
+							}
+					    });
+					}
+				});
+			}
+			
 			function check_val(val) { 
 				
 			    var isValid = true;
@@ -390,6 +443,9 @@
                               	jQuery(".lastname_edit").empty().val(status.last_name);
                               	jQuery(".firstname_edit").empty().val(status.first_name);
                               	jQuery(".middlename_edit").empty().val(status.middle_name);
+                              	jQuery(".account_id").empty().val(status.account_id);
+                              	jQuery(".old_email_edit").empty().val(status.email);
+                              	jQuery(".email_edit").empty().val(status.email);
                               	jQuery(".dob_edit").empty().val(status.dob);
                               	jQuery(".address_edit").empty().val(status.address);
                               	jQuery(".contact_no_edit").empty().val(status.contact_no);
@@ -422,6 +478,8 @@
 					var lastname_edit = jQuery(".lastname_edit").val();
 					var firstname_edit = jQuery(".firstname_edit").val();
 					var middlename_edit = jQuery(".middlename_edit").val();
+					var old_email_edit = jQuery(".old_email_edit").val();
+					var email_edit = jQuery(".email_edit").val();
 					var dob_edit = jQuery(".dob_edit").val();
 					var gender_edit = jQuery(".gender_edit").val();
 					var marital_status_edit = jQuery(".marital_status_edit").val();
@@ -437,6 +495,7 @@
 					error += check_emp_str("lastname_edit");
 					error += check_emp_str("firstname_edit");
 					error += check_emp_str("middlename_edit");
+					error += check_emp_str("email_edit");
 					error += check_emp_str("dob_edit");
 					error += check_emp_str("gender_edit");
 					error += check_emp_str("marital_status_edit");
@@ -461,6 +520,8 @@
 								'lastname_edit':lastname_edit,
 								'firstname_edit':firstname_edit,
 								'middlename_edit':middlename_edit,
+								'old_email_edit':old_email_edit,
+								'email_edit':email_edit,
 								'dob_edit':dob_edit,
 								'gender_edit':gender_edit,
 								'marital_status_edit':marital_status_edit,
@@ -475,6 +536,9 @@
 								var status = jQuery.parseJSON(data);
 	                          	if(status.success == 1){
 	                          		window.location.href = status.url;
+	                          	}else if(status.success == 3){
+		                          	alert(status.msg);
+	                            	return false;
 	                            }else{
 	                            	return false;
                               	}

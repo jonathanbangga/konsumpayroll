@@ -60,22 +60,24 @@
 			$data['employee'] = $this->hr_emp->basic_emp_view_all_active_user($per_page, $page, $this->company_id);
 			
 			if($this->input->post('add')){
-				$this->form_validation->set_rules('uname', 'Username', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('middle_name', 'Middle Name', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('location_id', 'Location', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('dob', 'Birth Date', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('gender', 'Gender', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('marital_status', 'Marital Status', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('address', 'Address', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('contact_no', 'Contact Number', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('tin', 'TIN', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('sss', 'SSS', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('hdmf', 'HDMF', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('no_dependents', 'Number of Dependents', 'trim|required|xss_clean');
+				foreach($this->input->post('uname') as $key_2=>$val){
+					$this->form_validation->set_rules("uname[{$key_2}]", 'Username', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("last_name[{$key_2}]", 'Last Name', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("first_name[{$key_2}]", 'First Name', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("middle_name[{$key_2}]", 'Middle Name', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("email[{$key_2}]", 'Email', 'trim|required|xss_clean|valid_email');
+					$this->form_validation->set_rules("dob[{$key_2}]", 'Birth Date', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("gender[{$key_2}]", 'Gender', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("marital_status[{$key_2}]", 'Marital Status', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("address[{$key_2}]", 'Address', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("contact_no[{$key_2}]", 'Contact Number', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("tin[{$key_2}]", 'TIN', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("sss[{$key_2}]", 'SSS', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("hdmf[{$key_2}]", 'HDMF', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("no_dependents[{$key_2}]", 'Number of Dependents', 'trim|required|xss_clean');
+				}
 				
-				//if ($this->form_validation->run()==true){
+				if ($this->form_validation->run()==true){
 					foreach($this->input->post('uname') as $key=>$val){
 						$company_id = $this->company_id;
 						$rank_id = "";
@@ -84,7 +86,7 @@
 						$fname = $this->input->post('first_name');
 						$mname = $this->input->post('middle_name');
 						$lname = $this->input->post('last_name');
-						$emailaddress = "";
+						$emailaddress = $this->input->post('email');
 						$dob = $this->input->post('dob');
 						$marital_status = $this->input->post('marital_status');
 						$address = $this->input->post('address');
@@ -141,9 +143,10 @@
 							'account_id' => $account_id,
 							'payroll_cloud_id' => $username[$key],
 							'password' => $password,
-							'account_type_id' => 1,
-							'email' => $emailaddress,
-							'deleted' => 0
+							'account_type_id' => "1",
+							'email' => $emailaddress[$key],
+							'user_type_id'=>"3",
+							'deleted' => "0"
 						);
 							
 						$insert_employee_sql = $this->jmodel->insert_data('employee',$insert_employee);
@@ -152,7 +155,10 @@
 					
 					$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully saved!</div>');
 					redirect($this->url);
-				//}
+				}else{
+					print validation_errors();
+					return false;
+				}
 			}
 			
 			if($this->input->is_ajax_request()) {
@@ -162,6 +168,21 @@
 					foreach($ajax_uname_val as $key=>$val){
 						$validate_uname = $this->hr_emp->validate_name($ajax_uname_val[$key]);
 						if($validate_uname){
+							echo json_encode(array("success"=>1));
+							return false;
+						}else{
+							echo json_encode(array("success"=>0));
+							return false;
+						}
+					}
+				}
+				
+				// Check Employee Email Address
+				if($this->input->post('check_email_address')){
+					$ajax_email_val = $this->input->post('email_val');
+					foreach($ajax_email_val as $key_email=>$val_email){
+						$validate_email = $this->hr_emp->validate_email($ajax_email_val[$key_email]);
+						if($validate_email){
 							echo json_encode(array("success"=>1));
 							return false;
 						}else{
@@ -191,10 +212,12 @@
 						echo json_encode(
 							array(
 								"success"=>1,
+								"account_id"=>$emp_res->account_id,
 								"emp_id"=>$emp_res->emp_id,
 								"last_name"=>$emp_res->last_name,
 								"first_name"=>$emp_res->first_name,
 								"middle_name"=>$emp_res->middle_name,
+								"email"=>$emp_res->email,
 								"dob"=>$emp_res->dob,
 								"gender"=>$emp_res->gender,
 								"marital_status"=>$emp_res->marital_status,
@@ -223,6 +246,9 @@
 					$lastname_edit = $this->input->post('lastname_edit');
 					$firstname_edit = $this->input->post('firstname_edit');
 					$middlename_edit = $this->input->post('middlename_edit');
+					$account_id = $this->input->post('account_id');
+					$old_email_edit = $this->input->post('old_email_edit');
+					$email_edit = $this->input->post('email_edit');
 					$dob_edit = $this->input->post('dob_edit');
 					$gender_edit = $this->input->post('gender_edit');
 					$marital_status_edit = $this->input->post('marital_status_edit');
@@ -232,6 +258,12 @@
 					$sss_edit = $this->input->post('sss_edit');
 					$hdmf_edit = $this->input->post('hdmf_edit');
 					$no_qual_dep_edit = $this->input->post('no_qual_dep_edit');
+					
+					$check_email_address = $this->hr_emp->update_check_email_address($old_email_edit,$email_edit);
+					if($check_email_address == FALSE){
+						echo json_encode(array("success"=>3,"msg"=>"The Email Address field must contain a unique value."));
+						return false;
+					}
 					
 					$update_array = array(
 						'last_name'=>$lastname_edit,
@@ -247,8 +279,13 @@
 						'hdmf'=>$hdmf_edit,
 						'no_of_dependents'=>$no_qual_dep_edit
 					);
+					
+					$update_email = array(
+						'email'=>$email_edit
+					);
 					$update_info = $this->jmodel->update_data('employee',$update_array,$emp_idEdit,'emp_id');
-					if($update_info){
+					$update_emailadd_info = $this->jmodel->update_data('accounts',$update_email,$account_id,'account_id');
+					if($update_info && $update_emailadd_info){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
 						echo json_encode(array("success"=>1,"url"=>$this->url));
 						return false;
