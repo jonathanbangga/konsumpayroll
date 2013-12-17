@@ -1,5 +1,7 @@
-<div class="tbl-wrap">
+<div class="new_header_cont">
 	<h1>Overtime Logs</h1>
+</div>
+<div class="tbl-wrap">
 	<?php print $this->session->flashdata('message');?>
 	<table style="width:933px;" class="tbl emp_conList">
             <tbody><tr>

@@ -48,3 +48,9 @@
 .loan_history_cont {
 	margin-bottom: 25px;
 }
+.new_header_cont {
+	margin-left: -30px;
+}
+#side-menu ul ul li a {
+	background: none;
+}

@@ -90,6 +90,7 @@
           <!-- TBL-WRAP END -->
         </div>
         </div>
+<script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
 <script>
 	function addNewEmp(size){
 		var tbl = "<tr>";
@@ -541,6 +542,7 @@
 		_successContBox();
 		_update_information();
 		pagination();
+		basic_file_li();
 	});
 </script>
 <?php print form_close();?>

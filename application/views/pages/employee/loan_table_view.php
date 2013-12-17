@@ -1,5 +1,7 @@
-<div class="tbl-wrap">
+<div class="new_header_cont">
 	<h1>Loan History</h1>
+</div>
+<div class="tbl-wrap">
 	<?php print $this->session->flashdata('message');?>
 	<div class="loan_history_cont">
 		<select style='width: 175px;' class='txtselect select-medium loan_type' name='loan_type'>

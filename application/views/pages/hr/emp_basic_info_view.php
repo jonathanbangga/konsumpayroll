@@ -137,6 +137,7 @@
           <!-- TBL-WRAP END -->
         </div>
         </div>
+        <script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
         <script>
         	function addNewEmp(size){
             	var tbl = "<tr>";
@@ -511,6 +512,7 @@
 				_get_information();
 				_updateBtn();
 				pagination();
+				basic_file_li();
 			});
         </script>
 <div class="footer-grp-btn">

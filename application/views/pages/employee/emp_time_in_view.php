@@ -78,7 +78,7 @@
             <tbody>
               <tr><td width="70px">Time In</td>
               <td>
-              	<input type="hidden" name="employee_timein" class="employee_timein ihide" />
+              	<input type="text" name="employee_timein" class="employee_timein" style="position:absolute;top:-9999999999px;" />
               	<input type="text" class="txtfield datepickerCont employee_timein_date" name="employee_timein_date" />
               	<select name="time_in_hr" class="txtselect time_in_hr" style="width:60px;">
               		<?php 
@@ -728,6 +728,14 @@
 		    },3000);
 		}
 	}
+
+	function _datepicker(){
+		jQuery(".datepickerCont").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
+	}
 	
 	jQuery(function(){
 		updateTime();
@@ -735,5 +743,6 @@
 		time_out();
 		change_log();
 		_successContBox();
+		_datepicker();
 	});
 </script>
