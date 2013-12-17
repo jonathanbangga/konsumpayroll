@@ -37,5 +37,22 @@ class Company_list_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 		
+	/**
+	 * CHECK OWNER companies
+	 * Check owners company
+	 * @param int $start
+	 * @param int $limit
+	 */
+	public function get_companies_owned($start=0,$limit=5){
+		$sql = "SELECT * FROM company c
+				LEFT JOIN assigned_company ac on ac.company_id = c.company_id 
+				WHERE ac.payroll_system_account_id = '{$ththis->session->usedata('psa_id')}' 
+				AND c.status = 'Active' AND c.deleted='0' AND ac.deleted = '0'";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		$query->free_result();
+		return $result;
+	}
+	
 }
 /* End of file */

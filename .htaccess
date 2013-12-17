@@ -29,3 +29,4 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 ErrorDocument 404 /index.php
 </IfModule>
 php_value upload_max_filesize "5M" 
+php_value date.timezone "Asia/Manila"

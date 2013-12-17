@@ -18,7 +18,7 @@ class Company_list extends CI_Controller {
 		$this->authentication->check_if_logged_in();	
 		$this->load->model("dashboard/company_list_model");
 		delete_company_session();
-		$this->sub_domain = $this->session->userdata('sub_domain');
+		$this->sub_domain = $this->session->userdata('sub_domain');	
 	}
 
 	/**

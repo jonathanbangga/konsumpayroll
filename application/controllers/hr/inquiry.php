@@ -63,7 +63,7 @@
 												$this->input->post('employee_name'),
 												$this->input->post('year')
 												);
-					p($data['inquiry_result']);
+				
 				}else{
 					
 				}	
@@ -162,6 +162,10 @@
 			}
 		}
 	
+		public function test(){
+			$we = create_comp_directory('434');
+			p($we);
+		}
 	}
 
 /* End of file sss_tbl.php */

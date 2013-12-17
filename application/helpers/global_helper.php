@@ -67,6 +67,12 @@
 	 */
 	function photo_upload($path="./uploads/",$max_size= 3000,$max_width=3024,$max_height=3000){
 		$CI =& get_instance();
+		//TRIGGER AJAX CHANGE CHMODE Para choi
+		if(is_dir($path)){
+			chmod("./uploads",0777);
+			chmod("./uploads/companies",0777);
+			chmod($path,0777);
+		}
 		$config['upload_path'] = $path;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']	= $max_size;
@@ -79,6 +85,9 @@
 			return $error;
 		} else {
 			$data = array("status"=>"1",'error'=>'','upload_data' => $CI->upload->data());
+			chmod("./uploads",0755);
+			chmod("./uploads/companies",0755);
+			chmod($path,0755);
 			return $data;
 		}
 	}
