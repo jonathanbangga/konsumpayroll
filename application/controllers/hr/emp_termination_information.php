@@ -87,8 +87,8 @@
 				
 				if ($this->form_validation->run()==true){
 					
-					$config['upload_path'] = "./uploads/";
-					$config['allowed_types'] = 'doc|docx|xls|xlsx|ppt|pptx|pdf|txt|jpg|png|jpeg|bmp|gif|avi|flv|mpg|wmv|mp3|wma|wav|zip|rar|sql';
+					$config['upload_path'] = "./uploads/companies/{$this->company_id}";
+					$config['allowed_types'] = $this->config->item('allowed_types');
 					$config['encrypt_name']  = TRUE;
 					$this->load->library('upload', $config);
 					$this->upload->initialize($config);
@@ -181,8 +181,8 @@
 							return false;
 						}
 					}else{
-						$config['upload_path'] = "./uploads/";
-						$config['allowed_types'] = 'doc|docx|xls|xlsx|ppt|pptx|pdf|txt|jpg|png|jpeg|bmp|gif|avi|flv|mpg|wmv|mp3|wma|wav|zip|rar|sql';
+						$config['upload_path'] = "./uploads/companies/{$this->company_id}";
+						$config['allowed_types'] = $this->config->item('allowed_types');
 						$config['encrypt_name']  = TRUE;
 						$this->load->library('upload', $config);
 						$this->upload->initialize($config);
@@ -206,7 +206,7 @@
                 	    }
 							
 						if($update_info){
-							if($attachment_old_val!="0") unlink(realpath('uploads/'.$attachment_old_val));
+							if($attachment_old_val!="0") unlink(realpath("uploads/companies/{$this->company_id}".$attachment_old_val));
 							$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
 							redirect($this->url);
 							return false;
@@ -228,7 +228,7 @@
 					$photo_val = $this->input->post('attr_photo_val');
 					$delete_me = $this->db->query("DELETE FROM employee_termination WHERE emp_id = '{$emp_id}' and company_id = '{$this->company_id}'");
 					if($delete_me){
-						if($photo_val!="0") unlink(realpath('uploads/'.$photo_val));
+						if($photo_val!="0") unlink(realpath("uploads/companies/{$this->company_id}".$photo_val));
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully deleted!</div>');
 						echo json_encode(array("success"=>1,"url"=>$this->url));
 						return false;

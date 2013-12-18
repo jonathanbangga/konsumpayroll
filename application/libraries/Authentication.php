@@ -42,7 +42,7 @@ class Authentication {
 				   'emp_id'=>$a->emp_id
 				);
 				if($a->user_type_id == 3 || $a->user_type_id == 2){
-					// redirect hr
+					// redirect owner or hr
 					$this->ci->session->set_userdata($newdata);
 					redirect("/{$a->main_sub_domain}/dashboard/company_list");
 				}elseif($a->user_type_id == 5){
