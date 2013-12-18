@@ -47,7 +47,7 @@
             <?php 			
             		}
             	}else{
-            		print "<tr class='msg_empt_cont'><td colspan='15' style='text-align:left;'>".msg_empty()."</td></tr>";
+            		print "<tr class='msg_empt_cont'><td colspan='16' style='text-align:left;'>".msg_empty()."</td></tr>";
             	}
             ?>
           </tbody></table>
