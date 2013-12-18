@@ -21,7 +21,7 @@ class Account_model extends CI_Model {
 
 		return $sql;
 		
-	}
+	} 
 	
 	public function check_employee($account){
 		$sql = $this->db->query("
