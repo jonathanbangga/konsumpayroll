@@ -111,6 +111,21 @@
 						$emp_id = $this->jmodel->maxid('emp_id','employee');
 						$account_id = $this->jmodel->maxid('account_id','accounts');
 						
+						// Check Username
+					
+						$validate_uname = $this->hr_emp->validate_name($username[$key]);
+						if($validate_uname){
+							show_error("The Employee Number field must contain a unique value");
+							return false;
+						}
+						
+						// Check Employee Email Address
+						$validate_email = $this->hr_emp->validate_email($emailaddress[$key]);
+						if($validate_email){
+							show_error("The Email Address field must contain a unique value");
+							return false;
+						}
+						
 						$insert_employee = array(
 							'emp_id' => $emp_id,
 							'company_id' => $company_id,
