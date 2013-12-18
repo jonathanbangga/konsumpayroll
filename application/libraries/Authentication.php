@@ -37,18 +37,18 @@ class Authentication {
 				   'account_type_id'  => $a->account_type_id,
 				   'psa_id'  => $a->payroll_system_account_id,
 				   'user_type_id' => $a->user_type_id,
-				   'sub_domain' => $a->sub_domain,
+				   'sub_domain' => $a->main_sub_domain,
 				   'company_name' => $a->company_name,
 				   'emp_id'=>$a->emp_id
 				);
-				if($a->user_type_id == 3){
+				if($a->user_type_id == 3 || $a->user_type_id == 2){
 					// redirect hr
 					$this->ci->session->set_userdata($newdata);
-					redirect("/{$a->sub_domain}/dashboard/company_list");
+					redirect("/{$a->main_sub_domain}/dashboard/company_list");
 				}elseif($a->user_type_id == 5){
 					// redirect employee
 					$this->ci->session->set_userdata($newdata);
-					redirect("/{$a->sub_domain}/employee/emp_time_in");
+					redirect("/{$a->company_name}/employee/emp_time_in");
 				}
 			}else{
 				redirect('/');
@@ -104,7 +104,7 @@ class Authentication {
 	public function check_employee(){
 		$account = $this->ci->session->userdata('account_id');
 		$check_employee = $this->ci->account_model->check_employee($account);
-		if($this->ci->uri->segment(1) == "login" || $this->ci->uri->segment(2) == "hr" || $this->ci->uri->segment(2) == "" || $this->ci->uri->segment(2) == "dashboard"){
+		if($this->ci->uri->segment(2) == "hr" || $this->ci->uri->segment(2) == "" || $this->ci->uri->segment(2) == "dashboard"){
 			// for employee
 			if($check_employee == 5 && $account != ""){
 				$company_name = $this->ci->session->userdata('company_name');

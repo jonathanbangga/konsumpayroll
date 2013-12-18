@@ -9,7 +9,7 @@ class Account_model extends CI_Model {
 	public function get_account($user,$pass,$account_type){
 
 		$sql = $this->db->query("
-			SELECT *, a.`account_id` AS main_account_id
+			SELECT *, a.`account_id` AS main_account_id, psa.sub_domain AS main_sub_domain
 			FROM `accounts` AS a
 			LEFT JOIN `payroll_system_account` AS psa ON ( a.`payroll_system_account_id` = psa.`payroll_system_account_id` ) 
 			LEFT JOIN employee e ON a.account_id = e.account_id
