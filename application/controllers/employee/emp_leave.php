@@ -22,12 +22,19 @@
 			parent::__construct();
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
-			$this->company_id = 2;
-			$this->emp_id = 78;
 			
 			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3);
 			$this->theme = $this->config->item('jb_employee_temp');
 			$this->menu = $this->config->item('jb_employee_menu');
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
+			$this->emp_id = $this->session->userdata('emp_id');
 		}
 		
 		/**

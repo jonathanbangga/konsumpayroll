@@ -144,7 +144,7 @@
 							'account_id' => $account_id,
 							'payroll_cloud_id' => $username[$key],
 							'password' => $password,
-							'account_type_id' => "1",
+							'account_type_id' => "2",
 							'email' => $emailaddress[$key],
 							'user_type_id'=>"3",
 							'deleted' => "0"
