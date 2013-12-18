@@ -104,7 +104,7 @@ class Authentication {
 	public function check_employee(){
 		$account = $this->ci->session->userdata('account_id');
 		$check_employee = $this->ci->account_model->check_employee($account);
-		if($this->ci->uri->segment(2) == "hr" || $this->ci->uri->segment(2) == "" || $this->ci->uri->segment(2) == "dashboard"){
+		if($this->ci->uri->segment(2) == "hr" || $this->ci->uri->segment(1) == "" || $this->ci->uri->segment(2) == "dashboard"){
 			// for employee
 			if($check_employee == 5 && $account != ""){
 				$company_name = $this->ci->session->userdata('company_name');
