@@ -111,6 +111,16 @@ class Authentication {
 				redirect("/{$company_name}/employee/emp_time_in");
 			}
 		}
+		
+		if($this->ci->uri->segment(2) == "employee" || $this->ci->uri->segment(1) == ""){
+			// for hr or owner
+			if($account != ""){
+				if($check_employee == '3' || $check_employee == '2'){
+					$sub_domain = $this->ci->session->userdata('sub_domain');
+					redirect("/{$sub_domain}/dashboard/company_list");
+				}
+			}
+		}
 	}
 	
 }
