@@ -70,6 +70,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$limit."
 				");
 				
@@ -87,6 +88,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$start.",".$limit."
 				");
 				

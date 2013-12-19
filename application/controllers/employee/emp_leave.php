@@ -73,6 +73,7 @@
 				$return_date_hr = $this->input->post('return_date_hr');
 				$return_date_min = $this->input->post('return_date_min');
 				$return_date_sec = $this->input->post('return_date_sec');
+				$total_leave_request = $this->input->post('total_leave_request');
 				
 				$this->form_validation->set_rules("leave_type", 'Leave Type', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("reason", 'Reason', 'trim|required|xss_clean');
@@ -88,6 +89,7 @@
 				$this->form_validation->set_rules("return_date_hr", 'Return Date Hour', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("return_date_min", 'Return Date Minute', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("return_date_sec", 'Return Date Second', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("total_leave_request", 'Total Leave Request', 'trim|xss_clean');
 				
 				if ($this->form_validation->run()==true){
 					$concat_start_date = $start_date." ".$start_date_hr.":".$start_date_min.":".$start_date_sec;
@@ -103,6 +105,7 @@
 						"date_start"=>$concat_start_date,
 						"date_end"=>$concat_end_date,
 						"date_return"=>$concat_return_date,
+						"total_leave_requested"=>$total_leave_request,
 						"note"=>"",
 						"leave_application_status"=>"pending",
 						"attachments"=>""
