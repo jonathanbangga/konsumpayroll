@@ -7,10 +7,15 @@ class Company_list_model extends CI_Model {
     }
 
 	public function get_company(){
-		return $this->db->query("
-			SELECT *
-			FROM `company` c
-		");
+		///return $this->db->query("
+		//	SELECT *
+		//	FROM `company` c
+		//");
+		$sql = "SELECT * FROM company c
+				LEFT JOIN assigned_company ac on ac.company_id = c.company_id 
+				WHERE ac.payroll_system_account_id = '{$this->session->userdata('psa_id')}' 
+				AND c.status = 'Active' AND c.deleted='0' AND ac.deleted = '0'";
+		return $this->db->query($sql);
 	}
 	
 	/**
@@ -46,7 +51,7 @@ class Company_list_model extends CI_Model {
 	public function get_companies_owned($start=0,$limit=5){
 		$sql = "SELECT * FROM company c
 				LEFT JOIN assigned_company ac on ac.company_id = c.company_id 
-				WHERE ac.payroll_system_account_id = '{$ththis->session->usedata('psa_id')}' 
+				WHERE ac.payroll_system_account_id = '{$this->session->userdata('psa_id')}' 
 				AND c.status = 'Active' AND c.deleted='0' AND ac.deleted = '0'";
 		$query = $this->db->query($sql);
 		$result = $query->result();

@@ -951,6 +951,29 @@ CREATE TABLE IF NOT EXISTS `employee_timesheets` (
   PRIMARY KEY (`timesheets_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
+
+--
+-- Table structure for table `employee_time_in`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_time_in` (
+  `employee_time_in_id` int(55) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(55) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `date` date NOT NULL,
+  `time_in` datetime NOT NULL,
+  `lunch_out` datetime NOT NULL,
+  `lunch_in` datetime NOT NULL,
+  `time_out` datetime NOT NULL,
+  `total_hours` decimal(10,2) NOT NULL,
+  `corrected` enum('No','Yes') NOT NULL,
+  `reason` text NOT NULL,
+  `tax_status` enum('','pending','approved') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_time_in_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
 -- --------------------------------------------------------
 
 --
