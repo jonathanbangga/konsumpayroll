@@ -79,6 +79,7 @@
         </div>
         </div>
         <!-- MAIN-CONTENT END -->
+        <script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
         <script>
 			function checkCheckBox(){
 				if(!jQuery("input[name='qual_dep[]']").is(":checked")){
@@ -372,6 +373,7 @@
 				_successContBox();
 				update_information();
 				dob_datepicker();
+				basic_file_li();
 			});
        	</script>
 <div class="footer-grp-btn">

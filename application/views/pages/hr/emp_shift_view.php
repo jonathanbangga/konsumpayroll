@@ -98,6 +98,7 @@
         </div>
         	<?php print form_close();?>
         </div>
+        <script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
         <script>
         	function addNewEmp(size){
             	var tbl = "<tr class='shift_row_list'>";
@@ -526,6 +527,7 @@
 				_datepicker();
 				shift_search_empname();
 				shift_search_empno();
+				shift_li();
 			});
         </script>
 <div class="footer-grp-btn">

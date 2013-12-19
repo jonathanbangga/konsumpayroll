@@ -189,6 +189,27 @@
 		}
 
 		/**
+		 * Validate Email Address
+		 * Enter description here ...
+		 */
+		public function validate_email($email){
+			$sql = $this->db->query("
+				SELECT *FROM accounts a
+				LEFT JOIN employee e ON a.account_id = e.account_id
+				WHERE a.email = '{$email}'
+				AND e.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
 		 * Employee Training Details Counter
 		 * Enter description here ...
 		 * @param unknown_type $comp_id
@@ -415,11 +436,19 @@
 		 * @param unknown_type $comp_id
 		 */
 		public function emp_res($emp_id,$comp_id){
-			$sql = $this->db->query("
+			/* $sql = $this->db->query("
 				SELECT *FROM employee
 				WHERE emp_id = '{$emp_id}'
 				AND company_id = '{$comp_id}'
 				AND status = 'Active'
+			"); */
+			
+			$sql = $this->db->query("
+				SELECT *FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.emp_id = '{$emp_id}'
+				AND e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -2665,6 +2694,29 @@
 				return $row->remaining_cash_amount;
 			}else{
 				return 0;
+			}
+		}
+		
+		/**
+		 * Check Employee Email Address
+		 * @param $email
+		 * @param $old_email
+		 */
+		public function update_check_email_address($old_email, $email){
+			$query = $this->db->query("
+				SELECT *FROM accounts
+				WHERE email = '{$email}'
+				AND deleted = '0'
+			");
+			$results = $query->row();
+			if($query->num_rows() == 0){
+				return true;
+			}else{
+				if($results->email == $old_email){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 		

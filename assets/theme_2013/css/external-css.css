@@ -15,6 +15,23 @@
 	margin-right: 5px;
 	float: left;
 }
+#pagination li a{
+	background:#686868!important;
+}
+#pagination .next a{
+    background-image:url(../images/bg-nextarrow.png) !important;
+	background-position:90% center !important;
+	background-repeat:no-repeat !important;
+	min-width:65px;
+	padding:4px 15px 4px 0;
+}
+#pagination .prev a{
+   background-image:url(../images/bg-prevarrow.png)!important;
+	background-position:10% center!important;
+	background-repeat:no-repeat!important;
+	min-width:65px;
+	padding:4px 0 4px 15px;
+}
 #pagination li.active {
 	opacity: 0.8;
 }
@@ -30,4 +47,10 @@
 }
 .loan_history_cont {
 	margin-bottom: 25px;
+}
+.new_header_cont {
+	margin-left: -30px;
+}
+#side-menu ul ul li a {
+	background: none;
 }

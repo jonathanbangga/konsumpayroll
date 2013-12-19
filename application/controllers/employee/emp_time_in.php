@@ -23,14 +23,21 @@
 			$this->menu = $this->config->item('company_dashboard_menu');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
-			$this->company_id = 2;
-			$this->emp_id = 78;
 			
 			$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3);
 			$this->theme = $this->config->item('jb_employee_temp');
 			$this->menu = $this->config->item('jb_employee_menu');
 			$this->zero_time = "0000-00-00 00:00:00";
 			$this->min_log = 5;
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
+				return false;
+			}
+			$this->company_id = $this->company_info->company_id;
+			$this->emp_id = $this->session->userdata('emp_id');
 		}
 		
 		/**
@@ -235,8 +242,16 @@
 						$lunch_in = ($get_timein_info->lunch_in==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->lunch_in));
 						$time_out = ($get_timein_info->time_out==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->time_out));
 						
+						$current_time_val = date("Y-m-d H:i:s");
+						
+						$startDate = strtotime("{$get_timein_info->time_in}");
+						$endDate = strtotime("{$current_time_val}");
+						$interval = $endDate - $startDate;
+						$days = floor($interval / (60 * 60 * 24));
+						
 						print json_encode(array(
 							"success"=>1,
+							"no_of_days"=>$days,
 							"employee_time_in_id"=>$get_timein_info->employee_time_in_id,
 							"time_in_date"=>$time_in_date[0],
 							"lunch_out_date"=>$lunch_out_date[0],

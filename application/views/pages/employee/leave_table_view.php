@@ -1,6 +1,8 @@
+<div class="new_header_cont">
+	<h1>Leave History</h1>
+</div>
 <div class="tbl-wrap">
 	<?php print $this->session->flashdata('message');?>
-	<h1>Leave History</h1>
 	<table style="width:1618px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:95px;">Leave Type</th>
