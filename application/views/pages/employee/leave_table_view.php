@@ -71,7 +71,7 @@
               	<input type='text' name='start_date' class='start_date txtfield datepickerCont' readonly="readonly" />
               	<select name="start_date_hr" class="txtselect start_date_hr" style="width:60px;">
               		<?php 
-              			for($hrs=00;$hrs<=23;$hrs++){
+              			for($hrs=00;$hrs<=12;$hrs++){
               				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
               				print "<option value='{$hrs}' name='start_date_hr'>".$hrs."</option>";
               			}
@@ -87,11 +87,10 @@
               		?>
                 </select>
                 <select name="start_date_sec" class="txtselect start_date_sec" style="width:60px;">
-                  	<?php 
-              			for($hrs=00;$hrs<=59;$hrs++){
-              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
-              				print "<option value='{$hrs}' name='start_date_sec'>".$hrs."</option>";
-              			}
+              		<?php 
+                  		print "<option value='00' name='start_date_sec'></option>";
+              			print "<option value='AM' name='start_date_sec'>AM</option>";
+              			print "<option value='PM' name='start_date_sec'>PM</option>";
               		?>
                 </select>
               </td></tr>
@@ -101,7 +100,7 @@
 	              	<input type='text' name='end_date' class='end_date txtfield datepickerCont' readonly="readonly" />
 						<select name="end_date_hr" class="end_date_hr txtselect" style="width:60px;">
 		                    <?php 
-		              			for($hrs=00;$hrs<=18;$hrs++){
+		              			for($hrs=00;$hrs<=12;$hrs++){
 		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              					print "<option value='{$hrs}' name='end_date_hr'>".$hrs."</option>";
 		              			}
@@ -110,18 +109,17 @@
 		                :
 		                <select name="end_date_min" class="end_date_min txtselect" style="width:60px;">
 		                   <?php 
-		              			for($hrs=00;$hrs<=23;$hrs++){
+		              			for($hrs=00;$hrs<=59;$hrs++){
 		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              					print "<option value='{$hrs}' name='end_date_min'>".$hrs."</option>";
 		              			}
 		              		?>
 		                </select>
 		                <select name="end_date_sec" class="end_date_sec txtselect" style="width:60px;">
-		                  	<?php 
-		              			for($hrs=00;$hrs<=23;$hrs++){
-		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
-		              				print "<option value='{$hrs}' name='end_date_sec'>".$hrs."</option>";
-		              			}
+		              		<?php 
+		                  		print "<option value='00' name='end_date_sec'></option>";
+		              			print "<option value='AM' name='end_date_sec'>AM</option>";
+		              			print "<option value='PM' name='end_date_sec'>PM</option>";
 		              		?>
 		                </select>
                 </td>              	
@@ -132,7 +130,7 @@
 	              	<input type='text' name='return_date' class='return_date txtfield datepickerCont' readonly="readonly" />
 	              		<select name="return_date_hr" class="return_date_hr txtselect" style="width:60px;">
 		                  	<?php 
-		              			for($hrs=00;$hrs<=23;$hrs++){
+		              			for($hrs=00;$hrs<=12;$hrs++){
 	              					$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              					print "<option value='{$hrs}' name='return_date_hr'>".$hrs."</option>";	
 		              			}
@@ -141,18 +139,17 @@
 		                :
 		                <select name="return_date_min" class="return_date_min txtselect" style="width:60px;">
 		                  	<?php 
-		              			for($hrs=00;$hrs<=23;$hrs++){
+		              			for($hrs=00;$hrs<=59;$hrs++){
 		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              					print "<option value='{$hrs}' name='return_date_hr'>".$hrs."</option>";
 		              			}
 		              		?>
 		                </select>
 		                <select name="return_date_sec" class="return_date_sec txtselect" style="width:60px;">
-		                 	<?php 
-		              			for($hrs=00;$hrs<=23;$hrs++){
-		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
-		              				print "<option value='{$hrs}' name='return_date_sec'>".$hrs."</option>";
-		              			}
+		              		<?php 
+		                  		print "<option value='00' name='return_date_sec'></option>";
+		              			print "<option value='AM' name='return_date_sec'>AM</option>";
+		              			print "<option value='PM' name='return_date_sec'>PM</option>";
 		              		?>
 		                </select>
 	              </td>
@@ -248,11 +245,47 @@
 	    weekday[6]="Saturday"
 	    return weekday[d.getDay()];
 	}
+
+	function getWeekDay_value_ajax(weekDay_value){
+		var z = "";
+		$.ajax({
+			url: window.location.href,
+			type: "POST",
+			data: {
+				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+				'shift_schedule':'1',
+				'weekDay_value': weekDay_value,
+			},
+			async: false,
+			success: function(data){
+				z = data;
+			}
+	    });
+	    return z;
+	}
+
+	function result_shift_schedule(_value){
+		var z = "";
+		$.ajax({
+			url: window.location.href,
+			type: "POST",
+			data: {
+				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+				'result_shift_schedule':'1',
+				'date_weekDay_value': _value,
+			},
+			async: false,
+			success: function(data){
+				z = data;
+			}
+	    });
+		return z;
+	}
 	
 	function calculateTime() {
         // get values time
-	    var start = jQuery(".start_date_hr").val()+":"+jQuery(".start_date_min").val();
-	    var end = jQuery(".end_date_hr").val()+":"+jQuery(".end_date_min").val();
+	    var start = jQuery(".start_date_hr").val()+":"+jQuery(".start_date_min").val()+" "+jQuery(".start_date_sec").val();
+	    var end = jQuery(".end_date_hr").val()+":"+jQuery(".end_date_min").val()+" "+jQuery(".end_date_sec").val();
 	    // get values start date
 	    var date_start = jQuery(".start_date").val();
 	    var split_ds = date_start.split("-");
@@ -283,7 +316,8 @@
 		    }	
 		}else{
 			// minus 1 day
-		    var get_days_between = no_of_days - 1;
+		    var no_of_days = endDate.getDate() - startDate.getDate();
+    		var get_days_between = no_of_days - 1;
 		    
 		    // hours work per day
 		    var hours_work_per_day = 1.25;
@@ -309,14 +343,106 @@
 	    	    new_total_hours_worked += some_getWeekDay+"-";
 		    }
 		    var new_total_hours_worked_array  = new_total_hours_worked.slice(0,-1);
-		    console.log(new_total_hours_worked_array);
 		    var split_new_total_hours_worked_array = new_total_hours_worked_array.split("-");
 		    var length_new_total_hours_worked_array = split_new_total_hours_worked_array.length - 1;
-		    console.log(split_new_total_hours_worked_array[0]);
 		    var zero_hours = 0;
 		    for(var new_counter = 0;new_counter<=length_new_total_hours_worked_array;new_counter++){
-		       console.log(split_new_total_hours_worked_array[new_counter]);
+		       var weekDay_value = split_new_total_hours_worked_array[new_counter];
+		       zero_hours = parseFloat(zero_hours) + parseFloat(getWeekDay_value_ajax(weekDay_value));
 		    }
+
+			var start_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_start));
+			var end_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_end));
+
+			if(start_date_shift_schedule == ""){
+				var new_start_date_shift_schedule = 0;
+			}else{
+				var split_start_date_shift_schedule = start_date_shift_schedule.split("-");
+				var new_start_date_shift_schedule = split_start_date_shift_schedule[1];
+			}
+
+			if(end_date_shift_schedule == ""){
+				var new_end_date_shift_schedule = 0;
+			}else{
+				var split_end_date_shift_schedule = end_date_shift_schedule.split("-");
+				var new_end_date_shift_schedule = split_end_date_shift_schedule[0];
+			}
+
+			// Total Start Date Shift Sched ======================
+			var compute_start_date = new Date(new_date_start+" "+start);
+			var split_new_start_date_shift_schedule = new_start_date_shift_schedule.split(" ");
+			if(jQuery(".start_date_sec").val() == "PM" && split_new_start_date_shift_schedule[1] == "AM"){
+				// add 1 day to compute the total hours worked
+				var comput_new_date_start = new Date(new_date_start);
+				comput_new_date_start.setTime(comput_new_date_start.getTime() +  (1 * 24 * 60 * 60 * 1000));
+				var comput_new_someDate_fullyear = comput_new_date_start.getFullYear();
+	    	    var comput_new_someDate_month = comput_new_date_start.getMonth() + 1;
+	    	    var comput_new_someDate_day = comput_new_date_start.getDate();
+	    	    var comput_new_some_new_date = comput_new_someDate_month+"/"+comput_new_someDate_day+"/"+comput_new_someDate_fullyear;
+				var compute_end_date = new Date(comput_new_some_new_date+" "+new_start_date_shift_schedule);
+			}else{
+				var compute_end_date = new Date(new_date_start+" "+new_start_date_shift_schedule);
+			}
+			
+			// overall start date shift schedule
+			var result_start_date_shift_sched = (compute_end_date.getTime() - compute_start_date.getTime()) / 1000 / 60 / 60;
+			if(result_start_date_shift_sched >= 10){ // 10 total hours worked
+				var total_start_date_shift_sched = 10;
+				var overall_start_date_shift_sched = 10 / 8; // 8 = labor code hours worked
+			}else{
+				var total_start_date_shift_sched = result_start_date_shift_sched; // minus 1 more lunch break
+				var overall_start_date_shift_sched = result_start_date_shift_sched; // minus 1 more lunch break
+				if(overall_start_date_shift_sched < 0){
+					overall_start_date_shift_sched = 0;
+				}else{
+					overall_start_date_shift_sched = overall_start_date_shift_sched / 8; // 8 = labor code hours worked
+				}
+			}
+			// Total Start Date Shift Sched End ======================
+			
+			// Total End Date Shift Sched ======================
+			var compute_end_date = new Date(new_date_end+" "+end);
+			var split_new_end_date_shift_schedule = new_end_date_shift_schedule.split(" ");
+			if(jQuery(".end_date_sec").val() == "AM" && split_new_end_date_shift_schedule[1] == "PM"){
+				// add 1 day to compute the total hours worked
+				var comput_new_date_end = new Date(new_date_end);
+				comput_new_date_end.setTime(comput_new_date_end.getTime() - (1 * 24 * 60 * 60 * 1000));
+				var comput_new_someDate_fullyear_end = comput_new_date_end.getFullYear();
+	    	    var comput_new_someDate_month_end = comput_new_date_end.getMonth() + 1;
+	    	    var comput_new_someDate_day_end = comput_new_date_end.getDate();
+	    	    var comput_new_some_new_date_end = comput_new_someDate_month_end+"/"+comput_new_someDate_day_end+"/"+comput_new_someDate_fullyear_end;
+				var compute_end_date_end = new Date(comput_new_some_new_date_end+" "+new_end_date_shift_schedule);
+			}else{
+				var compute_end_date_end = new Date(new_date_end+" "+new_end_date_shift_schedule);
+			}
+			
+			// overall start date shift schedule
+			var result_end_date_shift_sched = (compute_end_date.getTime() - compute_end_date_end.getTime()) / 1000 / 60 / 60;
+			if(result_end_date_shift_sched >= 10){ // 10 total hours worked
+				var total_end_date_shift_sched = 10;
+				var overall_end_date_shift_sched = 10 / 8; // 8 = labor code hours worked
+			}else{
+				var total_end_date_shift_sched = result_end_date_shift_sched; // minus 1 more lunch break
+				var overall_end_date_shift_sched = result_end_date_shift_sched; // minus 1 more lunch break
+				if(overall_end_date_shift_sched < 0){
+					overall_end_date_shift_sched = 0;
+				}else{
+					overall_end_date_shift_sched = overall_end_date_shift_sched / 8; // 8 = labor code hours worked
+				}
+			}
+			// Total Start Date Shift Sched End ======================
+		    
+		    // overall rest day hours work
+		    var overall_rd_hours_work = zero_hours;
+
+		    // overall hours worked between
+			var overall_get_hours_work_between = get_hours_work_between;
+			console.log(new_start_date_shift_schedule+" "+new_end_date_shift_schedule);
+			console.log("Total Start Date Shift Sched: "+overall_start_date_shift_sched);
+			console.log("Total End Date Shift Sched: "+overall_end_date_shift_sched);
+		    console.log("Hours worked between: "+overall_get_hours_work_between);
+		    console.log("Rest Day: "+overall_rd_hours_work);
+		    return "1";
 		}
 	}
 	

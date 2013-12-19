@@ -121,7 +121,25 @@
 				
 			}
 			
-			$this->layout->set_layout($this->theme);	
+			if($this->input->is_ajax_request()) {
+				// for shift schedule
+				if($this->input->post('shift_schedule')){
+					$weekDay_value = $this->input->post('weekDay_value');
+					$query_weekDay_value = $this->employee->weekDay_value($this->company_id, $this->emp_id, $weekDay_value);
+					print ($query_weekDay_value) ? 1.25 : 0 ;
+					return false;
+				}
+				
+				// start date for shift schedule
+				if($this->input->post('result_shift_schedule')){
+					$date_weekDay_value = $this->input->post('date_weekDay_value');
+					$date_query_weekDay_value = $this->employee->date_weekDay_value($this->company_id, $this->emp_id, $date_weekDay_value);
+					print $date_query_weekDay_value;
+					return false;
+				}
+			}
+			
+			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/employee/leave_table_view', $data);
 		}
 	
