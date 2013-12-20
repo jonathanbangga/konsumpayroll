@@ -1,5 +1,4 @@
 <?php echo form_open($this->uri->uri_string);?>
-
 <div class="main-content">
     <!-- MAIN-CONTENT START -->
     <div class="success_trigger">
@@ -166,7 +165,12 @@
 			return false;
 		}
 	}
+	// date
+	function date_dob(){
+		jQuery("input[name='birth_date']").datepicker({dateFormat:'yy-mm-dd'});
+	}
 	jQuery(window).load(function(){
 		error_show();
+		date_dob();
  	});
  </script>

@@ -818,17 +818,11 @@ CREATE TABLE IF NOT EXISTS `employee_shifts_schedule` (
   `emp_id` int(11) NOT NULL,
   `valid_from` date NOT NULL,
   `until` date NOT NULL,
-  `Sunday` date NOT NULL,
-  `Monday` date NOT NULL,
-  `Tuesday` date NOT NULL,
-  `Wednesday` date NOT NULL,
-  `Thursday` date NOT NULL,
-  `Friday` date NOT NULL,
-  `Saturday` date NOT NULL,
+  `payroll_group_id` int(55) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`shifts_schedule_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 

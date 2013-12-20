@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title><?php print $page_title;?></title>
 <base href="<?php print base_url();?>">
-<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'> -->
 <link href="/assets/theme_2013/css/global.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/custom.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="/assets/theme_2013/css/custom-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
