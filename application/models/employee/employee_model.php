@@ -70,6 +70,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$limit."
 				");
 				
@@ -87,6 +88,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -961,6 +963,52 @@
 				}
 			}else{
 				return FALSE;
+			}
+		}
+		
+		/**
+		 * Get Employee Week Day Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $weekDay_value
+		 */
+		public function weekDay_value($comp_id, $emp_id, $weekDay_value){
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule
+				WHERE company_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$new_weekday_val = $row->$weekDay_value;
+				if($new_weekday_val == ""){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
+			}
+		}
+		
+		/**
+		 * Get Date Week Day Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $weekDay_value
+		 */
+		public function date_weekDay_value($comp_id, $emp_id, $weekDay_value){
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule
+				WHERE company_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$new_weekday_val = $row->$weekDay_value;
+				return $new_weekday_val;
 			}
 		}
 		
