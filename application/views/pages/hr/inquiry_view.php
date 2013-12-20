@@ -94,6 +94,13 @@
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
+        <div class="export_dropdown">
+        	<select name="iexport" class="emp_fields" id="iexport">
+        		<option value="">SELECT</option>
+        		<option value="xls">XLS</option>
+        		<option value="csv">CSV</option>
+        	</select>
+        </div>
         <script type="text/javascript">
         	var tokens  = "<?php echo itoken_cookie();?>";
         	var tname = "<?php echo itoken_name();?>";
@@ -132,6 +139,7 @@
 					});
 				});
 			}
+			// AUTO SAVE REASONS ZONE
 			function autosave_adjustments_reasons(){
 				jQuery(document).on("keyup","input[name='adjustments_reasons']",function(e){
 					var el = jQuery(this);
@@ -156,12 +164,31 @@
 					});
 				});
 			}
+			// SELECT TO EXPORT
+			function export_this(){
+				var comp = "<?php echo $this->uri->segment(1);?>";
+				jQuery(document).on("change","#iexport",function(e){
+					var el = jQuery(this);
+					var option = el.val();
+					var payroll_user 	= jQuery("input[id^='payroll_user']").val() ? jQuery("input[id^='payroll_user']").val() : 'no';
+					var employee_name 	= jQuery("input[id^='employee_name']").val() ? jQuery("input[id^='employee_name']").val() : 'no';
+					var year = jQuery("select[name='year'] option:selected").val() ? jQuery("select[name='year'] option:selected").val() : 'no';
+					if(option == ""){
+
+					}else{
+						window.location.href = '/'+comp+'/hr/inquiry/export/'+option+'/'+payroll_user+'/'+employee_name+'/'+year;
+						//console.log('/'+comp+'/hr/inquiry/export/'+option+'/'+payroll_user+'/'+employee_name+'/'+year);
+					}
+				});
+			}
+			
 			
 			jQuery(function(){
 				auto_complete_name();
 				auto_complete_id();
 				autosave_adjustments();
 				autosave_adjustments_reasons();
+				export_this();
 			});
 		</script>
 

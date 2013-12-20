@@ -23,7 +23,7 @@
 			if($payroll_account_id !=""){
 				$where .="AND a.payroll_cloud_id='{$this->db->escape_str($payroll_account_id)}' ";
 			}else if($employee_name !=""){
-				$where .="AND CONCAT(e.first_name,' ',e.last_name) like '%{$this->db->escape_str($employee_name)}%' ";
+				$where .="AND CONCAT(e.first_name,' ',e.last_name) = '{$this->db->escape_str($employee_name)}' ";
 			}else if($year !=""){
 				$where .="AND year(ela.date_start) = '{$this->db->escape_str($year)}'";
 			}
