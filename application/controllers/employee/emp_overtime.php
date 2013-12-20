@@ -20,6 +20,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();
 			$this->menu = $this->config->item('company_dashboard_menu');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
@@ -81,8 +82,8 @@
 				
 				if ($this->form_validation->run()==true){
 											
-					$start_time = $start_date_hr.":".$start_date_min.":".$start_date_sec;
-					$end_time = $end_date_hr.":".$end_date_min.":".$end_date_sec;
+					$start_time = date("H:i:s",strtotime($start_date_hr.":".$start_date_min." ".$start_date_sec));
+					$end_time = date("H:i:s",strtotime($end_date_hr.":".$end_date_min." ".$end_date_sec));
 					$save_employee_overtime = array(
 						"emp_id"=>$this->emp_id,
 						"overtime_date_applied"=>date("Y-m-d"),

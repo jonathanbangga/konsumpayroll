@@ -67,6 +67,11 @@
 				}
 			?>
 		</table>
+		<br />
+		<div class="pagiCont_btnCont">
+			<div class="left"><?php print $links;?></div>
+        	<div class="clearB"></div>
+        </div>
 	</div>
 </div>
 

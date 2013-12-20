@@ -20,6 +20,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();
 			$this->load->helper('employee_helper');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');

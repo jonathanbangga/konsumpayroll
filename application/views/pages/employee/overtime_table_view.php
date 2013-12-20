@@ -20,8 +20,8 @@
 		?>
 			<tr>
 				<td><?php print $row->overtime_from;?></td>
-				<td><?php print $row->start_time;?></td>
-				<td><?php print $row->end_time;?></td>
+				<td><?php print date("g:i A",strtotime($row->start_time));?></td>
+				<td><?php print date("g:i A",strtotime($row->end_time));?></td>
 				<td><?php print $row->overtime_date_applied;?></td>
 				<td><?php print $row->reason;?></td>
 				<td><?php print $row->no_of_hours;?></td>
@@ -57,7 +57,7 @@
               	<td>
               		<select name="start_date_hr" class="txtselect start_date_hr" style="width:60px;">
 	              		<?php 
-	              			for($hrs=00;$hrs<=23;$hrs++){
+	              			for($hrs=01;$hrs<=12;$hrs++){
 	              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              				print "<option value='{$hrs}' name='start_date_hr'>".$hrs."</option>";
 	              			}
@@ -73,11 +73,10 @@
 	              		?>
 	                </select>
 	                <select name="start_date_sec" class="txtselect start_date_sec" style="width:60px;">
-	                  	<?php 
-	              			for($hrs=00;$hrs<=59;$hrs++){
-	              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
-	              				print "<option value='{$hrs}' name='start_date_sec'>".$hrs."</option>";
-	              			}
+	                  	<?php
+	              			print "<option value='00' name='start_date_sec'></option>";
+	              			print "<option value='AM' name='start_date_sec'>AM</option>";
+	              			print "<option value='PM' name='start_date_sec'>PM</option>";
 	              		?>
 	                </select>
               	</td>
@@ -87,7 +86,7 @@
               	<td>
 						<select name="end_date_hr" class="end_date_hr txtselect" style="width:60px;">
 		                    <?php 
-		              			for($hrs=00;$hrs<=24;$hrs++){
+		              			for($hrs=01;$hrs<=12;$hrs++){
 		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
 	              					print "<option value='{$hrs}' name='end_date_hr'>".$hrs."</option>";
 		              			}
@@ -103,11 +102,10 @@
 		              		?>
 		                </select>
 		                <select name="end_date_sec" class="end_date_sec txtselect" style="width:60px;">
-		                  	<?php 
-		              			for($hrs=00;$hrs<=59;$hrs++){
-		              				$hrs = (strlen($hrs)==1) ? "0".$hrs : $hrs;
-		              				print "<option value='{$hrs}' name='end_date_sec'>".$hrs."</option>";
-		              			}
+		                  	<?php
+		              			print "<option value='00' name='end_date_sec'></option>";
+		              			print "<option value='AM' name='end_date_sec'>AM</option>";
+		              			print "<option value='PM' name='end_date_sec'>PM</option>";
 		              		?>
 		                </select>
                 </td>              	
@@ -136,6 +134,8 @@
 	function validate_form(){
 		var start_date = jQuery(".start_date").val();
 		var purpose = jQuery(".purpose").val();
+		var start_date_sec = jQuery(".start_date_sec").val();
+		var end_date_sec = jQuery(".end_date_sec").val();
 		
 		if(start_date == ""){
 			jQuery(".start_date").addClass("emp_str");
@@ -144,6 +144,20 @@
 			jQuery(".start_date").removeClass("emp_str");
 		}
 
+		if(start_date_sec == "00"){
+			jQuery(".start_date_sec").addClass("emp_str");
+			var error = 1;
+		}else{
+			jQuery(".start_date_sec").removeClass("emp_str");
+		}
+
+		if(end_date_sec == "00"){
+			jQuery(".end_date_sec").addClass("emp_str");
+			var error = 1;
+		}else{
+			jQuery(".end_date_sec").removeClass("emp_str");
+		}
+		
 		if(purpose == ""){
 			jQuery(".purpose").addClass("emp_str");
 			var error = 1;

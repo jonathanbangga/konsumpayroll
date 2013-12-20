@@ -20,7 +20,7 @@
               <th style="width:auto;">Date Granted</th>
               <th style="width:auto">Principal</th>
               <th style="width:auto;">Loan Balance</th>
-              <th style="width:auto;">Monthly Amortazation</th>
+              <th style="width:auto;">Monthly Amortization</th>
               <th style="width:auto">Interest Rate</th>
               <th style="width:auto">Action</th>
             </tr>
@@ -32,7 +32,7 @@
 				<td><?php print $row->loan_type_name;?></td>
 				<td><?php print $row->loan_no;?></td>
 				<td><?php print $row->date_granted;?></td>
-				<td><?php print $row->principal;?></td>
+				<td><?php print number_format($row->principal,2);?></td>
 				<td>
 					<?php 
 						print loan_balance($comp_id, $row->emp_id, $row->employee_loans_id);
@@ -42,7 +42,7 @@
 				<td><?php print $row->interest_rates;?></td>
 				<td><a class="btn" href="/<?php print $this->uri->segment(1);?>/employee/emp_payment_history/index/<?php print $row->employee_loans_id;?>">PAYMENT HISTORY</a></td>
 			</tr>
-		<?php 		
+		<?php
 				}
 			}else{
             		print "<tr class='msg_empt_cont'><td colspan='12' style='text-align:left;'>".msg_empty()."</td></tr>";

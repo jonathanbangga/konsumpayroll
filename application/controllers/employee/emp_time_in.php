@@ -20,6 +20,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();
 			$this->menu = $this->config->item('company_dashboard_menu');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
@@ -47,7 +48,20 @@
 
 			$data['page_title'] = "Time In";
 			$data['min_log'] = $this->min_log;
-			$data['time_in_list'] = $this->employee->time_in_list($this->company_id, $this->emp_id);
+			
+			// init pagination
+			$uri = "/{$this->uri->segment(1)}/employee/emp_time_in/index";
+			$total_rows = $this->employee->time_in_list_counter($this->company_id, $this->emp_id);
+			$per_page = $this->config->item('per_page');
+			$segment=5;
+			
+			init_pagination($uri,$total_rows,$per_page,$segment);
+
+			$page = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+			$data["links"] = $this->pagination->create_links();
+			// end pagination
+			
+			$data['time_in_list'] = $this->employee->time_in_list($per_page, $page, $this->company_id, $this->emp_id);
 			
 			// check timesheet table
 

@@ -46,11 +46,12 @@
 				// New Total Payment History
 				$new_total_payment = $interest_val + $principal_val;
 			}else{
-				return "No payment history found";
+				return "No Payment History found";
 				return false;
 			}
 			
 			#return $CI->db->last_query();
 			$loan_balance = $installment - $new_total_payment; 
-			return $installment." - ".$new_total_payment." = ".$loan_balance;
+			// return $installment." - ".$new_total_payment." = ".$loan_balance;
+			return number_format($loan_balance,2);
 	}

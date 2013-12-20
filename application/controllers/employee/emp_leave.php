@@ -20,6 +20,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('employee/employee_model','employee');
 			
@@ -61,18 +62,22 @@
 			if($this->input->post('save_my_leave')){
 				$leave_type = $this->input->post('leave_type');
 				$reason = $this->input->post('reason');
+				
 				$start_date = $this->input->post('start_date');
 				$start_date_hr = $this->input->post('start_date_hr');
 				$start_date_min = $this->input->post('start_date_min'); 
 				$start_date_sec = $this->input->post('start_date_sec');
+				
 				$end_date = $this->input->post('end_date');
 				$end_date_hr = $this->input->post('end_date_hr');
 				$end_date_min = $this->input->post('end_date_min');
 				$end_date_sec = $this->input->post('end_date_sec');
+				
 				$return_date = $this->input->post('return_date');
 				$return_date_hr = $this->input->post('return_date_hr');
 				$return_date_min = $this->input->post('return_date_min');
 				$return_date_sec = $this->input->post('return_date_sec');
+				
 				$total_leave_request = $this->input->post('total_leave_request');
 				
 				$this->form_validation->set_rules("leave_type", 'Leave Type', 'trim|required|xss_clean');
@@ -92,9 +97,12 @@
 				$this->form_validation->set_rules("total_leave_request", 'Total Leave Request', 'trim|xss_clean');
 				
 				if ($this->form_validation->run()==true){
-					$concat_start_date = $start_date." ".$start_date_hr.":".$start_date_min.":".$start_date_sec;
-					$concat_end_date = $end_date." ".$end_date_hr.":".$end_date_min.":".$end_date_sec;
-					$concat_return_date = $return_date." ".$return_date_hr.":".$return_date_min.":".$return_date_sec;
+					$concat_start_datetime = date("H:i:s",strtotime($start_date_hr.":".$start_date_min." ".$start_date_sec));
+					$concat_start_date = $start_date." ".$concat_start_datetime;
+					$concat_end_datetime = date("H:i:s",strtotime($end_date_hr.":".$end_date_min." ".$end_date_sec));
+					$concat_end_date = $end_date." ".$concat_end_datetime;
+					$concat_return_datetime = date("H:i:s",strtotime($return_date_hr.":".$return_date_min." ".$return_date_sec));
+					$concat_return_date = $return_date." ".$concat_return_datetime;
 					
 					$save_employee_leave = array(
 						"company_id"=>$this->company_id,
