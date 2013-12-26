@@ -25,6 +25,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->load->library("profile");
 			$this->load->model("hr/approve_leave_model","leave");
 			$this->theme = $this->config->item('default');
 			$this->menu = "content_holders/user_hr_owner_menu";
@@ -102,6 +103,8 @@
 								"company_id"=>$this->company_info->company_id
 							);
 							$this->leave->update_field("employee_leaves_application",$fields,$where);
+							#approves the leave and save this to activity logs
+							$this->leave->ajax_leave_logs($val,$this->company_info->company_id);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>""));		
@@ -145,6 +148,12 @@
 			}
 		}
 		
+		
+		public function we(){
+			echo 'test';
+			$this->leave->ajax_leave_logs(1,$this->company_info->company_id);
+			
+		}
 	}
 
 /* End of file company_approvers.php */

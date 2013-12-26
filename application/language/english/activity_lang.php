@@ -14,3 +14,6 @@ $lang['updated_company'] = "%s has added a company";
 $lang['add_dept_company'] = "%s has added a Department company";
 
 # employee
+$lang['approve_leave'] = "%s approved %s leave application as of %s";
+# owner approved 
+

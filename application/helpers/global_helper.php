@@ -248,3 +248,22 @@
 			return false;
 		}
 	}
+	
+	/**
+	 * THIS WILL CHECK THE lEAVE APPlICATION DETAILS 
+	 * USED FOR CHECKING EMPLOYEE IDS 
+	 * @param int $employee_leaves_application_id
+	 * @return object
+	 */
+	function check_leave_application($employee_leaves_application_id){
+		$CI =& get_instance();
+		if(is_numeric($employee_leaves_application_id)){
+			$query = $CI->db->get_where("employee_leaves_application",array("employee_leaves_application_id"=>$employee_leaves_application_id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	

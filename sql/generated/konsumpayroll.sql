@@ -76,7 +76,7 @@ INSERT INTO `account_type` (`account_type_id`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `activity_logs` (
   `activity_logs_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(250) NOT NULL,
   `date` datetime NOT NULL,
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',

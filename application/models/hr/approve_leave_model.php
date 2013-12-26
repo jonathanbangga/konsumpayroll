@@ -169,6 +169,45 @@
 			return $this->db->affected_rows();
 		}
 		
+		/**
+		 * ADD ACTIVITY LEAVES ON LEAVE APPlICATION
+		 * once the leave application is done , records it on activity logs
+		 * @param int $employee_leaves_application_id
+		 * @param int $company_id
+		 */
+		public function ajax_leave_logs($employee_leaves_application_id,$company_id){
+			if($this->session->userdata('user_type_id') == 2){ // IF OWNER 	
+				$company_owner = $this->profile->get_account($this->session->userdata('account_id'),"company_owner");
+				$fullname = $company_owner->first_name." ".$company_owner->last_name;
+				if(is_numeric($employee_leaves_application_id)){
+					# CHECK THE LEAVE APPliCATION ID ONCE IT IS VAlID THEN WE TAKE OUT EMP_ID WHO FILED THIS 
+					$leave_id = check_leave_application($employee_leaves_application_id); 
+					# NOW Shreds the DATA and distributes its emp_id to the profile_getAccount
+					$emp_who_filed = $this->profile->get_account($leave_id->emp_id,"employee_via_emp_id");
+					# THEN instead of getting the fullname we just try to manually take out the fullname
+					$emp_filed_fullname = $emp_who_filed->first_name." ".$emp_who_filed->last_name;
+					# DECLARES OUR ACTIVITY language logs
+					$lang_approve = sprintf(lang("approve_leave"),$fullname,$emp_filed_fullname,idates(idates_now())." on ".time_only(idates_now()));
+					# ADD our activity
+					add_activity($lang_approve,$company_id);
+				}
+			}else if($this->session->userdata('user_type_id') == 3){
+				$company_owner = $this->profile->get_account($this->session->userdata('account_id'),"employee");
+				$fullname = $company_owner->first_name." ".$company_owner->last_name;
+				if(is_numeric($employee_leaves_application_id)){
+					# CHECK THE LEAVE APPliCATION ID ONCE IT IS VAlID THEN WE TAKE OUT EMP_ID WHO FILED THIS 
+					$leave_id = check_leave_application($employee_leaves_application_id); 
+					# NOW Shreds the DATA and distributes its emp_id to the profile_getAccount
+					$emp_who_filed = $this->profile->get_account($leave_id->emp_id,"employee_via_emp_id");
+					# THEN instead of getting the fullname we just try to manually take out the fullname
+					$emp_filed_fullname = $emp_who_filed->first_name." ".$emp_who_filed->last_name;
+					# DECLARES OUR ACTIVITY language logs
+					$lang_approve = sprintf(lang("approve_leave"),$fullname,$emp_filed_fullname,idates(idates_now())." on ".time_only(idates_now()));
+					# ADD our activity
+					add_activity($lang_approve,$company_id);
+				}
+			}
+		}
 	}
 	
 /* End of file Approve_leave_model */
