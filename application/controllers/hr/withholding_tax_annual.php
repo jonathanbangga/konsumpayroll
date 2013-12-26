@@ -39,7 +39,7 @@
 		public function index() {
 			$data['page_title'] = "WITHOLDING TAX - ANNUAL";
 			$data['sidebar_menu'] =$this->sidebar_menu;
-			$withholding_tax_annual = array('company_id'=>$this->company_info->company_id);
+			$withholding_tax_annual = array('status'=>'Active');
 			//display all withholding tax by annual version
 			$data['withholding_tax_status'] = $this->jmodel->display_data_where_result('withholding_tax_annual',$withholding_tax_annual);
 			$this->layout->set_layout($this->theme);	
