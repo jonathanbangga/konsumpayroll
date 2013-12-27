@@ -51,11 +51,11 @@
 					$data['errors'] = validation_errors("<span class='errors'>","</span>");
 				} else {
 					$fields = array(
-								"tin"		=> $this->db->escape_str($this->input->post('tin')),
-								"rdo_code"	=> $this->db->escape_str($this->input->post('rdo')),
-								"sss_id"	=> $this->db->escape_str($this->input->post('sss_id')),
-								"hdmf"		=> $this->db->escape_str($this->input->post('hdmf_id')),
-								"phil_health"=>$this->db->escape_str($this->input->post('philhealth_id')),
+								"tin"		=> $this->db->escape_str(str_replace("-","",$this->input->post('tin'))),
+								"rdo_code"	=> $this->db->escape_str(str_replace("-","",$this->input->post('rdo'))),
+								"sss_id"	=> $this->db->escape_str(str_replace("-","",$this->input->post('sss_id'))),
+								"hdmf"		=> $this->db->escape_str(str_replace("-","",$this->input->post('hdmf_id'))),
+								"phil_health"=>$this->db->escape_str(str_replace("-","",$this->input->post('philhealth_id'))),
 								"category"	=> $this->db->escape_str($this->input->post('category')),
 								"status"	=> "Active",
 								"deleted"	=> "0"
