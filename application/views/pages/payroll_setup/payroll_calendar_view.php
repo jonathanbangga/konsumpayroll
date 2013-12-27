@@ -66,7 +66,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 			  </table>
 			  <!--PAYROLL-CALENDAR-ROW END -->
 			</div>
-				<input type="submit" class="btn" id="save_all" name="save_all" value="Save All" />
+				
 		<?php
 			}
 		}else{
@@ -74,7 +74,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 		}
 		?>
 		
-	
+	<input type="submit" class="btn" id="save_all" name="save_all" value="Save All" />
       
         <!-- MAIN-CONTENT END -->
 		<?php echo form_close();?>
