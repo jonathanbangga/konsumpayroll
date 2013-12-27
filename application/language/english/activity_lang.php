@@ -15,5 +15,9 @@ $lang['add_dept_company'] = "%s has added a Department company";
 
 # employee
 $lang['approve_leave'] = "%s approved %s leave application as of %s";
+$lang['reject_leave'] = "%s rejected %s leave application as of %s";
+$lang['approve_ovetime_leave'] = "%s approved %s overtime application as of %s";
+$lang['reject_overtime_leave'] = "%s reject %s overtime application as of %s";
+
 # owner approved 
 

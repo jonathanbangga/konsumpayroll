@@ -31,7 +31,7 @@
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =1;
+			$this->per_page =10;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -116,6 +116,8 @@
 								"company_id"=>$this->company_info->company_id
 							);
 							$this->overtime->update_field("employee_overtime_application",$fields,$where);
+							# this will add activity logs on every application which was approve
+							$this->overtime->ajax_overtime_logs_approve($val,$this->company_info->company_id);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>"","field"=>$where));		
@@ -148,6 +150,8 @@
 								"overtime_id"=>$val,
 								"company_id"=>$this->company_info->company_id
 							);
+							# this will add activity logs on every application which was rejected
+							$this->overtime->ajax_overtime_logs_reject($val,$this->company_info->company_id);		
 							$this->overtime->update_field("employee_overtime_application",$fields,$where);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
@@ -163,6 +167,12 @@
 			}
 		}
 
+		public function we(){
+			$we2 = check_overtime_application(12);
+			$we = $this->overtime->ajax_overtime_logs_reject(12,$this->company_info->company_id);
+			
+			p($we);
+		}
 	}
 
 /* End of file company_approvers.php */

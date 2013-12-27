@@ -104,7 +104,7 @@
 							);
 							$this->leave->update_field("employee_leaves_application",$fields,$where);
 							#approves the leave and save this to activity logs
-							$this->leave->ajax_leave_logs($val,$this->company_info->company_id);
+							$this->leave->ajax_leave_logs_approve($val,$this->company_info->company_id);	
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>""));		
@@ -134,6 +134,7 @@
 								"company_id"=>$this->company_info->company_id
 							);
 							$this->leave->update_field("employee_leaves_application",$fields,$where);
+							$this->leave->ajax_leave_logs_reject($val,$this->company_info->company_id);
 						endforeach;
 						$this->session->set_flashdata("success","Success");
 						echo json_encode(array("success"=>"1","error"=>""));		
@@ -151,7 +152,7 @@
 		
 		public function we(){
 			echo 'test';
-			$this->leave->ajax_leave_logs(1,$this->company_info->company_id);
+			$this->leave->ajax_leave_logs_approve(1,$this->company_info->company_id);
 			
 		}
 	}
