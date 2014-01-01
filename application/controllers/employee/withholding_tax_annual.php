@@ -26,11 +26,15 @@
 			
 			$this->sidebar_menu = 'content_holders/employee_sidebar_menu';
 			$this->menu = $this->config->item('jb_employee_menu');
-			$this->company_info =  whose_company();
-			if($this->company_info == false){
-				show_error("Company subdomain is invalid");
+			
+			$this->company_info = whose_company();
+			
+			if(count($this->company_info) == 0){
+				show_error("Invalid subdomain");
 				return false;
-			}	
+			}
+			$this->company_id = $this->company_info->company_id;
+			$this->emp_id = $this->session->userdata('emp_id');
 		}
 		
 		/**

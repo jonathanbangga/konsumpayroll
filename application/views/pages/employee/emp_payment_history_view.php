@@ -1,5 +1,7 @@
+<div class="new_header_cont">
+	<h1>Payment History</h1>
+</div>
 <div class="tbl-wrap">	
-		<h1>Payment History</h1>
           <!-- TBL-WRAP START -->
           <table style="width:933px;" class="tbl emp_conList">
             <tbody><tr>

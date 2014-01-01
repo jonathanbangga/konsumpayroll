@@ -189,6 +189,27 @@
 		}
 
 		/**
+		 * Validate Email Address
+		 * Enter description here ...
+		 */
+		public function validate_email($email){
+			$sql = $this->db->query("
+				SELECT *FROM accounts a
+				LEFT JOIN employee e ON a.account_id = e.account_id
+				WHERE a.email = '{$email}'
+				AND e.status = 'Active'
+			");
+			
+			if($sql->num_rows() > 0){
+				$results = $sql->result();
+				$sql->free_result();
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
 		 * Employee Training Details Counter
 		 * Enter description here ...
 		 * @param unknown_type $comp_id
@@ -415,11 +436,19 @@
 		 * @param unknown_type $comp_id
 		 */
 		public function emp_res($emp_id,$comp_id){
-			$sql = $this->db->query("
+			/* $sql = $this->db->query("
 				SELECT *FROM employee
 				WHERE emp_id = '{$emp_id}'
 				AND company_id = '{$comp_id}'
 				AND status = 'Active'
+			"); */
+			
+			$sql = $this->db->query("
+				SELECT *FROM employee e
+				LEFT JOIN accounts a ON e.account_id = a.account_id
+				WHERE e.emp_id = '{$emp_id}'
+				AND e.company_id = '{$comp_id}'
+				AND e.status = 'Active'
 			");
 			
 			if($sql->num_rows() > 0){
@@ -2283,6 +2312,7 @@
 				FROM employee_shifts_schedule ess
 				LEFT JOIN employee e ON ess.emp_id = e.emp_id
 				LEFT JOIN accounts a ON e.account_id = a.account_id
+				LEFT JOIN payroll_group pg ON ess.payroll_group_id = pg.payroll_group_id
 				WHERE e.company_id = '{$comp_id}'
 				AND e.status = 'Active'
 			");
@@ -2308,6 +2338,7 @@
 					SELECT *FROM employee_shifts_schedule ess
 					LEFT JOIN employee e ON ess.emp_id = e.emp_id
 					LEFT JOIN accounts a ON e.account_id = a.account_id
+					LEFT JOIN payroll_group pg ON ess.payroll_group_id = pg.payroll_group_id
 					WHERE e.company_id = '{$comp_id}'
 					AND e.status = 'Active'
 					LIMIT ".$limit."
@@ -2346,7 +2377,7 @@
 		 */
 		public function emp_shift_listing($comp_id){
 			$emp_train_det = $this->db->query("
-				SELECT *FROM employee_deductions
+				SELECT *FROM employee_shifts_schedule
 				WHERE company_id = '{$comp_id}'
 			");
 			
@@ -2361,6 +2392,7 @@
 				$emp_val_notin = 0;
 			}
 			
+			/*
 			$sql2 = $this->db->query("
 				SELECT *FROM employee e
 				LEFT JOIN accounts a ON e.account_id = a.account_id
@@ -2368,12 +2400,14 @@
 				AND e.status = 'Active'
 				AND e.emp_id NOT IN({$emp_val_notin});
 			");
+			*/
 			
 			$sql = $this->db->query("
 				SELECT *FROM employee e
 				LEFT JOIN accounts a ON e.account_id = a.account_id
 				WHERE e.company_id = '{$comp_id}'
 				AND e.status = 'Active'
+				AND e.emp_id NOT IN({$emp_val_notin});
 			");
 			
 			if($sql->num_rows() > 0){
@@ -2392,7 +2426,8 @@
 		 */
 		public function emp_shift_info($shifts_schedule_id,$comp_id){
 			$sql = $this->db->query("
-				SELECT *FROM employee_shifts_schedule ess
+				SELECT *,ess.payroll_group_id as main_payroll_group_id
+				FROM employee_shifts_schedule ess
 				LEFT JOIN employee e ON ess.emp_id = e.emp_id
 				WHERE ess.shifts_schedule_id = '{$shifts_schedule_id}'
 				AND ess.company_id = '{$comp_id}'
@@ -2426,25 +2461,13 @@
 				$shifts_schedule_id,
 				$valid_from,
 				$until,
-				$sunday,
-				$monday,
-				$tuesday,
-				$wednesday,
-				$thursday,
-				$friday,
-				$saturday,
+				$payroll_group_edit,
 				$comp_id){
 			$sql = $this->db->query("
 				UPDATE employee_shifts_schedule
 				SET valid_from = '{$valid_from}', 
 				until = '{$until}', 
-				Sunday = '{$sunday}', 
-				Monday = '{$monday}', 
-				Tuesday = '{$tuesday}',
-				Wednesday = '{$wednesday}',
-				Thursday = '{$thursday}',
-				Friday = '{$friday}',
-				Saturday = '{$saturday}'
+				payroll_group_id = '{$payroll_group_edit}' 
 				WHERE shifts_schedule_id = '{$shifts_schedule_id}'
 				AND company_id = '{$comp_id}'
 			");
@@ -2466,6 +2489,7 @@
 				SELECT *FROM employee_shifts_schedule ess
 				LEFT JOIN employee e ON ess.emp_id = e.emp_id
 				LEFT JOIN accounts a ON e.account_id = a.account_id
+				LEFT JOIN payroll_group pg ON ess.payroll_group_id = pg.payroll_group_id
 				WHERE concat(e.first_name,' ',e.last_name) LIKE '%{$emp_name}%'
 				AND e.status = 'Active'
 				LIMIT 10
@@ -2489,6 +2513,7 @@
 				SELECT *FROM employee_shifts_schedule ess
 				LEFT JOIN employee e ON ess.emp_id = e.emp_id
 				LEFT JOIN accounts a ON e.account_id = a.account_id
+				LEFT JOIN payroll_group pg ON ess.payroll_group_id = pg.payroll_group_id
 				WHERE a.payroll_cloud_id LIKE '%{$emp_no}%'
 				AND e.status = 'Active'
 				LIMIT 10
@@ -2665,6 +2690,29 @@
 				return $row->remaining_cash_amount;
 			}else{
 				return 0;
+			}
+		}
+		
+		/**
+		 * Check Employee Email Address
+		 * @param $email
+		 * @param $old_email
+		 */
+		public function update_check_email_address($old_email, $email){
+			$query = $this->db->query("
+				SELECT *FROM accounts
+				WHERE email = '{$email}'
+				AND deleted = '0'
+			");
+			$results = $query->row();
+			if($query->num_rows() == 0){
+				return true;
+			}else{
+				if($results->email == $old_email){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 		

@@ -67,6 +67,11 @@
 				}
 			?>
 		</table>
+		<br />
+		<div class="pagiCont_btnCont">
+			<div class="left"><?php print $links;?></div>
+        	<div class="clearB"></div>
+        </div>
 	</div>
 </div>
 
@@ -78,7 +83,7 @@
             <tbody>
               <tr><td width="70px">Time In</td>
               <td>
-              	<input type="hidden" name="employee_timein" class="employee_timein ihide" />
+              	<input type="text" name="employee_timein" class="employee_timein" style="position:absolute;top:-9999999999px;" />
               	<input type="text" class="txtfield datepickerCont employee_timein_date" name="employee_timein_date" />
               	<select name="time_in_hr" class="txtselect time_in_hr" style="width:60px;">
               		<?php 
@@ -392,7 +397,9 @@
 							if(_this.val() == new_lunch_out_hr){
 								_this.prop("selected",true);
 								if(split_lunch_out[0]=="00" && split_lunch_out[1]=="00" && split_lunch_out[2]=="00"){
-									jQuery(".lunch_out_hr").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_out_hr").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_out_hr").removeAttr("disabled");
 								}
@@ -407,7 +414,9 @@
 							if(_this.val() == new_lunch_out_min){
 								_this.prop("selected",true);
 								if(split_lunch_out[0]=="00" && split_lunch_out[1]=="00" && split_lunch_out[2]=="00"){
-									jQuery(".lunch_out_min").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_out_min").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_out_min").removeAttr("disabled");
 								}
@@ -421,7 +430,9 @@
 							if(_this.val() == split_lunch_out[2]){
 								_this.prop("selected",true);
 								if(split_lunch_out[0]=="00" && split_lunch_out[1]=="00" && split_lunch_out[2]=="00"){
-									jQuery(".lunch_out_ampm").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_out_ampm").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_out_ampm").removeAttr("disabled");
 								}
@@ -438,7 +449,9 @@
 							if(_this.val() == new_lunch_in_hr){
 								_this.prop("selected",true);
 								if(split_lunch_in[0]=="00" && split_lunch_in[1]=="00" && split_lunch_in[2]=="00"){
-									jQuery(".lunch_in_hr").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_in_hr").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_in_hr").removeAttr("disabled");
 								}
@@ -453,7 +466,9 @@
 							if(_this.val() == new_lunch_in_min){
 								_this.prop("selected",true);
 								if(split_lunch_in[0]=="00" && split_lunch_in[1]=="00" && split_lunch_in[2]=="00"){
-									jQuery(".lunch_in_min").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_in_min").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_in_min").removeAttr("disabled");
 								}
@@ -467,7 +482,9 @@
 							if(_this.val() == split_lunch_in[2]){
 								_this.prop("selected",true);
 								if(split_lunch_in[0]=="00" && split_lunch_in[1]=="00" && split_lunch_in[2]=="00"){
-									jQuery(".lunch_in_ampm").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".lunch_in_ampm").prop("disabled",true);
+									}
 								}else{
 									jQuery(".lunch_in_ampm").removeAttr("disabled");
 								}
@@ -483,7 +500,9 @@
 							if(_this.val() == new_time_out_hr){
 								_this.prop("selected",true);
 								if(split_time_out[0]=="00" && split_time_out[1]=="00" && split_time_out[2]=="00"){
-									jQuery(".time_out_hr").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".time_out_hr").prop("disabled",true);
+									}
 								}else{
 									jQuery(".time_out_hr").removeAttr("disabled");
 								}
@@ -498,7 +517,9 @@
 							if(_this.val() == new_time_out_min){
 								_this.prop("selected",true);
 								if(split_time_out[0]=="00" && split_time_out[1]=="00" && split_time_out[2]=="00"){
-									jQuery(".time_out_min").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".time_out_min").prop("disabled",true);
+									}
 								}else{
 									jQuery(".time_out_min").removeAttr("disabled");
 								}
@@ -512,7 +533,9 @@
 							if(_this.val() == split_time_out[2]){
 								_this.prop("selected",true);
 								if(split_time_out[0]=="00" && split_time_out[1]=="00" && split_time_out[2]=="00"){
-									jQuery(".time_out_ampm").prop("disabled",true);
+									if(status.no_of_days == 0){
+										jQuery(".time_out_ampm").prop("disabled",true);
+									}
 								}else{
 									jQuery(".time_out_ampm").removeAttr("disabled");
 								}
@@ -528,31 +551,35 @@
 						jQuery(".reason").val(status.reason);
 
 						if(jQuery(".employee_timein_date").val()=="0000-00-00"){
-							jQuery(".employee_timein_date").prop("disabled",true);
+							if(status.no_of_days == 0){
+								jQuery(".employee_timein_date").prop("disabled",true);
+							}
 						}else{
 							jQuery(".employee_timein_date").removeAttr("disabled");
-							// jQuery(".time_in_ampm option").eq(0).remove();
 						}
 						
 						if(jQuery(".lunch_out_date").val()=="0000-00-00"){
-							jQuery(".lunch_out_date").prop("disabled",true);
+							if(status.no_of_days == 0){
+								jQuery(".lunch_out_date").prop("disabled",true);
+							}
 						}else{
 							jQuery(".lunch_out_date").removeAttr("disabled");
-							// jQuery(".lunch_out_ampm option").eq(0).remove();
 						}
 
 						if(jQuery(".lunch_in_date").val()=="0000-00-00"){
-							jQuery(".lunch_in_date").prop("disabled",true);
+							if(status.no_of_days == 0){
+								jQuery(".lunch_in_date").prop("disabled",true);
+							}
 						}else{
 							jQuery(".lunch_in_date").removeAttr("disabled");
-							// jQuery(".lunch_in_ampm option").eq(0).remove();
 						}
 
 						if(jQuery(".time_out_date").val()=="0000-00-00"){
-							jQuery(".time_out_date").prop("disabled",true);
+							if(status.no_of_days == 0){
+								jQuery(".time_out_date").prop("disabled",true);
+							}
 						}else{
 							jQuery(".time_out_date").removeAttr("disabled");
-							// jQuery(".time_out_ampm option").eq(0).remove();
 						}
 						
 						 jQuery(".employee_timein").val(status.employee_time_in_id);
@@ -706,6 +733,14 @@
 		    },3000);
 		}
 	}
+
+	function _datepicker(){
+		jQuery(".datepickerCont").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
+	}
 	
 	jQuery(function(){
 		updateTime();
@@ -713,5 +748,6 @@
 		time_out();
 		change_log();
 		_successContBox();
+		_datepicker();
 	});
 </script>

@@ -70,6 +70,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$limit."
 				");
 				
@@ -87,6 +88,7 @@
 					WHERE el.company_id = {$comp_id}
 					AND el.emp_id = {$emp_id}
 					AND el.status = 'Active'
+					ORDER BY employee_leaves_application_id DESC
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -571,23 +573,64 @@
 		}
 		
 		/**
-		 * Employee Time In List
+		 * Employee Time In List Counter
 		 * @param unknown_type $comp_id
 		 * @param unknown_type $emp_id
 		 */
-		public function time_in_list($comp_id, $emp_id){
+		public function time_in_list_counter($comp_id, $emp_id){
 			$sql = $this->db->query("
-				SELECT *FROM employee_time_in
+				SELECT 
+				COUNT(employee_time_in_id) AS total_row
+				FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
 				ORDER BY employee_time_in_id DESC
 			");
 			if($sql->num_rows() > 0){
-				$results = $sql->result();
+				$row = $sql->row();
 				$sql->free_result();
-				return $results;
+				return $row->total_row;
 			}else{
 				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Time In List
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 */
+		public function time_in_list($limit, $start, $comp_id, $emp_id){
+			if($start==0){
+				$sql = $this->db->query("
+					SELECT *FROM employee_time_in
+					WHERE comp_id = '{$comp_id}'
+					AND emp_id = '{$emp_id}'
+					ORDER BY employee_time_in_id DESC
+					LIMIT ".$limit."
+				");
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}
+			}else{
+				$sql = $this->db->query("
+					SELECT *FROM employee_time_in
+					WHERE comp_id = '{$comp_id}'
+					AND emp_id = '{$emp_id}'
+					ORDER BY employee_time_in_id DESC
+					LIMIT ".$start.",".$limit."
+				");
+				if($sql->num_rows() > 0){
+					$results = $sql->result();
+					$sql->free_result();
+					return $results;
+				}else{
+					return FALSE;
+				}
 			}
 		}
 		
@@ -961,6 +1004,107 @@
 				}
 			}else{
 				return FALSE;
+			}
+		}
+		
+		/**
+		 * Get Employee Week Day Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $weekDay_value
+		 */
+		public function weekDay_value($comp_id, $emp_id, $weekDay_value){
+			/*
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule
+				WHERE company_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$new_weekday_val = $row->$weekDay_value;
+				if($new_weekday_val == ""){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
+			}
+			*/
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN workday w ON ess.payroll_group_id = w.payroll_group_id 
+				WHERE ess.company_id = '{$comp_id}'
+				AND ess.emp_id = '{$emp_id}'
+				AND w.working_day = '{$weekDay_value}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$zero = "00:00:00";
+				$row = $sql->row();
+				$sql->free_result();
+				$work_start_time = $row->work_start_time;
+				$work_end_time = $row->work_end_time;
+				$break_start_time = $row->break_start_time;
+				$break_end_time = $row->break_end_time;
+				
+				if($work_start_time == $zero && $work_end_time == $zero && $break_start_time == $zero && $break_end_time == $zero){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
+			}
+		}
+		
+		/**
+		 * Get Date Week Day Value
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $weekDay_value
+		 */
+		public function date_weekDay_value($comp_id, $emp_id, $weekDay_value){
+			/*
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule
+				WHERE company_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				$new_weekday_val = $row->$weekDay_value;
+				if($new_weekday_val == ""){
+					return "0";
+				}else{
+					return $new_weekday_val;
+				}
+			}
+			*/
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN workday w ON ess.payroll_group_id = w.payroll_group_id 
+				WHERE ess.company_id = '{$comp_id}'
+				AND ess.emp_id = '{$emp_id}'
+				AND w.working_day = '{$weekDay_value}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$zero = "00:00:00";
+				$row = $sql->row();
+				$sql->free_result();
+				$work_start_time = $row->work_start_time;
+				$work_end_time = $row->work_end_time;
+				$break_start_time = $row->break_start_time;
+				$break_end_time = $row->break_end_time;
+				
+				if($work_start_time == $zero && $work_end_time == $zero && $break_start_time == $zero && $break_end_time == $zero){
+					return "0";
+				}else{
+					$new_weekday_val = date("h:i:s A",strtotime($work_start_time))."-".date("h:i:s A",strtotime($work_end_time));
+					return $new_weekday_val;
+				}
 			}
 		}
 		

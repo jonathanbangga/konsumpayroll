@@ -66,6 +66,7 @@ class Admin_profile extends CI_Controller {
 						"address"		=> $this->input->post('address'),
 						"home_no"		=> $this->input->post('home_no'),
 						"mobile_no"		=> $this->input->post('mobile_no'),
+						"dob"			=> $this->input->post("birth_date"),
 						"emergency_contact_person" => $this->input->post('emergency_contact_person'),
 						"emergency_contact_number" => $this->input->post('emergency_contact_number'),
 						"security_question"	=> $this->input->post('security_question'),
@@ -86,7 +87,7 @@ class Admin_profile extends CI_Controller {
 					// UPDATE ACCOUNT
 					$account_field = array(
 						"email"		=> $this->input->post("email_add"),
-						"password"	=> $this->input->post('new_password')
+						"password"	=> md5($this->input->post('new_password'))
 					);
 					$this->admin->update_fields("accounts",$account_field,$where);
 				}	

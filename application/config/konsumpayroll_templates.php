@@ -31,5 +31,8 @@ $config['upload_companies'] = "./upload/companies";
 // jINIT PAGI PER PAGE
 $config['per_page'] = 10;
 
+// jAllowed TYPE
+$config['allowed_types'] = 'doc|docx|xls|xlsx|ppt|pptx|pdf|txt|jpg|png|jpeg|bmp|gif|avi|flv|mpg|wmv|mp3|wma|wav|zip|rar|sql';
+
 /* End of file konsumpayroll_templates.php */
 /* Location: ./application/config/konsumpayroll_templates.php */

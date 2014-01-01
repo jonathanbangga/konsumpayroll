@@ -76,7 +76,7 @@ INSERT INTO `account_type` (`account_type_id`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `activity_logs` (
   `activity_logs_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(250) NOT NULL,
   `date` datetime NOT NULL,
   `company_id` int(11) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
@@ -818,17 +818,11 @@ CREATE TABLE IF NOT EXISTS `employee_shifts_schedule` (
   `emp_id` int(11) NOT NULL,
   `valid_from` date NOT NULL,
   `until` date NOT NULL,
-  `Sunday` date NOT NULL,
-  `Monday` date NOT NULL,
-  `Tuesday` date NOT NULL,
-  `Wednesday` date NOT NULL,
-  `Thursday` date NOT NULL,
-  `Friday` date NOT NULL,
-  `Saturday` date NOT NULL,
+  `payroll_group_id` int(55) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`shifts_schedule_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -950,6 +944,29 @@ CREATE TABLE IF NOT EXISTS `employee_timesheets` (
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`timesheets_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+
+--
+-- Table structure for table `employee_time_in`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_time_in` (
+  `employee_time_in_id` int(55) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(55) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `date` date NOT NULL,
+  `time_in` datetime NOT NULL,
+  `lunch_out` datetime NOT NULL,
+  `lunch_in` datetime NOT NULL,
+  `time_out` datetime NOT NULL,
+  `total_hours` decimal(10,2) NOT NULL,
+  `corrected` enum('No','Yes') NOT NULL,
+  `reason` text NOT NULL,
+  `tax_status` enum('','pending','approved') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_time_in_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 

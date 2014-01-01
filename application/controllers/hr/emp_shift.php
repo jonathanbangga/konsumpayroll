@@ -20,6 +20,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			$this->authentication->check_if_logged_in();
 			$this->theme = $this->config->item('default');
 			$this->load->model('konsumglobal_jmodel','jmodel');
 			$this->load->model('hr/hr_employee_model','hr_emp');
@@ -68,6 +69,7 @@
 			}
 			
 			$data['employee_shift'] = $results;
+			$data['payroll_group'] = $this->hr_emp->payroll_group($this->company_id);
 			
 			if($this->input->post('add')){
 				foreach($this->input->post('emp_id') as $key2=>$val){
@@ -75,13 +77,7 @@
 					$this->form_validation->set_rules("emp_no[{$key2}]", 'Employee Number', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("valid_from[{$key2}]", 'Valid From', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("until[{$key2}]", 'Until', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("sunday[{$key2}]", 'Sunday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("monday[{$key2}]", 'Monday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("tuesday[{$key2}]", 'Tuesday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("wednesday[{$key2}]", 'Wednesday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("thursday[{$key2}]", 'Thursday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("friday[{$key2}]", 'Friday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("saturday[{$key2}]", 'Saturday', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("payroll_group[{$key2}]", 'Payroll Group Name', 'trim|required|xss_clean');
 				}
 				//if ($this->form_validation->run()==true){
 					foreach($this->input->post('emp_id') as $key=>$val){
@@ -89,26 +85,14 @@
 						$emp_id = $this->input->post('emp_id');
 						$valid_from = $this->input->post('valid_from');
 						$until = $this->input->post('until');
-						$sunday = $this->input->post('sunday');
-						$monday = $this->input->post('monday');
-						$tuesday = $this->input->post('tuesday');
-						$wednesday = $this->input->post('wednesday');
-						$thursday = $this->input->post('thursday');
-						$friday = $this->input->post('friday');
-						$saturday = $this->input->post('saturday');
+						$payroll_group = $this->input->post('payroll_group');
 						
 						$insert_employee_shift = array(
 							'emp_id' => $emp_id[$key],
 							'company_id' => $company_id,
 							'valid_from' => $valid_from[$key],
 							'until' => $until[$key],
-							'Sunday' => $sunday[$key],
-							'Monday' => $monday[$key],
-							'Tuesday' => $tuesday[$key],
-							'Wednesday' => $wednesday[$key],
-							'Thursday' => $thursday[$key],
-							'Friday' => $friday[$key],
-							'Saturday' => $saturday[$key]
+							'payroll_group_id' => $payroll_group[$key]
 						);
 							
 						$this->jmodel->insert_data('employee_shifts_schedule',$insert_employee_shift);
@@ -159,13 +143,7 @@
 								"company_id"=>$emp_res->company_id,
 								"valid_from"=>$emp_res->valid_from,
 								"until"=>$emp_res->until,
-								"Sunday"=>$emp_res->Sunday,
-								"Monday"=>$emp_res->Monday,
-								"Tuesday"=>$emp_res->Tuesday,
-								"Wednesday"=>$emp_res->Wednesday,
-								"Thursday"=>$emp_res->Thursday,
-								"Friday"=>$emp_res->Friday,
-								"Saturday"=>$emp_res->Saturday
+								"payroll_group_id"=>$emp_res->main_payroll_group_id
 							)
 						);
 						return false;
@@ -187,13 +165,7 @@
 					              <td>{$row->payroll_cloud_id}</td>
 					              <td>{$row->valid_from}</td>
 					              <td>{$row->until}</td>
-					              <td>{$row->Sunday}</td>
-					              <td>{$row->Monday}></td>
-					              <td>{$row->Tuesday}</td>
-					              <td>{$row->Wednesday}</td>
-					              <td>{$row->Thursday}</td>
-					              <td>{$row->Friday}</td>	
-					              <td>{$row->Saturday}</td>
+					              <td>{$row->payroll_group_name}</td>
 					              <td><a href='javascript:void(0);' class='btn btn-gray btn-action editBtnDb' shifts_schedule_id='{$row->shifts_schedule_id}'>EDIT</a> <a href='javascript:void(0);' class='btn btn-red btn-action delBtnDb' shifts_schedule_id='{$row->shifts_schedule_id}'>DELETE</a></td>
 					            </tr>
 							";
@@ -221,13 +193,7 @@
 					              <td>{$row->payroll_cloud_id}</td>
 					              <td>{$row->valid_from}</td>
 					              <td>{$row->until}</td>
-					              <td>{$row->Sunday}</td>
-					              <td>{$row->Monday}></td>
-					              <td>{$row->Tuesday}</td>
-					              <td>{$row->Wednesday}</td>
-					              <td>{$row->Thursday}</td>
-					              <td>{$row->Friday}</td>	
-					              <td>{$row->Saturday}</td>
+					              <td>{$row->payroll_group_name}</td>
 					              <td><a href='javascript:void(0);' class='btn btn-gray btn-action editBtnDb' shifts_schedule_id='{$row->shifts_schedule_id}'>EDIT</a> <a href='javascript:void(0);' class='btn btn-red btn-action delBtnDb' shifts_schedule_id='{$row->shifts_schedule_id}'>DELETE</a></td>
 					            </tr>
 							";
@@ -249,37 +215,19 @@
 				$shifts_schedule_id = $this->input->post('shifts_schedule_id');
 				$valid_from = $this->input->post('valid_from');
 				$until = $this->input->post('until');
-				$sunday = $this->input->post('sunday');
-				$monday = $this->input->post('monday');
-				$tuesday = $this->input->post('tuesday');
-				$wednesday = $this->input->post('wednesday');
-				$thursday = $this->input->post('thursday');
-				$friday = $this->input->post('friday');
-				$saturday = $this->input->post('saturday');
+				$payroll_group_edit = $this->input->post('payroll_group_edit');
 				
 				$this->form_validation->set_rules("shifts_schedule_id", 'Shift Schedule ID', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("valid_from", 'Valid From', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("until", 'Until', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("sunday", 'Sunday', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("monday", 'Monday', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("tuesday", 'Tuesday', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("wednesday", 'Wednesday', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("thursday", 'Thursday', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("friday", 'Friday', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("saturday", 'Saturday', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("payroll_group_edit", 'Payroll Group Name', 'trim|required|xss_clean');
 				
 				if ($this->form_validation->run()==true){
 					$update_info = $this->hr_emp->update_shift_info(
 						$shifts_schedule_id,
 						$valid_from,
 						$until,
-						$sunday,
-						$monday,
-						$tuesday,
-						$wednesday,
-						$thursday,
-						$friday,
-						$saturday,
+						$payroll_group_edit,
 						$this->company_id);
 					if($update_info){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');

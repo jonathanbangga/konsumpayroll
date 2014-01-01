@@ -34,6 +34,7 @@
 	        	<div class="left"><?php print $links;?></div>
 	        	<div class="clearB"></div>
         	</div>
+		<script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
         <script>
 	        function pagination(){
 	    		jQuery("#pagination li").each(function(){
@@ -43,6 +44,7 @@
 
 	    	jQuery(function(){
 	    		pagination();
+	    		loan_li();
 	    	});
         </script>
 		<div class="footer-grp-btn">

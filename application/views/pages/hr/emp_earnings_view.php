@@ -112,6 +112,7 @@
         </div>
         <?php print form_close();?>
         </div>
+<script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
 <script>
 	function addRow(size){
 		var tbl = "<tr>";
@@ -431,6 +432,7 @@
 		_delete_empDb();
 		_edit_information();
 		pagination();
+		payroll_info_li();
 	});
 </script>
 <div class="footer-grp-btn">

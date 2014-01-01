@@ -4,20 +4,14 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:2090px;" class="tbl emp_conList">
+          <table style="width:1170px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
               <th style="width:170px;">Employee Name</th>
               <th style="width:170px;">Employee Number</th>
               <th style="width:170px;">Valid From</th>
               <th style="width:170px;">Until</th>
-              <th style="width:170px;">Sunday</th>
-              <th style="width:170px;">Monday</th>
-              <th style="width:170px;">Tuesday</th>
-              <th style="width:170px;">Wednesday</th>
-              <th style="width:170px;">Thursday</th>
-              <th style="width:170px;">Friday</th>
-              <th style="width:170px;">Saturday</th>
+              <th style="width:170px;">Payroll Group</th>
               <th style="width:170px">Action</th>
             </tr>
             <?php 
@@ -31,13 +25,7 @@
 	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print $row->valid_from;?></td>
 	              <td><?php print $row->until;?></td>
-	              <td><?php print $row->Sunday;?></td>
-	              <td><?php print $row->Monday;?></td>
-	              <td><?php print $row->Tuesday;?></td>
-	              <td><?php print $row->Wednesday;?></td>
-	              <td><?php print $row->Thursday;?></td>
-	              <td><?php print $row->Friday;?></td>	
-	              <td><?php print $row->Saturday;?></td>
+	              <td><?php print $row->payroll_group_name;?></td>	              
 	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" shifts_schedule_id="<?php print $row->shifts_schedule_id;?>">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" shifts_schedule_id="<?php print $row->shifts_schedule_id;?>">DELETE</a></td>
 	            </tr>
             <?php 			
@@ -65,7 +53,7 @@
           <table width="100%">
             <tbody>
 		    <tr>
-              <td>Employee Name:</td>
+              <td style="width: 105px;">Employee Name:</td>
               <td>
               <input readonly='readonly' type='text' name='shifts_schedule_id' class='shifts_schedule_id ihide txtfield emp_id"+size+"' />
               <input type='text' readonly="readonly" name='emp_name' class='txtfield emp_name emp_name"+size+"' class_val='class_val"+size+"' attr_uname_val='"+size+"'></td></tr>
@@ -74,19 +62,11 @@
 	        <tr>
               <td>Until:</td><td><input type='text' name='until' class='txtfield until datepickerCont' id='dob"+size+"'></td></tr>
 	        <tr>
-              <td>Sunday:</td><td><input type='text' name='sunday' class='sunday txtfield'></td></tr>
-	        <tr>
-              <td>Monday:</td><td><input type='text' name='monday' class='monday txtfield'></td></tr>
-	        <tr>
-              <td>Tuesday:</td><td><input type='text' name='tuesday' class='tuesday txtfield'></td></tr>
-	        <tr>
-              <td>Wednesday:</td><td><input type='text' name='wednesday' class='wednesday txtfield'></td></tr>
-	        <tr>
-              <td>Thursday:</td><td><input type='text' name='thursday' class='thursday txtfield'></td></tr>
-	        <tr>
-              <td>Friday:</td><td><input type='text' name='friday' class='friday txtfield'></td></tr>
-	        <tr>
-              <td>Saturday:</td><td><input type='text' name='saturday' class='saturday txtfield'></td></tr>
+	          <td>Payroll Group:</td>
+              <td>
+              	<select style='min-width: 148px;' class='txtselect select-medium payroll_group_edit' name='payroll_group_edit'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->payroll_group_name); ?>'><?php print $row_pg->payroll_group_name;?></option><?php } }?></select>
+              </td>
+            </tr>
             <tr>
               <td>&nbsp;</td>
               <td>
@@ -98,6 +78,7 @@
         </div>
         	<?php print form_close();?>
         </div>
+        <script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
         <script>
         	function addNewEmp(size){
             	var tbl = "<tr class='shift_row_list'>";
@@ -106,13 +87,7 @@
 			    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
 		        tbl += "<td><input type='text' name='valid_from[]' class='valid_from txtfield datepickerCont'></td>";
 		        tbl += "<td><input type='text' name='until[]' class='txtfield until datepickerCont' id='dob"+size+"'></td>";
-		        tbl += "<td><input type='text' name='sunday[]' class='sunday txtfield'></td>";
-		        tbl += "<td><input type='text' name='monday[]' class='monday txtfield'></td>";
-		        tbl += "<td><input type='text' name='tuesday[]' class='tuesday txtfield'></td>";
-		        tbl += "<td><input type='text' name='wednesday[]' class='wednesday txtfield'></td>";
-		        tbl += "<td><input type='text' name='thursday[]' class='thursday txtfield'></td>";
-		        tbl += "<td><input type='text' name='friday[]' class='friday txtfield'></td>";
-		        tbl += "<td><input type='text' name='saturday[]' class='saturday txtfield'></td>";
+		        tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->payroll_group_name); ?>'><?php print $row_pg->payroll_group_name;?></option><?php } }?></select></td>";
 		        tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	            tbl += "</tr>";
 		              
@@ -333,13 +308,14 @@
                               	jQuery(".shifts_schedule_id").empty().val(status.shifts_schedule_id);
                               	jQuery(".valid_from").empty().val(status.valid_from);
                               	jQuery(".until").empty().val(status.until);
-                              	jQuery(".sunday").empty().val(status.Sunday);
-                              	jQuery(".monday").empty().val(status.Monday);
-                              	jQuery(".tuesday").empty().val(status.Tuesday);
-                              	jQuery(".wednesday").empty().val(status.Wednesday);
-                              	jQuery(".thursday").empty().val(status.Thursday);
-                              	jQuery(".friday").empty().val(status.Friday);
-                              	jQuery(".saturday").empty().val(status.Saturday);
+								jQuery(".payroll_group_edit option").each(function(){
+									var _this = jQuery(this);
+									if(_this.val() == status.payroll_group_id){
+										_this.prop("selected",true);
+									}else{
+										_this.removeAttr("selected");
+									}
+								});
                               	
                           		jQuery(".editCont").dialog({
                 					width: 'inherit',
@@ -363,25 +339,13 @@
 				var shifts_schedule_id = jQuery(".shifts_schedule_id").val();
 				var valid_from = jQuery(".valid_from").val();
 				var until = jQuery(".until").val();
-				var sunday = jQuery(".sunday").val();
-				var monday = jQuery(".monday").val();
-				var tuesday = jQuery(".tuesday").val();
-				var wednesday = jQuery(".wednesday").val();
-				var thursday = jQuery(".thursday").val();
-				var friday = jQuery(".friday").val();
-				var saturday = jQuery(".saturday").val();
+				var payroll_group_edit = jQuery(".payroll_group_edit").val();
 				var error = "";
 				
 				error = check_emp_str("shifts_schedule_id");
 				error += check_emp_str("valid_from");
 				error += check_emp_str("until");
-				error += check_emp_str("sunday");
-				error += check_emp_str("monday");
-				error += check_emp_str("tuesday");
-				error += check_emp_str("wednesday");
-				error += check_emp_str("thursday");
-				error += check_emp_str("friday");
-				error += check_emp_str("saturday");
+				error += check_emp_str("payroll_group_edit");
 
 				if(jQuery.trim(error) != ""){
 					return false;
@@ -526,6 +490,7 @@
 				_datepicker();
 				shift_search_empname();
 				shift_search_empno();
+				shift_li();
 			});
         </script>
 <div class="footer-grp-btn">

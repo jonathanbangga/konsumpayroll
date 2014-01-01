@@ -67,6 +67,12 @@
 	 */
 	function photo_upload($path="./uploads/",$max_size= 3000,$max_width=3024,$max_height=3000){
 		$CI =& get_instance();
+		//TRIGGER AJAX CHANGE CHMODE Para choi
+		if(is_dir($path)){
+			chmod("./uploads",0777);
+			chmod("./uploads/companies",0777);
+			chmod($path,0777);
+		}
 		$config['upload_path'] = $path;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']	= $max_size;
@@ -79,6 +85,9 @@
 			return $error;
 		} else {
 			$data = array("status"=>"1",'error'=>'','upload_data' => $CI->upload->data());
+			chmod("./uploads",0755);
+			chmod("./uploads/companies",0755);
+			chmod($path,0755);
 			return $data;
 		}
 	}
@@ -235,6 +244,41 @@
 					return true;
 				break;
 			endswitch;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * THIS WILL CHECK THE lEAVE APPlICATION DETAILS 
+	 * USED FOR CHECKING EMPLOYEE IDS 
+	 * @param int $employee_leaves_application_id
+	 * @return object
+	 */
+	function check_leave_application($employee_leaves_application_id){
+		$CI =& get_instance();
+		if(is_numeric($employee_leaves_application_id)){
+			$query = $CI->db->get_where("employee_leaves_application",array("employee_leaves_application_id"=>$employee_leaves_application_id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * CHECK OVERTIME APPLICATION DETAILS
+	 * USED FOR CHECKING EMPLOYEE IDS
+	 * @param int $overtime_id
+	 */
+	function check_overtime_application($overtime_id){
+		$CI =& get_instance();
+		if(is_numeric($overtime_id)){
+			$query = $CI->db->get_where("employee_overtime_application",array("overtime_id"=>$overtime_id));
+			$row = $query->row();
+			$query->free_result();
+			return $row;
 		}else{
 			return false;
 		}

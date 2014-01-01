@@ -7,6 +7,7 @@ class Authentication {
 	public function __construct(){
 		$this->ci =& get_instance();
 		$this->ci->load->model('account_model');
+		$this->check_employee();
     }
 
     public function validate_login($user,$pass,$account_type){
@@ -29,6 +30,31 @@ class Authentication {
 			}
 		// user
 		}else{
+			if($sql->num_rows()>0){
+				$a = $sql->row();
+				$newdata = array(
+                   'account_id'  => $a->main_account_id,
+				   'account_type_id'  => $a->account_type_id,
+				   'psa_id'  => $a->payroll_system_account_id,
+				   'user_type_id' => $a->user_type_id,
+				   'sub_domain' => $a->main_sub_domain,
+				   'company_name' => $a->company_name,
+				   'emp_id'=>$a->emp_id
+				);
+				if($a->user_type_id == 3 || $a->user_type_id == 2){
+					// redirect owner or hr
+					$this->ci->session->set_userdata($newdata);
+					redirect("/{$a->main_sub_domain}/dashboard/company_list");
+				}elseif($a->user_type_id == 5){
+					// redirect employee
+					$this->ci->session->set_userdata($newdata);
+					redirect("/{$a->company_name}/employee/emp_time_in");
+				}
+			}else{
+				redirect('/');
+			}
+			
+			/*
 			// if account exist
 			if($sql->num_rows()>0){
 				$a = $sql->row();
@@ -44,6 +70,7 @@ class Authentication {
 			}else{
 				redirect('/');
 			}	
+			*/
 		}
     }
 	
@@ -72,6 +99,28 @@ class Authentication {
 		$this->ci->session->unset_userdata("psa_id");
 		$this->ci->session->unset_userdata("company_id");
 		$this->ci->session->sess_destroy();
+	}
+	
+	public function check_employee(){
+		$account = $this->ci->session->userdata('account_id');
+		$check_employee = $this->ci->account_model->check_employee($account);
+		if($this->ci->uri->segment(2) == "hr" || $this->ci->uri->segment(1) == "" || $this->ci->uri->segment(2) == "dashboard"){
+			// for employee
+			if($check_employee == 5 && $account != ""){
+				$company_name = $this->ci->session->userdata('company_name');
+				redirect("/{$company_name}/employee/emp_time_in");
+			}
+		}
+		
+		if($this->ci->uri->segment(2) == "employee" || $this->ci->uri->segment(1) == ""){
+			// for hr or owner
+			if($account != ""){
+				if($check_employee == '3' || $check_employee == '2'){
+					$sub_domain = $this->ci->session->userdata('sub_domain');
+					redirect("/{$sub_domain}/dashboard/company_list");
+				}
+			}
+		}
 	}
 	
 }

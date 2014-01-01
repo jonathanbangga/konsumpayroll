@@ -1,14 +1,18 @@
 
         <?php echo form_open("/company/company_setup/government_registration/index",array("onsubmit"=>"return submit_gov();"));?>
 		<?php echo $error;
-			echo $this->session->flashdata("success");
+			if($this->session->flashdata("success")){
+				echo "<div class=\"successContBox highlight_message\">{$this->session->flashdata("success")}</div>";
+			}
 		?>
 		<div class="tbl-wrap">
           <!-- TBL-WRAP START -->
 			<table>
 				<tr>
 				  <td style="width:155px">TIN:</td>
-				  <td><input class="txtfield jfields_capture" id="tin" name="tin" type="text" placeholder="xxx-xxx-xxx-xxx" value="<?php echo $company_info ? $company_info->tin : "";?>"></td>
+				  <td>
+				  <input class="txtfield jfields_capture" id="tin" name="tin" type="text" placeholder="xxx-xxx-xxx-xxx" value="<?php echo $company_info ? $company_info->tin : "";?>"> 
+				  </td>
 				</tr>
 				<tr>
 				  <td>RDO:</td>
@@ -57,7 +61,6 @@
 			}
 			// SUBMIT GOVERNMENT CONFIDENTIALS SSS,PHILHEALTH ETC
 			function submit_gov(){
-				alert('test');
 				var tin = jQuery("#tin").val();
 				var rdo = jQuery("#rdo").val();
 				var sss_id = jQuery("#sss_id").val();

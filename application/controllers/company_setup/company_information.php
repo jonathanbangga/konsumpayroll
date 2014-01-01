@@ -40,9 +40,7 @@
 			$data['company_info'] = subdomain_checker();
 			$data['errors']	= "";
 			$data['company_info'] = $this->company->company_info($this->company_id);
-
-			if($this->input->post('next')){
-				
+			if($this->input->post('next')){			
 				if($this->company_id == ""){	
 					$this->form_validation->set_rules("company_name","Company name","required|trim|xss_clean|is_unique[company.company_name]");
 					// IF COMPANY ID SESSION IS EMPTY VALIDATE COMPANY SUBDOMAIN
@@ -96,6 +94,8 @@
 									}
 								}
 							}	
+						}else{
+							redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
 						}
 					}else{		
 						$company_id = $this->company->add_company($fields);
@@ -115,6 +115,8 @@
 								);	
 							$this->company->save_fields("assigned_company",$save_assign);
 							$this->session->set_userdata("company_id",$company_id);
+							redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
+						}else{
 							redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
 						}
 					}
@@ -148,8 +150,6 @@
 			$this->session->set_userdata("company_id","1");
 			p($this->session->all_userdata());
 		}
-	
-		
 		
 	}
 
