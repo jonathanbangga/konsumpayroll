@@ -33,6 +33,8 @@ class Workday extends CI_Controller {
 			$end_time_p = $this->input->post('et_p');
 			$working_hours = $this->input->post('working_hours');
 			$break_last_index = $this->input->post('break_last_index');
+			$sel_wdid = $this->input->post('sel_wdid');
+			
 			// workdays
 			foreach($workday as $wd){
 				$wd2 = explode("-",$wd);
@@ -40,21 +42,47 @@ class Workday extends CI_Controller {
 				$index = $wd2[1];
 				$start_time = date("H:i:s",strtotime($start_time_h[$index].":".$start_time_m[$index]." ".$start_time_p[$index]));
 				$end_time = date("H:i:s",strtotime($end_time_h[$index].":".$end_time_m[$index]." ".$end_time_p[$index]));
-				// save workdays
-				$this->workday_model->add_workdays($day,$start_time,$end_time,$working_hours[$index],$pg_id[$index]);
-				// break time
-				for($i=0;$i<$break_last_index[$wd2[1]];$i++){
-					$bt_st_h = $this->input->post('bt_st_h'.$i);
-					$bt_st_m = $this->input->post('bt_st_m'.$i);
-					$bt_st_p = $this->input->post('bt_st_p'.$i);
-					$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
-					$bt_et_h = $this->input->post('bt_et_h'.$i);
-					$bt_et_m = $this->input->post('bt_et_m'.$i);
-					$bt_et_p = $this->input->post('bt_et_p'.$i);
-					$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
+				
+				//$wd_flag = $this->workday_model->check_if_working_day_already_set($pg_id[$index],$day);
+				if($sel_wdid[$index]!=""){
+					//echo $break_last_index[$index];
+					// update workdays
+					$this->workday_model->update_workdays($day,$start_time,$end_time,$working_hours[$index],$sel_wdid[$index]);
+					// break time
+					// loop through number of breaks
+					for($i=0;$i<$break_last_index[$index];$i++){
+						$bt_st_h = $this->input->post('bt_st_h'.$i);
+						$bt_st_m = $this->input->post('bt_st_m'.$i);
+						$bt_st_p = $this->input->post('bt_st_p'.$i);
+						$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
+						$bt_et_h = $this->input->post('bt_et_h'.$i);
+						$bt_et_m = $this->input->post('bt_et_m'.$i);
+						$bt_et_p = $this->input->post('bt_et_p'.$i);
+						$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
+						$btid = $this->input->post('btid'.$i);
+						// update break time
+						echo $btid[$index];
+						$this->workday_model->update_break_time($btid[$index],$bt_start_time,$bt_end_time);
+						
+					}
+				}else{
+					// save workdays
+					$this->workday_model->add_workdays($day,$start_time,$end_time,$working_hours[$index],$pg_id[$index]);
 					// save break time
-					$this->workday_model->add_break_time($pg_id[$index],$day,$bt_start_time,$bt_end_time,$i);
-				}
+					// loop through number of breaks
+					for($i=0;$i<$break_last_index[$index];$i++){
+						$bt_st_h = $this->input->post('bt_st_h'.$i);
+						$bt_st_m = $this->input->post('bt_st_m'.$i);
+						$bt_st_p = $this->input->post('bt_st_p'.$i);
+						$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
+						$bt_et_h = $this->input->post('bt_et_h'.$i);
+						$bt_et_m = $this->input->post('bt_et_m'.$i);
+						$bt_et_p = $this->input->post('bt_et_p'.$i);
+						$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
+						// update break time
+						$this->workday_model->add_break_time($pg_id[$index],$day,$bt_start_time,$bt_end_time,$i);
+					}
+				}			
 			}
 			// workshift
 			$workshift = $this->input->post('workshift');
@@ -72,7 +100,7 @@ class Workday extends CI_Controller {
 				$shift_st = date("H:i:s",strtotime($shift_st_h[$index].":".$shift_st_m[$index]." ".$shift_st_p[$index]));
 				$shift_et = date("H:i:s",strtotime($shift_et_h[$index].":".$shift_et_m[$index]." ".$shift_et_p[$index]));
 				// save workshift
-				$this->workday_model->add_workshift($pg_id_ws[$index],$sn,$shift_st,$shift_et,$shift_wh[$index],$ws_sel[$index]);
+				//$this->workday_model->add_workshift($pg_id_ws[$index],$sn,$shift_st,$shift_et,$shift_wh[$index],$ws_sel[$index]);
 			}
 			// worday settings
 			$main_pg_id = $this->input->post('main_pg_id');
@@ -86,9 +114,13 @@ class Workday extends CI_Controller {
 			$flex_m = $this->input->post('flex_m');
 			$flex_p = $this->input->post('flex_p');
 			foreach($main_pg_id as $index=>$pg){
-				$flex = date("H:i:s",strtotime($flex_h[$index].":".$flex_m[$index]." ".$flex_p[$index]));
+				if($flex_chk_sel[$index]==1){
+					$flex = date("H:i:s",strtotime($flex_h[$index].":".$flex_m[$index]." ".$flex_p[$index]));
+				}else{
+					$flex = "";
+				}
 				// save workday settings
-				$this->workday_model->set_workday_settings($pg,$workday_type[$index],$num_of_break[$index],$wd_py[$index],$dl_py[$index],$dsb_py[$index],$flex_chk_sel[$index],$flex);
+				//$this->workday_model->set_workday_settings($pg,$workday_type[$index],$num_of_break[$index],$wd_py[$index],$dl_py[$index],$dsb_py[$index],$flex_chk_sel[$index],$flex);
 			}
 		}
 		$data['pg_sql'] = $this->workday_model->get_payroll_group();

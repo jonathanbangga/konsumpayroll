@@ -40,6 +40,18 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
+	public function update_workdays($working_day,$work_start_time,$work_end_time,$working_hours,$workday_id){
+		$this->db->query("
+			UPDATE `workday` 
+			SET	`working_day` = '".mysql_real_escape_string($working_day)."',
+				`work_start_time` = '".mysql_real_escape_string($work_start_time)."',
+				`work_end_time` = '".mysql_real_escape_string($work_end_time)."',
+				`working_hours` = '".mysql_real_escape_string($working_hours)."'
+			WHERE `workday_id` = {$workday_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
 	public function add_break_time($payroll_group_id,$workday,$start_time,$end_time,$break_time_number){
 		$this->db->query("
 			INSERT INTO
@@ -59,6 +71,17 @@ class Workday_model extends CI_Model {
 				'".mysql_real_escape_string($end_time)."',
 				'".mysql_real_escape_string($this->company_id)."'
 			)
+		");
+	}
+	
+	public function update_break_time($break_time_id="",$start_time="",$end_time=""){
+		$this->db->query("
+			UPDATE `break_time`
+			SET
+				`start_time` = '".mysql_real_escape_string($start_time)."',
+				`end_time` = '".mysql_real_escape_string($end_time)."'
+			WHERE `break_time_id` = '".mysql_real_escape_string($break_time_id)."'
+			AND `company_id` = {$this->company_id}
 		");
 	}
 	
@@ -170,6 +193,16 @@ class Workday_model extends CI_Model {
 			SELECT *
 			FROM `workday_settings` 
 			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function check_if_working_day_already_set($payroll_group_id,$working_day){
+		return $this->db->query("
+			SELECT *
+			FROM `workday_settings`
+			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `working_day` = '{$working_day}'
 			AND `company_id` = {$this->company_id}
 		");
 	}

@@ -94,17 +94,17 @@ $num_break = 0;
               <th>Working Days</th>
               <th>Start Time</th>
               <th class="end_time_th">End Time</th>
-              <th class="wh2">Working Hours</th>
 			  <?php
 			  if($cpgb_sql->num_rows()>0){
 				 for($x=0;$x<$num_break;$x++){
 			  ?>
-				<th class="end_time_th">End Time</th>
-				<th class="wh2">Working Hours</th>
+				  <th>Start Time</th>
+				  <th>End Time</th>
 			  <?php
 				}
 			  }
 			  ?>
+              <th class="wh2">Working Hours</th>
               <th>Actions</th>
             </tr>
 			<?php
@@ -133,8 +133,9 @@ $num_break = 0;
 					// end time
 					$et_h = date("h",strtotime($swd->work_end_time));
 					$et_m = date("i",strtotime($swd->work_end_time));
-					$et_p = date("A",strtotime($swd->work_end_time));;
+					$et_p = date("A",strtotime($swd->work_end_time));
 					$working_hours = $swd->working_hours;
+					$sel_wdid = $swd->workday_id;
 				}else{
 					$sel_day = "";
 					$st_h = "";
@@ -144,6 +145,7 @@ $num_break = 0;
 					$et_m = "";
 					$et_p = "";
 					$working_hours = "";
+					$sel_wdid = "";
 				}
 			
 			
@@ -151,8 +153,9 @@ $num_break = 0;
 				<tr>
 					<td>
 						<input type="checkbox" name="workday[]" id="checkbox" value="<?php echo $day; ?>-<?php echo $index; ?>" <?php echo ($sel_day!="")?'checked="checked"':''; ?>  />
-						<input type="hidden" name="pg_id[]" class="pg_id" value="<?php echo $pg->payroll_group_id; ?>">
-						<input type="hidden" name="break_last_index[]" class="break_last_index" value="0">
+						<input type="hidden" name="pg_id[]" class="pg_id" value="<?php echo $pg->payroll_group_id; ?>" />
+						<input type="hidden" name="break_last_index[]" class="break_last_index" value="<?php echo $num_break; ?>" />
+						<input type="hidden" name="sel_wdid[]" class="sel_wdid" value="<?php echo $sel_wdid; ?>" />
 					</td>
 					<td><?php echo $day; ?></td>
 					<td>
@@ -219,6 +222,8 @@ $num_break = 0;
 					  $sbt_sql = $this->workday_model->get_breaktime($pg->payroll_group_id,$day,($x+1));
 					  if($sbt_sql->num_rows()>0){
 						$sbt = $sbt_sql->row();
+						// break time id
+						$btid = $sbt->break_time_id;
 						// start time
 						$st_h = date("h",strtotime($sbt->start_time));
 						$st_m =  date("i",strtotime($sbt->start_time));
@@ -229,6 +234,7 @@ $num_break = 0;
 						$et_p = date("A",strtotime($sbt->end_time));;
 					
 					}else{
+						$btid = "";
 						$sel_day = "";
 						$st_h = "";
 						$st_m = "";
@@ -241,7 +247,8 @@ $num_break = 0;
 					  ?>
 						<td>
 							<div class="wd_time_div">
-								<select name="st_h[]" class="txtselect" style="width:60px;">
+								<input type="hidden" name="btid<?php echo $x; ?>[]" value="<?php echo $btid; ?>" />
+								<select name="bt_st_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
 								   <?php for($i=0;$i<=12;$i++){ 
 									$st_h2 = intval($st_h);
 									$day_num = sprintf("%02s", $i);
@@ -251,7 +258,7 @@ $num_break = 0;
 									</option>
 									<?php } ?>
 								 </select>:
-								<select name="st_m[]" class="txtselect" style="width:60px;">
+								<select name="bt_st_m<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
 									<?php for($i=0;$i<=59;$i++){
 									$st_m2 = intval($st_m);
 									$day_num = sprintf("%02s", $i);
@@ -261,15 +268,15 @@ $num_break = 0;
 									</option>
 									<?php } ?>
 								</select>
-								<select name="st_p[]" class="txtselect" style="width:60px;">
-									<option value=="AM" <?php echo ($st_m2=="AM")?'selected="selected"':''; ?>>AM</option>
-									<option value="PM" <?php echo ($st_m2=="PM")?'selected="selected"':''; ?>>PM</option>
+								<select name="bt_st_p<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+									<option value=="AM" <?php echo ($st_p=="AM")?'selected="selected"':''; ?>>AM</option>
+									<option value="PM" <?php echo ($st_p=="PM")?'selected="selected"':''; ?>>PM</option>
 								</select>
 							</div>
 						</td>
 						<td class="end_time_td">
 							<div class="wd_time_div">
-								<select name="et_h[]" class="txtselect" style="width:60px;">
+								<select name="bt_et_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
 								   <?php for($i=0;$i<=12;$i++){ 
 									$et_h2 = intval($et_h);
 									$day_num = sprintf("%02s", $i);
@@ -279,7 +286,7 @@ $num_break = 0;
 									</option>
 									<?php } ?>
 								 </select>:
-								<select name="et_m[]" class="txtselect" style="width:60px;">
+								<select name="bt_et_m<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
 									<?php for($i=0;$i<=59;$i++){ 
 									$et_m2 = intval($et_m);
 									$day_num = sprintf("%02s", $i);
@@ -289,9 +296,9 @@ $num_break = 0;
 									</option>
 									<?php } ?>
 								</select>
-								<select name="et_p[]" class="txtselect" style="width:60px;">
-								  <option <?php echo ($et_m2=="AM")?'selected="selected"':''; ?>>AM</option>
-								  <option <?php echo ($et_m2=="PM")?'selected="selected"':''; ?>>PM</option>
+								<select name="bt_et_p<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+								  <option <?php echo ($et_p=="AM")?'selected="selected"':''; ?>>AM</option>
+								  <option <?php echo ($et_p=="PM")?'selected="selected"':''; ?>>PM</option>
 								</select>
 							</div>
 						</td>
@@ -335,7 +342,7 @@ $num_break = 0;
 		</p>   
 		
 		<?php
-		if($flex_time!=""){
+		if($allow_flex==1){
 			$fh = date("h",strtotime($flex_time));
 			$fm = date("i",strtotime($flex_time));
 			$fp = date("A",strtotime($flex_time));
@@ -346,7 +353,7 @@ $num_break = 0;
 		}
 		?>
 
-		<div class="wd_div flex_div" <?php echo ($flex_time!="")?'style="display:block;"':''; ?>>
+		<div class="wd_div flex_div" <?php echo ($allow_flex==1)?'style="display:block;"':''; ?>>
 			<table>
 				<tr>
 					<td>Latest Time in Allowed: </td>
@@ -427,8 +434,11 @@ $num_break = 0;
 										<?php } ?>
 									</select>
 									<select name="" class="txtselect" style="width:60px;">
-									  <option value="AM" <?php echo ($ws->working_hours=="AM")?'selected="selected"':''; ?>>AM</option>
-									  <option value="PM" <?php echo ($ws->working_hours=="PM")?'selected="selected"':''; ?>>PM</option>
+										<?php
+										$wsp = date("A",strtotime($ws->start_time));
+										?>
+									  <option value="AM" <?php echo ($wsp=="AM")?'selected="selected"':''; ?>>AM</option>
+									  <option value="PM" <?php echo ($wsp=="PM")?'selected="selected"':''; ?>>PM</option>
 									</select>
 								</div>
 							</td>
@@ -455,8 +465,11 @@ $num_break = 0;
 										<?php } ?>
 									</select>
 									<select name="" class="txtselect" style="width:60px;">
-									  <option value="AM" <?php echo ($ws->working_hours=="AM")?'selected="selected"':''; ?>>AM</option>
-									  <option value="PM" <?php echo ($ws->working_hours=="PM")?'selected="selected"':''; ?>>PM</option>
+									  <?php
+										$wsp = date("A",strtotime($ws->end_time));
+									  ?>
+									  <option value="AM" <?php echo ($wsp=="AM")?'selected="selected"':''; ?>>AM</option>
+									  <option value="PM" <?php echo ($wsp=="PM")?'selected="selected"':''; ?>>PM</option>
 									</select>
 								</div>
 							</td>
