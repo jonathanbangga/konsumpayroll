@@ -48,7 +48,7 @@
 						$emp_level	= $this->input->post('level');
 						if($emp_idfield){
 							foreach($emp_idfield as $k=>$v){
-								$this->form_validation->set_rules("emp_id[".$k."]","Employee number (".$k."):","required|trim|numeric|xss_clean|min_length[8]|max_length[30]|is_unique[accounts.payroll_cloud_id]");
+								$this->form_validation->set_rules("emp_id[".$k."]","Employee number (".$k."):","required|trim|xss_clean|min_length[8]|max_length[30]|is_unique[accounts.payroll_cloud_id]");
 								$this->form_validation->set_rules("first_name[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
 								$this->form_validation->set_rules("middle_name[".$k."]","Employee Middle Name (".$k."):","required|trim|xss_clean");
 								$this->form_validation->set_rules("last_name[".$k."]","Employee Last Name (".$k."):","required|trim|xss_clean");

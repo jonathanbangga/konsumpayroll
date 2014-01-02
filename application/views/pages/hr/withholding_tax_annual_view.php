@@ -14,7 +14,7 @@
 			<tr>
 				<td><?php print iprice($row->salary_bracket);?></td>
 				<td><?php print iprice($row->range_of_tax_from);?></td>
-				<td><?php print iprice($row->range_of_tax_to);?></td>
+				<td><?php print is_numeric($row->range_of_tax_to) ? iprice($row->range_of_tax_to) : 'over';?></td>
 				<td><?php print iprice($row->initial_tax);?></td>
 				<td><?php print iprice($row->additional_tax);?></td>
 			</tr>

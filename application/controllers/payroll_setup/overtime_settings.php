@@ -69,6 +69,34 @@ class Overtime_settings extends CI_Controller {
 		$this->layout->view('pages/payroll_setup/overtime_settings_view',$data);
 	}
 	
+	public function ajax_delete_overtime_type(){
+		$overtime_type_id = $this->input->post('overtime_type_id');
+		$this->overtime_settings_model->delete_overtime_type($overtime_type_id);
+	}
+	
+	public function ajax_delete_allowance_type(){
+		$allowance_type_id = $this->input->post('allowance_type_id');
+		$this->overtime_settings_model->delete_allowance_type($allowance_type_id);
+	}
+	
+	public function ajax_update_overtime_type(){
+		$overtime_type_id = $this->input->post('overtime_type_id');
+		$overtime_type = $this->input->post('overtime_type');
+		$pay_rate = $this->input->post('pay_rate');
+		$ot_rate = $this->input->post('ot_rate');
+		$this->overtime_settings_model->update_overtime_type($overtime_type_id,$overtime_type,$pay_rate,$ot_rate);
+	}
+	
+	public function ajax_update_allowance_type(){
+		$allowance_type_id = $this->input->post('allowance_type_id');
+		$allowance_type = $this->input->post('allowance_type');
+		$taxable = $this->input->post('taxable');
+		$maximum_non_taxable = $this->input->post('maximum_non_taxable');
+		$amount = $this->input->post('amount');
+		$minimum_ot = $this->input->post('minimum_ot');
+		$this->overtime_settings_model->update_allowance_type($allowance_type_id,$allowance_type,$taxable,$maximum_non_taxable,$amount,$minimum_ot);
+	}
+	
 }
 
 /* End of file */

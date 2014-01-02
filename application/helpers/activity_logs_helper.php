@@ -48,7 +48,7 @@
 	 * @return dates
 	 */
 	function time_only($time){
-		return date("H:i:s a",strtotime($time));
+		return date("H:i:s",strtotime($time));
 	}
 	
 	/**

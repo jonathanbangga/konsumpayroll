@@ -47,6 +47,9 @@
 	</div>
 	<br />
 	<br />
+	<div class="ihide" id="jshow_status">
+		<div class="highlight_message">Successfully added</div>
+	</div>
 	<div class="tbl-wrap">	
 		            <!-- TBL-WRAP START -->
           <table class="tbl emp_conList" style="width:2430px;">
@@ -62,35 +65,30 @@
 					<th style="width:70px;">Ending Balance</th>
 					<th style="width:70px;">Adjustment Reason</th>
 	            </tr>
-	            <?php 
-	            	if($inquiry_result){
-	            		foreach($inquiry_result as $key=>$val):
-	            ?>
-            	<tr>
-					<td><?php echo random_string('numeric',1);?></td>
-					<td><?php echo $val->leave_name;?></td>
-					<td><?php echo 1;?></td>
-					<td><?php echo $val->total_credits;?></td>
-					<td><?php echo random_string('numeric',1);?></td>
-					<td><input type="text"  class="txtfield"  name="adjustments" value="<?php echo $val->note;?>" ela_id="<?php echo $val->ela_id;?>" /></td>
-					<td>10060</td>
-					<td><input type="text" class="txtfield" name="adjustments_reasons" value="<?php echo $val->reasons;?>"  ela_id="<?php echo $val->ela_id;?>" /> </td>  
-	            </tr>	            
-	            <?php 		
-	            		endforeach;
-	            	}else{
-	            ?>
-	            <tr>
-	            	<td colspan="8">
-	            	<?php echo msg_empty();?>
-	            	</td>
-	            </tr>
-	            <?php 		
-	            	}
-	            ?>
-            
+            <?php 
+            	if($inquiry_result){
+            		foreach($inquiry_result as $key=>$val):
+            ?>
+	            	<tr>
+						<td><?php echo $val->period;?></td>
+						<td><?php echo $val->leave_name;?></td>
+						<td><?php echo $val->total_leave_requested;?></td>
+						<td><?php echo $val->total_credits;?></td>
+						<td><?php echo random_string('numeric',1);?></td>
+						<td><input type="text"  class="txtfield"  name="adjustments" value="<?php echo $val->note;?>" ela_id="<?php echo $val->ela_id;?>" /></td>
+						<td>10060</td>
+						<td><input type="text" class="txtfield" name="adjustments_reasons" value="<?php echo $val->reasons;?>"  ela_id="<?php echo $val->ela_id;?>" /> </td>  
+		            </tr>	            
+            <?php 		
+            		endforeach;
+            	}else{
+            ?>
+		            <tr><td colspan="8"><?php echo msg_empty();?></td></tr>
+            <?php 		
+            	}
+            ?>     
             </tbody>
-            </table>
+         </table>
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
@@ -138,6 +136,12 @@
 						}
 					});
 				});
+
+				jQuery(document).on("blur","input[name='adjustments'],input[name='adjustments_reasons']",function(e){
+					jQuery("#jshow_status").fadeIn('slow',function(){
+						jQuery(this).fadeOut('slow');
+					});
+				});	
 			}
 			// AUTO SAVE REASONS ZONE
 			function autosave_adjustments_reasons(){
