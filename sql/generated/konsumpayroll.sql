@@ -598,6 +598,22 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `overtime_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `overtime_settings` (
+  `overtime_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automatic_recognition` int(11) NOT NULL,
+  `overtime_as_leave_hours` int(11) NOT NULL,
+  `leave_type_id` int(11) NOT NULL,
+  `min_hours` int(11) NOT NULL,
+  `increment` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`overtime_settings_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+--
 -- Table structure for table `employee_leaves_application`
 --
 
