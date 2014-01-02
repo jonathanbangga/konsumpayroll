@@ -1164,7 +1164,7 @@
 					a.payroll_cloud_id as payroll_cloud_id,
 					at.allowance_type_name as allowance_type_name,
 					efd.amount as amount,
-					at.taxable as taxable
+					efd.taxable as taxable
 					FROM employee_fixed_allowances efd
 					LEFT JOIN allowance_type at ON efd.allowance_type_id = at.allowance_type_id
 					LEFT JOIN employee e ON efd.emp_id = e.emp_id
@@ -1190,7 +1190,7 @@
 					a.payroll_cloud_id as payroll_cloud_id,
 					at.allowance_type_name as allowance_type_name,
 					efd.amount as amount,
-					at.taxable as taxable
+					efd.taxable as taxable
 					FROM employee_fixed_allowances efd
 					LEFT JOIN allowance_type at ON efd.allowance_type_id = at.allowance_type_id
 					LEFT JOIN employee e ON efd.emp_id = e.emp_id
@@ -1259,11 +1259,12 @@
 		 * @param unknown_type $recurring
 		 * @param unknown_type $comp_id
 		 */
-		public function update_fixed_allowance($emp_idEdit,$allowance_type,$amount_edit,$comp_id){
+		public function update_fixed_allowance($emp_idEdit,$allowance_type,$amount_edit,$taxable_edit,$comp_id){
 			$sql = $this->db->query("
 				UPDATE employee_fixed_allowances
 				SET allowance_type_id = '{$allowance_type}', 
-				amount = '{$amount_edit}'
+				amount = '{$amount_edit}',
+				taxable = '{$taxable_edit}'
 				WHERE emp_id = '{$emp_idEdit}'
 				AND company_id = '{$comp_id}'
 			");

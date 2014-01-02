@@ -75,6 +75,7 @@
 					$this->form_validation->set_rules("tin[{$key_2}]", 'TIN', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("sss[{$key_2}]", 'SSS', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("hdmf[{$key_2}]", 'HDMF', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("philhealth[{$key_2}]", 'PhilHealth', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("no_dependents[{$key_2}]", 'Number of Dependents', 'trim|required|xss_clean');
 				}
 				
@@ -95,7 +96,7 @@
 						$home_no = $this->input->post('contact_no');
 						$tin = $this->input->post('tin');
 						$sss = $this->input->post('sss');
-						$phil_health = "";
+						$phil_health = $this->input->post('philhealth');
 						$gsis = "";
 						$hdmf = $this->input->post('hdmf');
 						$emergency_contact_person = "";
@@ -142,7 +143,7 @@
 							'home_no' => $home_no[$key],
 							'tin' => $tin[$key],
 							'sss' => $sss[$key],
-							'phil_health' => $phil_health,
+							'phil_health' => $phil_health[$key],
 							'gsis' => $gsis,
 							'hdmf' => $hdmf[$key],
 							'emergency_contact_person' => $emergency_contact_person,
@@ -244,7 +245,7 @@
 								"tin"=>$emp_res->tin,
 								"hdmf"=>$emp_res->hdmf,
 								"sss"=>$emp_res->sss,
-								"phil_health"=>$emp_res->phil_health,
+								"philhealth"=>$emp_res->phil_health,
 								"gsis"=>$emp_res->gsis,
 								"no_of_dependents"=>$emp_res->no_of_dependents
 							)
@@ -273,6 +274,7 @@
 					$tin_edit = $this->input->post('tin_edit');
 					$sss_edit = $this->input->post('sss_edit');
 					$hdmf_edit = $this->input->post('hdmf_edit');
+					$philhealth_edit = $this->input->post('philhealth_edit');
 					$no_qual_dep_edit = $this->input->post('no_qual_dep_edit');
 					
 					$check_email_address = $this->hr_emp->update_check_email_address($old_email_edit,$email_edit);
@@ -293,6 +295,7 @@
 						'tin'=>$tin_edit,
 						'sss'=>$sss_edit,
 						'hdmf'=>$hdmf_edit,
+						'phil_health'=>$philhealth_edit,
 						'no_of_dependents'=>$no_qual_dep_edit
 					);
 					

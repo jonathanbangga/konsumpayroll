@@ -295,6 +295,57 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	    for(var a=0;a<=100;a++){ // a = dummy
+	    	jQuery("input[name='sub_dept[]']").eq(a).removeClass("emp_str"); 
+	    	jQuery("input[name='last_date[]']").eq(a).removeClass("emp_str");
+	    	jQuery("input[name='bank_route[]']").eq(a).removeClass("emp_str");
+	    	jQuery("input[name='bank_account[]']").eq(a).removeClass("emp_str");
+	    	jQuery("input[name='account_type[]']").eq(a).removeClass("emp_str");
+
+	    	var department = jQuery("select[name='department[]']").eq(a).val();
+	    	var employment_type = jQuery("select[name='employment_type[]']").eq(a).val();
+	    	var payment_method = jQuery("select[name='payment_method[]']").eq(a).val();
+	    	var payroll_group = jQuery("select[name='payroll_group[]']").eq(a).val();
+	    	var default_project = jQuery("select[name='default_project[]']").eq(a).val();
+	    	var witholding_tax = jQuery("select[name='witholding_tax[]']").eq(a).val();
+
+	    	if(department == ""){
+	    		jQuery("select[name='department[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='department[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(employment_type == ""){
+	    		jQuery("select[name='employment_type[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='employment_type[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(payment_method == ""){
+	    		jQuery("select[name='payment_method[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='payment_method[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(payroll_group == ""){
+	    		jQuery("select[name='payroll_group[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='payroll_group[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(default_project == ""){
+	    		jQuery("select[name='default_project[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='default_project[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(witholding_tax == ""){
+	    		jQuery("select[name='witholding_tax[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='witholding_tax[]']").eq(a).removeClass("emp_str");
+	    	}
+	    }
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

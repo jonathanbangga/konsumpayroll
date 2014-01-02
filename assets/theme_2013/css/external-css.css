@@ -54,3 +54,10 @@
 #side-menu ul ul li a {
 	background: none;
 }
+.error_msg_cont p{
+	color: #E14343;
+	padding: 0;
+}
+.error_msg_cont p:last-child{
+	margin-bottom: 15px;
+}

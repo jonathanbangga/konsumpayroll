@@ -72,13 +72,15 @@
 				$emp_id = $this->input->post('emp_id');
 				$emp_no = $this->input->post('emp_no');
 				$allowance_type = $this->input->post('allowance_type');
-				$amount = $this->input->post('amount'); 
+				$amount = $this->input->post('amount');
+				$taxable = $this->input->post('taxable');
 				
 				foreach($emp_id as $key2=>$val){
 					$this->form_validation->set_rules("emp_id[{$key2}]", 'Employee ID', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("emp_no[{$key2}]", 'Employee Number', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("allowance_type[{$key2}]", 'Allowance Type', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("amount[{$key2}]", 'Amount', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("taxable[{$key2}]", 'Taxable', 'trim|required|xss_clean');
 				}
 				
 				if ($this->form_validation->run()==true){
@@ -89,6 +91,7 @@
 							'company_id' => $this->company_id,
 							'allowance_type_id' => $allowance_type[$key],
 							'amount' => $amount[$key],
+                	    	'taxable' => $taxable[$key]
 						);
 
 						$insert_emp_deduction = $this->jmodel->insert_data('employee_fixed_allowances',$add_emp_fixed_allowance);
@@ -106,13 +109,15 @@
 				$emp_idEdit = $this->input->post('emp_idEdit');
 				$allowance_type = $this->input->post('allowance_type');
 				$amount_edit = $this->input->post('amount_edit');
+				$taxable_edit = $this->input->post('taxable_edit');
 				
 				$this->form_validation->set_rules("emp_idEdit", 'Employee ID', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("allowance_type", 'Allowance Type', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("amount_edit", 'Amount', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("taxable_edit", 'Taxable', 'trim|required|xss_clean');
 				
 				if ($this->form_validation->run()==true){
-					$update_info = $this->hr_emp->update_fixed_allowance($emp_idEdit,$allowance_type,$amount_edit,$this->company_id);
+					$update_info = $this->hr_emp->update_fixed_allowance($emp_idEdit,$allowance_type,$amount_edit,$taxable_edit,$this->company_id);
 					if($update_info){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
 						echo json_encode(array("success"=>1));
@@ -157,7 +162,8 @@
 								"emp_id"=>$get_info_row->emp_id,
 								"emp_name"=>ucwords($get_info_row->first_name)." ".ucwords($get_info_row->last_name),
 								"allowance_type_id"=>$get_info_row->allowance_type_id,
-								"amount"=>$get_info_row->amount
+								"amount"=>$get_info_row->amount,
+								"taxable"=>$get_info_row->taxable
 							)
 						);
 						return false;

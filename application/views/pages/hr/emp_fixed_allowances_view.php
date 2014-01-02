@@ -79,6 +79,14 @@
               <td><input type="text" value="" name="amount_edit" class="txtfield amount_edit" /></td>
             </tr>
             <tr>
+              <td>Taxable: </td>
+              <td>
+              	<select class='txtselect select-medium taxable_edit' name='taxable_edit'>
+              		<option value='Yes<?php echo set_select('taxable_edit', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('taxable_edit', 'No'); ?>'>No</option>
+              	</select>
+              </td>
+            </tr>
+            <tr>
               <td>&nbsp;</td>
               <td>
 	              <input type="submit" value="Update" name="update_info" class="btn" />
@@ -98,7 +106,7 @@
 	    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
 	    tbl += "<td><select style='min-width: 148px;' class='txtselect select-medium' name='allowance_type[]'><?php if($emp_fixed_allowance_type == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($emp_fixed_allowance_type as $row_type){?> <option value='<?php print $row_type->allowance_type_id;?><?php echo set_select('allowance_type[]', $row_type->allowance_type_name); ?>'><?php print $row_type->allowance_type_name;?></option><?php } }?></select></td>";
 	    tbl += "<td><input type='text' name='amount[]' class='valid_to txtfield'></td>";
-	    tbl += "<td></td>";
+	    tbl += "<td><select class='txtselect select-medium' name='taxable[]'><option value='Yes<?php echo set_select('taxable[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('taxable[]', 'No'); ?>'>No</option></select></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	    tbl += "</tr>";
 	          
@@ -185,6 +193,23 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	    for(var a=0;a<=100;a++){ // a = dummy
+	    	var allowance_type = jQuery("select[name='allowance_type[]']").eq(a).val();
+	    	var taxable = jQuery("select[name='taxable[]']").eq(a).val();
+
+	    	if(allowance_type == ""){
+	    		jQuery("select[name='allowance_type[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='allowance_type[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(taxable == ""){
+	    		jQuery("select[name='taxable[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='taxable[]']").eq(a).removeClass("emp_str");
+	    	}
+	    }
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;
@@ -288,6 +313,12 @@
 							jQuery(".allowanceType_edit option").each(function(){
 								var _this = jQuery(this);
 								if(_this.val() == status.allowance_type_id){
+									_this.prop("selected",true);
+								}
+							});
+							jQuery(".taxable_edit option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.taxable){
 									_this.prop("selected",true);
 								}
 							});
