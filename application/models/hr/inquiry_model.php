@@ -20,34 +20,35 @@
 		 */
 		public function get_employee_inquiries($company_id,$payroll_account_id=NULL,$employee_name=NULL,$year=NULL){
 			$where = "";
-			if($payroll_account_id !=""){
-				$where .="AND a.payroll_cloud_id='{$this->db->escape_str($payroll_account_id)}' ";
-			}else if($employee_name !=""){
-				$where .="AND CONCAT(e.first_name,' ',e.last_name) = '{$this->db->escape_str($employee_name)}' ";
-			}else if($year !=""){
-				$where .="AND year(ela.date_start) = '{$this->db->escape_str($year)}'";
-			}
+			if($payroll_account_id !="") $where .="AND a.payroll_cloud_id='{$this->db->escape_str($payroll_account_id)}' ";
+			if($employee_name !="") $where .="AND CONCAT(e.first_name,' ',e.last_name) = '{$this->db->escape_str($employee_name)}' ";
+			if($year !="") $where .="AND year(ela.date_start) = '{$this->db->escape_str($year)}'";
 			if(is_numeric($company_id)){
 				$sql = "SELECT ela.emp_id,ela.employee_leaves_application_id as ela_id,
-						ela.leave_type_id,el.leave_credits as total_credits,ela.note as adjustments,
+						ela.leave_type_id,
+						el.leave_credits as total_credits,
+						ela.note as adjustments,
+						ela.total_leave_requested,
 						a.payroll_cloud_id as payroll_cloud_id,
 						concat(e.first_name,' ',e.last_name) as full_name,
-						ela.reasons as adjustments_reasons,lt.leave_type_name as leave_name,
+						ela.reasons as adjustments_reasons,lt.leave_type as leave_name,
 						ela.note as note,
-						ela.reasons as reasons 
+						ela.reasons as reasons,
+						lt.period as period
 						FROM employee_leaves_application ela 
 						LEFT JOIN employee e on e.emp_id = ela.emp_id 
 						LEFT JOIN accounts a on a.account_id = e.account_id 
 						LEFT JOIN employee_leaves el on el.emp_id = ela.emp_id 
 						LEFT JOIN leave_type lt on lt.leave_type_id = ela.leave_type_id
-						WHERE ela.company_id = '{$this->db->escape_str($company_id)}' AND ela.leave_application_status='approve' 
-						";	
-				$sql2 = "SELECT *,lt.leave_type_name as sleave_name,el.leave_credits as total_credits FROM employee_leaves el
+						WHERE ela.company_id = '{$this->db->escape_str($company_id)}' 		 
+						";
+				// AND ela.leave_application_status='approve'	
+				$sql2 = "SELECT *,lt.leave_type as sleave_name,el.leave_credits as total_credits FROM employee_leaves el
 					LEFT JOIN leave_type lt on lt.leave_type_id = el.leave_type_id 
 					LEFT JOIN leaves l on l.company_id  = el.company_id 
 					LEFT JOIN employee e on e.emp_id = e.emp_id 
 					LEFT JOIN accounts a  on a.account_id = e.account_id 
-					WHERE el.company_id = '{$this->db->escape_str($company_id)}'
+					WHERE el.company_id = '{$this->db->escape_str($company_id)}' 
 					";	
 				
 				$query = $this->db->query($sql.$where);

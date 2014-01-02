@@ -84,16 +84,16 @@
 				foreach($emp_id as $key2=>$val){
 					$this->form_validation->set_rules("emp_id[{$key2}]", 'Employee ID', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("emp_no[{$key2}]", 'Employee Number', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("min_wage_earner[{$key2}]", 'Allowance Type', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("min_wage_earner[{$key2}]", 'Min Wage Earner', 'trim|required|xss_clean');
 					$this->form_validation->set_rules("amount[{$key2}]", 'Amount', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("entitled_to_basic_pay[{$key2}]", 'Employee ID', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("pay_rate_type[{$key2}]", 'Employee Number', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("time_sheet_required[{$key2}]", 'Allowance Type', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("entitled_to_ot[{$key2}]", 'Amount', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("entitled_to_nsd[{$key2}]", 'Amount', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("night_shift_diff_rate[{$key2}]", 'Amount', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("entitled_commission[{$key2}]", 'Amount', 'trim|required|xss_clean');
-					$this->form_validation->set_rules("entitled_holi_pre[{$key2}]", 'Amount', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("entitled_to_basic_pay[{$key2}]", 'Entitled to Basic Pay', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("pay_rate_type[{$key2}]", 'Pay Rate Type', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("time_sheet_required[{$key2}]", 'Time Sheet Required', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("entitled_to_ot[{$key2}]", 'Entitled To OT', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("entitled_to_nsd[{$key2}]", 'Entitled To NSD', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("night_shift_diff_rate[{$key2}]", 'Night Shift Diff Rate', 'trim|xss_clean');
+					$this->form_validation->set_rules("entitled_commission[{$key2}]", 'Entitled  Commission', 'trim|required|xss_clean');
+					$this->form_validation->set_rules("entitled_holi_pre[{$key2}]", 'Entitled Holi Pre', 'trim|required|xss_clean');
 				}
 				
 				if ($this->form_validation->run()==true){

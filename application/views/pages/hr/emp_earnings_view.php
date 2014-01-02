@@ -125,8 +125,8 @@
 	    tbl += "<td><select class='txtselect select-medium' name='pay_rate_type[]'><option value='Month<?php echo set_select('pay_rate_type[]', 'Month'); ?>'>Month</option><option value='Half Month<?php echo set_select('pay_rate_type[]', 'Half Month'); ?>'>Half Month</option></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='time_sheet_required[]'><option value='Yes<?php echo set_select('time_sheet_required[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('time_sheet_required[]', 'No'); ?>'>No</option></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='entitled_to_ot[]'><option value='Yes<?php echo set_select('entitled_to_ot[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('entitled_to_ot[]', 'No'); ?>'>No</option></select></td>";
-	    tbl += "<td><select class='txtselect select-medium' name='entitled_to_nsd[]'><option value='Yes<?php echo set_select('entitled_to_nsd[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('entitled_to_nsd[]', 'No'); ?>'>No</option></select></td>";
-	    tbl += "<td><input type='text' name='night_shift_diff_rate[]' class='valid_to txtfield'></td>";
+	    tbl += "<td><select class='txtselect select-medium' attr_size_val="+size+" name='entitled_to_nsd[]'><option value='Yes<?php echo set_select('entitled_to_nsd[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('entitled_to_nsd[]', 'No'); ?>'>No</option></select></td>";
+	    tbl += "<td><input type='text' name='night_shift_diff_rate[]' class='valid_to txtfield nsd_rate_val"+size+"'></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='entitled_commission[]'><option value='Yes<?php echo set_select('entitled_commission[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('entitled_commission[]', 'No'); ?>'>No</option></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='entitled_holi_pre[]'><option value='Yes<?php echo set_select('entitled_holi_pre[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('entitled_holi_pre[]', 'No'); ?>'>No</option></select></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
@@ -215,6 +215,77 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	    for(var a=0;a<=100;a++){ // a = dummy
+	    	var entitle_nsd = jQuery("select[name='entitled_to_nsd[]']").eq(a).val();
+	    	var entitle_nsd_size = jQuery("select[name='entitled_to_nsd[]']").eq(a).attr("attr_size_val");
+	    	if(entitle_nsd == "Yes"){
+				if(jQuery("input[name='night_shift_diff_rate[]']").eq(a).val() == ""){
+					jQuery("input[name='night_shift_diff_rate[]']").eq(a).addClass("emp_str");
+				}else{
+					jQuery("input[name='night_shift_diff_rate[]']").eq(a).removeClass("emp_str");
+				}
+	    	}else{
+	    		jQuery("input[name='night_shift_diff_rate[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	var min_wage_earner = jQuery("select[name='min_wage_earner[]']").eq(a).val();
+	    	var entitled_to_basic_pay = jQuery("select[name='entitled_to_basic_pay[]']").eq(a).val();
+	    	var pay_rate_type = jQuery("select[name='pay_rate_type[]']").eq(a).val();
+	    	var time_sheet_required = jQuery("select[name='time_sheet_required[]']").eq(a).val();
+	    	var entitled_to_ot = jQuery("select[name='entitled_to_ot[]']").eq(a).val();
+	    	var entitled_to_nsd = jQuery("select[name='entitled_to_nsd[]']").eq(a).val();
+	    	var entitled_commission = jQuery("select[name='entitled_commission[]']").eq(a).val();
+	    	var entitled_holi_pre = jQuery("select[name='entitled_holi_pre[]']").eq(a).val();
+
+	    	if(min_wage_earner == ""){
+	    		jQuery("select[name='min_wage_earner[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='min_wage_earner[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(entitled_to_basic_pay == ""){
+	    		jQuery("select[name='entitled_to_basic_pay[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='entitled_to_basic_pay[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(pay_rate_type == ""){
+	    		jQuery("select[name='pay_rate_type[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='pay_rate_type[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(time_sheet_required == ""){
+	    		jQuery("select[name='time_sheet_required[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='time_sheet_required[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(entitled_to_ot == ""){
+	    		jQuery("select[name='entitled_to_ot[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='entitled_to_ot[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(entitled_to_nsd == ""){
+	    		jQuery("select[name='entitled_to_nsd[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='entitled_to_nsd[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(entitled_commission == ""){
+	    		jQuery("select[name='entitled_commission[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='entitled_commission[]']").eq(a).removeClass("emp_str");
+	    	}
+
+	    	if(entitled_holi_pre == ""){
+	    		jQuery("select[name='entitled_holi_pre[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='entitled_holi_pre[]']").eq(a).removeClass("emp_str");
+	    	}
+	    }
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

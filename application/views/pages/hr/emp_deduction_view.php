@@ -199,6 +199,15 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	    for(var a=0;a<=100;a++){ // a = dummy
+	    	var deduction_type = jQuery("select[name='deduction_type[]']").eq(a).val();
+	    	if(deduction_type == ""){
+	    		jQuery("select[name='deduction_type[]']").eq(a).addClass("emp_str");
+	    	}else{
+	    		jQuery("select[name='deduction_type[]']").eq(a).removeClass("emp_str");
+	    	}
+	    }
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

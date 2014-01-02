@@ -598,6 +598,22 @@ CREATE TABLE IF NOT EXISTS `employee_leaves` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `overtime_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `overtime_settings` (
+  `overtime_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automatic_recognition` int(11) NOT NULL,
+  `overtime_as_leave_hours` int(11) NOT NULL,
+  `leave_type_id` int(11) NOT NULL,
+  `min_hours` int(11) NOT NULL,
+  `increment` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`overtime_settings_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+--
 -- Table structure for table `employee_leaves_application`
 --
 
@@ -1264,14 +1280,22 @@ CREATE TABLE IF NOT EXISTS `leaves` (
 
 CREATE TABLE IF NOT EXISTS `leave_type` (
   `leave_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `leave_type_name` varchar(100) NOT NULL,
-  `payable` enum('yes','no') NOT NULL,
-  `required_document` varchar(100) NOT NULL,
+  `leave_type` varchar(80) NOT NULL,
+  `payable` int(11) NOT NULL,
+  `required_documents` varchar(250) NOT NULL,
+  `include_in_actual_hours_worked` int(11) NOT NULL,
+  `leaves_used_to_deduct_no_of_work` int(11) NOT NULL,
+  `leave_accrued` int(11) NOT NULL,
+  `period` varchar(100) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `years_of_service` varchar(100) NOT NULL,
+  `unused_leave` varchar(100) NOT NULL,
+  `unused_leave_upon_termination` varchar(100) NOT NULL,
+  `max_days_of_leave` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`leave_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

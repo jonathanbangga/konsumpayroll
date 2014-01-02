@@ -46,7 +46,7 @@
 		 */
 		public function search() {
 			$data['page_title'] = "INQUIRY";
-			$data['sidebar_menu'] =$this->sidebar_menu;
+			$data['sidebar_menu'] = $this->sidebar_menu;
 			$data['inquiry_result'] = '';
 			$data['employees'] = $this->inquiry->fetch_all_employee($this->company_info->company_id);		
 			if($this->input->post('submit')){
@@ -57,13 +57,7 @@
 					$this->session->set_userdata("payroll_user",$this->input->post('payroll_user'));
 					$this->session->set_userdata("employee_name",$this->input->post('employee_name'));
 					$this->session->set_userdata("year",$this->input->post('year'));	
-					$data['inquiry_result']  = $this->inquiry->get_employee_inquiries(
-												$this->company_info->company_id,
-												$this->input->post('payroll_user'),
-												$this->input->post('employee_name'),
-												$this->input->post('year')
-												);
-				
+					$data['inquiry_result'] = $this->inquiry->get_employee_inquiries($this->company_info->company_id,$this->input->post('payroll_user'),$this->input->post('employee_name'),$this->input->post('year'));		
 				}else{
 					
 				}	
@@ -143,7 +137,7 @@
 			$contents_stored = "Period \t Leave Type \t Total Credits \t Accrued Leaves \t Used Leaves \t Adjustments \t Ending Balance \t Adjustment Reason\n";
 			if($data['inquiry_result']){					
 				foreach($data['inquiry_result'] as $key=>$val):
-					$contents_stored .= random_string('numeric',1)." \t ".$val->leave_name." \t 1 \t".$val->total_credits." \t "
+					$contents_stored .= $val->period." \t ".$val->leave_name." \t ".$val->total_leave_requested." \t".$val->total_credits." \t "
 									.random_string('numeric',1)."\t".$val->note." \t 1000 \t ".$val->reasons."\n";
 				endforeach;
 			}
