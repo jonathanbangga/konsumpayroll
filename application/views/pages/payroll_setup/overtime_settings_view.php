@@ -21,10 +21,14 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 			  if($ot_sql->num_rows()>0){
 				foreach($ot_sql->result() as $ot){ ?>
 					<tr>
-						<td><?php echo $ot->overtime_type_name;	?></td>
-						<td><?php echo $ot->pay_rate; ?></td>
-						<td><?php echo $ot->ot_rate; ?></td>
-						<td><a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="#" class="btn btn-red btn-action">DELETE</a></td>
+						<td><span class="overtime_type_span"><?php echo $ot->overtime_type_name;	?></span></td>
+						<td><span class="pay_rate_span"><?php echo $ot->pay_rate; ?></span></td>
+						<td><span class="ot_rate_span"><?php echo $ot->ot_rate; ?></span></td>
+						<td>
+							<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit">EDIT</a> 
+							<a href="javascript:void(0);" class="btn btn-red btn-action btn-delete">DELETE</a>
+							<input type="hidden" class="overtime_type_id" value="<?php echo $ot->overtime_type_id ?>" />
+						</td>
 					</tr>
 			  <?php
 				}
@@ -123,12 +127,16 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 			if($at_sql->num_rows()>0){
 				foreach($at_sql->result() as $at){ ?>
 					<tr>
-					  <td><?php echo $at->allowance_type_name; ?></td>
-					  <td><?php echo ($at->taxable==1)?"Yes":"No"; ?></td>
-					  <td><?php echo $at->maximum_non_taxable_amount; ?></td>
-					  <td><?php echo $at->amount; ?></td>
-					  <td><?php echo $at->minimum_ot_hours; ?></td>
-					  <td><a href="javascript:void(0);" class="btn btn-gray btn-action">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-remove">REMOVE</a></td>
+					  <td><span class="allowance_type_name_span"><?php echo $at->allowance_type_name; ?></span></td>
+					  <td><span class="taxable_span" style="display:none;"><?php echo $at->taxable; ?></span><?php echo ($at->taxable==1)?"Yes":"No"; ?></td>
+					  <td><span class="maximum_non_taxable_amount_span"><?php echo $at->maximum_non_taxable_amount; ?></span></td>
+					  <td><span class="amount_span"><?php echo $at->amount; ?></span></td>
+					  <td><span class="minimum_ot_hours_span"><?php echo $at->minimum_ot_hours; ?></span></td>
+					  <td>
+						<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit-at">EDIT</a> 
+						<a href="javascript:void(0);" class="btn btn-red btn-delete-at">DELETE</a>
+						<input type="hidden" class="allowance_type_id" value="<?php echo $at->allowance_type_id ?>" />
+					  </td>
 					</tr>
 				<?php
 				}
@@ -154,33 +162,54 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
         <!-- FOOTER-GRP-BTN END -->
       </div>
 
-<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+<div id="confirm-delete-dialog" class="jdialog"  title="Delete">
 	<div class="inner_div">
 		Are you sure you want to delete? 
 	</div>
 </div>  
 
-<div id="project-details-dialog" class="jdialog"  title="Edit Project">
+<div id="edit-overtime_settings" class="jdialog"  title="Edit">
 	<div class="inner_div">
 		<p>
-			Earnings:<br />
-			<input type="text" id="edit_earnings" name="edit_earnings" class="txtfield" />
+			Overtime Type:<br />
+			<input type="text" id="edit_overtime_type" class="txtfield" />
+		</p>
+		<p>
+			Pay Rate %:<br />
+			<input type="text" id="edit_pay_rate" class="txtfield" />
+		</p>
+		<p>
+			OT Rate %:<br />
+			<input type="text" id="edit_ot_rate" class="txtfield" />
+		</p>
+	</div>
+</div>
+
+<div id="edit-allowance_settings" class="jdialog"  title="Edit">
+	<div class="inner_div">
+		<p>
+			Allowance Type:<br />
+			<input type="text" id="edit_allowance_type" class="txtfield" />
 		</p>
 		<p>
 			Taxable:<br />
-			<select class="txtselect taxable" id="edit_taxable" style="width: 85px !important;margin-top: 10px;">
-				<option value="-1">Select</option>
+			<select class="txtselect" id="edit_taxable">
+				<option value="-1">select</option>
 				<option value="1">Yes</option>
 				<option value="0">No</option>
 			</select>
 		</p>
 		<p>
-			Max Non Taxable:<br />
-			<input type="text" id="edit_max_non_taxable" name="edit_max_non_taxable" class="txtfield" />
+			Max Non-Taxable Amount:<br />
+			<input type="text" id="edit_maximum_non_taxable" class="txtfield" />
 		</p>
 		<p>
-			Witholding Tax Rate:<br />
-			<input type="text" id="edit_witholding_tax" name="edit_witholding_tax" class="txtfield" />
+			Amount:<br />
+			<input type="text" id="edit_amount" class="txtfield" />
+		</p>
+		<p>
+			Min OT Hours:<br />
+			<input type="text" id="edit_minimum_ot" class="txtfield" />
 		</p>
 	</div>
 </div>
@@ -209,13 +238,86 @@ jQuery(document).ready(function(){
 		jQuery(".ot_tbl tbody").append(str);
 	});
 	
-	// remove overtime type
+	// remove overtime type row
 	jQuery(document).on("click",".btn-remove",function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".overtime_type").length==0){
 			jQuery("#empty").show();
 		}
 	});
+	
+	// delete overtime type
+	jQuery(".btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var overtime_type_id = obj.parents("tr:first").find(".overtime_type_id").val();
+					// ajax call
+					jQuery.ajax({
+						type: "POST",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings/ajax_delete_overtime_type",
+						data: {
+							overtime_type_id: overtime_type_id,
+							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+						}
+					}).done(function(ret){
+						jQuery.cookie("msg", "Overtime type has been deleted");
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings";
+					});				
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	// edit overtime type
+	jQuery(".btn-edit").click(function(){
+		var obj = jQuery(this);
+		var overtime_type_id = obj.parents("tr:first").find(".overtime_type_id").val();
+		var overtime_type = obj.parents("tr:first").find(".overtime_type_span").html();
+		var pay_rate = obj.parents("tr:first").find(".pay_rate_span").html();
+		var ot_rate = obj.parents("tr:first").find(".ot_rate_span").html();
+		jQuery("#edit_overtime_type").val(overtime_type);
+		jQuery("#edit_pay_rate").val(pay_rate);
+		jQuery("#edit_ot_rate").val(ot_rate);
+		jQuery("#edit-overtime_settings").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'update': function() {
+					var overtime_type = jQuery("#edit_overtime_type").val();
+					var pay_rate = jQuery("#edit_pay_rate").val();
+					var ot_rate = jQuery("#edit_ot_rate").val();
+					// ajax call
+					jQuery.ajax({
+						type: "POST",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings/ajax_update_overtime_type",
+						data: {
+							overtime_type_id: overtime_type_id,
+							overtime_type: overtime_type,
+							pay_rate: pay_rate,
+							ot_rate: ot_rate,
+							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+						}
+					}).done(function(ret){
+						jQuery.cookie("msg", "Overtime type has been updated");
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings";
+					});	
+				}
+			}
+		});
+	});
+	
+	
 	
 	// add allowance type
 	jQuery("#add-more-at").click(function(){
@@ -233,17 +335,103 @@ jQuery(document).ready(function(){
 							'<td><input style="width:100px;" class="txtfield max_non_taxable" name="max_non_taxable[]" type="text"></td>'+
 							'<td><input style="width:100px;" class="txtfield amount" name="amount[]" type="text"></td>'+
 							'<td><input style="width:100px;" class="txtfield min_ot" name="min_ot[]" type="text"></td>'+
-							'<td><a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action btn-remove-at">REMOVE</a></td>'+
+							'<td>'+
+								'<a href="#" class="btn btn-gray btn-action">EDIT</a>'+ 
+								'<a href="javascript:void(0);" class="btn btn-red btn-action btn-remove-at">REMOVE</a>'+
+							'</td>'+
 						'</tr>';
 		jQuery(".at_tbl tbody").append(str);
 	});
 	
-	// remove allowance type
+	// remove allowance type row
 	jQuery(document).on("click",".btn-remove-at",function(){
 		jQuery(this).parents("tr:first").remove();
 		if(jQuery(".allowance_type").length==0){
 			jQuery("#empty-at").show();
 		}
+	});
+	
+	// delete allowance type
+	jQuery(".btn-delete-at").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var allowance_type_id = obj.parents("tr:first").find(".allowance_type_id").val();
+					// ajax call
+					jQuery.ajax({
+						type: "POST",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings/ajax_delete_allowance_type",
+						data: {
+							allowance_type_id: allowance_type_id,
+							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+						}
+					}).done(function(ret){
+						jQuery.cookie("msg", "Allowance type has been deleted");
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings";
+					});				
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
+	});
+	
+	// edit allowance type
+	jQuery(".btn-edit-at").click(function(){
+		var obj = jQuery(this);
+		var allowance_type_id = obj.parents("tr:first").find(".allowance_type_id").val();
+		var allowance_type = obj.parents("tr:first").find(".allowance_type_name_span").html();
+		var taxable = obj.parents("tr:first").find(".taxable_span").html();
+		var maximum_non_taxable = obj.parents("tr:first").find(".maximum_non_taxable_amount_span").html();
+		var amount = obj.parents("tr:first").find(".amount_span").html();
+		var minimum_ot = obj.parents("tr:first").find(".minimum_ot_hours_span").html();
+		jQuery("#edit_allowance_type").val(allowance_type);
+		jQuery("#edit_taxable option").each(function(){
+			if(jQuery(this).val()==taxable){
+				jQuery(this).prop("selected",true);
+			}
+		});
+		jQuery("#edit_maximum_non_taxable").val(maximum_non_taxable);
+		jQuery("#edit_amount").val(amount);
+		jQuery("#edit_minimum_ot").val(minimum_ot);
+		jQuery("#edit-allowance_settings").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'update': function() {
+					var allowance_type = jQuery("#edit_allowance_type").val();
+					var taxable = jQuery("#edit_taxable").val();
+					var maximum_non_taxable = jQuery("#edit_maximum_non_taxable").val();
+					var amount = jQuery("#edit_amount").val();
+					var minimum_ot = jQuery("#edit_minimum_ot").val();
+					// ajax call
+					jQuery.ajax({
+						type: "POST",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings/ajax_update_allowance_type",
+						data: {
+							allowance_type_id: allowance_type_id,
+							allowance_type: allowance_type,
+							taxable: taxable,
+							maximum_non_taxable: maximum_non_taxable,
+							amount: amount,
+							minimum_ot: minimum_ot,
+							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+						}
+					}).done(function(ret){
+						jQuery.cookie("msg", "Overtime type has been updated");
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings";
+					});	
+				}
+			}
+		});
 	});
 	
 	// save
@@ -272,6 +460,7 @@ jQuery(document).ready(function(){
 		
 	});
 	
+	// leave type hide/show script
 	jQuery("#oalh_yes").click(function(){
 		jQuery("#leave_type").slideDown();
 	});
