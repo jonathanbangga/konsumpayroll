@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -116,6 +117,7 @@
 			var size = shuffle_str("1234frds");
 			addRow(size);
 			remove_row();
+			change_employee();
 			_name_listing();
 			_datepicker();
 
@@ -124,6 +126,16 @@
 		});
 	}
 
+	function change_employee(){
+		jQuery(".emp_name").focus(function(){
+		    var _this = jQuery(this);
+		    var _attr = _this.attr("attr_uname_val");
+		    _this.removeAttr("readonly").val("");
+		    jQuery(".emp_no"+_attr).val("");
+		    jQuery(".emp_id"+_attr).val("");
+		});
+	}
+	
 	function shuffle_str(str) {
 	    var a = str.split(""),
 	        n = a.length;
@@ -143,7 +155,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_id[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
@@ -187,14 +202,46 @@
 	        }
 	    });
 
+	 	// show error msg
+	    var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_leave_type = "";
+		var why_remaining_hours = "";
+		var why_as_of = "";
+	    
 	    for(var a=0;a<=100;a++){ // a = dummy
+	    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
 	    	var leave_type = jQuery("select[name='leave_type[]']").eq(a).val();
+	    	var remaining_hours = jQuery("input[name='remaining_hours[]']").eq(a).val();
+	    	var as_of = jQuery("input[name='as_of[]']").eq(a).val();
+	    	
 	    	if(leave_type == ""){
+	    		why_leave_type = 1;
 	    		jQuery("select[name='leave_type[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='leave_type[]']").eq(a).removeClass("emp_str");
 	    	}
+
+	    	if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(remaining_hours == "") why_remaining_hours = 1;
+			if(as_of == "") why_as_of = 1;
 	    }
+
+	    if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_leave_type != "") why += "<p>- Please select Leave Type</p>";
+		if(why_remaining_hours != "") why += "<p>- Please enter Leave Credits</p>";
+		if(why_as_of != "") why += "<p>- Please enter As of</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

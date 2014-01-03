@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -190,6 +191,8 @@
         	        	_this.removeClass("emp_str");
         	        }
         	    });
+
+        	    show_error_msg();
         	    
     	    	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
         	    	return false;
@@ -278,6 +281,55 @@
         	}
 
 
+	function show_error_msg(){
+		// show error msg
+		var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_dateFrom = "";
+		var why_dateTo = "";
+		var why_coursename = "";
+		var why_organizer = "";
+		var why_cost = "";
+		var why_training_hours = "";
+		
+		for(var a=0;a<=100;a++){ // a = dummy
+			var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+			var dateFrom = jQuery("input[name='dateFrom[]']").eq(a).val();
+			var dateTo = jQuery("input[name='dateTo[]']").eq(a).val();
+			var coursename = jQuery("input[name='coursename[]']").eq(a).val();
+			var organizer = jQuery("input[name='organizer[]']").eq(a).val();
+			var cost = jQuery("input[name='cost[]']").eq(a).val();
+			var training_hours = jQuery("input[name='training_hours[]']").eq(a).val();
+
+			if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(dateFrom == "") why_dateFrom = 1;
+			if(dateTo == "") why_dateTo = 1;
+			if(coursename == "") why_coursename = 1;
+			if(organizer == "") why_organizer = 1;
+			if(cost == "") why_cost = 1;
+			if(training_hours == "") why_training_hours = 1;
+		}
+
+		if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_dateFrom != "") why += "<p>- Please enter Date From</p>";
+		if(why_dateTo != "") why += "<p>- Please enter Date To</p>";
+		if(why_coursename != "") why += "<p>- Please enter Course Name</p>";
+		if(why_organizer != "") why += "<p>- Please enter Organizer</p>";
+		if(why_cost != "") why += "<p>- Please enter Cost</p>";
+		if(why_training_hours != "") why += "<p>- Please enter Training Hours</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
+	}
+	    	
 	function change_employee(){
 		jQuery(".emp_name").focus(function(){
 		    var _this = jQuery(this);
@@ -294,7 +346,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_name[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}

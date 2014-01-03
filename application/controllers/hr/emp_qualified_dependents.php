@@ -101,9 +101,10 @@
 					foreach($emp_name_res as $row){
 						$emp_name = ucwords($row->first_name)." ".ucwords($row->last_name);
 						$emp_id_row = $row->emp_id;
+						$qual_no = $row->no_of_dependents;
 					}
 					
-					echo json_encode(array("emp_id"=>$emp_id_row,"name"=>$emp_name,"table"=>$qual_dept_list));
+					echo json_encode(array("qual_no"=>$qual_no,"emp_id"=>$emp_id_row,"name"=>$emp_name,"table"=>$qual_dept_list));
 					return false;
 				}
 				

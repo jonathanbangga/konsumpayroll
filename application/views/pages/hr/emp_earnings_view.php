@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -145,6 +146,7 @@
 			var size = shuffle_str("1234frds");
 			addRow(size);
 			remove_row();
+			change_employee();
 			_name_listing();
 			_datepicker();
 
@@ -153,6 +155,16 @@
 		});
 	}
 
+	function change_employee(){
+		jQuery(".emp_name").focus(function(){
+		    var _this = jQuery(this);
+		    var _attr = _this.attr("attr_uname_val");
+		    _this.removeAttr("readonly").val("");
+		    jQuery(".emp_no"+_attr).val("");
+		    jQuery(".emp_id"+_attr).val("");
+		});
+	}
+	
 	function shuffle_str(str) {
 	    var a = str.split(""),
 	        n = a.length;
@@ -172,7 +184,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_id[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
@@ -215,12 +230,29 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
-
+	    
+	 	// show error msg
+		var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_amount = "";
+		var why_night_shift_diff_rate = "";
+		
+		var why_min_wage_earner = "";
+    	var why_entitled_to_basic_pay = "";
+    	var why_pay_rate_type = "";
+    	var why_time_sheet_required = "";
+    	var why_entitled_to_ot = "";
+    	var why_entitled_to_nsd = "";
+    	var why_entitled_commission = "";
+    	var why_entitled_holi_pre = "";
+		
 	    for(var a=0;a<=100;a++){ // a = dummy
 	    	var entitle_nsd = jQuery("select[name='entitled_to_nsd[]']").eq(a).val();
 	    	var entitle_nsd_size = jQuery("select[name='entitled_to_nsd[]']").eq(a).attr("attr_size_val");
 	    	if(entitle_nsd == "Yes"){
 				if(jQuery("input[name='night_shift_diff_rate[]']").eq(a).val() == ""){
+					why_night_shift_diff_rate = 1;
 					jQuery("input[name='night_shift_diff_rate[]']").eq(a).addClass("emp_str");
 				}else{
 					jQuery("input[name='night_shift_diff_rate[]']").eq(a).removeClass("emp_str");
@@ -228,7 +260,11 @@
 	    	}else{
 	    		jQuery("input[name='night_shift_diff_rate[]']").eq(a).removeClass("emp_str");
 	    	}
-
+	    	
+	    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+			var amount = jQuery("input[name='amount[]']").eq(a).val();
+			
 	    	var min_wage_earner = jQuery("select[name='min_wage_earner[]']").eq(a).val();
 	    	var entitled_to_basic_pay = jQuery("select[name='entitled_to_basic_pay[]']").eq(a).val();
 	    	var pay_rate_type = jQuery("select[name='pay_rate_type[]']").eq(a).val();
@@ -238,54 +274,86 @@
 	    	var entitled_commission = jQuery("select[name='entitled_commission[]']").eq(a).val();
 	    	var entitled_holi_pre = jQuery("select[name='entitled_holi_pre[]']").eq(a).val();
 
+	    	if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(amount == "") why_amount = 1;
+	    	
 	    	if(min_wage_earner == ""){
+		    	why_min_wage_earner = 1;
 	    		jQuery("select[name='min_wage_earner[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='min_wage_earner[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(entitled_to_basic_pay == ""){
+		    	why_entitled_to_basic_pay = 1;
 	    		jQuery("select[name='entitled_to_basic_pay[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='entitled_to_basic_pay[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(pay_rate_type == ""){
+		    	why_pay_rate_type = 1;
 	    		jQuery("select[name='pay_rate_type[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='pay_rate_type[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(time_sheet_required == ""){
+		    	why_time_sheet_required = 1;
 	    		jQuery("select[name='time_sheet_required[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='time_sheet_required[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(entitled_to_ot == ""){
+		    	why_entitled_to_ot = 1;
 	    		jQuery("select[name='entitled_to_ot[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='entitled_to_ot[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(entitled_to_nsd == ""){
+		    	why_entitled_to_nsd = 1;
 	    		jQuery("select[name='entitled_to_nsd[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='entitled_to_nsd[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(entitled_commission == ""){
+		    	why_entitled_commission = 1;
 	    		jQuery("select[name='entitled_commission[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='entitled_commission[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(entitled_holi_pre == ""){
+		    	why_entitled_holi_pre = 1;
 	    		jQuery("select[name='entitled_holi_pre[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='entitled_holi_pre[]']").eq(a).removeClass("emp_str");
 	    	}
 	    }
+
+	    if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_amount != "") why += "<p>- Please enter Amount</p>";
+		if(why_night_shift_diff_rate != "") why += "<p>- Please enter Night Shift Diff Rate</p>";
+		
+	    if(why_min_wage_earner != "") why += "<p>- Please select Minimum Wage Earner</p>";
+		if(why_entitled_to_basic_pay != "") why += "<p>- Please select Entitled to Basic Pay</p>";
+		if(why_time_sheet_required != "") why += "<p>- Please select Timesheet Required</p>";
+		if(why_entitled_to_ot != "") why += "<p>- Please select Entitled to Overtime</p>";
+		if(why_entitled_to_nsd != "") why += "<p>- Please select Entitled to NSD</p>";
+		if(why_entitled_commission != "") why += "<p>- Please select Entitled to Commission</p>";
+		if(why_entitled_holi_pre != "") why += "<p>- Please select Entitled to Holiday/Premium</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

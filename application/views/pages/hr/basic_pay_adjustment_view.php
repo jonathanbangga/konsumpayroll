@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -146,7 +147,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_no[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
@@ -220,6 +224,49 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	 	// show error msg
+	    var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_current_basic_pay = "";
+		var why_new_basic_pay = "";
+		var why_effective_date = "";
+		var why_adjustment_date = "";
+		var why_reasons = "";
+
+		for(var a=0;a<=100;a++){ // a = dummy
+	    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+			var current_basic_pay = jQuery("input[name='current_basic_pay[]']").eq(a).val();
+			var new_basic_pay = jQuery("input[name='new_basic_pay[]']").eq(a).val();
+			var effective_date = jQuery("input[name='effective_date[]']").eq(a).val();
+			var adjustment_date = jQuery("input[name='adjustment_date[]']").eq(a).val();
+			var reasons = jQuery("input[name='reasons[]']").eq(a).val();
+
+			if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(current_basic_pay == "") why_current_basic_pay = 1;
+			if(new_basic_pay == "") why_new_basic_pay = 1;
+			if(effective_date == "") why_effective_date = 1;
+			if(adjustment_date == "") why_adjustment_date = 1;
+			if(reasons == "") why_reasons = 1;
+		}
+
+		if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_current_basic_pay != "") why += "<p>- Please enter Current Basic Pay</p>";
+		if(why_new_basic_pay != "") why += "<p>- Please enter New Basic Pay</p>";
+		if(why_effective_date != "") why += "<p>- Please enter Effective Date</p>";
+		if(why_adjustment_date != "") why += "<p>- Please enter Adjustment Date</p>";
+		if(why_reasons != "") why += "<p>- Please enter Reasons</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

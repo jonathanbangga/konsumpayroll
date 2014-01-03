@@ -1,6 +1,7 @@
 <p>Employee Name: <?php print ucwords($emp_info->first_name)." ".ucwords($emp_info->last_name);?></p>
 <p>Employee Number: <?php print $emp_info->payroll_cloud_id;?></p>
 <p>Loan Type: <?php print $emp_info->loan_type_name;?></p>
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -145,7 +146,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='payroll_date[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".error_msg_cont").html("");
+					jQuery(".saveBtn").css("display","none");
+				}
 		    });
 		});
 	}
@@ -170,6 +174,33 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	 	// show error msg
+	    var why = "";
+		var why_payroll_date = "";
+		var why_principal = "";
+		var why_interest = "";
+
+		for(var a=0;a<=100;a++){ // a = dummy
+			var payroll_date = jQuery("input[name='payroll_date[]']").eq(a).val();
+	    	var principal = jQuery("input[name='principal[]']").eq(a).val();
+	    	var interest = jQuery("input[name='interest[]']").eq(a).val();
+
+	    	if(payroll_date == "") why_payroll_date = 1;
+	    	if(principal == "") why_principal = 1;
+	    	if(interest == "") why_interest = 1;
+		}
+
+		if(why_payroll_date != "") why += "<p>- Please enter Payroll Date</p>";
+		if(why_principal != "") why += "<p>- Please enter Principal</p>";
+		if(why_interest != "") why += "<p>- Please enter Interest</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str") || jQuery(".emp_conList tr select").hasClass("emp_str")){
 	    	return false;
