@@ -291,8 +291,11 @@
 				    var _this = jQuery(this);
 				    jQuery(this).find(".delRow").on("click", function(){
 				        _this.remove();
-				        var input_text_size = jQuery("input[name='uname[]']").length;
-						if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				        var input_text_size = jQuery("input[name='emp_name[]']").length;
+						if(parseInt(input_text_size) == 0){
+							jQuery(".saveBtn").css("display","none");
+							jQuery(".error_msg_cont").html("");
+						}
 				    });
 				});
 			}
