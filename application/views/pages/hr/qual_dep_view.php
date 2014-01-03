@@ -29,6 +29,7 @@
           </table>
           	<div class="emp_dep_contbox ihide" title="Add Employee Dependents">
           	<?php print form_open('','onsubmit="return check_dep()"');?>
+          		<span class="ihide qual_no_cont"></span>
           		<h1 class="emp_name_dep custom_h1"></h1><span class="ihide emp_idVal emp_idMain"></span>
 				  <table style="width:100%" class="tbl emp_dept_contList">
 		            <tbody>
@@ -135,6 +136,7 @@
                                         jQuery(".emp_name_dep").text(emp_name);
 										jQuery(".emp_idVal").text(emp_idVal);
 										jQuery(".emp_idVal").val(emp_idVal);
+										jQuery(".qual_no_cont").text(status.qual_no);
 										
                                         jQuery(".emp_dep_contbox table:eq(0) tbody").append(view_dep);
                                         jQuery(".emp_dep_contbox").dialog({
@@ -148,7 +150,7 @@
                                         //check_dep();
                                         _delete_dependentsDb();
                                         get_information();
-
+                                        check_qual_dep_no();
 										return false;
 									}
 							});
@@ -189,6 +191,7 @@
 
 			     	// remove no item row
 					_remove_msg_emp();
+					check_qual_dep_no();
 				});	
 			}
 
@@ -223,7 +226,9 @@
 	        	    var _this = jQuery(this);
 	        	    jQuery(this).find(".delBtnRow").on("click", function(){
 	        	        _this.remove();
-	        	        var input_text_size = jQuery("input[name='dept_name[]']").length;
+	        	        // var input_text_size = jQuery("input[name='dept_name[]']").length;
+	        	        var input_text_size = jQuery("input[name='dept_name_add[]']").length;
+	        	        check_qual_dep_no();
 	        			if(parseInt(input_text_size) == 0) jQuery("input[name='save_dep']").css("display","none");
 	        	    });
 	        	});
@@ -366,6 +371,18 @@
 					yearRange: "-100:+0"
 				});
 			}
+
+	        function check_qual_dep_no(){
+	        	var active_qual_dep = jQuery(".clear_tbl").length;
+	        	var qual_dep_no = jQuery(".qual_no_cont").text();
+
+	        	var new_qual_dep = parseInt(qual_dep_no) - parseInt(active_qual_dep);
+	        	if(new_qual_dep <= 0){
+	        	    jQuery(".add_new_dep").hide();
+	        	}else{
+	        	    jQuery(".add_new_dep").css("display","inline-block");
+	        	}
+	        }
 	        
 			jQuery(function(){
 				view_dep();

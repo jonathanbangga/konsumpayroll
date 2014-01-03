@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -225,6 +226,7 @@
 			var size = shuffle_str("1234frds");
 			addRow(size);
 			remove_row();
+			change_employee();
 			_name_listing();
 			_datepicker();
 
@@ -252,11 +254,24 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_id[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
 
+	function change_employee(){
+		jQuery(".emp_name").focus(function(){
+		    var _this = jQuery(this);
+		    var _attr = _this.attr("attr_uname_val");
+		    _this.removeAttr("readonly").val("");
+		    jQuery(".emp_no"+_attr).val("");
+		    jQuery(".emp_id"+_attr).val("");
+		});
+	}
+	
 	function _name_listing(){
 		var emp_list_val = "<?php print substr($employee, 0, -1);?>";
 		if(jQuery.trim(emp_list_val) == ""){
@@ -296,6 +311,30 @@
 	        }
 	    });
 
+	 	// show error msg
+		var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_position = "";
+		var why_date_hired = "";
+		var why_tax_status = "";
+		var why_timeSheet_approval_grp = "";
+		var why_overtime_approval_grp = "";
+		var why_leave_approval_grp = "";
+		var why_expense_approval_grp = "";
+		var why_eBundy_approval_grp = "";
+		var why_sss_contribution_amount = "";
+		var why_hdmf_contribution_amount = "";
+		var why_philhealth_contribution_amount = "";
+		var why_cost_center = "";
+		
+		var why_department = "";
+		var why_employment_type = "";
+		var why_payment_method = "";
+		var why_payroll_group = "";
+		var why_default_project = "";
+		var why_witholding_tax = "";
+	    
 	    for(var a=0;a<=100;a++){ // a = dummy
 	    	jQuery("input[name='sub_dept[]']").eq(a).removeClass("emp_str"); 
 	    	jQuery("input[name='last_date[]']").eq(a).removeClass("emp_str");
@@ -303,6 +342,21 @@
 	    	jQuery("input[name='bank_account[]']").eq(a).removeClass("emp_str");
 	    	jQuery("input[name='account_type[]']").eq(a).removeClass("emp_str");
 
+	    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+			var position = jQuery("input[name='position[]']").eq(a).val();
+			var date_hired = jQuery("input[name='date_hired[]']").eq(a).val();
+			var tax_status = jQuery("input[name='tax_status[]']").eq(a).val();
+			var timeSheet_approval_grp = jQuery("input[name='timeSheet_approval_grp[]']").eq(a).val();
+			var overtime_approval_grp = jQuery("input[name='overtime_approval_grp[]']").eq(a).val();
+			var leave_approval_grp = jQuery("input[name='leave_approval_grp[]']").eq(a).val();
+			var expense_approval_grp = jQuery("input[name='expense_approval_grp[]']").eq(a).val();
+			var eBundy_approval_grp = jQuery("input[name='eBundy_approval_grp[]']").eq(a).val();
+			var sss_contribution_amount = jQuery("input[name='sss_contribution_amount[]']").eq(a).val();
+			var hdmf_contribution_amount = jQuery("input[name='hdmf_contribution_amount[]']").eq(a).val();
+			var philhealth_contribution_amount = jQuery("input[name='philhealth_contribution_amount[]']").eq(a).val();
+			var cost_center = jQuery("input[name='cost_center[]']").eq(a).val();
+			
 	    	var department = jQuery("select[name='department[]']").eq(a).val();
 	    	var employment_type = jQuery("select[name='employment_type[]']").eq(a).val();
 	    	var payment_method = jQuery("select[name='payment_method[]']").eq(a).val();
@@ -310,42 +364,91 @@
 	    	var default_project = jQuery("select[name='default_project[]']").eq(a).val();
 	    	var witholding_tax = jQuery("select[name='witholding_tax[]']").eq(a).val();
 
+	    	if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(position == "") why_position = 1;
+			if(date_hired == "") why_date_hired = 1;
+			if(tax_status == "") why_tax_status = 1;
+			if(timeSheet_approval_grp == "") why_timeSheet_approval_grp = 1;
+			if(overtime_approval_grp == "") why_overtime_approval_grp = 1;
+			if(leave_approval_grp == "") why_leave_approval_grp = 1;
+			if(expense_approval_grp == "") why_expense_approval_grp = 1;
+			if(eBundy_approval_grp == "") why_eBundy_approval_grp = 1;
+			if(sss_contribution_amount == "") why_sss_contribution_amount = 1;
+			if(hdmf_contribution_amount == "") why_hdmf_contribution_amount = 1;
+			if(philhealth_contribution_amount == "") why_philhealth_contribution_amount = 1;
+			if(cost_center == "") why_cost_center = 1;
+			
 	    	if(department == ""){
+	    		why_department = 1;
 	    		jQuery("select[name='department[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='department[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(employment_type == ""){
+	    		why_employment_type = 1;
 	    		jQuery("select[name='employment_type[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='employment_type[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(payment_method == ""){
+	    		why_payment_method = 1;
 	    		jQuery("select[name='payment_method[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='payment_method[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(payroll_group == ""){
+	    		why_payroll_group = 1;
 	    		jQuery("select[name='payroll_group[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='payroll_group[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(default_project == ""){
+	    		why_default_project = 1;
 	    		jQuery("select[name='default_project[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='default_project[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(witholding_tax == ""){
+	    		why_witholding_tax = 1;
 	    		jQuery("select[name='witholding_tax[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='witholding_tax[]']").eq(a).removeClass("emp_str");
 	    	}
 	    }
+
+	    if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_position != "") why += "<p>- Please enter Position</p>";
+		if(why_date_hired != "") why += "<p>- Please enter Date Hired</p>";
+		if(why_tax_status != "") why += "<p>- Please enter Tax Status</p>";
+		if(why_timeSheet_approval_grp != "") why += "<p>- Please enter Timesheet Approval Group</p>";
+		if(why_overtime_approval_grp != "") why += "<p>- Please enter Overtime Approval Group</p>";
+		if(why_leave_approval_grp != "") why += "<p>- Please enter Leave Approval Group</p>";
+		if(why_expense_approval_grp != "") why += "<p>- Please enter Expense Approval Group</p>";
+		if(why_eBundy_approval_grp != "") why += "<p>- Please enter eBundy Approval Group</p>";
+		if(why_hdmf_contribution_amount != "") why += "<p>- Please enter HDMF Contribution Amount</p>";
+		if(why_philhealth_contribution_amount != "") why += "<p>- Please enter PhilHealth Contribution Amount</p>";
+		if(why_cost_center != "") why += "<p>- Please enter Cost Center</p>";
+		
+	    if(why_department != "") why += "<p>- Please select Department</p>";
+		if(why_employment_type != "") why += "<p>- Please select Employee Type</p>";
+		if(why_payment_method != "") why += "<p>- Please select Payment Method</p>";
+		if(why_payroll_group != "") why += "<p>- Please select Payroll Group</p>";
+		if(why_default_project != "") why += "<p>- Please select Default Project</p>";
+		if(why_witholding_tax != "") why += "<p>- Please select Withholding Tax</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

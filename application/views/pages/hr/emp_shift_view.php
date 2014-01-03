@@ -1,5 +1,8 @@
-<p>Employee Number: <input type="text" class="shift_search_empno" /></p>
-<p>Employee Name: <input type="text" class="shift_search_empname" /></p>
+<p>
+	<input type="text" class="shift_search_empno txtfield" placeholder="Employee Number" />
+	<input type="text" class="shift_search_empname txtfield" placeholder="Employee Name" />
+</p>
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validateForm()"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -105,6 +108,7 @@
 					addNewEmp(size);
 					dob_datepicker();
 					_name_listing();
+					change_employee();
 					check_uname();
 					remove_row();
 					_datepicker();
@@ -116,6 +120,16 @@
 					_remove_no_result();
 				});
             }
+
+        	function change_employee(){
+        		jQuery(".emp_name").focus(function(){
+        		    var _this = jQuery(this);
+        		    var _attr = _this.attr("attr_uname_val");
+        		    _this.removeAttr("readonly").val("");
+        		    jQuery(".emp_no"+_attr).val("");
+        		    jQuery(".emp_id"+_attr).val("");
+        		});
+        	}
             
 			function validateForm(){
 				jQuery(".emp_conList tr input:text").each(function(){
@@ -127,14 +141,52 @@
         	        	_this.removeClass("emp_str");
         	        }
         	    });
-        	    
+
+				// show error msg
+			    var why = "";
+				var why_emp_name = "";
+				var why_emp_no = "";
+				var why_valid_from = "";
+				var why_until = "";
+				var why_payroll_group = "";
+				
+				for(var a=0;a<=100;a++){ // a = dummy
+			    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+					var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+					var valid_from = jQuery("input[name='valid_from[]']").eq(a).val();
+					var until = jQuery("input[name='until[]']").eq(a).val();
+					var payroll_group = jQuery("select[name='payroll_group[]']").eq(a).val();
+
+					if(emp_name == "") why_emp_name = 1;
+					if(emp_no == "") why_emp_no = 1;
+					if(valid_from == "") why_valid_from = 1;
+					if(until == "") why_until = 1;
+					if(payroll_group == ""){
+						why_payroll_group = 1;
+						jQuery("select[name='payroll_group[]']").eq(a).addClass("emp_str");
+					}else{
+						jQuery("select[name='payroll_group[]']").eq(a).removeClass("emp_str");
+					}
+				}
+
+				if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+				if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+				if(why_valid_from != "") why += "<p>- Please enter Valid From</p>";
+				if(why_until != "") why += "<p>- Please enter Until</p>";
+				if(why_payroll_group != "") why += "<p>- Please select Payroll Group</p>";
+
+				if(why != ""){
+					jQuery(".error_msg_cont").html(why);
+					return false;
+				}else{
+					jQuery(".error_msg_cont").html("");
+				}
+				
 				duplicate_str();
 				
 				if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
         	    	return false;
         	    }
-
-        	    
 			}
 
 			function duplicate_str(){
