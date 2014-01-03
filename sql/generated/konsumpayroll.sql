@@ -574,10 +574,11 @@ CREATE TABLE IF NOT EXISTS `employee_fixed_allowances` (
   `emp_id` int(11) NOT NULL,
   `allowance_type_id` varchar(80) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
+  `taxable` enum('Yes','No') NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`fixed_allowance_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 -- --------------------------------------------------------
 
 --
