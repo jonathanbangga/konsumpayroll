@@ -160,16 +160,30 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
-	public function set_workday_settings($payroll_group_id,$workday_type="",$num_breaks="",$working_days="",$duration_of_lunch="",$duration_of_short_breaks="",$flexible_workhours="",$latest_allowed_time_in=""){
+	public function update_workshift($workshift_id="",$shift_name="",$start_time="",$end_time="",$working_hours="",$selected=""){
+		$this->db->query("
+			UPDATE `workshift`
+			SET
+				`shift_name` = '".mysql_real_escape_string($shift_name)."',
+				`start_time` = '".mysql_real_escape_string($start_time)."',
+				`end_time` = '".mysql_real_escape_string($end_time)."',
+				`working_hours` = '".mysql_real_escape_string($working_hours)."',
+				`selected` = '".mysql_real_escape_string($selected)."'
+			WHERE `workshift_id` = {$workshift_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function set_workday_settings($payroll_group_id,$workday_type="",$num_breaks="",$working_days_per_year="",$duration_of_lunch_per_year="",$duration_of_short_breaks_per_year="",$flexible_workhours="",$latest_allowed_time_in=""){
 		$this->db->query("
 			INSERT INTO
 			`workday_settings` (
 				`payroll_group_id`,
 				`workday_type`,
 				`num_breaks`,
-				`working_days`,
-				`duration_of_lunch`,
-				`duration_of_short_breaks`,
+				`working_days_per_year`,
+				`duration_of_lunch_per_year`,
+				`duration_of_short_breaks_per_year`,
 				`flexible_workhours`,
 				`latest_allowed_time_in`,
 				`company_id`
@@ -178,13 +192,29 @@ class Workday_model extends CI_Model {
 				'".mysql_real_escape_string($payroll_group_id)."',
 				'".mysql_real_escape_string($workday_type)."',
 				'".mysql_real_escape_string($num_breaks)."',
-				'".mysql_real_escape_string($working_days)."',
-				'".mysql_real_escape_string($duration_of_lunch)."',
-				'".mysql_real_escape_string($duration_of_short_breaks)."',
+				'".mysql_real_escape_string($working_days_per_year)."',
+				'".mysql_real_escape_string($duration_of_lunch_per_year)."',
+				'".mysql_real_escape_string($duration_of_short_breaks_per_year)."',
 				'".mysql_real_escape_string($flexible_workhours)."',
 				'".mysql_real_escape_string($latest_allowed_time_in)."',
 				'".mysql_real_escape_string($this->company_id)."'
 			)
+		");
+	}
+	
+	public function update_workday_settings($workday_settings_id,$workday_type="",$num_breaks="",$working_days_per_year="",$duration_of_lunch_per_year="",$duration_of_short_breaks_per_year="",$flexible_workhours="",$latest_allowed_time_in=""){
+		$this->db->query("
+			UPDATE `workday_settings`
+			SET
+				`workday_type` = '".mysql_real_escape_string($workday_type)."',
+				`num_breaks` = '".mysql_real_escape_string($num_breaks)."',
+				`working_days_per_year` = '".mysql_real_escape_string($working_days_per_year)."',
+				`duration_of_lunch_per_year` = '".mysql_real_escape_string($duration_of_lunch_per_year)."',
+				`duration_of_short_breaks_per_year` = '".mysql_real_escape_string($duration_of_short_breaks_per_year)."',
+				`flexible_workhours` = '".mysql_real_escape_string($flexible_workhours)."',
+				`latest_allowed_time_in` = '".mysql_real_escape_string($latest_allowed_time_in)."'
+			WHERE `workday_settings_id` = {$workday_settings_id}
+			AND `company_id` = {$this->company_id}
 		");
 	}
 	
