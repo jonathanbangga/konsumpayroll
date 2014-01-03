@@ -3,6 +3,7 @@
 <p>Loan Type: <?php print $emp_info->loan_type_name;?></p>
 <p>Date Granted: <?php print $emp_info->date_granted;?></p>
 <p>Loan Amount: <?php print $emp_info->principal;?></p>
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -230,6 +231,37 @@
 	        }
 	    });
 
+	 	// show error msg
+	    var why = "";
+		var why_payment = "";
+		var why_interest = "";
+		var why_principal = "";
+		var why_penalty = "";
+
+		for(var a=0;a<=100;a++){ // a = dummy
+			var payment = jQuery("input[name='payment[]']").eq(a).val();
+	    	var interest = jQuery("input[name='interest[]']").eq(a).val();
+	    	var principal = jQuery("input[name='principal[]']").eq(a).val();
+	    	var penalty = jQuery("input[name='penalty[]']").eq(a).val();
+
+	    	if(payment == "") why_payment = 1;
+	    	if(interest == "") why_interest = 1;
+	    	if(principal == "") why_principal = 1;
+	    	if(penalty == "") why_penalty = 1;
+		}
+
+		if(why_payment != "") why += "<p>- Please enter Payment</p>";
+		if(why_interest != "") why += "<p>- Please enter Interest</p>";
+		if(why_principal != "") why += "<p>- Please enter Principal</p>";
+		if(why_penalty != "") why += "<p>- Please enter Penalty</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
+	    
 	    jQuery(".emp_conList tr select").each(function(){
 	        var _this = jQuery(this);
 	        var txtfield = _this.val();

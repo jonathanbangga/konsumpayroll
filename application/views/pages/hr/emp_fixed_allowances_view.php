@@ -1,3 +1,4 @@
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -123,6 +124,7 @@
 			var size = shuffle_str("1234frds");
 			addRow(size);
 			remove_row();
+			change_employee();
 			_name_listing();
 			_datepicker();
 
@@ -131,6 +133,16 @@
 		});
 	}
 
+	function change_employee(){
+		jQuery(".emp_name").focus(function(){
+		    var _this = jQuery(this);
+		    var _attr = _this.attr("attr_uname_val");
+		    _this.removeAttr("readonly").val("");
+		    jQuery(".emp_no"+_attr).val("");
+		    jQuery(".emp_id"+_attr).val("");
+		});
+	}
+	
 	function shuffle_str(str) {
 	    var a = str.split(""),
 	        n = a.length;
@@ -150,7 +162,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_id[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
@@ -194,22 +209,54 @@
 	        }
 	    });
 
+	 	// show error msg
+		var why = "";
+		var why_emp_name = "";
+		var why_emp_no = "";
+		var why_allowance_type = "";
+    	var why_taxable = "";
+    	var why_amount = "";
+		
 	    for(var a=0;a<=100;a++){ // a = dummy
+	    	var emp_name = jQuery("input[name='emp_name[]']").eq(a).val();
+			var emp_no = jQuery("input[name='emp_no[]']").eq(a).val();
+			var amount = jQuery("input[name='amount[]']").eq(a).val();
+			
 	    	var allowance_type = jQuery("select[name='allowance_type[]']").eq(a).val();
 	    	var taxable = jQuery("select[name='taxable[]']").eq(a).val();
 
+	    	if(emp_name == "") why_emp_name = 1;
+			if(emp_no == "") why_emp_no = 1;
+			if(amount == "") why_amount = 1;
+	    	
 	    	if(allowance_type == ""){
+	    		why_allowance_type = 1;
 	    		jQuery("select[name='allowance_type[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='allowance_type[]']").eq(a).removeClass("emp_str");
 	    	}
 
 	    	if(taxable == ""){
+	    		why_taxable = 1;
 	    		jQuery("select[name='taxable[]']").eq(a).addClass("emp_str");
 	    	}else{
 	    		jQuery("select[name='taxable[]']").eq(a).removeClass("emp_str");
 	    	}
 	    }
+
+	    if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
+		if(why_amount != "") why += "<p>- Please enter Amount</p>";
+
+		if(why_allowance_type != "") why += "<p>- Please select Allowance Type</p>";
+		if(why_taxable != "") why += "<p>- Please select Taxable</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str")){
 	    	return false;

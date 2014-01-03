@@ -34,6 +34,18 @@ class Workday extends CI_Controller {
 			$working_hours = $this->input->post('working_hours');
 			$break_last_index = $this->input->post('break_last_index');
 			$sel_wdid = $this->input->post('sel_wdid');
+			$is_delete = $this->input->post('is_delete');
+			
+			// delete workday
+			foreach($is_delete as $index=>$val){
+				if($val==1){
+					$this->workday_model->delete_workdays($sel_wdid[$index]);
+					for($i=0;$i<$break_last_index[$index];$i++){
+						$btid = $this->input->post('btid'.$i);
+						$this->workday_model->delete_breaktime($btid[$index]);
+					}
+				}
+			}
 			
 			// workdays
 			foreach($workday as $wd){
@@ -105,6 +117,18 @@ class Workday extends CI_Controller {
 			foreach($shift_name as $index=>$sn){
 				$shift_st = date("H:i:s",strtotime($shift_st_h[$index].":".$shift_st_m[$index]." ".$shift_st_p[$index]));
 				$shift_et = date("H:i:s",strtotime($shift_et_h[$index].":".$shift_et_m[$index]." ".$shift_et_p[$index]));
+			
+						/*echo "<p>
+								index: {$index} <br />
+								id: {$workshift[$index]} <br />
+								start time hour: {$shift_st_h[$index]} <br />
+								start time min: {$shift_st_m[$index]} <br />
+								start time period: {$shift_st_p[$index]} <br />
+								start time: {$shift_st} <br  />
+								end time: {$shift_et} <br />
+							</p>";
+							*/
+							
 				if($workshift[$index]!=""){
 					// update workshift
 					$this->workday_model->update_workshift($workshift[$index],$sn,$shift_st,$shift_et,$shift_wh[$index],$ws_sel[$index]);
@@ -112,6 +136,7 @@ class Workday extends CI_Controller {
 					// save workshift
 					$this->workday_model->add_workshift($pg_id_ws[$index],$sn,$shift_st,$shift_et,$shift_wh[$index],$ws_sel[$index]);
 				}
+				//echo $this->db->last_query();
 			}
 			// worday settings
 			$wd_id = $this->input->post('wd_id');
@@ -139,6 +164,7 @@ class Workday extends CI_Controller {
 					$this->workday_model->set_workday_settings($pg,$workday_type[$index],$num_of_break[$index],$wd_py[$index],$dl_py[$index],$dsb_py[$index],$flex_chk_sel[$index],$flex);
 				}
 			}
+			setcookie("msg","Submission successful!"); 
 		}
 		$data['pg_sql'] = $this->workday_model->get_payroll_group();
 		$this->layout->view('pages/payroll_setup/workday_view',$data);

@@ -1,5 +1,6 @@
 <p>Employee Name: <?php print $fullname;?></p>
 <p>Employee Number: <?php print $payroll_cloud_id;?></p>
+<div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
@@ -186,7 +187,10 @@
 		    jQuery(this).find(".delRow").on("click", function(){
 		        _this.remove();
 		        var input_text_size = jQuery("input[name='emp_id[]']").length;
-				if(parseInt(input_text_size) == 0) jQuery(".saveBtn").css("display","none");
+				if(parseInt(input_text_size) == 0){
+					jQuery(".saveBtn").css("display","none");
+					jQuery(".error_msg_cont").html("");
+				}
 		    });
 		});
 	}
@@ -239,6 +243,69 @@
 	        	_this.removeClass("emp_str");
 	        }
 	    });
+
+	 	// show error msg
+	    var why = "";
+		var why_loan_no = "";
+		var why_loan_type = "";
+		var why_date_granted = "";
+		var why_principal = "";
+		var why_terms = "";
+		var why_interest_rate = "";
+		var why_penalty_rate = "";
+		var why_beginning_balance = "";
+		var why_bank_route = "";
+		var why_bank_account = "";
+		var why_account_type = "";
+		var why_monthly_amortization = "";
+		
+		for(var a=0;a<=100;a++){ // a = dummy
+	    	var loan_no = jQuery("input[name='loan_no[]']").eq(a).val();
+	    	var loan_type = jQuery("select[name='loan_type[]']").eq(a).val();
+	    	var date_granted = jQuery("input[name='date_granted[]']").eq(a).val();
+	    	var principal = jQuery("input[name='principal[]']").eq(a).val();
+	    	var terms = jQuery("input[name='terms[]']").eq(a).val();
+	    	var interest_rate = jQuery("input[name='interest_rate[]']").eq(a).val();
+	    	var penalty_rate = jQuery("input[name='penalty_rate[]']").eq(a).val();
+	    	var beginning_balance = jQuery("input[name='beginning_balance[]']").eq(a).val();
+	    	var bank_route = jQuery("input[name='bank_route[]']").eq(a).val();
+	    	var bank_account = jQuery("input[name='bank_account[]']").eq(a).val();
+	    	var account_type = jQuery("input[name='account_type[]']").eq(a).val();
+	    	var monthly_amortization = jQuery("input[name='monthly_amortization[]']").eq(a).val();
+
+	    	if(loan_no == "") why_loan_no = 1;
+	    	if(loan_type == "") why_loan_type = 1;
+	    	if(date_granted == "") why_date_granted = 1;
+	    	if(principal == "") why_principal = 1;
+	    	if(terms == "") why_terms = 1;
+	    	if(interest_rate == "") why_interest_rate = 1;
+	    	if(penalty_rate == "") why_penalty_rate = 1;
+	    	if(beginning_balance == "") why_beginning_balance = 1;
+	    	if(bank_route == "") why_bank_route = 1;
+	    	if(bank_account == "") why_bank_account = 1;
+	    	if(account_type == "") why_account_type = 1;
+	    	if(monthly_amortization == "") why_monthly_amortization = 1;
+    	}
+
+		if(why_loan_no != "") why += "<p>- Please enter Loan Number</p>";
+		if(why_loan_type != "") why += "<p>- Please select Loan Type</p>";
+		if(why_date_granted != "") why += "<p>- Please enter Date Granted</p>";
+		if(why_principal != "") why += "<p>- Please enter Loan Amount</p>";
+		if(why_terms != "") why += "<p>- Please enter Term(months)</p>";
+		if(why_interest_rate != "") why += "<p>- Please enter Interest Rate%</p>";
+		if(why_penalty_rate != "") why += "<p>- Please enter Penalty Rate%</p>";
+		if(why_beginning_balance != "") why += "<p>- Please enter Beginning Balance</p>";
+		if(why_bank_route != "") why += "<p>- Please enter Bank Route</p>";
+		if(why_bank_account != "") why += "<p>- Please enter Bank Account</p>";
+		if(why_account_type != "") why += "<p>- Please enter Account Type</p>";
+		if(why_monthly_amortization != "") why += "<p>- Please enter Monthly Amortization</p>";
+
+		if(why != ""){
+			jQuery(".error_msg_cont").html(why);
+			return false;
+		}else{
+			jQuery(".error_msg_cont").html("");
+		}
 	    
     	if(jQuery(".emp_conList tr input:text").hasClass("emp_str") || jQuery(".emp_conList tr select").hasClass("emp_str")){
 	    	return false;
