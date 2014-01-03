@@ -52,6 +52,14 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
+	public function delete_workdays($workday_id){
+		$this->db->query("
+			DELETE 
+			FROM `workday`
+			WHERE `workday_id` = {$workday_id}
+		");
+	}
+	
 	public function add_break_time($payroll_group_id,$workday,$start_time,$end_time,$break_time_number){
 		$this->db->query("
 			INSERT INTO
@@ -82,6 +90,14 @@ class Workday_model extends CI_Model {
 				`end_time` = '".mysql_real_escape_string($end_time)."'
 			WHERE `break_time_id` = '".mysql_real_escape_string($break_time_id)."'
 			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function delete_breaktime($break_time_id){
+		$this->db->query("
+			DELETE 
+			FROM `break_time`
+			WHERE `break_time_id` = {$break_time_id}
 		");
 	}
 	

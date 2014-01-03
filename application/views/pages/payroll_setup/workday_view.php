@@ -159,10 +159,11 @@ $num_break = 0;
 			?>
 				<tr>
 					<td>
-						<input type="checkbox" name="workday[]" id="checkbox" value="<?php echo $day; ?>-<?php echo $index; ?>" <?php echo ($sel_day!="")?'checked="checked"':''; ?>  />
+						<input type="checkbox" name="workday[]" class="workday_chk" id="checkbox" value="<?php echo $day; ?>-<?php echo $index; ?>" <?php echo ($sel_day!="")?'checked="checked"':''; ?>  />
 						<input type="hidden" name="pg_id[]" class="pg_id" value="<?php echo $pg->payroll_group_id; ?>" />
 						<input type="hidden" name="break_last_index[]" class="break_last_index" value="<?php echo $num_break; ?>" />
 						<input type="hidden" name="sel_wdid[]" class="sel_wdid" value="<?php echo $sel_wdid; ?>" />
+						<input type="hidden" name="is_delete[]" class="is_delete" value="0" />
 					</td>
 					<td><?php echo $day; ?></td>
 					<td>
@@ -418,7 +419,10 @@ $num_break = 0;
 					foreach($ws_sql->result() as $ws){ ?>
 						<tr>
 							<td>
-								<input name="workshift[]" type="checkbox" value="<?php echo $ws->workshift_id; ?>" <?php echo ($ws->selected==1)?'checked="checked"':''; ?> />
+								<input type="hidden" name="workshift[]" value="<?php echo $ws->workshift_id; ?>" />
+								<input type="hidden" name="pg_id_ws[]" class="pg_id_ws" value="" />
+								<input type="hidden" name="ws_sel[]" class="ws_sel" value="<?php echo ($ws->selected==1)?1:0; ?>">
+								<input class="workshift_chk" type="checkbox" <?php echo ($ws->selected==1)?'checked="checked"':''; ?> />
 							</td>
 							<td><input type="text" style="width:85px;" class="txtfield text-nomal" name="shift_name[]" value="<?php echo $ws->shift_name; ?>"></td>
 							<td>
@@ -438,7 +442,7 @@ $num_break = 0;
 										$sel_day = intval(date("i",strtotime($ws->start_time)));
 										$day_num = sprintf("%02s", $i);
 										?>
-										<option value="<?php $day_num; ?>" <?php echo ($day_num==$sel_day)?'selected="selected"':''; ?>>
+										<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$sel_day)?'selected="selected"':''; ?>>
 											<?php echo $day_num; ?>
 										</option>
 										<?php } ?>
@@ -653,9 +657,11 @@ jQuery(document).ready(function(){
 		str = ''+
 			'<tr>'+
 				'<td>'+
-					'<input name="workshift[]" class="workshift" type="checkbox" value="">'+
+					'<input type="checkbox" class="workshift_chk" value="">'+
+					'<input type="hidden" name="workshift[]" value="">'+
 					'<input name="pg_id_ws[]" class="pg_id_ws" type="hidden" value="'+pg_id+'">'+
 					'<input name="ws_sel[]" class="ws_sel" type="hidden" value="0">'+
+					'<input type="hidden" name="is_delete[]" class="is_delete" value="0" />'+
 				'</td>'+
 				'<td><input style="width:85px;" class="txtfield text-nomal shift_name" name="shift_name[]" type="text" /></td>'+
 				'<td>'+
@@ -697,7 +703,6 @@ jQuery(document).ready(function(){
 				'<td><input style="width:50px;" class="txtfield text-nomal txtcenter shift_wh" name="shift_wh[]" type="text" /></td>'+
 				'<td>'+
 					'<div style="width: 140px;">'+
-						'<a class="btn btn-gray btn-action" href="#">EDIT</a>'+
 						'<a class="btn btn-red btn-action btn-remove" href="javascript:void(0);" title="'+pg_id+'">REMOVE</a>'+
 					'</div>'+
 				'</td>'+
@@ -732,7 +737,7 @@ jQuery(document).ready(function(){
 	});
 	
 	// mark workshift as selected
-	jQuery(document).on("click",".workshift",function(){
+	jQuery(document).on("click",".workshift_chk",function(){
 		if(jQuery(this).prop("checked")==true){
 			jQuery(this).parents("tr:first").find(".ws_sel").val(1);
 		}else{
@@ -740,7 +745,18 @@ jQuery(document).ready(function(){
 		}
 	});
 	
-	
+	// delete workday script
+	jQuery(".workday_chk").click(function(){
+		var parent = jQuery(this).parents("tr:first");
+		if(jQuery(this).prop("checked")==false){
+			var sel_wdid = parent.find(".sel_wdid").val();
+			if(sel_wdid!=""){
+				parent.find(".is_delete").val(1);
+			}
+		}else{
+			parent.find(".is_delete").val(0);
+		}
+	});
 	
 });
 </script>
