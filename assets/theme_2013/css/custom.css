@@ -196,3 +196,8 @@ select#jpayroll_group{
 	padding:3px;
 }
 /** end permissions **/
+/*** input css global chris ***/
+.input_pad{
+	height:27px;
+}
+/*** end input css global chris ***/
