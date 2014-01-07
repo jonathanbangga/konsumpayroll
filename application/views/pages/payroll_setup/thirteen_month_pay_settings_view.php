@@ -259,15 +259,7 @@
     		    jQuery("#jadjustment_zone").append(html);            
     		});
       	}
-      // GIVES SAVE STATUS
-      	function thirteen_status(){
-			var check_text = jQuery.trim(jQuery("#jmessages").text());
-			if(check_text !=""){
-				jQuery("#show_success").fadeIn('slow',function(){
-					jQuery(this).fadeOut(6000);
-				});
-			}
-		}
+      	
 		// VALIDATES FORMS BEFORE SUBMITTINGS
 		function validate_this_form(){
 			ierror_field(".jselect");
@@ -281,6 +273,6 @@
 
       jQuery(function(){
     	  add_more_adjustments();    
-    	  thirteen_status();  
+    	  ishow_status();  
       });
       </script>
