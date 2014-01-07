@@ -159,10 +159,11 @@
 						$insert_account = array(
 							'account_id' => $account_id,
 							'payroll_cloud_id' => $username[$key],
+							'payroll_system_account_id'=>'2',
 							'password' => $password,
 							'account_type_id' => "2",
 							'email' => $emailaddress[$key],
-							'user_type_id'=>"3",
+							'user_type_id'=>"5",
 							'deleted' => "0"
 						);
 							
