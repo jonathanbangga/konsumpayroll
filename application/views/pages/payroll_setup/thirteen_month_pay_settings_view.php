@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	
-	<?php echo form_open($this->session->userdata('sub_domain')."/payroll_setup/thirteen_month_pay_settings");?>
+	<?php echo form_open($this->session->userdata('sub_domain')."/payroll_setup/thirteen_month_pay_settings",array("onsubmit"=>"return validate_this_form();"));?>
 	<div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>Identify the income to be included in 13th month pay. </p>
@@ -19,7 +19,7 @@
             <tr>
               <td>Basic Pay</td>
               <td>
-              	<select style="width:115px;" class="txtselect" name="basic_pay">              	
+              	<select style="width:115px;" class="txtselect jselect" name="basic_pay">              	
               	 <?php 
               		foreach($options as $key=>$val){
               			$iselect = "";
@@ -35,7 +35,7 @@
             <tr>
               <td>Overtime</td>
               <td>
-              	<select style="width:115px;" class="txtselect" name="overtime">
+              	<select style="width:115px;" class="txtselect jselect" name="overtime">
               	 <?php 
               		foreach($options as $key=>$val){
               			$iselect = "";
@@ -51,7 +51,7 @@
             <tr>
               <td>Holiday/Premium Pay</td>
               <td>
-             	 <select style="width:115px;" class="txtselect" name="holiday_or_premium_pay">
+             	 <select style="width:115px;" class="txtselect jselect" name="holiday_or_premium_pay">
               	 <?php 
               		foreach($options as $key=>$val){
               			$iselect = "";
@@ -68,7 +68,7 @@
             <tr>
               <td>Night Shift Differential</td>
               <td>
-              <select style="width:115px;" class="txtselect" name="night_shift_differential">
+              <select style="width:115px;" class="txtselect jselect" name="night_shift_differential">
               	<?php 
               		foreach($options as $key=>$val){
               			$iselect = "";
@@ -133,7 +133,7 @@
          						$earning_save = $this->thirteen_month_pay_settings->get_earnings_13month($earn->earning_id);
          					}
 						?>
-						<select style="width:115px;" class="txtselect" name="earning_status[]">
+						<select style="width:115px;" class="txtselect jselect" name="earning_status[]">
 						<?php 
 		              		foreach($options as $key=>$val){
 		              			$iselect = "";
@@ -164,7 +164,7 @@
             </tr>
             <tr>
               <td>Tardiness</td>
-              <td><select style="width:115px;" class="txtselect" name="tardiness">
+              <td><select style="width:115px;" class="txtselect jselect" name="tardiness">
              	 <?php 
 					foreach($options as $key=>$val){
 						$iselect = "";
@@ -178,7 +178,7 @@
             </tr>
             <tr>
               <td>Absences</td>
-              <td><select style="width:115px;" class="txtselect" name="absences">
+              <td><select style="width:115px;" class="txtselect jselect" name="absences">
               	<?php 
 					foreach($options as $key=>$val){
 						$iselect = "";
@@ -192,7 +192,7 @@
             </tr>
             <tr>
               <td>Undertime</td>
-              <td><select style="width:115px;" class="txtselect" name="undertime">
+              <td><select style="width:115px;" class="txtselect jselect" name="undertime">
               	<?php 
 					foreach($options as $key=>$val){
 						$iselect = "";
@@ -213,7 +213,7 @@
 	              	<?php echo $adjust->name;?>
 	              	<input type="hidden" name="thirteen_month_other_adjustments_id[]" value="<?php echo $adjust->thirteen_month_other_adjustments_id;?>" />      	
 	              </td>
-	              <td><select style="width:115px;" class="txtselect" name="additional_adjustments_name[]">
+	              <td><select style="width:115px;" class="txtselect jselect" name="additional_adjustments_name[]">
 	              	<?php 
 						foreach($options as $key=>$val){
 							$iselect = "";
@@ -246,25 +246,37 @@
       </div>
       <?php echo form_close();?>
       <script type="text/javascript">
-      function add_more_adjustments(){
+      // ADD MORE ADJUSTMENTS APPEND STYLE
+      	function add_more_adjustments(){
     	  jQuery(document).on("click","#jadd_adjustments",function(e){
     		    e.preventDefault();
     		    var html = '<tr>';
-    		    html +='     <td><input type="text" value="" class="txtfield" name="more_adjustments_name[]"  /></td>';
-    		    html +='     <td><select name="more_adjustments_option[]" class="txtselect" style="width:115px;">';
+    		    html +='     <td><input type="text" value="" class="txtfield jselect" name="more_adjustments_name[]"  /></td>';
+    		    html +='     <td><select name="more_adjustments_option[]" class="txtselect jselect" style="width:115px;">';
     		    html +='     <option value="">Select</option><option value="yes">Yes</option><option value="no">No</option>';
     		    html +='     </select></td>';
     		    html +='      </tr>';
     		    jQuery("#jadjustment_zone").append(html);            
     		});
-      }
-      function thirteen_status(){
+      	}
+      // GIVES SAVE STATUS
+      	function thirteen_status(){
 			var check_text = jQuery.trim(jQuery("#jmessages").text());
 			if(check_text !=""){
 				jQuery("#show_success").fadeIn('slow',function(){
 					jQuery(this).fadeOut(6000);
 				});
 			}
+		}
+		// VALIDATES FORMS BEFORE SUBMITTINGS
+		function validate_this_form(){
+			ierror_field(".jselect");
+			if(ierror_mark(".jselect") > 0){
+				
+			}else{
+				return true;
+			}
+			return false;
 		}
 
       jQuery(function(){

@@ -22,7 +22,9 @@ class Thirteen_month_pay_settings extends CI_Controller {
 		// load
 		$this->load->model('payroll_setup/thirteen_month_pay_settings_model',"thirteen_month_pay_settings");
 		$this->company_id = $this->session->userdata('company_id');
+		if($this->company_id ==''){
 		
+		}	
 	}
 
 	public function we(){
