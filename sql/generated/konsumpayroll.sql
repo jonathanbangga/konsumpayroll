@@ -36,6 +36,60 @@ CREATE TABLE IF NOT EXISTS `thirteen_month_include_earnings` (
   PRIMARY KEY (`thirteen_month_include_earnings_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions` (
+  `priority_of_deductions_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `philhealth` int(5) NOT NULL,
+  `sss` int(5) NOT NULL,
+  `withholding_tax` int(5) NOT NULL,
+  `hdmf` int(5) NOT NULL,
+  `company_loan` int(5) NOT NULL,
+  `sss_salary_loan` int(5) NOT NULL,
+  `sss_calamity_loan` int(5) NOT NULL,
+  `sss_emergency_loan` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions_other`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions_other` (
+  `priority_of_deductions_other_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `priority` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_other_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions_other_loans`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions_other_loans` (
+  `priority_of_deductions_other_loans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(5) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `priority` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_other_loans_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
