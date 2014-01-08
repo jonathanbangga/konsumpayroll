@@ -880,3 +880,29 @@ p.fileupload  {
 
 
 /* dec 11 2013 end */
+
+/* jan 7 2014 start */
+.imba-panel-icon {
+	width:575px;
+	margin-left:88px;
+}
+.imba-panel-icon ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.imba-panel-icon ul li {
+	text-align:center;
+	float:left;
+	margin:0 90px 40px 0;
+	padding:0;
+	width:100px;
+}
+.imba-panel-icon ul li div {
+	margin-bottom:8px;
+}
+.imba-panel-icon ul li a {
+	text-decoration:none;
+	color:#333333;
+}
+/* jan 7 2014 end */
