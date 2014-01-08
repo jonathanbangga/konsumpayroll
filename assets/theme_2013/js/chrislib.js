@@ -873,6 +873,16 @@ $.fn.enter = function(fn) {
 }; 
 
 // end plugin style
+
+// SHOW STATUS
+function ishow_status(){
+	var check_text = jQuery.trim(jQuery("#jmessages").text());
+	if(check_text !=""){
+		jQuery("#show_success").fadeIn('slow',function(){
+			jQuery(this).fadeOut(6000);
+		});
+	}
+}
 		
 jQuery(function() {
 	kpay.hr.company_sidebar();
