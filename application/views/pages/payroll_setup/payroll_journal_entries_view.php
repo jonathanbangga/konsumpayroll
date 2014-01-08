@@ -26,7 +26,6 @@
             		}
             	}else{
             ?>
-            
             	<tr>
 	              <td><input readonly="readonly" style="width:115px;background:none;border:0;text-align: center;color: #333333;font-size:11px;font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif;" class="" name="earnings[]" type="text" value="Basic Pay"></td>
 	              <td><input style="width:115px;" class="txtfield" name="earnings_account_code[]" type="text"></td>

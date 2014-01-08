@@ -2717,6 +2717,49 @@
 			}
 		}
 		
+		/**
+		 * View Approver Information
+		 * @param unknown_type $name_approver
+		 * @param unknown_type $comp_id
+		 */
+		public function view_approver($name_approver,$comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*, ag.emp_id as emp_id FROM approval_process ap
+				LEFT JOIN approval_groups ag ON ap.approval_process_id = ag.approval_process_id
+				LEFT JOIN employee e ON e.emp_id = ag.emp_id
+				WHERE ap.company_id = '{$comp_id}'
+				AND ap.name = '{$name_approver}'
+			");
+			$result = $sql->result();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * View Cost Center Information
+		 * @param unknown_type $comp_id
+		 */
+		public function view_costcenter($comp_id){
+			$sql = $this->db->query("
+				SELECT 
+				*FROM cost_center
+				WHERE company_id = '{$comp_id}'
+				AND status = 'Active'
+			");
+			$result = $sql->result();
+			if($sql->num_rows() > 0){
+				$sql->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
 	}
 	
 /* End of file Hr_employee_model.php */
