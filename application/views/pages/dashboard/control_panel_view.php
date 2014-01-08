@@ -7,7 +7,7 @@
             <li><a href="/<?php echo $this->uri->segment(1);?>/dashboard/company_profile/index/hr_setup">
               <div><img src="/assets/theme_2013/images/img-panel-icon1.jpg" width="68" height="67" alt=" "></div>
               <span>HR Set Up</span> </a></li>
-            <li><a href="#">
+            <li><a href="/<?php echo $this->uri->segment(1);?>/dashboard/company_profile/index/payroll_setup">
               <div><img src="/assets/theme_2013/images/img-panel-icon2.jpg" width="68" height="67" alt=" "></div>
               <span>Payroll Set Up</span> </a></li>
             <li><a href="/<?php echo $this->uri->segment(1);?>/hr/emp_basic_information">

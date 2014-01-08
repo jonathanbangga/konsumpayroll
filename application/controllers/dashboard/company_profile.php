@@ -32,8 +32,10 @@
 			
 			if($this->uri->segment(4) == ""){
 				redirect("{$this->uri->segment(1)}/company_setup/company_information");
-			}else{
+			}elseif($this->uri->segment(5) == "hr_setup"){
 				redirect("{$this->uri->segment(1)}/hr_setup/employment_type");
+			}elseif($this->uri->segment(5) == "payroll_setup"){
+				redirect("{$this->uri->segment(1)}/payroll_setup/payroll_group");
 			}
 		}
 		
