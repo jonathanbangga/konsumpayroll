@@ -29,7 +29,12 @@
 		 */
 		public function index() {
 			$this->session->set_userdata("company_id",$this->company_id);
-			redirect("{$this->uri->segment(1)}/company_setup/company_information");
+			
+			if($this->uri->segment(4) == ""){
+				redirect("{$this->uri->segment(1)}/company_setup/company_information");
+			}else{
+				redirect("{$this->uri->segment(1)}/hr_setup/employment_type");
+			}
 		}
 		
 	}

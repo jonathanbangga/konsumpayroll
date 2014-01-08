@@ -4,7 +4,7 @@
         <!-- IMBA-CONTAINER START -->
         <div class="imba-panel-icon">
           <ul>
-            <li><a href="/<?php echo $this->uri->segment(1);?>/hr_setup/employment_type">
+            <li><a href="/<?php echo $this->uri->segment(1);?>/dashboard/company_profile/index/hr_setup">
               <div><img src="/assets/theme_2013/images/img-panel-icon1.jpg" width="68" height="67" alt=" "></div>
               <span>HR Set Up</span> </a></li>
             <li><a href="#">
