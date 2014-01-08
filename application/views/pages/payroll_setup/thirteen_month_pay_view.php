@@ -1,7 +1,12 @@
 <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <p>How often do you process your 13th month pay for Payroll group1</p>
-        <select class="txtselect" name="select">
+        <select class="txtselect" name="thirteen_month_process" id="thirteen_month_process">
+        	<option value="">SELECT</option>
+        	<option value="monthly">Monthly</option>
+        	<option value="semi-monthly">Semi-Monthly</option>
+        	<option value="quarterly">Quarterly</option>
+        	<option value="yearly">Yearly</option>
         </select>
         <br>
         <br>

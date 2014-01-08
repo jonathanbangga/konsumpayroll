@@ -112,7 +112,7 @@
 							$save_assign = array(
 									"company_id" => $company_id,
 									"payroll_system_account_id" => $this->session->userdata("psa_id")
-								);	
+							);	
 							$this->company->save_fields("assigned_company",$save_assign);
 							$this->session->set_userdata("company_id",$company_id);
 							redirect("/{$this->session->userdata("sub_domain")}/company_setup/government_registration");
