@@ -139,6 +139,13 @@ class Priority_of_deductions_model extends CI_Model {
 		}
     }
     
+    /**
+     * REMOVE PRIORITY OF DEDUCTION use for ajax
+     * THIS WILL REMOVE PRIORITY DEDUCTIONS
+     * @param int $company_id
+     * @param int $priority_of_deductions_other_id
+     * @return boolean
+     */
     public function remove_priority_of_deductions_other($company_id,$priority_of_deductions_other_id){
     	if(is_numeric($company_id) && is_numeric($priority_of_deductions_other_id)){
 	    	$where = array(
@@ -152,6 +159,88 @@ class Priority_of_deductions_model extends CI_Model {
     		return false;
     	}
     }
+    
+    /**
+     * SAVE MORE LOANS 
+     * MAO NI MO SAVE KUNG MO ADD SIYA OG MORE LOANS
+     * @param int $company_id
+     * @param string $name
+     * @param int $priority
+     * @return integer
+     */
+ 	public function save_priority_of_other_loan($company_id,$name,$priority){
+ 		if(is_numeric($company_id)){
+	    	$fields = array(
+	    		"company_id"=>$this->db->escape_str($company_id),
+	    		"name"		=>$this->db->escape_str($name),
+	    		"priority"	=>$this->db->escape_str($priority),
+	    		"date"		=>idates_now(),
+	    		"deleted"	=> '0'
+	    	);
+	    	$this->db->insert('priority_of_deductions_other_loans',$fields);
+	    	return $this->db->insert_id();
+ 		}else{
+ 			return false;
+ 		}
+    }
+    
+	public function update_priority_of_other_loan($company_id,$priority_of_deductions_other_loans_id,$name,$priority){
+ 		if(is_numeric($company_id)){
+	    	$fields = array(
+	    		"name"		=>$this->db->escape_str($name),
+	    		"priority"	=>$this->db->escape_str($priority),
+	    		"date"		=>idates_now(),
+	    		"deleted"	=> '0'
+	    	);
+	    	$where = array(
+	    		"company_id"=>$this->db->escape_str($company_id),
+	    		"priority_of_deductions_other_loans_id" => $priority_of_deductions_other_loans_id
+	    	);
+	    	$this->db->where($where);
+	    	$this->db->update('priority_of_deductions_other_loans',$fields);
+	    	return $this->db->insert_id();
+ 		}else{
+ 			return false;
+ 		}
+    }
+    
+    /**
+     * REMOVES PRIORITY OF OTHER LOAN
+     * removes priority loan
+     * @param int $company_id
+     * @param int $priority_of_deductions_other_loans_id
+     * @return boolean
+     */
+	public function remove_priority_of_other_loan($company_id,$priority_of_deductions_other_loans_id){
+ 		if(is_numeric($company_id)){	
+	    	$where = array(
+	    		"company_id"=>$this->db->escape_str($company_id),
+	    		"priority_of_deductions_other_loans_id" => $priority_of_deductions_other_loans_id
+	    	);
+	    	$this->db->where($where);
+	    	$this->db->delete('priority_of_deductions_other_loans');
+	    	return $this->db->affected_rows();
+ 		}else{
+ 			return false;
+ 		}
+    }
+    
+    /**
+     * GET PRIORITY OF OTHER LOANS
+     * CHECK IF priority of other loans
+     * @param int $company_id
+     * @return object
+     */
+    public function get_priority_of_other_loan($company_id){
+    	if($company_id){
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans WHERE company_id = '{$company_id}' AND deleted='0' ");
+    		$result = $query->result();
+    		$query->free_result();
+    		return $result;
+    	}
+    }
+    
+    
 		
 }
 /* End of file */

@@ -26,19 +26,19 @@
             </tr>
             <tr>
               <td>PhilHealth</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="philhealth" value="<?php echo $priority_deducations ? $priority_deducations->philhealth : ''; ?>" type="text"></td>
+              <td><input style="width:95px;" class="txtfield iwarn iprior" name="philhealth" value="<?php echo $priority_deducations ? $priority_deducations->philhealth : ''; ?>" type="text"></td>
             </tr>
             <tr>
               <td>SSS</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="sss" value="<?php echo $priority_deducations ? $priority_deducations->sss : ''; ?>" type="text"></td>
+              <td><input style="width:95px;" class="txtfield iwarn iprior" name="sss" value="<?php echo $priority_deducations ? $priority_deducations->sss : ''; ?>" type="text"></td>
             </tr>
             <tr>
               <td>Withholding Tax</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="withholding_tax" value="<?php echo $priority_deducations ? $priority_deducations->withholding_tax : ''; ?>" type="text"></td>
+              <td><input style="width:95px;" class="txtfield iwarn iprior" name="withholding_tax" value="<?php echo $priority_deducations ? $priority_deducations->withholding_tax : ''; ?>" type="text"></td>
             </tr>
             <tr>
               <td>HDMF</td>
-              <td><input style="width:95px;" class="txtfield iwarn" value="<?php echo $priority_deducations ? $priority_deducations->hdmf : ''; ?>" name="hdmf" type="text"></td>
+              <td><input style="width:95px;" class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->hdmf : ''; ?>" name="hdmf" type="text"></td>
             </tr>
           </table>
         </div>
@@ -59,7 +59,7 @@
             			<input type="hidden" value="<?php echo $other_deduc->priority_of_deductions_other_id;?>" class="txtfield" name="update_priority_id[]">
            				<input type="text" value="<?php echo $other_deduc->name;?>" class="txtfield iwarn" name="update_priority_name[]"></td>
             		<td>
-            		<input type="text" value="<?php echo $other_deduc->priority;?>" class="txtfield iwarn" name="update_priority[]"></td>
+            		<input type="text" value="<?php echo $other_deduc->priority;?>" class="txtfield iwarn iprior" name="update_priority[]"></td>
             		<td>
             		<a class="btn btn-red btn-action btn-remove jremove_other_update" id="<?php echo $other_deduc->priority_of_deductions_other_id;?>" href="javascript:void(0);" >REMOVE</a></td>
             	</tr>
@@ -70,32 +70,57 @@
             
           </table>
           <br />
-          <a id="jadd_other_deductions" href="#" class="btn">Add </a>
+          <a id="jadd_other_deductions" href="#" class="btn">Add More</a>
         </div>
         <h5>Loans</h5>
         <div class="tbl-wrap">
-          <table class="tbl">
+          <table class="tbl" id="jmoreloan">
             <tr>
               <th style="width:152px;">Income</th>
               <th style="width:115px;">Priority</th>
+              <th style="width:115px;">Status</th>
             </tr>
             <tr>
               <td>Company Loan</td>
-              <td><input style="width:95px;" class="txtfield iwarn" value="<?php echo $priority_deducations ? $priority_deducations->company_loan : ''; ?>" name="company_loan" type="text"></td>
+              <td><input  class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->company_loan : ''; ?>" name="company_loan" type="text"></td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
               <td>SSS Salary Loan</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="sss_salary_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_salary_loan : ''; ?>" type="text"></td>
+              <td><input class="txtfield iwarn iprior" name="sss_salary_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_salary_loan : ''; ?>" type="text"></td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
               <td>SSS Calamity Loan</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="sss_calamity_loan" type="text" value="<?php echo $priority_deducations ? $priority_deducations->sss_calamity_loan : ''; ?>"></td>
+              <td><input  class="txtfield iwarn iprior" name="sss_calamity_loan" type="text" value="<?php echo $priority_deducations ? $priority_deducations->sss_calamity_loan : ''; ?>"></td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
               <td>SSS Emergency Loan</td>
-              <td><input style="width:95px;" class="txtfield iwarn" name="sss_emergency_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_emergency_loan : ''; ?>" type="text"></td>
+              <td><input  class="txtfield iwarn iprior" name="sss_emergency_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_emergency_loan : ''; ?>" type="text"></td>
+              <td>&nbsp;</td>
             </tr>
+            
+            <?php 
+            	if($other_loans){
+            		foreach($other_loans as $more_loans):
+            ?>
+            	<tr>
+             		<td>
+             		<input class="txtfield iwarn" name="update_loan_name[]" value="<?php echo $other_loans ? $more_loans->name : ''; ?>" type="text">
+             		<input class="txtfield iwarn" name="update_pod_id[]" value="<?php echo $other_loans ? $more_loans->priority_of_deductions_other_loans_id : ''; ?>" type="hidden">
+             		</td>
+              		<td><input class="txtfield iwarn iprior" name="update_loan_priority[]" value="<?php echo $other_loans ? $more_loans->priority : ''; ?>" type="text"></td>
+             		<td><a href="javascript:void(0);" id="6" class="btn btn-red btn-action btn-remove jremove_other_loan">REMOVE</a></td>
+           		 </tr>
+            <?php 		
+            		endforeach;
+            	}
+            ?>
+            
           </table>
+          <br />
+           <a id="jadd_other_loan" href="#" class="btn">Add More</a>
         </div>
         <!-- MAIN-CONTENT END -->
       </div>
@@ -115,20 +140,44 @@
       		    var el = jQuery(this);
       		    var html = '<tr>';
       		        html +='<td><input type="text" name="name[]" class="txtfield iwarn"></td>';
-      		        html +='<td><input type="text" name="priority[]" class="txtfield iwarn"></td>';
+      		        html +='<td><input type="text" name="priority[]" class="txtfield iwarn iprior"></td>';
       		        html +='<td><a href="javascript:void(0);" class="btn btn-red btn-action btn-remove jremove_other">REMOVE</a></td>';
       		        html +='</tr>';
       		    jQuery("#jother_deductions").append(html);      
       		});
         }
+		// ADD OTHE RLOANS
+		function add_other_loans(){
+			jQuery(document).on("click","#jadd_other_loan",function(e){
+      		    e.preventDefault();
+      		    var el = jQuery(this);
+      		    var html = '<tr>';
+      		        html +='<td><input type="text" name="add_loan_name[]" class="txtfield iwarn"></td>';
+      		        html +='<td><input type="text" name="add_loan_priority[]" class="txtfield iwarn iprior"></td>';
+      		        html +='<td><a href="javascript:void(0);" class="btn btn-red btn-action btn-remove jremove_other_loan">REMOVE</a></td>';
+      		        html +='</tr>';
+      		    jQuery("#jmoreloan").append(html);      
+      		});	
+		}
+        
 		// REMOVE OTHER FIELD
-		function remove_other_field(){
+		function remove_other_field() {
 			jQuery(document).on("click",".jremove_other",function(e){
 			    e.preventDefault();
 			    var el = jQuery(this);
-			   el.parents("tr").remove();
+			   	el.parents("tr").remove();
 			});
 		}
+
+		// REMOVE MORE LOANS
+		function remove_other_loans() {
+			jQuery(document).on("click",".jremove_other_loan",function(e){
+				e.preventDefault();
+				var el = jQuery(this);
+				el.parents("tr").remove();
+			});			
+		}
+
 		// REMOVE  UPDATE OTHER FIELD
 		function remove_other_field_remove_updates(){
 			jQuery(document).on("click",".jremove_other_update",function(e){
@@ -171,8 +220,9 @@
 		// VALIIDATE THIS
 		function ivalidate_pod(){
 			ierror_field(".iwarn");
+			ierror_duplicate(".iprior");
 			if(ierror_mark(".iwarn") > 0){
-				
+				return false;
 			}else{
 				return true;
 			}	
@@ -181,9 +231,12 @@
       	
         jQuery(function(){
         	add_other_fields();
+        	add_other_loans() // ADD LOAN MORE 
         	remove_other_field(); // REMOVES THE OTHER FIELD WHICH IS NOT UPDATE WHICH IS NEW ONLY
         	remove_other_field_remove_updates(); // REMOVES THE OTHER WHICH HAS HAVE A VALUE
+        	remove_other_loans(); // REMOVES OTHER LOANS
         	ishow_status();
+        	inum('.iprior');
         });
       	
       </script>
