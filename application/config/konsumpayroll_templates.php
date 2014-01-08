@@ -8,7 +8,7 @@ $config['temp_admin_dashboard'] = 'temp_admin_full_width';
 $config['temp_employee'] = 'temp_employee';
 $config['company_dashboard'] = 'company_dashboard';
 $config['jb_employee_temp'] = 'employee_template';
-
+$config['temp_control_panel'] = 'temp_control_panel';
 
 // main menu
 $config['company_dashboard_menu'] = 'content_holders/company_dashboard_menu';
