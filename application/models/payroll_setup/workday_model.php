@@ -18,10 +18,10 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
-	public function add_workdays($working_day,$work_start_time,$work_end_time,$working_hours,$payroll_group_id){
+	public function add_uniform_working_day($working_day,$work_start_time,$work_end_time,$working_hours,$payroll_group_id){
 		$this->db->query("
 			INSERT INTO
-			`workday` (
+			`uniform_working_day` (
 				`working_day`,
 				`work_start_time`,
 				`work_end_time`,
@@ -40,9 +40,9 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
-	public function update_workdays($working_day,$work_start_time,$work_end_time,$working_hours,$workday_id){
+	public function update_uniform_working_day($working_day,$work_start_time,$work_end_time,$working_hours,$workday_id){
 		$this->db->query("
-			UPDATE `workday` 
+			UPDATE `uniform_working_day` 
 			SET	`working_day` = '".mysql_real_escape_string($working_day)."',
 				`work_start_time` = '".mysql_real_escape_string($work_start_time)."',
 				`work_end_time` = '".mysql_real_escape_string($work_end_time)."',
@@ -52,15 +52,15 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
-	public function delete_workdays($workday_id){
+	public function delete_uniform_working_day($workday_id){
 		$this->db->query("
 			DELETE 
-			FROM `workday`
+			FROM `uniform_working_day`
 			WHERE `workday_id` = {$workday_id}
 		");
 	}
 	
-	public function add_break_time($payroll_group_id,$workday,$start_time,$end_time,$break_time_number){
+	public function add_break_time($payroll_group_id,$workday="",$start_time="",$end_time="",$break_time_number="",$worktype="",$workshift_id=""){
 		$this->db->query("
 			INSERT INTO
 			`break_time` (
@@ -69,6 +69,8 @@ class Workday_model extends CI_Model {
 				`workday`,
 				`start_time`,
 				`end_time`,
+				`worktype`,
+				`workshift_id`,
 				`company_id`
 			)
 			VALUES (
@@ -77,6 +79,8 @@ class Workday_model extends CI_Model {
 				'".mysql_real_escape_string($workday)."',
 				'".mysql_real_escape_string($start_time)."',
 				'".mysql_real_escape_string($end_time)."',
+				'".mysql_real_escape_string($worktype)."',
+				'".mysql_real_escape_string($workshift_id)."',
 				'".mysql_real_escape_string($this->company_id)."'
 			)
 		");
@@ -101,10 +105,10 @@ class Workday_model extends CI_Model {
 		");
 	}
 	
-	public function get_workdays($payroll_group_id,$working_day){
+	public function get_uniform_working_day($payroll_group_id,$working_day){
 		return $this->db->query("
 			SELECT * 
-			FROM `workday` 
+			FROM `uniform_working_day` 
 			WHERE `payroll_group_id` = {$payroll_group_id}
 			AND `working_day` = '{$working_day}'
 			AND `company_id` = {$this->company_id}
@@ -127,6 +131,7 @@ class Workday_model extends CI_Model {
 			FROM `break_time`
 			WHERE `payroll_group_id` = {$payroll_group_id}
 			AND `workday` = '{$working_day}'
+			AND `worktype` = 'Uniform Working Days'
 			AND `break_time_number` = {$break_time_id}
 			AND `company_id` = {$this->company_id}
 		");
@@ -174,6 +179,7 @@ class Workday_model extends CI_Model {
 				'".mysql_real_escape_string($this->company_id)."'
 			)
 		");
+		return mysql_insert_id();
 	}
 	
 	public function update_workshift($workshift_id="",$shift_name="",$start_time="",$end_time="",$working_hours="",$selected=""){
@@ -250,6 +256,179 @@ class Workday_model extends CI_Model {
 			WHERE `payroll_group_id` = {$payroll_group_id}
 			AND `working_day` = '{$working_day}'
 			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	// revised
+	public function add_workday($workday_type,$payroll_group_id){
+		$this->db->query("
+			INSERT INTO
+			`workday` (
+				`workday_type`,
+				`payroll_group_id`,
+				`company_id`
+			)
+			VALUES (
+				'".mysql_real_escape_string($workday_type)."',
+				'".mysql_real_escape_string($payroll_group_id)."',
+				'".mysql_real_escape_string($this->company_id)."'
+			)
+		");
+	}
+	
+	public function set_uniform_working_day_settings($number_of_breaks_per_day,$total_working_days_per_year,$allow_flexible_workhours,$latest_time_in_allowed,$payroll_group_id){
+		$this->db->query("
+			INSERT INTO
+			`uniform_working_day_settings` (
+				`number_of_breaks_per_day`,
+				`total_working_days_per_year`,
+				`allow_flexible_workhours`,
+				`latest_time_in_allowed`,
+				`payroll_group_id`,
+				`company_id`
+				
+			)
+			VALUES (
+				'".mysql_real_escape_string($number_of_breaks_per_day)."',
+				'".mysql_real_escape_string($total_working_days_per_year)."',
+				'".mysql_real_escape_string($allow_flexible_workhours)."',
+				'".mysql_real_escape_string($latest_time_in_allowed)."',
+				'".mysql_real_escape_string($payroll_group_id)."',
+				'".mysql_real_escape_string($this->company_id)."'
+			)
+		");
+	}
+	
+	
+	public function add_flexible_hours($total_hours_for_the_week,$total_days_per_year,$latest_time_in_allowed,$number_of_breaks_per_day,$duration_of_lunch_break_per_day,$duration_of_short_break_per_day,$payroll_group_id){
+		$this->db->query("
+			INSERT INTO
+			`flexible_hours` (
+				`total_hours_for_the_week`,
+				`total_days_per_year`,
+				`latest_time_in_allowed`,
+				`number_of_breaks_per_day`,
+				`duration_of_lunch_break_per_day`,
+				`duration_of_short_break_per_day`,
+				`payroll_group_id`,
+				`company_id`
+			)
+			VALUES (
+				'".mysql_real_escape_string($total_hours_for_the_week)."',
+				'".mysql_real_escape_string($total_days_per_year)."',
+				'".mysql_real_escape_string($latest_time_in_allowed)."',
+				'".mysql_real_escape_string($number_of_breaks_per_day)."',
+				'".mysql_real_escape_string($duration_of_lunch_break_per_day)."',
+				'".mysql_real_escape_string($duration_of_short_break_per_day)."',
+				'".mysql_real_escape_string($payroll_group_id)."',
+				'".mysql_real_escape_string($this->company_id)."'
+			)
+		");
+	}
+	
+	public function set_workshift_settings($number_of_breaks_per_shift,$total_working_days_per_year,$grace_period_for_every_shift,$payroll_group_id){
+		$this->db->query("
+			INSERT INTO
+			`workshift_settings` (
+				`number_of_breaks_per_shift`,
+				`total_working_days_per_year`,
+				`grace_period_for_every_shift`,
+				`payroll_group_id`,
+				`company_id`
+			)
+			VALUES (
+				'".mysql_real_escape_string($number_of_breaks_per_shift)."',
+				'".mysql_real_escape_string($total_working_days_per_year)."',
+				'".mysql_real_escape_string($grace_period_for_every_shift)."',
+				'".mysql_real_escape_string($payroll_group_id)."',
+				'".mysql_real_escape_string($this->company_id)."'
+			)
+		");
+	}
+	
+	public function get_workday($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `workday`
+			WHERE `payroll_group_id` ={$payroll_group_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_uniform_working_day_settings($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `uniform_working_day_settings`
+			WHERE `payroll_group_id` ={$payroll_group_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_flexible_hours($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `flexible_hours`
+			WHERE `payroll_group_id` ={$payroll_group_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_ws_breaktime($payroll_group_id,$workshift_id,$break_time_id){
+		return $this->db->query("
+			SELECT *
+			FROM `break_time`
+			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `worktype` = 'Workshift'
+			AND `workshift_id` = {$workshift_id}
+			AND `break_time_number` = {$break_time_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_workshift_settings($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `workshift_settings`
+			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function clear_all_db_in_workday(){
+		$this->db->query("
+			DELETE 
+			FROM `workday`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `uniform_working_day`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `uniform_working_day_settings`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `workshift`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `workshift_settings`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `break_time`
+			WHERE `company_id` = {$this->company_id}
+		");
+		$this->db->query("
+			DELETE 
+			FROM `flexible_hours`
+			WHERE `company_id` = {$this->company_id}
 		");
 	}
 		

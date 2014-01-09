@@ -22,11 +22,13 @@ $num_break = intval($brk->break_time_number);
 $num_break = 0;
 }
 ?>
-<div class="workday_div" id="main-pg-div-<?php echo $pg->payroll_group_id; ?>">
+
+<div class="payroll_group_div" id="main-pg-div-<?php echo $pg->payroll_group_id; ?>">
 	<input type="hidden" name="main_pg_id[]" value="<?php echo $pg->payroll_group_id; ?>" />
 	<p><strong class="workday_head">Working Days for <?php echo $pg->name; ?></strong>
 	<?php
 	// get working days settings
+	/*
 	$wss_sql = $this->workday_model->get_workday_settings($pg->payroll_group_id);
 	if($wss_sql->num_rows()>0){
 		$wss = $wss_sql->row();
@@ -48,36 +50,68 @@ $num_break = 0;
 		$allow_flex = "";
 		$flex_time = "";
 	}
+	*/
+	
+		$ws_id = "";
+		$wd = "";
+		$nob = "";
+		$wd_py = "";
+		$dl_py = "";
+		$dsb_py = "";
+		$allow_flex = "";
+		$flex_time = "";
+	
+		// get workday 
+		$wd_sql = $this->workday_model->get_workday($pg->payroll_group_id);
+		if($wd_sql->num_rows()>0){
+			$wd =  $wd_sql->row();
+			$sel_wd = $wd->workday_type;
+		}else{
+			$sel_wd = "";
+		}
+		
+		// get unifrm working days settings
+		$wds_sql = $this->workday_model->get_uniform_working_day_settings($pg->payroll_group_id);
+		if($wds_sql->num_rows()>0){
+			$wds = $wds_sql->row();
+			$nob = $wds->number_of_breaks_per_day;
+			$tot_wh_py = $wds->total_working_days_per_year;
+			$afwh = $wds->allow_flexible_workhours;
+			$ltia = $wds->latest_time_in_allowed;
+		}else{
+			$nob = "";
+			$tot_wh_py = "";
+			$afwh = "";
+			$ltia = "";
+		}
+		
+		
 	?>
 	<input type="hidden" name="wd_id[]" value="<?php echo $ws_id; ?>" />
-	  <select style="margin-left:5px; width:152px;" class="txtselect" name="workday_type[]">
-		<option value="">Select Working Days</option>
-		<option value="Uniform Working Days" <?php echo ($wd=="Uniform Working Days")?'selected="selected"':''; ?>>Uniform Working Days</option>
-		<option value="Flexible Hours" <?php echo ($wd=="Flexible Hours")?'selected="selected"':''; ?>>Flexible Hours</option>
-		<option value="Workshift" <?php echo ($wd=="Workshift")?'selected="selected"':''; ?>>Workshift</option>
+	  <select style="margin-left:5px; width:152px;" class="txtselect workday_type" name="workday_type[]">
+		<option value="">-- Select Workday --</option>
+		<option value="Uniform Working Days" <?php echo ($sel_wd=="Uniform Working Days")?'selected="selected"':''; ?>>Uniform Working Days</option>
+		<option value="Flexible Hours" <?php echo ($sel_wd=="Flexible Hours")?'selected="selected"':''; ?>>Flexible Hours</option>
+		<option value="Workshift" <?php echo ($sel_wd=="Workshift")?'selected="selected"':''; ?>>Workshift</option>
 	  </select>
 	</p>
 	
 
-
-	<div class="workday_body" <?php echo ($pgi>0)?'style="display:none;"':''; ?>>
+	<div class="workday_body">
+	<div class="uniform_working_hours_div" <?php echo ($sel_wd=="Uniform Working Days")?'style="display:block"':''; ?>>
 		
-        <p>Number of Breaks per Day:
-		<?php
-		if($nob!=""){
-			echo $nob;
-		?>
-			<input type="hidden" name="num_of_break[]" value="<?php echo $nob; ?>" />
-		<?php
-		}else{ ?>
-			<input style="width:50px;" class="txtfield txtcenter text-nomal break" name="num_of_break[]" type="text" value="0" />
-		<?php
-		}
-		?>
-          
+        <p>
+	
+			<input style="width:50px;" class="txtfield txtcenter text-nomal break" name="num_of_break[]" type="text" value="<?php echo $nob; ?>" />
+			Number of Breaks per Day:   
+		
+		
         </p>
-        <p> Total working days per year. (This will be the basis for the computation of daily rates of employees)</p>
-        <div class="tbl-wrap">
+        <p> 
+		<input type="text" name="working_day_per_year[]" style="width:50px;" class="txtfield txtcenter text-nomal" value="<?php echo $tot_wh_py; ?>" />
+		Total working days per year. (This will be the basis for the computation of daily rates of employees)
+		</p>
+        <div class="tbl-wrap" style="margin:0px;">
           <table class="tbl">
             <tr>
 				<th>&nbsp;</th>
@@ -105,8 +139,8 @@ $num_break = 0;
 			  if($cpgb_sql->num_rows()>0){
 				 for($x=0;$x<$num_break;$x++){
 			  ?>
-				  <th>Start Time</th>
-				  <th>End Time</th>
+				  <th class="bt">Start Time</th>
+				  <th class="bt">End Time</th>
 			  <?php
 				}
 			  }
@@ -129,7 +163,7 @@ $num_break = 0;
 			foreach($day_array as $day){
 			
 				// get selected workday
-				$swd_sql = $this->workday_model->get_workdays($pg->payroll_group_id,$day);
+				$swd_sql = $this->workday_model->get_uniform_working_day($pg->payroll_group_id,$day);
 				if($swd_sql->num_rows()>0){
 					$swd = $swd_sql->row();
 					$sel_day = $swd->working_day;
@@ -154,7 +188,8 @@ $num_break = 0;
 					$working_hours = "";
 					$sel_wdid = "";
 				}
-			
+				
+				
 			
 			?>
 				<tr>
@@ -164,6 +199,7 @@ $num_break = 0;
 						<input type="hidden" name="break_last_index[]" class="break_last_index" value="<?php echo $num_break; ?>" />
 						<input type="hidden" name="sel_wdid[]" class="sel_wdid" value="<?php echo $sel_wdid; ?>" />
 						<input type="hidden" name="is_delete[]" class="is_delete" value="0" />
+						<input type="hidden" name="wt_name[]" class="wt_name" value="Uniform Working Days" />
 					</td>
 					<td><?php echo $day; ?></td>
 					<td>
@@ -253,7 +289,7 @@ $num_break = 0;
 			
 					}
 					  ?>
-						<td>
+						<td class="bt">
 							<div class="wd_time_div">
 								<input type="hidden" name="btid<?php echo $x; ?>[]" value="<?php echo $btid; ?>" />
 								<select name="bt_st_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
@@ -282,7 +318,7 @@ $num_break = 0;
 								</select>
 							</div>
 						</td>
-						<td class="end_time_td">
+						<td class="end_time_td bt">
 							<div class="wd_time_div">
 								<select name="bt_et_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
 								   <?php for($i=0;$i<=12;$i++){ 
@@ -322,107 +358,211 @@ $num_break = 0;
 			} ?>
             
           </table>
+		  
         </div>
+		<div class="main_flex_div" style="margin-top: 32px;">	
 	
+			<input type="hidden" name="flex_chk_sel[]" class="flex_chk_sel" value="<?php echo ($afwh==1)?1:0; ?>"  />
+			<input type="checkbox" name="flex_chk[]" class="flex_chk" value="1" <?php echo ($afwh==1)?'checked="checked"':''; ?> /> Allow flexible workhours
+		  
+			<?php
+			if($afwh==1){
+				$fh = date("h",strtotime($ltia));
+				$fm = date("i",strtotime($ltia));
+				$fp = date("A",strtotime($ltia));
+			}else{
+				$fh = "";
+				$fm = "";
+				$fp = "";
+			}
+			?>
 
-	<div class="wd_div">
+			
+		  
+		</div>
+		
+		
+			<div class="wd_div flex_div" style="margin-top: 13px;<?php echo ($afwh==1)?'display:block;':''; ?>" >
+				<table>
+					<tr>
+						<td>Latest Time in Allowed: </td>
+						<td>
+							<select name="flex_h[]" class="txtselect" style="width:60px;">
+								<?php for($i=0;$i<=12;$i++){ 
+								$fh2 = intval($fh);
+								$day_num = sprintf("%02s", $i);
+								?>
+								<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$fh2)?'selected="selected"':''; ?>>
+									<?php echo $day_num; ?>
+								</option>
+								<?php } ?>
+							</select>:
+							<select name="flex_m[]" class="txtselect" style="width:60px;">
+								<?php for($i=0;$i<=59;$i++){ 
+								$fm2 = intval($fm);
+								$day_num = sprintf("%02s", $i);
+								?>
+								<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$fm2)?'selected="selected"':''; ?>>
+									<?php echo $day_num; ?>
+								</option>
+								<?php } ?>
+							</select>
+							<select name="flex_p[]" class="txtselect" style="width:60px;">
+								<option value="AM" <?php echo ($fp=="AM")?'selected="selected"':''; ?>>AM</option>
+								<option value="PM" <?php echo ($fp=="PM")?'selected="selected"':''; ?>>PM</option>
+							</select>
+						</td>
+					</tr>
+				</table> 	
+			</div>
+		</div>
+		
+	
+		 
+		
+
+		
+
+	<?php
+	$flex_sql = $this->workday_model->get_flexible_hours($pg->payroll_group_id);
+	if($flex_sql->num_rows()>0){
+		$flex = $flex_sql->row();
+		$tot_wd_pw = $flex->total_hours_for_the_week;
+		$tot_days_py = $flex->total_days_per_year;
+		$lta = $flex->latest_time_in_allowed;
+		$num_breaks_pd = $flex->number_of_breaks_per_day;
+		$dur_lb_pd = $flex->duration_of_lunch_break_per_day;
+		$dur_sb_pd = $flex->duration_of_short_break_per_day;
+		$lta_h = date("h",strtotime($lta));
+		$lta_m = date("i",strtotime($lta));
+		$lta_p = date("A",strtotime($lta));
+	}else{
+		$tot_wd_pw = "";
+		$tot_days_py = "";
+		$lta = "";
+		$num_breaks_pd = "";
+		$dur_lb_pd = "";
+		$dur_sb_pd = "";
+		$lta_h = "";
+		$lta_m = "";
+		$lta_p = "";
+	}
+	
+	?>
+
+	<div class="flexible_hours_div" <?php echo ($sel_wd=="Flexible Hours")?'style="display:block"':''; ?>> 
 		<table>
 			<tr>
-				<td>working days per year:</td>
-				<td><input type="text" class="txtfield" name="wd_py[]" value="<?php echo $wd_py; ?>" /></td>
+				<td>Total hours for the week:</td>
+				<td><input type="text" class="txtfield" name="tot_wd_pw[]" value="<?php echo $tot_wd_pw; ?>" /></td>
+				<td>Number of breaks per day:</td>
+				<td><input type="text" class="txtfield" name="num_breaks_pd[]" value="<?php echo $num_breaks_pd; ?>" /></td>
 			</tr>
 			<tr>
-				<td>duration of lunch per year:</td>
-				<td><input type="text" class="txtfield" name="dl_py[]" value="<?php echo $dl_py; ?>" /></td>
+				<td>Total days per year:</td>
+				<td><input type="text" class="txtfield" name="tot_days_py[]" value="<?php echo $tot_days_py; ?>" /></td>
+				<td>Duration of lunch break (per min) per day:</td>
+				<td><input type="text" class="txtfield" name="dur_lb_pd[]" value="<?php echo $dur_lb_pd; ?>" /></td>
 			</tr>
 			<tr>
-				<td>duration of short breaks per year:</td>
-				<td><input type="text" class="txtfield" name="dsb_py[]" value="<?php echo $dsb_py; ?>" /></td>
+				<td>Latest Time in Allowed :</td>
+				<td>
+					<select name="lta_h[]" class="txtselect" style="width:60px;">
+						<?php for($i=0;$i<=12;$i++){ 
+						$lta_h2 = intval($lta_h);
+						$day_num = sprintf("%02s", $i);
+						?>
+						<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$lta_h2)?'selected="selected"':''; ?>>
+							<?php echo $day_num; ?>
+						</option>
+						<?php } ?>
+					</select>:
+					<select name="lta_m[]" class="txtselect" style="width:60px;">
+						<?php for($i=0;$i<=59;$i++){ 
+						$lta_m2 = intval($lta_m);
+						$day_num = sprintf("%02s", $i);
+						?>
+						<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$lta_m2)?'selected="selected"':''; ?>>
+							<?php echo $day_num; ?>
+						</option>
+						<?php } ?>
+					</select>
+					<select name="lta_p[]" class="txtselect" style="width:60px;margin-right: 90px;">
+						<option value="AM" <?php echo ($lta_p=="AM")?'selected="selected"':''; ?>>AM</option>
+						<option value="PM" <?php echo ($lta_p=="PM")?'selected="selected"':''; ?>>PM</option>
+					</select>
+				</td>
+				<td>Duration of short break (per min) per day:</td>
+				<td><input type="text" class="txtfield" name="dur_sb_pd[]" value="<?php echo $dur_sb_pd; ?>" /></td>
 			</tr>
 		</table> 
 	</div>
 	
 		
-	<div class="main_flex_div">	
-		<p style="margin-top: 42px;">
-			<input type="hidden" name="flex_chk_sel[]" class="flex_chk_sel" value="<?php echo ($allow_flex==1)?1:0; ?>"  />
-			<input type="checkbox" name="flex_chk[]" class="flex_chk" value="1" <?php echo ($allow_flex==1)?'checked="checked"':''; ?> /> Allow flexible workhours
-		</p>   
-		
-		<?php
-		if($allow_flex==1){
-			$fh = date("h",strtotime($flex_time));
-			$fm = date("i",strtotime($flex_time));
-			$fp = date("A",strtotime($flex_time));
-		}else{
-			$fh = "";
-			$fm = "";
-			$fp = "";
-		}
-		?>
-
-		<div class="wd_div flex_div" <?php echo ($allow_flex==1)?'style="display:block;"':''; ?>>
-			<table>
-				<tr>
-					<td>Latest Time in Allowed: </td>
-					<td>
-						<select name="flex_h[]" class="txtselect" style="width:60px;">
-							<?php for($i=0;$i<=12;$i++){ 
-							$fh2 = intval($fh);
-							$day_num = sprintf("%02s", $i);
-							?>
-							<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$fh2)?'selected="selected"':''; ?>>
-								<?php echo $day_num; ?>
-							</option>
-							<?php } ?>
-						</select>:
-						<select name="flex_m[]" class="txtselect" style="width:60px;">
-							<?php for($i=0;$i<=59;$i++){ 
-							$fm2 = intval($fm);
-							$day_num = sprintf("%02s", $i);
-							?>
-							<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$fm2)?'selected="selected"':''; ?>>
-								<?php echo $day_num; ?>
-							</option>
-							<?php } ?>
-						</select>
-						<select name="flex_p[]" class="txtselect" style="width:60px;">
-							<option value="AM" <?php echo ($fp=="AM")?'selected="selected"':''; ?>>AM</option>
-							<option value="PM" <?php echo ($fp=="PM")?'selected="selected"':''; ?>>PM</option>
-						</select>
-					</td>
-				</tr>
-			</table> 
-		</div>
-	</div>
+	
   
 	<?php
 	// get work shift 
 	$ws_sql = $this->workday_model->get_workshift($pg->payroll_group_id);
+	
+	// get workshift settings
+	$wss_sql = $this->workday_model->get_workshift_settings($pg->payroll_group_id);
+	if($wss_sql->num_rows()>0){
+		$wss = $wss_sql->row();
+		$ws_nb = $wss->number_of_breaks_per_shift;
+		$ws_twdpy = $wss->total_working_days_per_year;
+		$ws_gpps = $wss->grace_period_for_every_shift;
+	}else{
+		$ws_nb = "";
+		$ws_twdpy = "";
+		$ws_gpps = "";
+	}
+	
 	?>
-	<div class="main_ws_div" style="margin-bottom: 30px;">
-		<p><input style="margin:2px 5px 0 0;" class="ws_chk" name="" type="checkbox" value="1" <?php echo ($ws_sql->num_rows()>0)?'checked="checked"':''; ?> />Workshifts</p>
+	<div class="workshift_div" <?php echo ($sel_wd=="Workshift")?'style="display:block"':''; ?>>
+		
 		  
+		<p>
+		<input style="width:50px;" class="txtfield txtcenter text-nomal ws_break" name="ws_break[]" type="text" value="<?php echo $ws_nb; ?>" />
+		Number of Breaks per Shift:  
+        </p>
+        <p> 
+		<input type="text" name="shift_wd_py[]" style="width:50px;" class="txtfield txtcenter text-nomal break" value="<?php echo $ws_twdpy; ?>" />
+		Total working days per year. (This will be the basis for the computation of daily rates of employees)
+		</p> 
 		  
-		<div class="tbl-wrap ws_div" <?php echo ($ws_sql->num_rows()>0)?'style="display:block;"':''; ?>>
+		<div class="tbl-wrap ws_div">
 			<table class="tbl ws_tbl">
 				<tr>
 					<th >&nbsp;</th>
 					<th>Shift Name</th>
 					<th>Start Time</th>
-					<th>End Time</th>
+					<th class="ws_et">End Time</th>
+					<?php 
+					if($ws_nb>0){ 
+						for($i=0;$i<$ws_nb;$i++){
+					?>
+						<th class="bt">Break Time(start)</th>
+						<th class="ws_et bt">Break Time(End)</th>
+					<?php 
+						}
+					} 
+					?>
 					<th>Working Hours</th>
 					<th>Actions</th>
 				</tr>
 				<?php
+				
 				if($ws_sql->num_rows()>0){
 					foreach($ws_sql->result() as $ws){ ?>
 						<tr>
 							<td>
-								<input type="hidden" name="workshift[]" value="<?php echo $ws->workshift_id; ?>" />
-								<input type="hidden" name="pg_id_ws[]" class="pg_id_ws" value="" />
-								<input type="hidden" name="ws_sel[]" class="ws_sel" value="<?php echo ($ws->selected==1)?1:0; ?>">
 								<input class="workshift_chk" type="checkbox" <?php echo ($ws->selected==1)?'checked="checked"':''; ?> />
+								<input type="hidden" name="workshift[]" value="<?php echo $ws->workshift_id; ?>" />
+								<input type="hidden" name="pg_id_ws[]" class="pg_id_ws" value="<?php echo $pg->payroll_group_id; ?>" />
+								<input type="hidden" name="ws_sel[]" class="ws_sel" value="<?php echo ($ws->selected==1)?1:0; ?>">								
+								<input type="hidden" value="Workshift" class="ws_wt_name" name="ws_wt_name[]">
+								<input type="hidden" class="ws_last_index" name="ws_last_index[]" value="<?php echo $ws_nb; ?>" />
 							</td>
 							<td><input type="text" style="width:85px;" class="txtfield text-nomal" name="shift_name[]" value="<?php echo $ws->shift_name; ?>"></td>
 							<td>
@@ -456,7 +596,7 @@ $num_break = 0;
 									</select>
 								</div>
 							</td>
-							<td>
+							<td class="bt_insert">
 								<div class="wd_time_div">
 									<select name="shift_et_h[]" class="txtselect" style="width:60px;">
 									   <?php for($i=0;$i<=12;$i++){ 
@@ -487,6 +627,103 @@ $num_break = 0;
 									</select>
 								</div>
 							</td>
+							
+							<?php
+						// break time
+					  if($wss_sql->num_rows()>0){ 
+					  for($x=0;$x<$ws_nb;$x++){
+					  //echo $pg->payroll_group_id.'-'.$day.'-'.($x+1);
+					  $ws_bt_sql = $this->workday_model->get_ws_breaktime($pg->payroll_group_id,$ws->workshift_id,($x+1));
+					  if($ws_bt_sql->num_rows()>0){
+						$wsbt = $ws_bt_sql->row();
+						// break time id
+						$btid = $wsbt->break_time_id;
+						// start time
+						$st_h = date("h",strtotime($wsbt->start_time));
+						$st_m =  date("i",strtotime($wsbt->start_time));
+						$st_p =  date("A",strtotime($wsbt->start_time));
+						// end time
+						$et_h = date("h",strtotime($wsbt->end_time));
+						$et_m = date("i",strtotime($wsbt->end_time));
+						$et_p = date("A",strtotime($wsbt->end_time));;
+					
+					}else{
+						$btid = "";
+						$sel_day = "";
+						$st_h = "";
+						$st_m = "";
+						$st_p = "";
+						$et_h = "";
+						$et_m = "";
+						$et_p = "";
+			
+					}
+					  ?>
+						<td class="bt">
+							
+							<div class="wd_time_div">								
+								<input type="hidden" name="wsbtid<?php echo $x; ?>[]" value="<?php echo $btid; ?>" />
+								<select name="shift_bt_st_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+								   <?php for($i=0;$i<=12;$i++){ 
+									$st_h2 = intval($st_h);
+									$day_num = sprintf("%02s", $i);
+								   ?>
+									<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$st_h2)?'selected="selected"':''; ?>>
+										<?php echo $day_num; ?>
+									</option>
+									<?php } ?>
+								 </select>:
+								<select name="shift_bt_st_m<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+									<?php for($i=0;$i<=59;$i++){
+									$st_m2 = intval($st_m);
+									$day_num = sprintf("%02s", $i);
+									?>
+									<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$st_m2)?'selected="selected"':''; ?>>
+										<?php echo $day_num; ?>
+									</option>
+									<?php } ?>
+								</select>
+								<select name="shift_bt_st_p<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+									<option value="AM" <?php echo ($st_p=="AM")?'selected="selected"':''; ?>>AM</option>
+									<option value="PM" <?php echo ($st_p=="PM")?'selected="selected"':''; ?>>PM</option>
+								</select>
+							</div>
+						</td>
+						<td class="end_time_td bt">
+					
+							<div class="wd_time_div">
+								<select name="shift_bt_et_h<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+								   <?php for($i=0;$i<=12;$i++){ 
+									$et_h2 = intval($et_h);
+									$day_num = sprintf("%02s", $i);
+								   ?>
+									<option value="<?php echo $day_num; ?>" title="<?php echo $et_h2.'-'.$day_num; ?>" <?php echo ($day_num==$et_h2)?'selected="selected"':''; ?>>
+										<?php echo $day_num; ?>
+									</option>
+									<?php } ?>
+								 </select>:
+								<select name="shift_bt_et_m<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+									<?php for($i=0;$i<=59;$i++){ 
+									$et_m2 = intval($et_m);
+									$day_num = sprintf("%02s", $i);
+									?>
+									<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$et_m2)?'selected="selected"':''; ?>>
+										<?php echo $day_num; ?>
+									</option>
+									<?php } ?>
+								</select>
+								<select name="shift_bt_et_p<?php echo $x; ?>[]" class="txtselect" style="width:60px;">
+								  <option <?php echo ($et_p=="AM")?'selected="selected"':''; ?>>AM</option>
+								  <option <?php echo ($et_p=="PM")?'selected="selected"':''; ?>>PM</option>
+								</select>
+							</div>
+						</td>
+					  <?php
+						}
+					  }
+					  ?>
+							
+							
 							<td><input style="width:50px;" class="txtfield text-nomal txtcenter" name="shift_wh[]" type="text" value="<?php echo $ws->working_hours; ?>"></td>
 							<td>
 								<div style="width: 140px;">
@@ -498,22 +735,28 @@ $num_break = 0;
 					<?php
 					}
 				}else{
-					echo '<tr><td colspan="6" class="empty">No workshift assigned yet</td></tr>';
+					echo '<tr><td colspan="8" class="empty ws_empty">No workshift assigned yet</td></tr>';
 				}
+				
 				?>
 			</table>
-			<a href="javascript:void(0);" class="btn add-more" style="margin-top: 15px;">ADD MORE</a>
+			
+			
+			
 		</div>
+		
+		<a href="javascript:void(0);" class="btn add-more" style="margin-bottom: 23px;">ADD MORE</a><br />
+		
+		<input type="text" style="width:50px;" class="txtfield" name="grace_value[]" value="<?php echo $ws_gpps; ?>" /> Grace period for every shift (in min)
 		
 	</div>
 	
-	
-	
-
-
 	</div>
+	
 
 </div>
+
+
 
 
 <?php
@@ -534,17 +777,25 @@ $num_break = 0;
         <!-- FOOTER-GRP-BTN END -->
       </div>
 	  
+	  
+<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+	<div class="inner_div">
+		Are you sure you want to delete? 
+	</div>
+</div>  	
+	  
+	  
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
 	  
 <style>
-.wd_div{
-	margin-bottom: 33px;	
+.uniform_working_hours_div, .flexible_hours_div, .workshift_div {
+    margin-bottom: 35px;
 }
 .wd_div table td{
 	padding: 5px;
 }
-.wd_div input{
+.flexible_hours_div input{
 	width: 43px;
 }
 .workday_head{
@@ -553,9 +804,16 @@ $num_break = 0;
 .wd_time_div{
 	width:200px;
 }
-.flex_div, .ws_div{
+.uniform_working_hours_div,
+.flexible_hours_div,
+.workshift_div,
+.flex_div{
 	display:none;
 }
+.flexible_hours_div td{
+	padding: 4px 15px;
+}
+
 </style>
 
 <script>
@@ -568,16 +826,16 @@ jQuery(document).ready(function(){
 	// break time script
 	function break_time(obj){
 		//console.log('inside');
-		obj.parents(".workday_div").find(".bt").remove();
+		obj.parents(".uniform_working_hours_div").find(".bt").remove();
 		var num_of_break = parseInt(obj.val());
 		for(var i=0;i<num_of_break;i++){
 			var str = '<th colspan="2" class="bt">Break Time '+(i+1)+'</th>';
-			obj.parents(".workday_div").find(".wh1").before(str);
+			obj.parents(".payroll_group_div").find(".wh1").before(str);
 			
 			var str2 = ''+
 				'<th class="bt">Start Time</th>'+
 				'<th class="bt">End Time</th>';
-			obj.parents(".workday_div").find(".wh2").before(str2);
+			obj.parents(".payroll_group_div").find(".wh2").before(str2);
 			
 			var str3 = ''+
 				'<td class="bt">'+
@@ -616,14 +874,14 @@ jQuery(document).ready(function(){
 						'</select>'+
 					'</div>'+
 				'</td>';
-			obj.parents(".workday_div").find(".wh3").before(str3);
+			obj.parents(".payroll_group_div").find(".wh3").before(str3);
 		}
-		obj.parents(".workday_div").find(".break_last_index").val(i);
+		obj.parents(".payroll_group_div").find(".break_last_index").val(i);
 	}
 
 	// custom accordion script
 	jQuery(".workday_head").click(function(){
-		jQuery(this).parents(".workday_div").find(".workday_body").slideToggle();
+		jQuery(this).parents(".payroll_group_div").find(".workday_body").slideToggle();
 	});
 	
 	// invoke break time script
@@ -642,18 +900,19 @@ jQuery(document).ready(function(){
 	
 	// hide/show flexible hours
 	jQuery(".flex_chk").click(function(){
-		jQuery(this).parents(".main_flex_div").find(".flex_div").slideToggle();
+		jQuery(this).parents(".payroll_group_div").find(".flex_div").slideToggle();
 	});
 	
 	// hide show workshift
 	jQuery(".ws_chk").click(function(){
-		jQuery(this).parents(".main_ws_div").find(".ws_div").slideToggle();
+		jQuery(this).parents(".payroll_group_div").find(".ws_div").slideToggle();
 	});
 	
 	// add workshift
 	jQuery(".add-more").click(function(){
-		var pg_id = jQuery(this).parents(".workday_div").find(".pg_id:first").val();
-		jQuery(this).parents(".main_ws_div").find(".empty").hide();
+		//jQuery(this).parents(".workshift_div").find(".bt").remove();
+		var pg_id = jQuery(this).parents(".payroll_group_div").find(".pg_id:first").val();
+		jQuery(this).parents(".payroll_group_div").find(".empty").hide();
 		str = ''+
 			'<tr>'+
 				'<td>'+
@@ -662,6 +921,8 @@ jQuery(document).ready(function(){
 					'<input name="pg_id_ws[]" class="pg_id_ws" type="hidden" value="'+pg_id+'">'+
 					'<input name="ws_sel[]" class="ws_sel" type="hidden" value="0">'+
 					'<input type="hidden" name="is_delete[]" class="is_delete" value="0" />'+
+					'<input type="hidden" name="ws_last_index[]" class="ws_last_index" value="0" />'+
+					'<input type="hidden" name="ws_wt_name[]" class="ws_wt_name" value="Workshift" />'+
 				'</td>'+
 				'<td><input style="width:85px;" class="txtfield text-nomal shift_name" name="shift_name[]" type="text" /></td>'+
 				'<td>'+
@@ -677,8 +938,8 @@ jQuery(document).ready(function(){
 							} ?>'+ 
 						'</select>'+
 						'<select class="txtselect shift_st_p" name="shift_st_p[]" style="width:60px;">'+
-							  '<option>AM</option>'+
-							  '<option>PM</option>'+
+							  '<option value="AM">AM</option>'+
+							  '<option value="PM">PM</option>'+
 						'</select>'+
 					'</div>'+
 				'</td>'+
@@ -695,19 +956,66 @@ jQuery(document).ready(function(){
 							} ?>'+ 
 						'</select>'+
 						'<select class="txtselect shift_et_p" name="shift_et_p[]" style="width:60px;">'+
-							'<option>AM</option>'+
-							'<option>PM</option>'+
+							'<option value="AM">AM</option>'+
+							'<option value="PM">PM</option>'+
 						'</select>'+
 					'</div>'+
-				'</td>'+
-				'<td><input style="width:50px;" class="txtfield text-nomal txtcenter shift_wh" name="shift_wh[]" type="text" /></td>'+
+				'</td>';
+				
+				var ws_bt = parseInt(jQuery(this).parents(".payroll_group_div").find(".ws_break").val());
+				//console.log(ws_bt);
+				
+				for(var i=0;i<ws_bt;i++){
+					str +='<td class="bt">'+
+					'<div class="wd_time_div">'+
+						'<select class="txtselect shift_bt_st_h" name="shift_bt_st_h'+i+'[]" style="width:60px;">'+
+						   '<?php for($i=0;$i<=12;$i++){ 
+								echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+							} ?>'+ 
+						 '</select>:'+
+						'<select class="txtselect shift_bt_st_m" name="shift_bt_st_m'+i+'[]" style="width:60px;">'+
+							'<?php for($i=0;$i<=59;$i++){ 
+								echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+							} ?>'+ 
+						'</select>'+
+						'<select class="txtselect shift_bt_st_p" name="shift_bt_st_p'+i+'[]" style="width:60px;">'+
+							  '<option value="AM">AM</option>'+
+							  '<option value="PM">PM</option>'+
+						'</select>'+
+					'</div>'+
+					'</td>'+
+					'<td class="bt">'+
+						'<div class="wd_time_div">'+
+							'<select class="txtselect shift_bt_et_h" name="shift_bt_et_h'+i+'[]" style="width:60px;">'+
+							   '<?php for($i=0;$i<=12;$i++){ 
+									echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+								} ?>'+ 
+							'</select>:'+
+							'<select class="txtselect shift_bt_et_m" name="shift_bt_et_m'+i+'[]" style="width:60px;">'+
+								'<?php for($i=0;$i<=59;$i++){ 
+									echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+								} ?>'+ 
+							'</select>'+
+							'<select class="txtselect shift_bt_et_p" name="shift_bt_et_p'+i+'[]" style="width:60px;">'+
+								'<option value="AM">AM</option>'+
+								'<option value="PM">PM</option>'+
+							'</select>'+
+						'</div>'+
+					'</td>';
+				}
+				
+				
+				
+				str += '<td><input style="width:50px;" class="txtfield text-nomal txtcenter shift_wh" name="shift_wh[]" type="text" /></td>'+
 				'<td>'+
 					'<div style="width: 140px;">'+
 						'<a class="btn btn-red btn-action btn-remove" href="javascript:void(0);" title="'+pg_id+'">REMOVE</a>'+
 					'</div>'+
 				'</td>'+
 			'</tr>';
-		jQuery(this).parents(".main_ws_div").find(".ws_tbl tbody").append(str);
+		jQuery(this).parents(".payroll_group_div").find(".ws_tbl tbody").append(str);
+		jQuery(this).parents(".payroll_group_div").find(".ws_last_index").val(i);
+		
 		/*
 		jQuery(".workshift").each(function(index){
 			jQuery(this).val(index);
@@ -757,6 +1065,90 @@ jQuery(document).ready(function(){
 			parent.find(".is_delete").val(0);
 		}
 	});
+	
+	
+	
+	// working day dropdown script
+	jQuery(".workday_type").change(function(){
+		var wt = jQuery(this).val();
+		var parent = jQuery(this).parents(".payroll_group_div");
+		switch(wt){
+			case 'Uniform Working Days':
+				parent.find(".uniform_working_hours_div").slideDown();
+				parent.find(".flexible_hours_div").slideUp();
+				parent.find(".workshift_div").slideUp();
+			break;
+			case 'Flexible Hours':
+				parent.find(".uniform_working_hours_div").slideUp();
+				parent.find(".flexible_hours_div").slideDown();
+				parent.find(".workshift_div").slideUp();
+			break;
+			case 'Workshift':
+				parent.find(".uniform_working_hours_div").slideUp();
+				parent.find(".flexible_hours_div").slideUp();
+				parent.find(".workshift_div").slideDown();
+			break;
+			default:
+				parent.find(".uniform_working_hours_div").slideUp();
+				parent.find(".flexible_hours_div").slideUp();
+				parent.find(".workshift_div").slideUp();
+		}
+	});
+	
+	jQuery(".ws_break").blur(function(){
+		jQuery(this).parents(".workshift_div").find(".bt").remove();
+		var bt = parseInt(jQuery(this).val());
+		cp = 8+(bt*2);
+		jQuery(".ws_empty").attr("colspan",cp);
+		var str = "";
+		var str2 = "";
+		for(var i=0;i<bt;i++){
+		
+			str += '<th class="bt">Break Time(Start)</th><th class="ws_et_bt bt">Break Time(End)</th>';
+			
+			str2 +='<td class="bt">'+
+					'<div class="wd_time_div">'+
+						'<select class="txtselect shift_bt_st_h" name="shift_bt_st_h'+i+'[]" style="width:60px;">'+
+						   '<?php for($i=0;$i<=12;$i++){ 
+								echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+							} ?>'+ 
+						 '</select>:'+
+						'<select class="txtselect shift_bt_st_m" name="shift_bt_st_m'+i+'[]" style="width:60px;">'+
+							'<?php for($i=0;$i<=59;$i++){ 
+								echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+							} ?>'+ 
+						'</select>'+
+						'<select class="txtselect shift_bt_st_p" name="shift_bt_st_p'+i+'[]" style="width:60px;">'+
+							  '<option value="AM">AM</option>'+
+							  '<option value="PM">PM</option>'+
+						'</select>'+
+					'</div>'+
+					'</td>'+
+					'<td class="bt">'+
+						'<div class="wd_time_div">'+
+							'<select class="txtselect shift_bt_et_h" name="shift_bt_et_h'+i+'[]" style="width:60px;">'+
+							   '<?php for($i=0;$i<=12;$i++){ 
+									echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+								} ?>'+ 
+							'</select>:'+
+							'<select class="txtselect shift_bt_et_m" name="shift_bt_et_m'+i+'[]" style="width:60px;">'+
+								'<?php for($i=0;$i<=59;$i++){ 
+									echo '<option value="'.sprintf("%02s", $i).'">'.sprintf("%02s", $i).'</option>';
+								} ?>'+ 
+							'</select>'+
+							'<select class="txtselect shift_bt_et_p" name="shift_bt_et_p'+i+'[]" style="width:60px;">'+
+								'<option value="AM">AM</option>'+
+								'<option value="PM">PM</option>'+
+							'</select>'+
+						'</div>'+
+					'</td>';
+					
+		}
+		
+		jQuery(".ws_et:last").after(str);
+		jQuery(this).parents(".payroll_group_div").find(".bt_insert").after(str2);
+	});
+	
 	
 });
 </script>
