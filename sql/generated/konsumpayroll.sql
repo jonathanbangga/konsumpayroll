@@ -23,6 +23,133 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `thirteen_month_include_earnings`
+--
+
+CREATE TABLE IF NOT EXISTS `thirteen_month_include_earnings` (
+  `thirteen_month_include_earnings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `earning_id` int(11) NOT NULL,
+  `include_status` enum('yes','no') NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`thirteen_month_include_earnings_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions` (
+  `priority_of_deductions_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `philhealth` int(5) NOT NULL,
+  `sss` int(5) NOT NULL,
+  `withholding_tax` int(5) NOT NULL,
+  `hdmf` int(5) NOT NULL,
+  `company_loan` int(5) NOT NULL,
+  `sss_salary_loan` int(5) NOT NULL,
+  `sss_calamity_loan` int(5) NOT NULL,
+  `sss_emergency_loan` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions_other`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions_other` (
+  `priority_of_deductions_other_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `priority` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_other_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_of_deductions_other_loans`
+--
+
+CREATE TABLE IF NOT EXISTS `priority_of_deductions_other_loans` (
+  `priority_of_deductions_other_loans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(5) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `priority` int(5) NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`priority_of_deductions_other_loans_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thirteen_month_other_adjustments`
+--
+
+CREATE TABLE IF NOT EXISTS `thirteen_month_other_adjustments` (
+  `thirteen_month_other_adjustments_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `adjustments_status` enum('no','yes') NOT NULL,
+  `deleted` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`thirteen_month_other_adjustments_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thirteen_month_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `thirteen_month_settings` (
+  `thirteen_month_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `basic_pay` enum('no','yes') NOT NULL,
+  `overtime` enum('no','yes') NOT NULL,
+  `holiday_or_premium_pay` enum('no','yes') NOT NULL,
+  `night_shift_differential` enum('no','yes') NOT NULL,
+  `type_of_basic_pay_process` enum('1','2') NOT NULL,
+  `tardiness` enum('no','yes') NOT NULL,
+  `absences` enum('no','yes') NOT NULL,
+  `undertime` enum('no','yes') NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`thirteen_month_settings_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+--
+-- Table structure for table `accural`
+--
+
+CREATE TABLE IF NOT EXISTS `accural` (
+  `accural_id` int(55) NOT NULL AUTO_INCREMENT,
+  `accural_name` varchar(55) NOT NULL,
+  `item_one` varchar(55) NOT NULL,
+  `item_two` varchar(55) NOT NULL,
+  `item_three` varchar(55) NOT NULL,
+  `formula` text NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`accural_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `accounts`
 --
 
@@ -574,10 +701,11 @@ CREATE TABLE IF NOT EXISTS `employee_fixed_allowances` (
   `emp_id` int(11) NOT NULL,
   `allowance_type_id` varchar(80) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
+  `taxable` enum('Yes','No') NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`fixed_allowance_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 -- --------------------------------------------------------
 
 --

@@ -45,6 +45,12 @@
 			$data['page_title'] = "Payroll Information";
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			
+			$data['timesheet_approver'] = $this->hr_emp->view_approver("timesheet",$this->company_id);
+			$data['overtime_approver'] = $this->hr_emp->view_approver("overtime",$this->company_id);
+			$data['leave_approver'] = $this->hr_emp->view_approver("leave",$this->company_id);
+			$data['expenses_approver'] = $this->hr_emp->view_approver("expenses",$this->company_id);
+			$data['timein_approver'] = $this->hr_emp->view_approver("time in",$this->company_id);
+			$data['cost_center'] = $this->hr_emp->view_costcenter($this->company_id);
 			// init pagination
 			$uri = "/{$this->uri->segment(1)}/hr/emp_payroll_information/index";
 			$total_rows = $this->hr_emp->emp_payroll_info_counter($this->company_id);
@@ -196,16 +202,16 @@
 				
 				$this->form_validation->set_rules("emp_idEdit", 'Employee ID', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("department", 'Department', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("sub_dept", 'Sub Department', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("sub_dept", 'Sub Department', 'trim|xss_clean');
 				$this->form_validation->set_rules("employment_type", 'Employment Type', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("position", 'Position', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("date_hired", 'Date Hired', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("last_date", 'Last Date', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("last_date", 'Last Date', 'trim|xss_clean');
 				$this->form_validation->set_rules("tax_status", 'Tax Status', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("payment_method", 'Payment Method', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("bank_route", 'Bank Route', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("bank_account", 'Bank Account', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("account_type", 'Account Type', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("bank_route", 'Bank Route', 'trim|xss_clean');
+				$this->form_validation->set_rules("bank_account", 'Bank Account', 'trim|xss_clean');
+				$this->form_validation->set_rules("account_type", 'Account Type', 'trim|xss_clean');
 				$this->form_validation->set_rules("payroll_group", 'Payroll Group', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("default_project", 'Default Project', 'trim|required|xss_clean');
 				$this->form_validation->set_rules("timeSheet_approval_grp", 'Tim Sheet Approval Group', 'trim|required|xss_clean');

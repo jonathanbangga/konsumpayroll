@@ -157,8 +157,15 @@
 		}
 	
 		public function test(){
-			$we = create_comp_directory('434');
-			p($we);
+			$this->load->library('email');
+			$this->email->from('christopher.cuizon@techgrowthglobal.com', 'chris Name');
+			$this->email->to('christopher.cuizon@techgrowthglobal.com');
+			$this->email->cc('christopher.cuizon@techgrowthglobal.com');
+		
+			$this->email->subject('Email Test');
+			$this->email->message('Testing the email class.');
+			$this->email->send();
+			echo $this->email->print_debugger();
 		}
 	}
 

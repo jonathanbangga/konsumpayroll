@@ -88,10 +88,7 @@ class Company_setup extends CI_Controller {
 									"payroll_system_account_id" => $payroll_system_account_id
 							);
 							$this->company_setup->update_fields_data("accounts",$fields_account,$where);
-						}
-				
-						
-						
+						}	
 					}		
 					add_activity(sprintf(lang("added_company"),$this->profile->account_admin()->name),"");	
 				endforeach;	

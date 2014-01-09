@@ -238,6 +238,7 @@
 				var why_sss = "";
 				var why_hdmf = "";
 				var why_philhealth = "";
+				var why_no_dependents = "";
 				var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 				
 				for(var a=0;a<=100;a++){ // a = dummy
@@ -253,6 +254,7 @@
 				    var sss = jQuery("input[name='sss[]']").eq(a).val();
 				    var hdmf = jQuery("input[name='hdmf[]']").eq(a).val();
 				    var philhealth = jQuery("input[name='philhealth[]']").eq(a).val();
+				    var no_dependents = jQuery("input[name='no_dependents[]']").eq(a).val();
 				    
 				    if(emp_no == "") why_emp_no = 1;
 				    if(last_name == "") why_lastname = 1;
@@ -266,6 +268,7 @@
 				    if(sss == "") why_sss = 1;
 				    if(hdmf == "") why_hdmf = 1;
 				    if(philhealth == "") why_philhealth = 1;
+				    if(no_dependents == "") why_no_dependents = 1;
 				}
 
 				if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
@@ -280,6 +283,7 @@
 				if(why_sss != "") why += "<p>- Please enter SSS</p>";
 				if(why_hdmf != "") why += "<p>- Please enter HDMF</p>";
 				if(why_philhealth != "") why += "<p>- Please enter PhilHealth</p>";
+				if(why_no_dependents != "") why += "<p>- Please enter No. of Qualified Dependents</p>";
 				
 				if(why != ""){
 					jQuery(".error_msg_cont").html(why);
