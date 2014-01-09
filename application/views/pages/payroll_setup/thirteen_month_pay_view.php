@@ -28,67 +28,67 @@
 	              <td><input style="width:115px;" type="text" value="<?php echo $thirteen_month ? $thirteen_month->first_month_payroll_to : '';?>" name="first_month_payroll_to" class="txtfield"></td>
             </tr>
             <tr class="isecond_month imonth semi_mon">
-              	<td>2st month</td>
+              	<td>2nd month</td>
 				<td><input style="width:115px;" type="text" value="<?php echo $thirteen_month ? $thirteen_month->second_month_payroll_date : '';?>" name="second_month_payroll_date" class="txtfield"></td>
 				<td><input style="width:115px;" type="text" value="<?php echo $thirteen_month ? $thirteen_month->second_month_payroll_from : '';?>" name="second_month_payroll_from" class="txtfield"></td>
 				<td><input style="width:115px;" type="text" value="<?php echo $thirteen_month ? $thirteen_month->second_month_payroll_to : '';?>" name="second_month_payroll_to" class="txtfield"></td>
             </tr>
             <tr class="ithird_month imonth semi_mon">
-			 <td>3st month</td>
+			 <td>3rd month</td>
               <td><input style="width:115px;" type="text" name="third_month_payroll_date" value="<?php echo $thirteen_month ? $thirteen_month->third_month_payroll_date : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="third_month_payroll_from" value="<?php echo $thirteen_month ? $thirteen_month->third_month_payroll_from : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="third_month_payroll_to" value="<?php echo $thirteen_month ? $thirteen_month->third_month_payroll_to : '';?>" class="txtfield"></td>
             </tr>
             <tr class="ifourth_month imonth semi_mon">
-  				<td>4st month</td>
+  				<td>4th month</td>
               <td><input style="width:115px;" type="text" name="fourth_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->fourth_month_payroll_date : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="fourth_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->fourth_month_payroll_from : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="fourth_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->fourth_month_payroll_to : '';?>" class="txtfield"></td>
             </tr>
             <tr class="ififth_month imonth semi_mon">
-               <td>5st month</td>
+               <td>5th month</td>
               <td><input style="width:115px;" type="text" name="fifth_month_payroll_date" value="<?php echo $thirteen_month ? $thirteen_month->fifth_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="fifth_month_payroll_from" value="<?php echo $thirteen_month ? $thirteen_month->fifth_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="fifth_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->fifth_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="isix_month imonth semi_mon">
-               <td>6st month</td>
+               <td>6th month</td>
               <td><input style="width:115px;" type="text" name="sixth_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->sixth_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="sixth_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->sixth_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="sixth_month_payroll_to"   value="<?php echo $thirteen_month ? $thirteen_month->sixth_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="iseven_month imonth">
-              <td>7st month</td>
+              <td>7th month</td>
               <td><input style="width:115px;" type="text" name="seventh_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->seventh_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="seventh_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->seventh_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="seventh_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->seventh_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="ieight_month imonth">
-              <td>8st month</td>
+              <td>8th month</td>
               <td><input style="width:115px;" type="text" name="eight_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->eight_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="eight_month_payroll_from" value="<?php echo $thirteen_month ? $thirteen_month->eight_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="eight_month_payroll_to" value="<?php echo $thirteen_month ? $thirteen_month->eight_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="inine_month imonth">
-               <td>9st month</td>
+               <td>9th month</td>
               <td><input style="width:115px;" type="text" name="ninth_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->ninth_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="ninth_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->ninth_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="ninth_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->ninth_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="iten_month imonth">
-               <td>10st month</td>
+               <td>10th month</td>
               <td><input style="width:115px;" type="text" name="tenth_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->tenth_month_payroll_date : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="tenth_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->tenth_month_payroll_from : '';?>" class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="tenth_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->tenth_month_payroll_to : '';?>" class="txtfield"></td>
             </tr>
             <tr class="ieleven_month imonth">
-              <td>11st month</td>
+              <td>11th month</td>
               <td><input style="width:115px;" type="text" name="eleventh_month_payroll_date"   value="<?php echo $thirteen_month ? $thirteen_month->eleventh_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="eleventh_month_payroll_from"   value="<?php echo $thirteen_month ? $thirteen_month->eleventh_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="eleventh_month_payroll_to"   value="<?php echo $thirteen_month ? $thirteen_month->eleventh_month_payroll_to : '';?>"  class="txtfield"></td>
             </tr>
             <tr class="itwelve_month imonth">
-              <td>12st month</td>
+              <td>12th month</td>
               <td><input style="width:115px;" type="text" name="twelveth_month_payroll_date"  value="<?php echo $thirteen_month ? $thirteen_month->twelveth_month_payroll_date : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="twelveth_month_payroll_from"  value="<?php echo $thirteen_month ? $thirteen_month->twelveth_month_payroll_from : '';?>"  class="txtfield"></td>
               <td><input style="width:115px;" type="text" name="twelveth_month_payroll_to"  value="<?php echo $thirteen_month ? $thirteen_month->twelveth_month_payroll_to : '';?>"  class="txtfield"></td>
@@ -172,7 +172,7 @@
 	          case "monthly":
 				jQuery(".imonth").show('slow');
 				jQuery(".quarter").hide();	
-				jQuery(".yearly").show('slow');
+				
 	          break;
 	          case "semi-monthly":
 				jQuery(".imonth").hide('slow');

@@ -13,7 +13,6 @@ class Thirteen_month_pay_model extends CI_Model {
     public function __construct(){
         parent::__construct();
 		// default
-		$this->company_id = $this->session->userdata('company_id');
     }
 	
     /**
@@ -56,6 +55,24 @@ class Thirteen_month_pay_model extends CI_Model {
     	$this->db->insert('thirteen_month_pay',$field);
     	return $this->db->insert_id();
     }
+    
+    /**
+     * GET PAYROLL CALENDAR THIS WILL BE OUR PREFILLED DATA BETWEEN TAKING OUT 
+     * CHECKS OUR PREFILLED PAYROLL_CALENDAR DEDICATED TO TAKE OUT 
+     * @param int $company_id
+     * @return $result
+     */
+    public function get_payroll_calendar($company_id){
+    	if(is_numeric($company_id)){
+    		$query = $this->db->query("SELECT * FROM payroll_calendar WHERE company_id = '{$this->db->escape_str($company_id)}'");
+    		$result = $query->result();
+    		$query->free_result();
+    		return $result;
+    	}else{
+    		return false;
+    	}
+    }
+    
     
     
 }
