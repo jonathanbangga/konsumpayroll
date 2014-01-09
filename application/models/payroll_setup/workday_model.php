@@ -431,6 +431,15 @@ class Workday_model extends CI_Model {
 			WHERE `company_id` = {$this->company_id}
 		");
 	}
+	
+	public function delete_workshift($workshift_id){
+		$this->db->query("
+			DELETE 
+			FROM `workshift`
+			WHERE `workshift_id` = {$workshift_id}
+			AND `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */

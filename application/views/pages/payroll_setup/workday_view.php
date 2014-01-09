@@ -128,7 +128,7 @@ $num_break = 0;
 				}
 				?>
 				<th class="wh1">&nbsp;</th>
-				<th>&nbsp;</th>
+			
             </tr>
             <tr>
               <th>&nbsp;</th>
@@ -146,7 +146,7 @@ $num_break = 0;
 			  }
 			  ?>
               <th class="wh2">Working Hours</th>
-              <th>Actions</th>
+      
             </tr>
 			<?php
 			$day_array = array(
@@ -351,7 +351,7 @@ $num_break = 0;
 					  }
 					  ?>
 				   <td class="wh3"><input style="width:50px;" class="txtfield" name="working_hours[]" type="text" value="<?php echo $working_hours; ?>"></td>
-				   <td><a class="btn btn-gray" href="#">EDIT</a></td>
+			
 				</tr>
 			<?php
 			$index++;
@@ -558,7 +558,7 @@ $num_break = 0;
 						<tr>
 							<td>
 								<input class="workshift_chk" type="checkbox" <?php echo ($ws->selected==1)?'checked="checked"':''; ?> />
-								<input type="hidden" name="workshift[]" value="<?php echo $ws->workshift_id; ?>" />
+								<input type="hidden" name="workshift[]" class="workshift" value="<?php echo $ws->workshift_id; ?>" />
 								<input type="hidden" name="pg_id_ws[]" class="pg_id_ws" value="<?php echo $pg->payroll_group_id; ?>" />
 								<input type="hidden" name="ws_sel[]" class="ws_sel" value="<?php echo ($ws->selected==1)?1:0; ?>">								
 								<input type="hidden" value="Workshift" class="ws_wt_name" name="ws_wt_name[]">
@@ -727,8 +727,7 @@ $num_break = 0;
 							<td><input style="width:50px;" class="txtfield text-nomal txtcenter" name="shift_wh[]" type="text" value="<?php echo $ws->working_hours; ?>"></td>
 							<td>
 								<div style="width: 140px;">
-									<a class="btn btn-gray btn-action" href="#">EDIT</a> 
-									<a class="btn btn-red btn-action" href="#">DELETE</a>
+									<a class="btn btn-red btn-action btn-delete" href="javascript:void(0);">DELETE</a>
 								</div>
 							</td>
 						</tr>
@@ -778,7 +777,7 @@ $num_break = 0;
       </div>
 	  
 	  
-<div id="confirm-delete-dialog" class="jdialog"  title="Add more">
+<div id="confirm-delete-dialog" class="jdialog"  title="Delete">
 	<div class="inner_div">
 		Are you sure you want to delete? 
 	</div>
@@ -1147,6 +1146,37 @@ jQuery(document).ready(function(){
 		
 		jQuery(".ws_et:last").after(str);
 		jQuery(this).parents(".payroll_group_div").find(".bt_insert").after(str2);
+	});
+	
+	// delete earnings
+	jQuery(".btn-delete").click(function(){
+		var obj = jQuery(this);
+		jQuery("#confirm-delete-dialog").dialog({
+			modal: true,
+			show: {
+				effect: "blind"
+			},
+			buttons: {
+				'yes': function() {
+					var wsid = obj.parents("tr").find(".workshift").val();
+					// ajax call
+					jQuery.ajax({
+						type: "POST",
+						url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/workday/ajax_delete_workshift",
+						data: {
+							wsid: wsid,
+							<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+						}
+					}).done(function(ret){
+						jQuery.cookie("msg", "Workshift has been deleted");
+						window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/workday";
+					});				
+				},
+				'no': function() {
+					jQuery(this).dialog( 'close' );					
+				}
+			}
+		});
 	});
 	
 	

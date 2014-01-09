@@ -210,7 +210,10 @@ class Workday extends CI_Controller {
 		$this->layout->view('pages/payroll_setup/workday_view',$data);
 	}
 	
-	
+	public function ajax_delete_workshift(){
+		$wsid = $this->input->post('wsid');
+		$this->workday_model->delete_workshift($wsid);
+	}
 	
 }
 
