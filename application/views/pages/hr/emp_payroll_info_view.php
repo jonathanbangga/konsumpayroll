@@ -21,11 +21,11 @@
               <th style="width:170px">Account Type</th>
               <th style="width:170px">Payroll Group</th>
               <th style="width:170px">Default Project</th>
-              <th style="width:170px">TimeSheet Approval Grp</th>
-              <th style="width:170px">Overtime Approval Grp</th>
-              <th style="width:170px">Leave Approval Grp</th>
-              <th style="width:170px">Expense Approval Grp</th>
-              <th style="width:170px">eBundy Approval Grp</th>
+              <th style="width:170px">TimeSheet Approver</th>
+              <th style="width:170px">Overtime Approver</th>
+              <th style="width:170px">Leave Approver</th>
+              <th style="width:170px">Expense Approver</th>
+              <th style="width:170px">Time In Approver</th>
               <th style="width:170px">SSS Contribution Amount</th>
               <th style="width:170px">HDMF Contribution Amount</th>
               <th style="width:170px">Philhealth Contribution Amount</th>
@@ -55,16 +55,16 @@
 	              <td><?php print $row->account_type;?></td>
 	              <td><?php print $row->payroll_group_name;?></td>
 	              <td><?php print $row->default_project;?></td>
-	              <td><?php print $row->timeSheet_approval_grp;?></td>
-	              <td><?php print $row->overtime_approval_grp;?></td>
-	              <td><?php print $row->leave_approval_grp;?></td>
-	              <td><?php print $row->expense_approval_grp;?></td>
-	              <td><?php print $row->eBundy_approval_grp;?></td>
+	              <td><?php print emp_name($row->timeSheet_approval_grp);?></td>
+	              <td><?php print emp_name($row->overtime_approval_grp);?></td>
+	              <td><?php print emp_name($row->leave_approval_grp);?></td>
+	              <td><?php print emp_name($row->expense_approval_grp);?></td>
+	              <td><?php print emp_name($row->eBundy_approval_grp);?></td>
 	              <td><?php print $row->sss_contribution_amount;?></td>
 	              <td><?php print $row->hdmf_contribution_amount;?></td>
 	              <td><?php print $row->philhealth_contribution_amount;?></td>
 	              <td><?php print $row->witholding_tax;?></td>
-	              <td><?php print $row->cost_center;?></td>
+	              <td><?php print cost_center($row->cost_center);?></td>
 	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" attr_empid="<?php print $row->emp_id;?>">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" attr_empid="<?php print $row->emp_id;?>">DELETE</a></td>
 	            </tr>
             <?php
@@ -119,7 +119,17 @@
 		    <td><input type='text' name='last_date' class='valid_to txtfield datepickerCont'></td></tr>
 		    <tr>
 		    	<td style="width:155px;">Tax Status</td>
-		    <td><input type='text' name='tax_status' class='valid_to txtfield'></td></tr>
+			    <td>
+				    <select style='width: 135px;' class='txtselect select-medium tax_status_edit' name='tax_status'>
+						<option value='Z - zero exemption<?php echo set_select('tax_status', 'Z - zero exemption'); ?>'>Z - zero exemption</option>
+						<option value='S/ME - Single or Married without qualified dependents<?php echo set_select('tax_status', 'S/ME - Single or Married without qualified dependents'); ?>'>S/ME - Single or Married without qualified dependents</option>
+						<option value='ME1 / S1 - single / married with 1 QD<?php echo set_select('tax_status', 'ME1 / S1 - single / married with 1 QD'); ?>'>ME1 / S1 - single / married with 1 QD</option>
+						<option value='ME2 / S2 - single / married with 2 QD<?php echo set_select('tax_status', 'ME2 / S2 - single / married with 2 QD'); ?>'>ME1 / S2 - single / married with 2 QD</option>
+						<option value='ME3 / S3 - single / married with 3 QD<?php echo set_select('tax_status', 'ME3 / S3 - single / married with 3 QD'); ?>'>ME1 / S3 - single / married with 3 QD</option>
+						<option value='ME4 / S4 - single / married with 4 QD<?php echo set_select('tax_status', 'ME4 / S4 - single / married with 4 QD'); ?>'>ME1 / S4 - single / married with 4 QD</option>
+					</select>
+				</td>
+		    </tr>
 		    <tr>
 		    	<td style="width:155px;">Payment Method</td>
 		    <td><select class='txtselect select-medium payment_method_edit' name='payment_method'><option value='Cash<?php echo set_select('payment_method', 'Cash'); ?>'>Cash</option><option value='Debit<?php echo set_select('payment_method', 'Debit'); ?>'>Debit</option></select></td></tr>
@@ -139,20 +149,38 @@
 		    	<td style="width:155px;">Default Project</td>
 		    <td><select class='txtselect select-medium default_project_edit' name='default_project'><option value='Real<?php echo set_select('default_project', 'Real'); ?>'>Real</option><option value='Real Regular<?php echo set_select('default_project', 'Real Regular'); ?>'>Real Regular</option></select></td></tr>
 		    <tr>
-		    	<td style="width:155px;">TimeSheet Approval Grp</td>
-		    <td><input type='text' name='timeSheet_approval_grp' class='valid_to txtfield'></td></tr>
+		    	<td style="width:155px;">TimeSheet Approver</td>
+		    <td>
+		    	<select style='min-width: 130px;' class='txtselect select-medium' name='timeSheet_approval_grp'>
+			    	<?php 
+			    		if($timesheet_approver == NULL){
+		    				print "<option value=''>".msg_empty()."</option>";
+		    			}else{
+		    				foreach($timesheet_approver as $row){
+	    			?> 
+    				<option value='<?php print $row->emp_id;?><?php echo set_select('timeSheet_approval_grp', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option>
+    				<?php 
+	    					} 
+		    			}
+    				?>
+    			</select>
+	    	</td>
+		    </tr>
 		    <tr>
-		    	<td style="width:155px;">Overtime Approval Grp</td>
-		    <td><input type='text' name='overtime_approval_grp' class='valid_to txtfield'></td></tr>
+		    	<td style="width:155px;">Overtime Approver</td>
+		    <td><select style='min-width: 130px;' class='txtselect select-medium' name='overtime_approval_grp'><?php if($overtime_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($overtime_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('overtime_approval_grp', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>
+		    </tr>
 		    <tr>
-		    	<td style="width:155px;">Leave Approval Grp</td>
-		    <td><input type='text' name='leave_approval_grp' class='valid_to txtfield'></td></tr>
+		    	<td style="width:155px;">Leave Approver</td>
+		    <td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_approval_grp'><?php if($leave_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($leave_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('leave_approval_grp', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>
+		    </tr>
 		    <tr>
-		    	<td style="width:155px;">Expense Approval Grp</td>
-		    <td><input type='text' name='expense_approval_grp' class='valid_to txtfield'></td></tr>
+		    	<td style="width:155px;">Expense Approver</td>
+		    <td><select style='min-width: 130px;' class='txtselect select-medium' name='expense_approval_grp'><?php if($expenses_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($expenses_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('expense_approval_grp', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td></tr>
 		    <tr>
-		    	<td style="width:155px;">eBundy Approval Grp</td>
-		    <td><input type='text' name='eBundy_approval_grp' class='valid_to txtfield'></td></tr>
+		    	<td style="width:155px;">Time In Approver</td>
+		    <td><select style='min-width: 130px;' class='txtselect select-medium' name='eBundy_approval_grp'><?php if($timein_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($timein_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('eBundy_approval_grp', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>
+		    </tr>
 		    <tr>
 		    	<td style="width:155px;">SSS Contribution Amount</td>
 		    <td><input type='text' name='sss_contribution_amount' class='valid_to txtfield'></td></tr>
@@ -167,7 +195,8 @@
 		    <td><select class='txtselect select-medium witholding_tax_edit' name='witholding_tax'><option value='Yes<?php echo set_select('witholding_tax', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('witholding_tax', 'No'); ?>'>No</option></select></td></tr>
 		    <tr>
 		    	<td style="width:155px;">Cost Center 	</td>
-		    <td><input type='text' name='cost_center' class='valid_to txtfield'></td></tr>
+		    <td><select style='min-width: 130px;' class='txtselect select-medium' name='cost_center'><?php if($cost_center == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($cost_center as $row){ ?> <option value='<?php print $row->cost_center_id;?><?php echo set_select('cost_center', $row->cost_center_id); ?>'><?php print $row->cost_center_code;?></option> <?php } } ?> </select></td>
+		    </tr>
 		    
             <tr>
               <td>&nbsp;</td>
@@ -193,23 +222,23 @@
 	    tbl += "<td><input type='text' name='position[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='date_hired[]' class='valid_to txtfield datepickerCont'></td>";
 	    tbl += "<td><input type='text' name='last_date[]' class='valid_to txtfield datepickerCont'></td>";
-	    tbl += "<td><input type='text' name='tax_status[]' class='valid_to txtfield'></td>";
+	    tbl += "<td><select style='width: 135px;' class='txtselect select-medium' name='tax_status[]'><option value='Z - zero exemption<?php echo set_select('tax_status[]', 'Z - zero exemption'); ?>'>Z - zero exemption</option><option value='S/ME - Single or Married without qualified dependents<?php echo set_select('tax_status[]', 'S/ME - Single or Married without qualified dependents'); ?>'>S/ME - Single or Married without qualified dependents</option><option value='ME1 / S1 - single / married with 1 QD<?php echo set_select('tax_status[]', 'ME1 / S1 - single / married with 1 QD'); ?>'>ME1 / S1 - single / married with 1 QD</option><option value='ME2 / S2 - single / married with 2 QD<?php echo set_select('tax_status[]', 'ME2 / S2 - single / married with 2 QD'); ?>'>ME1 / S2 - single / married with 2 QD</option><option value='ME3 / S3 - single / married with 3 QD<?php echo set_select('tax_status[]', 'ME3 / S3 - single / married with 3 QD'); ?>'>ME1 / S3 - single / married with 3 QD</option><option value='ME4 / S4 - single / married with 4 QD<?php echo set_select('tax_status[]', 'ME4 / S4 - single / married with 4 QD'); ?>'>ME1 / S4 - single / married with 4 QD</option></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='payment_method[]'><option value='Cash<?php echo set_select('payment_method[]', 'Cash'); ?>'>Cash</option><option value='Debit<?php echo set_select('payment_method[]', 'Debit'); ?>'>Debit</option></select></td>";
 	    tbl += "<td><input type='text' name='bank_route[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='bank_account[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='account_type[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><select style='min-width: 148px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($payroll_group as $row_payroll_group){?> <option value='<?php print $row_payroll_group->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_payroll_group->payroll_group_name); ?>'><?php print $row_payroll_group->payroll_group_name;?></option><?php } }?></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='default_project[]'><option value='Real<?php echo set_select('default_project[]', 'Real'); ?>'>Real</option><option value='Real Regular<?php echo set_select('default_project[]', 'Real Regular'); ?>'>Real Regular</option></select></td>";
-	    tbl += "<td><input type='text' name='timeSheet_approval_grp[]' class='valid_to txtfield'></td>";
-	    tbl += "<td><input type='text' name='overtime_approval_grp[]' class='valid_to txtfield'></td>";
-	    tbl += "<td><input type='text' name='leave_approval_grp[]' class='valid_to txtfield'></td>";
-	    tbl += "<td><input type='text' name='expense_approval_grp[]' class='valid_to txtfield'></td>";
-	    tbl += "<td><input type='text' name='eBundy_approval_grp[]' class='valid_to txtfield'></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='timeSheet_approval_grp[]'><?php if($timesheet_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($timesheet_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('timeSheet_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='overtime_approval_grp[]'><?php if($overtime_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($overtime_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('overtime_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_approval_grp[]'><?php if($leave_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($leave_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('leave_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='expense_approval_grp[]'><?php if($expenses_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($expenses_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('expense_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='eBundy_approval_grp[]'><?php if($timein_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($timein_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('eBundy_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
 	    tbl += "<td><input type='text' name='sss_contribution_amount[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='hdmf_contribution_amount[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='philhealth_contribution_amount[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='witholding_tax[]'><option value='Yes<?php echo set_select('witholding_tax[]', 'Yes'); ?>'>Yes</option><option value='No<?php echo set_select('witholding_tax[]', 'No'); ?>'>No</option></select></td>";
-	    tbl += "<td><input type='text' name='cost_center[]' class='valid_to txtfield'></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='cost_center[]'><?php if($cost_center == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($cost_center as $row){ ?> <option value='<?php print $row->cost_center_id;?><?php echo set_select('cost_center[]', $row->cost_center_id); ?>'><?php print $row->cost_center_code;?></option> <?php } } ?> </select></td>";
 	    tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	    tbl += "</tr>";
 	          
@@ -311,6 +340,16 @@
 	        }
 	    });
 
+	    jQuery(".emp_conList tr select").each(function(){
+	        var _this = jQuery(this);
+	        var txtfield = _this.val();
+	        if(txtfield == ""){
+	            _this.addClass("emp_str");
+	        }else{
+	        	_this.removeClass("emp_str");
+	        }
+	    });
+
 	 	// show error msg
 		var why = "";
 		var why_emp_name = "";
@@ -347,15 +386,15 @@
 			var position = jQuery("input[name='position[]']").eq(a).val();
 			var date_hired = jQuery("input[name='date_hired[]']").eq(a).val();
 			var tax_status = jQuery("input[name='tax_status[]']").eq(a).val();
-			var timeSheet_approval_grp = jQuery("input[name='timeSheet_approval_grp[]']").eq(a).val();
-			var overtime_approval_grp = jQuery("input[name='overtime_approval_grp[]']").eq(a).val();
-			var leave_approval_grp = jQuery("input[name='leave_approval_grp[]']").eq(a).val();
-			var expense_approval_grp = jQuery("input[name='expense_approval_grp[]']").eq(a).val();
-			var eBundy_approval_grp = jQuery("input[name='eBundy_approval_grp[]']").eq(a).val();
+			var timeSheet_approval_grp = jQuery("select[name='timeSheet_approval_grp[]']").eq(a).val();
+			var overtime_approval_grp = jQuery("select[name='overtime_approval_grp[]']").eq(a).val();
+			var leave_approval_grp = jQuery("select[name='leave_approval_grp[]']").eq(a).val();
+			var expense_approval_grp = jQuery("select[name='expense_approval_grp[]']").eq(a).val();
+			var eBundy_approval_grp = jQuery("select[name='eBundy_approval_grp[]']").eq(a).val();
 			var sss_contribution_amount = jQuery("input[name='sss_contribution_amount[]']").eq(a).val();
 			var hdmf_contribution_amount = jQuery("input[name='hdmf_contribution_amount[]']").eq(a).val();
 			var philhealth_contribution_amount = jQuery("input[name='philhealth_contribution_amount[]']").eq(a).val();
-			var cost_center = jQuery("input[name='cost_center[]']").eq(a).val();
+			var cost_center = jQuery("select[name='cost_center[]']").eq(a).val();
 			
 	    	var department = jQuery("select[name='department[]']").eq(a).val();
 	    	var employment_type = jQuery("select[name='employment_type[]']").eq(a).val();
@@ -427,14 +466,14 @@
 		if(why_position != "") why += "<p>- Please enter Position</p>";
 		if(why_date_hired != "") why += "<p>- Please enter Date Hired</p>";
 		if(why_tax_status != "") why += "<p>- Please enter Tax Status</p>";
-		if(why_timeSheet_approval_grp != "") why += "<p>- Please enter Timesheet Approval Group</p>";
-		if(why_overtime_approval_grp != "") why += "<p>- Please enter Overtime Approval Group</p>";
-		if(why_leave_approval_grp != "") why += "<p>- Please enter Leave Approval Group</p>";
-		if(why_expense_approval_grp != "") why += "<p>- Please enter Expense Approval Group</p>";
-		if(why_eBundy_approval_grp != "") why += "<p>- Please enter eBundy Approval Group</p>";
+		if(why_timeSheet_approval_grp != "") why += "<p>- Please select Timesheet Approver</p>";
+		if(why_overtime_approval_grp != "") why += "<p>- Please select Overtime Approver</p>";
+		if(why_leave_approval_grp != "") why += "<p>- Please select Leave Approver</p>";
+		if(why_expense_approval_grp != "") why += "<p>- Please select Expense Approver</p>";
+		if(why_eBundy_approval_grp != "") why += "<p>- Please select Time In Approver</p>";
 		if(why_hdmf_contribution_amount != "") why += "<p>- Please enter HDMF Contribution Amount</p>";
 		if(why_philhealth_contribution_amount != "") why += "<p>- Please enter PhilHealth Contribution Amount</p>";
-		if(why_cost_center != "") why += "<p>- Please enter Cost Center</p>";
+		if(why_cost_center != "") why += "<p>- Please select Cost Center</p>";
 		
 	    if(why_department != "") why += "<p>- Please select Department</p>";
 		if(why_employment_type != "") why += "<p>- Please select Employee Type</p>";
@@ -568,8 +607,15 @@
 							jQuery("input[name='position']").val(status.position);
 							jQuery("input[name='date_hired']").val(status.date_hired);
 							jQuery("input[name='last_date']").val(status.last_date);
-							jQuery("input[name='tax_status']").val(status.tax_status);
+							// jQuery("input[name='tax_status']").val(status.tax_status);
 
+							jQuery(".tax_status_edit option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.tax_status){
+									_this.prop("selected",true);
+								}
+							});
+							
 							jQuery(".payment_method_edit option").each(function(){
 								var _this = jQuery(this);
 								if(_this.val() == status.payment_method){
@@ -595,11 +641,46 @@
 								}
 							});
 
-							jQuery("input[name='timeSheet_approval_grp']").val(status.timeSheet_approval_grp);
-							jQuery("input[name='overtime_approval_grp']").val(status.overtime_approval_grp);
-							jQuery("input[name='leave_approval_grp']").val(status.leave_approval_grp);
-							jQuery("input[name='expense_approval_grp']").val(status.expense_approval_grp);
-							jQuery("input[name='eBundy_approval_grp']").val(status.eBundy_approval_grp);
+							// jQuery("input[name='timeSheet_approval_grp']").val(status.timeSheet_approval_grp);
+							jQuery("input[name='timeSheet_approval_grp'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.timeSheet_approval_grp){
+									_this.prop("selected",true);
+								}
+							});
+							
+							// jQuery("input[name='overtime_approval_grp']").val(status.overtime_approval_grp);
+							jQuery("input[name='overtime_approval_grp'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.overtime_approval_grp){
+									_this.prop("selected",true);
+								}
+							});
+							
+							// jQuery("input[name='leave_approval_grp']").val(status.leave_approval_grp);
+							jQuery("input[name='leave_approval_grp'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.leave_approval_grp){
+									_this.prop("selected",true);
+								}
+							});
+							
+							// jQuery("input[name='expense_approval_grp']").val(status.expense_approval_grp);
+							jQuery("input[name='expense_approval_grp'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.expense_approval_grp){
+									_this.prop("selected",true);
+								}
+							});
+							
+							// jQuery("input[name='eBundy_approval_grp']").val(status.eBundy_approval_grp);
+							jQuery("input[name='eBundy_approval_grp'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.eBundy_approval_grp){
+									_this.prop("selected",true);
+								}
+							});
+
 							jQuery("input[name='sss_contribution_amount']").val(status.sss_contribution_amount);
 							jQuery("input[name='hdmf_contribution_amount']").val(status.hdmf_contribution_amount);
 							jQuery("input[name='philhealth_contribution_amount']").val(status.philhealth_contribution_amount);
@@ -611,7 +692,13 @@
 								}
 							});
 							
-							jQuery("input[name='cost_center']").val(status.cost_center);
+							// jQuery("input[name='cost_center']").val(status.cost_center);
+							jQuery("input[name='cost_center'] option").each(function(){
+								var _this = jQuery(this);
+								if(_this.val() == status.cost_center){
+									_this.prop("selected",true);
+								}
+							});
 							
 							jQuery(".editCont input").removeClass("emp_str");
                         }else{
@@ -625,30 +712,31 @@
 
 	function validate_edit_form(){
 		var emp_idEdit = jQuery.trim(jQuery(".emp_idEdit").val());
-	    var sub_dept = jQuery.trim(jQuery("input[name='sub_dept']").val());
+	    // var sub_dept = jQuery.trim(jQuery("input[name='sub_dept']").val());
 	    var position = jQuery.trim(jQuery("input[name='position']").val());
 	    var date_hired = jQuery.trim(jQuery("input[name='date_hired']").val());
-	    var last_date = jQuery.trim(jQuery("input[name='last_date']").val());
-	    var tax_status = jQuery.trim(jQuery("input[name='tax_status']").val());
-	    var bank_route = jQuery.trim(jQuery("input[name='bank_route']").val());
-	    var bank_account = jQuery.trim(jQuery("input[name='bank_account']").val());
-	    var account_type = jQuery.trim(jQuery("input[name='account_type']").val());
-	    var timeSheet_approval_grp = jQuery.trim(jQuery("input[name='timeSheet_approval_grp']").val());
-	    var overtime_approval_grp = jQuery.trim(jQuery("input[name='overtime_approval_grp']").val());
-	    var leave_approval_grp = jQuery.trim(jQuery("input[name='leave_approval_grp']").val());
-	    var expense_approval_grp = jQuery.trim(jQuery("input[name='expense_approval_grp']").val());
-	    var eBundy_approval_grp = jQuery.trim(jQuery("input[name='eBundy_approval_grp']").val());
+	    // var last_date = jQuery.trim(jQuery("input[name='last_date']").val());
+	    var tax_status = jQuery.trim(jQuery("select[name='tax_status']").val());
+	    // var bank_route = jQuery.trim(jQuery("input[name='bank_route']").val());
+	    // var bank_account = jQuery.trim(jQuery("input[name='bank_account']").val());
+	    // var account_type = jQuery.trim(jQuery("input[name='account_type']").val());
+	    var timeSheet_approval_grp = jQuery.trim(jQuery("select[name='timeSheet_approval_grp']").val());
+	    var overtime_approval_grp = jQuery.trim(jQuery("select[name='overtime_approval_grp']").val());
+	    var leave_approval_grp = jQuery.trim(jQuery("select[name='leave_approval_grp']").val());
+	    var expense_approval_grp = jQuery.trim(jQuery("select[name='expense_approval_grp']").val());
+	    var eBundy_approval_grp = jQuery.trim(jQuery("select[name='eBundy_approval_grp']").val());
 	    var sss_contribution_amount = jQuery.trim(jQuery("input[name='sss_contribution_amount']").val());
 	    var hdmf_contribution_amount = jQuery.trim(jQuery("input[name='hdmf_contribution_amount']").val());
 	    var philhealth_contribution_amount = jQuery.trim(jQuery("input[name='philhealth_contribution_amount']").val());
-	    var cost_center = jQuery.trim(jQuery("input[name='cost_center']").val());
+	    var cost_center = jQuery.trim(jQuery("select[name='cost_center']").val());
 	    var error = "";
-	    if(sub_dept==""){
+	    
+	    /* if(sub_dept==""){
 	        error = 1;
 	        jQuery("input[name='sub_dept']").addClass('emp_str');
 	    }else{
 	    	jQuery("input[name='sub_dept']").removeClass('emp_str');
-	    }
+	    } */
 
 	    if(position==""){
 	        error = 1;
@@ -664,74 +752,74 @@
 	    	jQuery("input[name='date_hired']").removeClass('emp_str');
 	    }
 
-	    if(last_date ==""){
+	    /* if(last_date ==""){
 	        error = 1;
 	        jQuery("input[name='last_date']").addClass('emp_str');
 	    }else{
 	    	jQuery("input[name='last_date']").removeClass('emp_str');
-	    }
+	    } */
 
 	    if(tax_status ==""){
 	        error = 1;
-	        jQuery("input[name='tax_status']").addClass('emp_str');
+	        jQuery("select[name='tax_status']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='tax_status']").removeClass('emp_str');
+	    	jQuery("select[name='tax_status']").removeClass('emp_str');
 	    }
 
-	    if(bank_route ==""){
+	    /* if(bank_route ==""){
 	        error = 1;
 	        jQuery("input[name='bank_route']").addClass('emp_str');
 	    }else{
 	    	jQuery("input[name='bank_route']").removeClass('emp_str');
-	    }
+	    } */
 
-	    if(bank_account ==""){
+	    /* if(bank_account ==""){
 	        error = 1;
 	        jQuery("input[name='bank_account']").addClass('emp_str');
 	    }else{
 	    	jQuery("input[name='bank_account']").removeClass('emp_str');
-	    }
+	    } */
 
-	    if(account_type ==""){
+	    /* if(account_type ==""){
 	        error = 1;
 	        jQuery("input[name='account_type']").addClass('emp_str');
 	    }else{
 	    	jQuery("input[name='account_type']").removeClass('emp_str');
-	    }
+	    } */
 
 	    if(timeSheet_approval_grp ==""){
 	        error = 1;
-	        jQuery("input[name='timeSheet_approval_grp']").addClass('emp_str');
+	        jQuery("select[name='timeSheet_approval_grp']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='timeSheet_approval_grp']").removeClass('emp_str');
+	    	jQuery("select[name='timeSheet_approval_grp']").removeClass('emp_str');
 	    }
 
 	    if(overtime_approval_grp ==""){
 	        error = 1;
-	        jQuery("input[name='overtime_approval_grp']").addClass('emp_str');
+	        jQuery("select[name='overtime_approval_grp']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='overtime_approval_grp']").removeClass('emp_str');
+	    	jQuery("select[name='overtime_approval_grp']").removeClass('emp_str');
 	    }
 
 	    if(leave_approval_grp ==""){
 	        error = 1;
-	        jQuery("input[name='leave_approval_grp']").addClass('emp_str');
+	        jQuery("select[name='leave_approval_grp']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='leave_approval_grp']").removeClass('emp_str');
+	    	jQuery("select[name='leave_approval_grp']").removeClass('emp_str');
 	    }
 
 	    if(expense_approval_grp ==""){
 	        error = 1;
-	        jQuery("input[name='expense_approval_grp']").addClass('emp_str');
+	        jQuery("select[name='expense_approval_grp']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='expense_approval_grp']").removeClass('emp_str');
+	    	jQuery("select[name='expense_approval_grp']").removeClass('emp_str');
 	    }
 
 	    if(eBundy_approval_grp ==""){
 	        error = 1;
-	        jQuery("input[name='eBundy_approval_grp']").addClass('emp_str');
+	        jQuery("select[name='eBundy_approval_grp']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='eBundy_approval_grp']").removeClass('emp_str');
+	    	jQuery("select[name='eBundy_approval_grp']").removeClass('emp_str');
 	    }
 
 	    if(sss_contribution_amount ==""){
@@ -757,9 +845,9 @@
 
 	    if(cost_center ==""){
 	        error = 1;
-	        jQuery("input[name='cost_center']").addClass('emp_str');
+	        jQuery("select[name='cost_center']").addClass('emp_str');
 	    }else{
-	    	jQuery("input[name='cost_center']").removeClass('emp_str');
+	    	jQuery("select[name='cost_center']").removeClass('emp_str');
 	    }
 	    
 	    if(error == 1){

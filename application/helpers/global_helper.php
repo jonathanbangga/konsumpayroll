@@ -284,4 +284,38 @@
 		}
 	}
 	
+	/**
+	 * Employee Name
+	 * @param unknown_type $emp_id
+	 */
+	function emp_name($emp_id){
+		$CI =& get_instance();
+		$sql = $CI->db->query("
+			SELECT *FROM employee
+			WHERE emp_id = '{$emp_id}'
+			AND status = 'Active'
+			AND deleted = '0'
+		"); 
+		$row = $sql->row();
+		$sql->free_result();
+		return ucwords($row->first_name)." ".ucwords($row->last_name);
+	}
+	
+	/**
+	 * Cost Center 
+	 * @param unknown_type $cost_center_id
+	 */
+	function cost_center($cost_center_id){
+		$CI =& get_instance();
+		$sql = $CI->db->query("
+			SELECT 
+			*FROM cost_center
+			WHERE cost_center_id = '{$cost_center_id}'
+			AND status = 'Active'
+		");
+		$row = $sql->row();
+		$sql->free_result();
+		return $row->cost_center_code;
+	}
+	
 	
