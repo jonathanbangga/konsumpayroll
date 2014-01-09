@@ -44,15 +44,15 @@ class Payroll_calendar extends CI_Controller {
 	
 	public function ajax_add_payroll_calendar(){
 		$pg_id = $this->input->post('pg_id');
-		$semi_monthly = $this->input->post('semi_monthly');
-		$monthly = $this->input->post('monthly');
-		$payroll_date = $this->input->post('payroll_date');
-		$payroll_date2 = date('Y-m-d',strtotime($payroll_date));
+		$first_semi_monthly = $this->input->post('first_semi_monthly');
+		$second_monthly = $this->input->post('second_monthly');
+		$first_payroll_date = $this->input->post('first_payroll_date');
+		$first_payroll_date2 = date('Y-m-d',strtotime($first_payroll_date));
 		$cut_off_from = $this->input->post('cut_off_from');
 		$cut_off_from2 = date('Y-m-d',strtotime($cut_off_from));
 		$cut_off_to = $this->input->post('cut_off_to');
 		$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to));
-		$this->payroll_calendar_model->add_payroll_calendar($pg_id,$semi_monthly,$monthly,$payroll_date2,$cut_off_from2,$cut_off_to2);
+		$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$first_payroll_date2,$cut_off_from2,$cut_off_to2);
 	}
 	
 	public function ajax_get_payroll_calendar_year(){
@@ -71,11 +71,25 @@ class Payroll_calendar extends CI_Controller {
 		echo $str;
 	}
 	
-	public function ajax_get_payroll_calendar(){
-		$pg_id = $this->input->post('pg_id');
-		$year = $this->input->post('year');
-		$pc_sql = $this->payroll_calendar_model->get_payroll_calendar($pg_id,$year);
+	public function ajax_show_calendar(){
+		$pc_id = $this->input->post('pc_id');
+		$pc_sql = $this->payroll_calendar_model->get_next_payroll_list($pc_id);
+		if($pc_sql->num_rows()>0){
+			$pc = $pc_sql->row();
+			$year = date("Y",strtotime($pc->first_payroll_date));
+			$pd = date("m/d/Y",strtotime($pc->first_payroll_date));
+			$cof = date("m/d/Y",strtotime($pc->cut_off_from));
+			$cot = date("m/d/Y",strtotime($pc->cut_off_to));
+			$period = date("n",strtotime($pc->first_payroll_date));
+		}else{
+			$year = "";
+			$pd = "";
+			$cof = "";
+			$cot = "";
+			$period = "";
+		}
 		$str = '
+			<div style="text-align:center;margin-bottom: 10px;">'.$year.'</div> 
 			<table>
 				<thead>
 					<tr>
@@ -85,22 +99,13 @@ class Payroll_calendar extends CI_Controller {
 						<th>Period</th>
 					</tr>
 				</thead>
-				<tbody>';
-		foreach($pc_sql->result() as $pc){
-			$str .= '
+				<tbody>
 					<tr>	
-						<td style="display:none;">
-							<input type="hidden" class="pc_id" value="'.$pc->payroll_calendar_id.'" />
-							<input type="hidden" class="is_changed" value="0" />
-						</td>
-						<td><input class="txtfield dp edit_payroll_date" type="text" value="'.date("m/d/Y",strtotime($pc->payroll_date)).'" /></td>
-						<td><input class="txtfield dp edit_cut_off_from" type="text" value="'.date("m/d/Y",strtotime($pc->cut_off_from)).'" /></td>
-						<td><input class="txtfield dp edit_cut_off_to" type="text" value="'.date("m/d/Y",strtotime($pc->cut_off_to)).'" /></td>
-						<td><input class="txtfield period" type="text" value="'.$pc->period.'" style="width: 20px;" /></td>
+						<td><input class="txtfield dp edit_payroll_date" type="text" value="'.$pd.'" /></td>
+						<td><input class="txtfield dp edit_cut_off_from" type="text" value="'.$cof.'" /></td>
+						<td><input class="txtfield dp edit_cut_off_to" type="text" value="'.$cot.'" /></td>
+						<td><input class="txtfield period" type="text" style="width: 20px;" value="'.$period.'" /></td>
 					</tr>
-			';
-		}	
-		$str .= '
 				</tbody>
 			</table>';
 		echo $str;
@@ -121,7 +126,6 @@ class Payroll_calendar extends CI_Controller {
 				$this->payroll_calendar_model->update_payroll_calendar($pc_id[$index],$payroll_date2,$cut_off_from2,$cut_off_to2,$period[$index]);
 			}
 		}
-		
 	}
 	
 }

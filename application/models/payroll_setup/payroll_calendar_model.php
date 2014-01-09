@@ -23,9 +23,9 @@ class Payroll_calendar_model extends CI_Model {
 			INSERT INTO
 			`payroll_calendar` (
 				`payroll_group_id`,
-				`semi_monthly`,
-				`monthly`,
-				`payroll_date`,
+				`first_semi_monthly`,
+				`second_monthly`,
+				`first_payroll_date`,
 				`cut_off_from`,
 				`cut_off_to`,
 				`company_id`
@@ -51,6 +51,7 @@ class Payroll_calendar_model extends CI_Model {
 		");
 	}
 	
+	/*
 	public function get_payroll_calendar($payroll_group_id,$year){
 		return $this->db->query("
 			SELECT * 
@@ -60,6 +61,7 @@ class Payroll_calendar_model extends CI_Model {
 			AND  `company_id` ={$this->company_id}
 		");
 	}
+	*/
 	
 	public function update_payroll_calendar($payroll_calendar_id,$payroll_date="",$cut_off_from="",$cut_off_to="",$period=""){
 		$this->db->query("
@@ -74,5 +76,22 @@ class Payroll_calendar_model extends CI_Model {
 		");
 	}
 	
+	// new
+	public function get_next_payroll_list($payroll_calendar_id){
+		return $this->db->query("
+			SELECT *
+			FROM `payroll_calendar`
+			WHERE `payroll_calendar_id` = {$payroll_calendar_id}
+		");
+	}
+	
+	public function get_payroll_calendar($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `payroll_calendar`
+			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND  `company_id` ={$this->company_id}
+		");
+	}
 }
 /* End of file */
