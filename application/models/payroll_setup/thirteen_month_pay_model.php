@@ -20,7 +20,7 @@ class Thirteen_month_pay_model extends CI_Model {
      * this will be our getter for the thirteen_month_pay
      * @param int $company_id
      * @return object
-     */
+     */ 
     public function get_thirteen_month_pay($company_id){
     	if(is_numeric($company_id)){
     		$query = $this->db->query("SELECT * FROM thirteen_month_pay WHERE company_id='{$this->db->escape_str($company_id)}' AND deleted='0'");
@@ -50,7 +50,7 @@ class Thirteen_month_pay_model extends CI_Model {
      * saves the thirteen month pay
      * @param array $field
      * @return integer
-     */
+     */ 
     public function save_thirteen_month_pay($field){
     	$this->db->insert('thirteen_month_pay',$field);
     	return $this->db->insert_id();
@@ -72,8 +72,7 @@ class Thirteen_month_pay_model extends CI_Model {
     		return false;
     	}
     }
-    
-    
+
     
 }
 /* End of file hr_setup_model.php */
