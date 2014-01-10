@@ -21,9 +21,11 @@ class Thirteen_month_pay_model extends CI_Model {
      * @param int $company_id
      * @return object
      */ 
-    public function get_thirteen_month_pay($company_id){
-    	if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM thirteen_month_pay WHERE company_id='{$this->db->escape_str($company_id)}' AND deleted='0'");
+    public function get_thirteen_month_pay($company_id,$payroll_group_id){
+    	if(is_numeric($company_id) && is_numeric($payroll_group_id)){
+    		$query = $this->db->query("SELECT * FROM thirteen_month_pay WHERE company_id='{$this->db->escape_str($company_id)}' 
+    				AND payroll_group_id = '{$this->db->escape_str($payroll_group_id)}' AND deleted='0'"
+    		);
     		$row = $query->row();
     		$query->free_result();
     		return $row;
@@ -39,8 +41,8 @@ class Thirteen_month_pay_model extends CI_Model {
      * @param array $field
      * @return boolean
      */
-    public function update_thirteen_month_pay($company_id,$field){
-    	$this->db->where(array("company_id"=>$this->company_id));
+    public function update_thirteen_month_pay($where,$field){
+    	$this->db->where($where);
     	$this->db->update('thirteen_month_pay',$field);
 		return $this->db->affected_rows();
     }
@@ -73,6 +75,28 @@ class Thirteen_month_pay_model extends CI_Model {
     	}
     }
 
+    public function get_payroll_group_setup($company_id){
+    	if(is_numeric($company_id)){
+	    	$query = $this->db->query("SELECT * FROM payroll_group WHERE company_id='{$this->db->escape_str($company_id)}'");
+	    	$result = $query->result();
+	    	$query->free_result();
+	    	return $result;
+    	}else{
+    		return false;
+    	}
+    }
+    
+    public function check_thirteen_month_pay_exist($company_id,$payroll_group_id){
+    	if(is_numeric($company_id) && is_numeric($payroll_group_id)){
+    		$query = $this->db->query("SELECT * FROM thirteen_month_pay WHERE company_id='{$company_id}' AND payroll_group_id='{$payroll_group_id}'");
+    		$row = $query->row();
+    		$query->free_result();
+    		return $row;
+    	}else{
+    		return false;
+    	}
+    }
+    
     
 }
 /* End of file hr_setup_model.php */
