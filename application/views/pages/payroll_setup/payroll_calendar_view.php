@@ -72,13 +72,13 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 				</tr>
 			  </table>
 			  <p style="padding-bottom:8px;">State the first payroll for this group that will be run by this system
-				<input type="text" class="txtfield dp first_payroll_date" name="first_payroll_date[]" style="width:120px;" value="<?php echo $fpd; ?>" />
+				<input type="text" class="txtfield dp first_payroll_date" name="first_payroll_date[]" style="width:120px;" value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($fpd)):''; ?>" />
 			  </p>
 			  <table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 				  <td style="width:512px;">Select range of work days to be included in first payroll for this group using the system</td>
-				  <td style="width:180px;"><input class="txtfield dp cut_off_from" name="cut_off_from[]" style="width:70px;" type="text" value="<?php echo $cof; ?>" />
-					<input class="txtfield dp cut_off_to" name="cut_off_to[]" style="width:70px;" type="text"  value="<?php echo $cot; ?>" /></td>
+				  <td style="width:180px;"><input class="txtfield dp cut_off_from" name="cut_off_from[]" style="width:70px;" type="text" value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($cof)):''; ?>" />
+					<input class="txtfield dp cut_off_to" name="cut_off_to[]" style="width:70px;" type="text"  value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($cot)):''; ?>" /></td>
 				</tr>
 				<tr>
 				  <td colspan="2">
@@ -151,6 +151,8 @@ jQuery(document).ready(function(){
 		var first_payroll_date = obj.parents(".payroll-calendar-row").find(".first_payroll_date").val();
 		var cut_off_from = obj.parents(".payroll-calendar-row").find(".cut_off_from").val();
 		var cut_off_to = obj.parents(".payroll-calendar-row").find(".cut_off_to").val();
+		var pc_id = obj.parents(".payroll-calendar-row").find(".pc_id").val();
+		
 		var error = "";
 		if(first_semi_monthly==""){
 			error += "Semi month payroll date is required<br />";
@@ -179,10 +181,16 @@ jQuery(document).ready(function(){
 					first_payroll_date: first_payroll_date,
 					cut_off_from: cut_off_from,
 					cut_off_to: cut_off_to,
+					pc_id: pc_id,
 					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 				}
 			}).done(function(ret){
+				/*
+				obj.parents(".payroll-calendar-row").find(".pc_id").val(ret);
 				highlight_message("Payroll calendar has been saved");
+				*/
+				jQuery.cookie("msg", "Payroll calendar has been saved");
+				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
 			});	
 			
 		}else{

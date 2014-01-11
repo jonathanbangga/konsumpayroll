@@ -40,6 +40,21 @@ class Payroll_calendar_model extends CI_Model {
 				'{$this->company_id}'	
 			)
 		");
+		return mysql_insert_id();
+	}
+	
+	public function update_payroll_calendar($payroll_calendar_id,$semi_monthly="",$monthly="",$payroll_date="",$cut_off_from="",$cut_off_to=""){
+		$this->db->query("
+			UPDATE `payroll_calendar`
+			SET
+				`first_semi_monthly` = '".mysql_real_escape_string($semi_monthly)."',
+				`second_monthly` = '".mysql_real_escape_string($monthly)."',
+				`first_payroll_date` = '".mysql_real_escape_string($payroll_date)."',
+				`cut_off_from` = '".mysql_real_escape_string($cut_off_from)."',
+				`cut_off_to` = '".mysql_real_escape_string($cut_off_to)."'
+			WHERE `payroll_calendar_id` ={$payroll_calendar_id}
+			AND `company_id` ={$this->company_id}
+		");
 	}
 	
 	public function get_distinct_year($payroll_group_id){
@@ -51,30 +66,6 @@ class Payroll_calendar_model extends CI_Model {
 		");
 	}
 	
-	/*
-	public function get_payroll_calendar($payroll_group_id,$year){
-		return $this->db->query("
-			SELECT * 
-			FROM  `payroll_calendar` 
-			WHERE YEAR(  `payroll_date` ) =  '{$year}'
-			AND  `payroll_group_id` ={$payroll_group_id}
-			AND  `company_id` ={$this->company_id}
-		");
-	}
-	*/
-	
-	public function update_payroll_calendar($payroll_calendar_id,$payroll_date="",$cut_off_from="",$cut_off_to="",$period=""){
-		$this->db->query("
-			UPDATE `payroll_calendar` 
-			SET
-				`payroll_date` = '{$payroll_date}',
-				`cut_off_from` = '{$cut_off_from}',
-				`cut_off_to` = '{$cut_off_to}',
-				`period` = '{$period}'
-			WHERE  `payroll_calendar_id` ={$payroll_calendar_id} 
-			AND  `company_id` ={$this->company_id}
-		");
-	}
 	
 	// new
 	public function get_next_payroll_list($payroll_calendar_id){
