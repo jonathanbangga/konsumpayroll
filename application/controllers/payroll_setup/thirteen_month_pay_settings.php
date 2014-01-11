@@ -22,19 +22,18 @@ class Thirteen_month_pay_settings extends CI_Controller {
 		// load
 		$this->load->model('payroll_setup/thirteen_month_pay_settings_model',"thirteen_month_pay_settings");
 		$this->company_id = $this->session->userdata('company_id');
-		if($this->company_id ==''){
-		
-		}	
 	}
 
 	public function we(){
-		$this->session->set_userdata("company_id","19");
+		$this->session->set_userdata("company_id","1");
+		p($this->session->all_userdata());
 	}
 	
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "13th Month Pay Settings";
 		$this->layout->set_layout($this->theme);
+		$data['page_title'] = "13th Month Pay Settings";
+		
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		$data['settings'] = $this->thirteen_month_pay_settings->get_settings($this->company_id);
 		$data['earnings'] = $this->thirteen_month_pay_settings->get_earnings($this->company_id);
@@ -51,6 +50,8 @@ class Thirteen_month_pay_settings extends CI_Controller {
 		$update_more_adjustments = $this->input->post('thirteen_month_other_adjustments_id');
 		$update_more_adjustments_status = $this->input->post('additional_adjustments_name');
 		# ARRAYS OF FIELS FOR UPDATE
+		
+		if($this->input->post('submit')){
 		$fields_update = array(
 			"basic_pay"	 => $this->input->post('basic_pay'),
 			"overtime"	 => $this->input->post('overtime'),
@@ -74,7 +75,6 @@ class Thirteen_month_pay_settings extends CI_Controller {
 			"undertime"	=> $this->input->post('undertime')
 		);
 		
-		if($this->input->post('submit')){
 			$this->form_validation->set_rules('basic_pay','Basic Pay','required|trim|xss_clean');
 			$this->form_validation->set_rules('overtime','Overtime','required|trim|xss_clean');
 			$this->form_validation->set_rules('holiday_or_premium_pay','Holyday/Premium','required|trim|xss_clean');
@@ -129,12 +129,12 @@ class Thirteen_month_pay_settings extends CI_Controller {
 					$this->thirteen_month_pay_settings->save_field('thirteen_month_settings',$fields_save);	
 					$this->session->set_flashdata("success","Thirteen month settings had been saved!");
 					redirect("/".$this->uri->uri_string());
-				}
-				
+				}		
 			}
 		}	
 		$this->layout->view('pages/payroll_setup/thirteen_month_pay_settings_view',$data);
 	}
+	
 	
 }
 

@@ -69,6 +69,41 @@
 	}
 	
 	/**
+	 * DISPLAYS DATES IN SLASH FORMAT
+	 * activates dates slash
+	 * @param string $str
+	 * @return dates
+	 */
+	function idates_slash($str){
+		return ($str == "0000-00-00" || $str == "01/01/1970" || $str =="1970-01-01") ? null : date("d/m/Y",strtotime($str));
+	}
+	
+	/**
+	 * CLEANS THE DATE WHEN IT THE FORMAT IS SLASH THEN THIS 
+	 * FUNCTIONS WILL AUTOMATICALLY CONVERTS  SLASH TO DASHSES
+	 * @param string $str
+	 * @param string $type (@example date,date-time)
+	 * @return if date then @format will be Y-m-d else date-time then Y-m-d H:i:s 
+	 */
+	function date_clean($str,$type = "date"){
+		if($str  == "0000-00-00" || $str == "01/01/1970" || $str =="1970-01-01"){
+			return null;			
+		}else{
+			switch($type):
+				case "date":
+					$str = date("d/m/Y",strtotime(str_replace("/","-",$str)));
+					
+					return  date("Y-m-d",strtotime($str));
+				break;
+				case "date_time":
+					$str =  str_replace("/","-",$str);
+					return idates_time($str);
+				break;
+			endswitch;	
+		}
+	}
+	
+	/**
 	 * This is the shortcut for the pre functionalities because so taas hehe
 	 * @param object $array
 	 * @example p(array("b","c","d"));

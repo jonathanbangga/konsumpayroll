@@ -10,12 +10,12 @@
 
 class Thirteen_month_pay_settings_model extends CI_Model {
 
-	protected $company_id;
+	
 
     public function __construct(){
         parent::__construct();
 		// default
-		$this->company_id = $this->session->userdata('company_id');
+	
     }
     
     /**
@@ -25,7 +25,7 @@ class Thirteen_month_pay_settings_model extends CI_Model {
      * @return object
      */
     public function get_settings($company_id){
-    	if(is_int($company_id)){
+    	if(is_numeric($company_id)){
 	    	$query = $this->db->query("SELECT * FROM thirteen_month_settings WHERE company_id = '{$this->db->escape_str($company_id)}' AND deleted='0'");
 	    	$row = $query->row();
 	    	$query->free_result();
@@ -41,7 +41,7 @@ class Thirteen_month_pay_settings_model extends CI_Model {
      * @param unknown_type $company_id
      */
     public function get_earnings($company_id){
-    	if(is_int($company_id)){
+    	if(is_numeric($company_id)){
 	    	$query = $this->db->get_where("earnings",array("company_id"=>$this->db->escape_str($company_id),"status"=>"Active","deleted"=>"0"));
 	    	$result = $query->result();
 	    	$query->free_result();
@@ -52,8 +52,8 @@ class Thirteen_month_pay_settings_model extends CI_Model {
     }
     
     public function save_field($table,$field){
-    	$this->db->insert($table,$field);
-    	return $this->db->insert_id();
+    	return $this->db->insert($table,$field);
+    	//return $this->db->insert_id();
     }
     
     public function update_field($table,$field,$where){
@@ -63,7 +63,7 @@ class Thirteen_month_pay_settings_model extends CI_Model {
     }
     
     public function delete_include_earnings($company_id){
-    	if(is_int($company_id)){
+    	if(is_numeric($company_id)){
     		$this->db->delete("thirteen_month_include_earnings",array("company_id"=>$company_id));
     	}
     }
@@ -75,7 +75,7 @@ class Thirteen_month_pay_settings_model extends CI_Model {
      * @return object
      */
     public function get_other_adjustments($company_id){
-    	if(is_int($company_id)){
+    	if(is_numeric($company_id)){
 	    	$query = $this->db->query("SELECT * FROM thirteen_month_other_adjustments WHERE company_id = '{$this->db->escape_str($company_id)}' and deleted = '0' ");
 	    	$result = $query->result();
 	    	$query->free_result();

@@ -1129,6 +1129,7 @@ CREATE TABLE IF NOT EXISTS `payroll_assigned_bank_accounts` (
   PRIMARY KEY (`payroll_assigned_bank_accounts_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `payroll_calendar`
@@ -1136,16 +1137,18 @@ CREATE TABLE IF NOT EXISTS `payroll_assigned_bank_accounts` (
 
 CREATE TABLE IF NOT EXISTS `payroll_calendar` (
   `payroll_calendar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
   `semi_monthly` int(11) NOT NULL,
   `monthly` int(11) NOT NULL,
-  `payroll_group_id` int(11) NOT NULL,
   `payroll_date` date NOT NULL,
   `cut_off_from` date NOT NULL,
   `cut_off_to` date NOT NULL,
+  `period` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   PRIMARY KEY (`payroll_calendar_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `payroll_run`
@@ -1166,6 +1169,7 @@ CREATE TABLE IF NOT EXISTS `payroll_run` (
   PRIMARY KEY (`payroll_run_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `expense_type`
@@ -1670,13 +1674,12 @@ CREATE TABLE IF NOT EXISTS `payroll_group_setup` (
 
 CREATE TABLE IF NOT EXISTS `payroll_group` (
   `payroll_group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payroll_group_name` varchar(100) NOT NULL,
-  `minimum_net_pay` decimal(10,2) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `period_type` varchar(250) NOT NULL,
+  `pay_rate_type` varchar(250) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`payroll_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
