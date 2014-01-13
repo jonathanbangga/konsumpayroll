@@ -98,7 +98,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 		}
 		?>
 		
-	<input type="submit" class="btn" id="save_all" name="save_all" value="Save All" />
+	<!-- <input type="submit" class="btn" id="save_all" name="save_all" value="Save All" /> -->
       
         <!-- MAIN-CONTENT END -->
 		<?php echo form_close();?>
@@ -235,12 +235,12 @@ jQuery(document).ready(function(){
 	
 	// show caledar
 	jQuery(".show_calendar").click(function(){
-		var pc_id = jQuery(this).parents(".payroll-calendar-row").find(".pc_id").val();
+		var pg_id = jQuery(this).parents(".payroll-calendar-row").find(".pg_id").val();
 		jQuery.ajax({
 			type: "POST",
 			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar/ajax_show_calendar",
 			data: {
-				pc_id: pc_id,
+				pg_id: pg_id,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		}).done(function(ret){

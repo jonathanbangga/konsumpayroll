@@ -18,7 +18,7 @@ class Payroll_calendar_model extends CI_Model {
 		");
 	}
 	
-	public function add_payroll_calendar($payroll_group_id,$semi_monthly="",$monthly="",$payroll_date="",$cut_off_from="",$cut_off_to=""){
+	public function add_payroll_calendar($payroll_group_id,$semi_monthly="",$monthly="",$payroll_date="",$cut_off_from="",$cut_off_to="",$period="",$selected=0){
 		$this->db->query("
 			INSERT INTO
 			`payroll_calendar` (
@@ -28,22 +28,26 @@ class Payroll_calendar_model extends CI_Model {
 				`first_payroll_date`,
 				`cut_off_from`,
 				`cut_off_to`,
+				`period`,
+				`selected`,
 				`company_id`
 			)
 			VALUES (
-				'{$payroll_group_id}',
-				'{$semi_monthly}',
-				'{$monthly}',
-				'{$payroll_date}',
-				'{$cut_off_from}',
-				'{$cut_off_to}',
-				'{$this->company_id}'	
+				'".mysql_real_escape_string($payroll_group_id)."',
+				'".mysql_real_escape_string($semi_monthly)."',
+				'".mysql_real_escape_string($monthly)."',
+				'".mysql_real_escape_string($payroll_date)."',
+				'".mysql_real_escape_string($cut_off_from)."',
+				'".mysql_real_escape_string($cut_off_to)."',
+				'".mysql_real_escape_string($period)."',
+				'".mysql_real_escape_string($selected)."',
+				'".mysql_real_escape_string($this->company_id)."'
 			)
 		");
 		return mysql_insert_id();
 	}
 	
-	public function update_payroll_calendar($payroll_calendar_id,$semi_monthly="",$monthly="",$payroll_date="",$cut_off_from="",$cut_off_to=""){
+	public function update_payroll_calendar($payroll_calendar_id,$semi_monthly="",$monthly="",$payroll_date="",$cut_off_from="",$cut_off_to="",$period=""){
 		$this->db->query("
 			UPDATE `payroll_calendar`
 			SET
@@ -51,7 +55,8 @@ class Payroll_calendar_model extends CI_Model {
 				`second_monthly` = '".mysql_real_escape_string($monthly)."',
 				`first_payroll_date` = '".mysql_real_escape_string($payroll_date)."',
 				`cut_off_from` = '".mysql_real_escape_string($cut_off_from)."',
-				`cut_off_to` = '".mysql_real_escape_string($cut_off_to)."'
+				`cut_off_to` = '".mysql_real_escape_string($cut_off_to)."',
+				`period` = '".mysql_real_escape_string($period)."'
 			WHERE `payroll_calendar_id` ={$payroll_calendar_id}
 			AND `company_id` ={$this->company_id}
 		");
@@ -81,8 +86,30 @@ class Payroll_calendar_model extends CI_Model {
 			SELECT *
 			FROM `payroll_calendar`
 			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `selected` = 1
 			AND  `company_id` ={$this->company_id}
 		");
 	}
+	
+	public function get_payroll_calendar_list($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `payroll_calendar`
+			WHERE `payroll_group_id` ={$payroll_group_id}
+			AND  `company_id` ={$this->company_id}
+			ORDER BY `first_payroll_date` ASC 
+		");
+	}
+	
+	public function clear_payroll_calendar_list($payroll_group_id){
+		$this->db->query("
+			DELETE
+			FROM `payroll_calendar`
+			WHERE `payroll_group_id` ={$payroll_group_id}
+			AND `selected` = 0
+			AND  `company_id` ={$this->company_id}
+		");
+	}
+	
 }
 /* End of file */

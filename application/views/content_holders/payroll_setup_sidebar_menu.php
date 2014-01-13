@@ -93,7 +93,7 @@
 	</li>
 	<li <?php if($uri=='accural'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/accural">
-			Accural
+			Accrual
 		</a>
 	</li>
 	<li <?php if($uri=='banks'){ echo 'class="selected"'; } ?>>

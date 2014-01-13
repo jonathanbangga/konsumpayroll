@@ -53,16 +53,29 @@ class Payroll_calendar extends CI_Controller {
 		$first_semi_monthly = $this->input->post('first_semi_monthly');
 		$second_monthly = $this->input->post('second_monthly');
 		$first_payroll_date = $this->input->post('first_payroll_date');
-		$first_payroll_date2 = date('Y-m-d',strtotime($first_payroll_date));
+		$pd = date('Y-m-d',strtotime($first_payroll_date));
 		$cut_off_from = $this->input->post('cut_off_from');
 		$cut_off_from2 = date('Y-m-d',strtotime($cut_off_from));
 		$cut_off_to = $this->input->post('cut_off_to');
 		$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to));
 		$pc_id = $this->input->post('pc_id');
+		$period = date("n",strtotime($pd));
 		if($pc_id==""){
-			$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$first_payroll_date2,$cut_off_from2,$cut_off_to2);
+			
+			$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period,1);
+			
+			
+			$this->capture_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+			
+			
 		}else{
-			$this->payroll_calendar_model->update_payroll_calendar($pc_id,$first_semi_monthly,$second_monthly,$first_payroll_date2,$cut_off_from2,$cut_off_to2);
+		
+			$this->payroll_calendar_model->clear_payroll_calendar_list($pg_id);
+			
+			$this->payroll_calendar_model->update_payroll_calendar($pc_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+			
+			$this->capture_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+			
 		}
 		
 	}
@@ -84,26 +97,14 @@ class Payroll_calendar extends CI_Controller {
 	}
 	
 	public function ajax_show_calendar(){
-		$pc_id = $this->input->post('pc_id');
-		$pc_sql = $this->payroll_calendar_model->get_next_payroll_list($pc_id);
-		if($pc_sql->num_rows()>0){
-			$pc = $pc_sql->row();
-			$pd = $pc->first_payroll_date;
-			$year = date("Y",strtotime($pd));
-			$cof = $pc->cut_off_from;
-			$cot = $pc->cut_off_to;
-			$period = $pc->first_payroll_date;
-			$first_semi_monthly = $pc->first_semi_monthly;
-			$second_monthly = $pc->second_monthly;
-		}else{
-			$year = "";
-			$pd = "";
-			$cof = "";
-			$cot = "";
-			$period = "";
-			$first_semi_monthly = "";
-			$second_monthly = "";
-		}
+	
+		$pg_id = $this->input->post('pg_id');
+		$pc_sql = $this->payroll_calendar_model->get_payroll_calendar_list($pg_id);
+		
+		$sel_pc_sql = $this->payroll_calendar_model->get_payroll_calendar($pg_id);
+		$sel_pc = $sel_pc_sql->row();
+		$year = date("Y",strtotime($sel_pc->first_payroll_date));
+		
 		$str = '
 			<div style="text-align:center;margin-bottom: 10px;">'.$year.'</div> 
 			<table>
@@ -117,52 +118,23 @@ class Payroll_calendar extends CI_Controller {
 				</thead>
 				<tbody>';
 					// while loop
-					$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
-					$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
-					$i=0;
-					while($pd<$last_payroll){
 					
-						if($i>0){
-							$pd_day = date("d",strtotime($pd));
-							$pd_month_txtual = date("F",strtotime($pd));
-							if($pd_day==$first_semi_monthly){
-								//$day = ($second_monthly==-1)?date("t",strtotime($pd)):$second_monthly;	
-								if($second_monthly==-1){
-									$day = date("t",strtotime($pd));
-								}else{
-									if($second_monthly>=29&&$pd_month_txtual=="February"){
-										$day = date("t",strtotime($pd));
-									}else{
-										$day = $second_monthly;
-									}
-									if($second_monthly==31&&$pd_month_txtual!="February"){
-										$ld = date("t",strtotime($pd));
-										$day = ($ld==31)?$second_monthly:$ld;
-									}
-								}
-							}else{
-								$day = $first_semi_monthly;
-								$month = date("m",strtotime("{$pd_month_txtual} + 1 month"));
-							} 
-							$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
-							$cof = date('Y-m-d',strtotime($cot."+ 1 day"));
-							$cot = date('Y-m-d',strtotime($cot."+ 15 days"));
-						}
-						
-						$str .= '<tr>	
-									<td>
-									<input class="txtfield dp edit_payroll_date" type="text" value="'.date("m/d/Y",strtotime($pd)).'" /></td>
-									<td><input class="txtfield dp edit_cut_off_from" type="text" value="'.date("m/d/Y",strtotime($cof)).'" /></td>
-									<td><input class="txtfield dp edit_cut_off_to" type="text" value="'.date("m/d/Y",strtotime($cot)).'" /></td>
-									<td><input class="txtfield period" type="text" style="width: 20px;" value="'.date("n",strtotime($pd)).'" /></td>
-								</tr>';
-					$i++;
+					foreach($pc_sql->result() as $pc){
+						$str .= '
+						<tr>	
+							<td>
+							<input class="txtfield dp edit_payroll_date" type="text" value="'.date("m/d/Y",strtotime($pc->first_payroll_date)).'" /></td>
+							<td><input class="txtfield dp edit_cut_off_from" type="text" value="'.date("m/d/Y",strtotime($pc->cut_off_from)).'" /></td>
+							<td><input class="txtfield dp edit_cut_off_to" type="text" value="'.date("m/d/Y",strtotime($pc->cut_off_to)).'" /></td>
+							<td><input class="txtfield period" type="text" style="width: 20px;" value="'.$pc->period.'" /></td>
+						</tr>';			
 					}
 				
 	
 				$str .= '</tbody>
 			</table>';
 		echo $str;
+		
 	}
 	
 	public function ajax_update_payroll_calendar(){
@@ -184,6 +156,45 @@ class Payroll_calendar extends CI_Controller {
 	
 	public function test(){
 		echo date("t",strtotime("January 2014"));
+	}
+	
+	public function capture_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period){
+		// while loop
+		$year = date("Y",strtotime($pd));
+		$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
+		$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
+		while($pd<$last_payroll){
+		
+	
+				$pd_day = date("d",strtotime($pd));
+				$pd_month_txtual = date("F",strtotime($pd));
+				if($pd_day==$first_semi_monthly){
+					//$day = ($second_monthly==-1)?date("t",strtotime($pd)):$second_monthly;	
+					if($second_monthly==-1){
+						$day = date("t",strtotime($pd));
+					}else{
+						if($second_monthly>=29&&$pd_month_txtual=="February"){
+							$day = date("t",strtotime($pd));
+						}else{
+							$day = $second_monthly;
+						}
+						if($second_monthly==31&&$pd_month_txtual!="February"){
+							$ld = date("t",strtotime($pd));
+							$day = ($ld==31)?$second_monthly:$ld;
+						}
+					}
+				}else{
+					$day = $first_semi_monthly;
+					$month = date("m",strtotime("{$pd_month_txtual} + 1 month"));
+				} 
+				$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
+				$cut_off_from2 = date('Y-m-d',strtotime($cut_off_to2."+ 1 day"));
+				$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to2."+ 15 days"));
+				$period = date("n",strtotime($pd));
+				
+				$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+
+		}
 	}
 	
 }
