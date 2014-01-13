@@ -318,4 +318,62 @@
 		return $row->cost_center_code;
 	}
 	
+	/**
+	 * Deduction Payroll Group Name
+	 * @param unknown_type $id
+	 * @param unknown_type $field
+	 */
+	function deduction_payroll_group($id,$field){
+		$CI =& get_instance();
+		$sql = $CI->db->query("
+			SELECT 
+			*FROM deductions_payroll_group
+			WHERE payroll_group_id = '{$id}'
+			AND status = 'Active'
+		");
+		$row = $sql->row();
+		$sql->free_result();
+		return $row->$field;
+	}
+	
+	/**
+	 * Deduction Income Information
+	 * @param unknown_type $id
+	 * @param unknown_type $field
+	 * @param unknown_type $income_val
+	 */
+	function deduction_income($income_val,$field,$comp_id){
+		$CI =& get_instance();
+		$sql = $CI->db->query("
+			SELECT 
+			*FROM deductions_income
+			WHERE income = '{$income_val}'
+			AND comp_id = '{$comp_id}'
+			AND status = 'Active'
+		");
+		$row = $sql->row();
+		$sql->free_result();
+		return $row->$field;
+	}
+	
+	/**
+	 * Deduction Adjustments Information
+	 * @param unknown_type $id
+	 * @param unknown_type $field
+	 * @param unknown_type $income_val
+	 */
+	function deduction_adjustments($val,$field,$comp_id){
+		$CI =& get_instance();
+		$sql = $CI->db->query("
+			SELECT 
+			*FROM deductions_adjustments
+			WHERE adjustments = '{$val}'
+			AND comp_id = '{$comp_id}'
+			AND status = 'Active'
+		");
+		$row = $sql->row();
+		$sql->free_result();
+		return $row->$field;
+	}
+	
 	
