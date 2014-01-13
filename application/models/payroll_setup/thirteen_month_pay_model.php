@@ -97,6 +97,13 @@ class Thirteen_month_pay_model extends CI_Model {
     	}
     }
     
+    public function check_payroll_calendar($company_id,$payroll_group_id){
+    	$query = $this->db->query("SELECT * FROM payroll_calendar WHERE payroll_group_id = '{$this->db->escape_str($payroll_group_id)}'");
+    	$row = $query->row();
+    	$query->free_result();
+    	return $row;
+    }
+    
     
 }
 /* End of file hr_setup_model.php */
