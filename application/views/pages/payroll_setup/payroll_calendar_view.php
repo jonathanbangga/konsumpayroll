@@ -16,15 +16,39 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 				<?php echo $pg->name ?>
 				<input type="hidden" class="pg_id" name="pg_id[]" value="<?php echo $pg->payroll_group_id; ?>" />
 			  </h5>
+			  
+			  <?php
+				$pc_sql = $this->payroll_calendar_model->get_payroll_calendar($pg->payroll_group_id);
+				if($pc_sql->num_rows()>0){
+					$pc = $pc_sql->row();
+					$pc_id = $pc->payroll_calendar_id;
+					$fsm = $pc->first_semi_monthly;
+					$sm = $pc->second_monthly;
+					$fpd = $pc->first_payroll_date;
+					$cof = $pc->cut_off_from;
+					$cot = $pc->cut_off_to;
+				}else{
+					$pc_id = "";
+					$fsm = "";
+					$sm = "";
+					$fpd = "";
+					$cof = "";
+					$cot = "";
+				}				
+			  ?>
+			  
 			  <table style="margin-bottom:8px;">
 				<tr>
+				  <td style="display:none">
+					<input type="hidden" name="pc_id[]" class="pc_id" value="<?php echo $pc_id; ?>" />
+				  </td>
 				  <td style="width:314px;"> Indicate the date of the first semi-monthly payroll </td>
 				  <td style="width:120px;">
-					<select style="width:120px;" class="txtselect semi_monthly" name="semi_monthly[]">
-						<option value="-1">select</option>
+					<select style="width:120px;" class="txtselect first_semi_monthly" name="first_semi_monthly[]">
+						<option value="">select</option>
 						<?php
 						for($i=1;$i<=15;$i++){?>
-							<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+							<option value="<?php echo $i; ?>" <?php echo ($i==$fsm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
 						<?php
 						}
 						?>
@@ -34,27 +58,27 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 				<tr>
 				  <td>Indicate the date of your second monthly payroll</td>
 				  <td>
-					<select style="width:120px;" class="txtselect monthly" name="monthly[]">
-						<option value="-1">select</option>
+					<select style="width:120px;" class="txtselect second_monthly" name="second_monthly[]">
+						<option value="">select</option>
 						<?php
 						for($i=16;$i<=31;$i++){?>
-							<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+							<option value="<?php echo $i; ?>" <?php echo ($i==$sm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
 						<?php
 						}
 						?>
-						<option value="-2">end of month</option>
+						<option value="-1" <?php echo ($sm==-1)?'selected="selected"':''; ?>>end of month</option>
 					</select>
 					</td>
 				</tr>
 			  </table>
 			  <p style="padding-bottom:8px;">State the first payroll for this group that will be run by this system
-				<input type="text" class="txtfield dp payroll_date" name="payroll_date[]" style="width:120px;" />
+				<input type="text" class="txtfield dp first_payroll_date" name="first_payroll_date[]" style="width:120px;" value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($fpd)):''; ?>" />
 			  </p>
 			  <table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 				  <td style="width:512px;">Select range of work days to be included in first payroll for this group using the system</td>
-				  <td style="width:180px;"><input class="txtfield dp cut_off_from" name="cut_off_from[]" style="width:70px;" type="text">
-					<input class="txtfield dp cut_off_to" name="cut_off_to[]" style="width:70px;" type="text"></td>
+				  <td style="width:180px;"><input class="txtfield dp cut_off_from" name="cut_off_from[]" style="width:70px;" type="text" value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($cof)):''; ?>" />
+					<input class="txtfield dp cut_off_to" name="cut_off_to[]" style="width:70px;" type="text"  value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($cot)):''; ?>" /></td>
 				</tr>
 				<tr>
 				  <td colspan="2">
@@ -86,16 +110,10 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
       </div>
 	  
 <div id="payroll_calendar_dialog" class="jdialog"  title="Payroll Calendar">
-	<div class="inner_div">
-		<div style="display:none;" class="highlight_message msg2">Message</div>
-		<div style="float:right;margin-bottom: 15px;">
-		Year 
-		<span id="pgy_span">
-		</span>
-		</div>
-		<div style="clear:both;"></div>
-		<div id="pc_table_div">
-		Please Select Year
+	<div class="inner_div pgy_span">
+		<div style="float:right;margin-bottom: 15px;" class="pgy_span">
+			<div id="pgy_span">
+			</div>
 		</div>
 	</div>
 </div>
@@ -128,19 +146,21 @@ jQuery(document).ready(function(){
 	jQuery(".save").click(function(){
 		var obj = jQuery(this);
 		var pg_id = obj.parents(".payroll-calendar-row").find(".pg_id").val();
-		var semi_monthly = obj.parents(".payroll-calendar-row").find(".semi_monthly").val();
-		var monthly = obj.parents(".payroll-calendar-row").find(".monthly").val();
-		var payroll_date = obj.parents(".payroll-calendar-row").find(".payroll_date").val();
+		var first_semi_monthly = obj.parents(".payroll-calendar-row").find(".first_semi_monthly").val();
+		var second_monthly = obj.parents(".payroll-calendar-row").find(".second_monthly").val();
+		var first_payroll_date = obj.parents(".payroll-calendar-row").find(".first_payroll_date").val();
 		var cut_off_from = obj.parents(".payroll-calendar-row").find(".cut_off_from").val();
 		var cut_off_to = obj.parents(".payroll-calendar-row").find(".cut_off_to").val();
+		var pc_id = obj.parents(".payroll-calendar-row").find(".pc_id").val();
+		
 		var error = "";
-		if(semi_monthly==-1){
+		if(first_semi_monthly==""){
 			error += "Semi month payroll date is required<br />";
 		}
-		if(monthly==-1){
+		if(second_monthly==""){
 			error += "Monthly payroll date is required<br />";
 		}
-		if(payroll_date==""){
+		if(first_payroll_date==""){
 			error += "Payroll date is required<br />";
 		}
 		if(cut_off_from==""){
@@ -156,20 +176,21 @@ jQuery(document).ready(function(){
 				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar/ajax_add_payroll_calendar",
 				data: {
 					pg_id: pg_id,
-					semi_monthly: semi_monthly,
-					monthly: monthly,
-					payroll_date: payroll_date,
+					first_semi_monthly: first_semi_monthly,
+					second_monthly: second_monthly,
+					first_payroll_date: first_payroll_date,
 					cut_off_from: cut_off_from,
 					cut_off_to: cut_off_to,
+					pc_id: pc_id,
 					<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 				}
 			}).done(function(ret){
-				obj.parents(".payroll-calendar-row").find(".semi_monthly").val("");
-				obj.parents(".payroll-calendar-row").find(".monthly").val("");
-				obj.parents(".payroll-calendar-row").find(".payroll_date").val("");
-				obj.parents(".payroll-calendar-row").find(".cut_off_from").val("");
-				obj.parents(".payroll-calendar-row").find(".cut_off_to").val("");
-				highlight_message("Payroll calendar has been saved")
+				/*
+				obj.parents(".payroll-calendar-row").find(".pc_id").val(ret);
+				highlight_message("Payroll calendar has been saved");
+				*/
+				jQuery.cookie("msg", "Payroll calendar has been saved");
+				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
 			});	
 			
 		}else{
@@ -214,12 +235,12 @@ jQuery(document).ready(function(){
 	
 	// show caledar
 	jQuery(".show_calendar").click(function(){
-		var pg_id = jQuery(this).parents(".payroll-calendar-row").find(".pg_id").val();
+		var pc_id = jQuery(this).parents(".payroll-calendar-row").find(".pc_id").val();
 		jQuery.ajax({
 			type: "POST",
-			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar/ajax_get_payroll_calendar_year",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar/ajax_show_calendar",
 			data: {
-				pg_id: pg_id,
+				pc_id: pc_id,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		}).done(function(ret){
@@ -228,57 +249,6 @@ jQuery(document).ready(function(){
 				modal: true,
 				show: {
 					effect: "blind"
-				},
-				close: function( event, ui ) {
-					jQuery("#pc_table_div").html("Please Select Year");
-				},
-				buttons: {
-					'save': function() {
-						// ajax call
-								var is_changed = new Array();
-								jQuery("#payroll_calendar_dialog .is_changed").each(function(index){
-									is_changed[index] = jQuery(this).val();
-								});
-								var pc_id = new Array();
-								jQuery("#payroll_calendar_dialog .pc_id").each(function(index){
-									pc_id[index] = jQuery(this).val();
-								});
-								var payroll_date = new Array();
-								jQuery("#payroll_calendar_dialog .edit_payroll_date").each(function(index){
-									payroll_date[index] = jQuery(this).val();
-								});
-			
-								var cut_off_from = new Array();
-								jQuery("#payroll_calendar_dialog .edit_cut_off_from").each(function(index){
-									cut_off_from[index] = jQuery(this).val();
-								});
-								var cut_off_to = new Array();
-								jQuery("#payroll_calendar_dialog .edit_cut_off_to").each(function(index){
-									cut_off_to[index] = jQuery(this).val();
-								});
-								var period = new Array();
-								jQuery("#payroll_calendar_dialog .period").each(function(index){
-									period[index] = jQuery(this).val();
-								});
-								jQuery.ajax({
-									type: "POST",
-									url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar/ajax_update_payroll_calendar",
-									data: {
-										is_changed: is_changed,
-										pc_id: pc_id,
-										payroll_date: payroll_date,
-										cut_off_from: cut_off_from,
-										cut_off_to: cut_off_to,
-										period: period,
-										<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
-									}
-								}).done(function(ret){
-									highlight_message("Changes has been saved",".msg2");
-								});	
-							
-					
-						
-					}
 				}
 			});
 		});	
