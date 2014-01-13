@@ -25,6 +25,7 @@ class Thirteen_month_pay extends CI_Controller {
 
 	public function index(){
 		// header and menu's
+
 		
 		$data['page_title'] = "13th Month Pay";
 		$this->layout->set_layout($this->theme);
@@ -35,9 +36,16 @@ class Thirteen_month_pay extends CI_Controller {
 		
 		if($this->input->post('submit')){	
 			$this->form_validation->set_rules("payroll_group_id[]","Payroll Group ID","xss_clean|trim|required");
+			$thirteen_month_process = $this->input->post('thirteen_month_process');
+			if($thirteen_month_process){
+				foreach($thirteen_month_process as $tmp_k => $tmp_val):
+					$this->form_validation->set_rules("thirteen_month_process[{$tmp_k}]","Thirteen Month Process","xss_clean|trim|required");
+				endforeach;
+			}
+			
 			if($this->form_validation->run() == true){
 				$payroll_group_id = $this->input->post('payroll_group_id');	
-				$thirteen_month_process = $this->input->post('thirteen_month_process');
+				
 				$first_month_payroll_date = $this->input->post('first_month_payroll_date');
 				$first_month_payroll_from = $this->input->post('first_month_payroll_from');
 				$first_month_payroll_to = $this->input->post('first_month_payroll_to');
@@ -99,6 +107,7 @@ class Thirteen_month_pay extends CI_Controller {
 				$third_quarter_to = $this->input->post('third_quarter_to');
 				
 				$add_another_bonus = $this->input->post('add_another_bonus');
+				$thirteen_month_released_date	= $this->input->post('thirteen_month_released_date');
 	
 				foreach($payroll_group_id as $pgi_key=>$pgi_val):
 					
@@ -134,6 +143,7 @@ class Thirteen_month_pay extends CI_Controller {
 						"ninth_month_payroll_to"	=> date_clean($ninth_month_payroll_to[$pgi_key]),
 						"tenth_month_payroll_date"	=> date_clean($tenth_month_payroll_date[$pgi_key]),
 						"tenth_month_payroll_from"	=> date_clean($tenth_month_payroll_from[$pgi_key]),
+						"tenth_month_payroll_to"	=> date_clean($tenth_month_payroll_to[$pgi_key]),
 						"eleventh_month_payroll_date"	=> date_clean($eleventh_month_payroll_date[$pgi_key]), 
 						"eleventh_month_payroll_from"	=> date_clean($eleventh_month_payroll_from[$pgi_key]),
 						"eleventh_month_payroll_to"		=> date_clean($eleventh_month_payroll_to[$pgi_key]),
@@ -149,11 +159,11 @@ class Thirteen_month_pay extends CI_Controller {
 						"third_quarter_date"	=> date_clean($third_quarter_date[$pgi_key]),
 						"third_quarter_from"	=> date_clean($third_quarter_from[$pgi_key]),
 						"third_quarter_to"		=> date_clean($third_quarter_to[$pgi_key]),
+						"thirteen_month_released_date" => date_clean($thirteen_month_released_date[$pgi_key]),
 						"add_another_bonus"		=> $add_another_bonus[$pgi_key],
+						"date"					=> idates_now(),
 						'deleted'				=> '0'	
 					);
-	
-					p($field);
 					#CHECK FIRST BEFORE WE SAVE THE FILE IT MAY BE A SAVE OPTION OTHERWISE WE UPDATE IT ON 
 					$check_payroll_group = $this->thirteen_month_pay->check_thirteen_month_pay_exist($this->company_id,$pgi_val);
 					if($check_payroll_group){ # EXIST ALREADY SO WE MUST UPDATE
@@ -162,9 +172,9 @@ class Thirteen_month_pay extends CI_Controller {
 					}else{ # NOT EXIST MEANING MUST SAVE ONLY
 						$field['company_id'] = $this->company_id; # CREATE AN ARRAY OF COMPANY_ID to store on save 	
 						$this->thirteen_month_pay->save_thirteen_month_pay($field);
-					}	
+					}				
 				endforeach;
-				$this->session->set_flashdata("success","data had been saved");
+				$this->session->set_flashdata("success","13 Month Pay had been saved");
 				redirect('/'.$this->uri->uri_string());
 			}else{
 			
