@@ -126,8 +126,8 @@
 	        <p>Do you want to add another bonus month for Real Regular Group? Example 14th Month</p>
 	        <table style="margin-left:10px;" border="0" cellspacing="0" cellpadding="0">
 			  <tr>
-			    <td style="width:60px;"> <input style="margin-right:5px;" name="add_another_bonus[<?php echo $get_payr_key;?>]" <?php echo ($thirteen_month && $thirteen_month->add_another_bonus == "yes") ? 'checked="checked"': '';?> type="radio" value="yes"> Yes</td>
-			    <td style="width:60px;"> <input style="margin-right:5px;" name="add_another_bonus[<?php echo $get_payr_key;?>]" type="radio" value="no" <?php echo ($thirteen_month && $thirteen_month->add_another_bonus == "no") ? 'checked="checked"': '';?>>  No</td>
+			    <td style="width:60px;"> <input style="margin-right:5px;" name="add_another_bonus[<?php echo $get_payr_key;?>]" <?php echo ($thirteen_month && $thirteen_month->add_another_bonus == "yes") ? 'checked="checked"': '';?> class="jadd_another_bonus"  type="radio" value="yes"> Yes</td>
+			    <td style="width:60px;"> <input style="margin-right:5px;" name="add_another_bonus[<?php echo $get_payr_key;?>]" type="radio" value="no" <?php echo ($thirteen_month && $thirteen_month->add_another_bonus == "no") ? 'checked="checked"': '';?> class="jadd_another_bonus" >  No</td>
 			  </tr>
 			</table>
 			<br><br><br>
@@ -214,6 +214,13 @@
 				}
 			});
 		}
+
+     	// IVALIDATE THE FORM
+     	function tmp_validate(){
+			i
+     		return false;
+        }
+		
      	jQuery(function(){
      		jQuery(".imonth").hide();
      		select_tmp_options();
