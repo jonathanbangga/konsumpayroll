@@ -14,10 +14,12 @@ $config['temp_control_panel'] = 'temp_control_panel';
 $config['company_dashboard_menu'] = 'content_holders/company_dashboard_menu';
 $config['add_company_menu'] = 'content_holders/company_menu';
 $config['jb_employee_menu'] = 'content_holders/jb_employee_menu';
+$config['main_menu'] = 'content_holders/main_menu';
 
 // side bar menu
 $config['hr_setup_sidebar_menu'] = 'content_holders/hr_setup_sidebar_menu';
 $config['payroll_setup_sidebar_menu'] = 'content_holders/payroll_setup_sidebar_menu';
+$config['payroll_run_sidebar_menu'] = 'content_holders/payroll_run_sidebar_menu';
 
 // assgin TYPe
 $config['type_admin'] = "1";
