@@ -2,7 +2,7 @@
 <p>Employee Number: <?php print $emp_info->payroll_cloud_id;?></p>
 <p>Loan Type: <?php print $emp_info->loan_type_name;?></p>
 <p>Date Granted: <?php print $emp_info->date_granted;?></p>
-<p>Loan Amount: <?php print $emp_info->principal;?></p>
+<p>Loan Amount: <?php print number_format($emp_info->principal, 2);?></p>
 <div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
