@@ -593,12 +593,29 @@
 						   		opacity: 0
 							}
 						});
+
+						// call disable fields
+						if(status.no_of_days > 0){
+							disable_fields();
+						}
 	                 }
 				}
 	 	    });
 		});	
 	}
 
+	function disable_fields(){
+	    // input type text
+	    jQuery(".changeLogs input:text").each(function(){
+	        jQuery(this).removeAttr("disabled");
+	    });
+	    
+	    // select option
+	     jQuery(".changeLogs select").each(function(){
+	        jQuery(this).removeAttr("disabled");
+	    });
+	}
+	
 	function validate_form(){
 		var reason = jQuery(".reason").val();
 		var error = 0;

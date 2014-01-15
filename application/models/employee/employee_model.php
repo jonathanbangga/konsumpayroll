@@ -192,7 +192,7 @@
 			$sql = $this->db->query("
 				SELECT *FROM leave_type
 				WHERE company_id = '{$comp_id}'
-				AND status = 'Active'
+				AND deleted = '0'
 			");
 			if($sql->num_rows() > 0){
 				$result = $sql->result();
@@ -920,8 +920,19 @@
 		 * @param unknown_type $reason
 		 */
 		public function update_employee_time_log(
-						$comp_id, $emp_id, $employee_timein, $time_in, $lunch_out, $lunch_in, $time_out, $reason
-					){
+			$comp_id, $emp_id, $employee_timein, $time_in, $lunch_out, $lunch_in, $time_out, $reason
+		){
+			if($lunch_out != "0000-00-00 00:00:00" || $lunch_in != "0000-00-00 00:00:00" || $time_out != "0000-00-00 00:00:00"){
+				$compute_timein_lunchout = (strtotime($lunch_out) - strtotime($time_in)) / 3600; 
+				$compute_lunchin_timeout = (strtotime($time_out) - strtotime($lunch_in)) / 3600;
+				$first_hours_worked = round($compute_timein_lunchout,2);
+				$second_hours_worked = round($compute_lunchin_timeout,2);
+				
+				$total_hours_worked = $first_hours_worked + $second_hours_worked;
+			}else{
+				$total_hours_worked = "0.00";
+			}
+			/*
 			$sql = $this->db->query("
 				UPDATE employee_time_in
 				SET time_in = '{$time_in}', lunch_out = '{$lunch_out}', lunch_in = '{$lunch_in}', time_out = '{$time_out}', 
@@ -930,7 +941,17 @@
 				AND emp_id = '{$emp_id}'
 				AND employee_time_in_id = '{$employee_timein}'
 			");
+			*/
+			$sql = $this->db->query("
+				UPDATE employee_time_in
+				SET time_in = '{$time_in}', lunch_out = '{$lunch_out}', lunch_in = '{$lunch_in}', time_out = '{$time_out}', 
+				reason = '{$reason}', tax_status = 'pending', corrected = 'Yes', total_hours = '{$total_hours_worked}'
+				WHERE comp_id = '{$comp_id}'
+				AND emp_id = '{$emp_id}'
+				AND employee_time_in_id = '{$employee_timein}'
+			");
 			if($sql){
+				/*
 				$sql_2 = $this->db->query("
 					SELECT *FROM employee_time_in
 					WHERE comp_id = '{$comp_id}'
@@ -940,6 +961,7 @@
 					LIMIT 1
 				");
 				if($sql_2->num_rows() > 0){
+					
 					$row = $sql_2->row();
 					$sql_2->free_result();
 					if($row->time_in != "0000-00-00 00:00:00" && $row->lunch_out != "0000-00-00 00:00:00" && $row->lunch_in != "0000-00-00 00:00:00" && $row->time_out != "0000-00-00 00:00:00"){
@@ -959,7 +981,9 @@
 					}else{
 					
 					}
+					
 				}
+				*/
 				return TRUE;
 			}else{
 				return FALSE;

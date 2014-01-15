@@ -1,0 +1,2936 @@
+[33mcommit 6e9890e9f51db56ccd0df8e3f4e26ea2851852b1[m
+Merge: 74de773 42eea6e
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Jan 13 15:20:00 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 74de773932a80793d2b4f0f897ba0b09ae2df55b[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Jan 13 15:19:10 2014 +0800
+
+    new files for payroll setup deductions
+
+[33mcommit 42eea6ed88ea82df662cf8078c23aa253bd48107[m
+Merge: b898b23 2aafcb5
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Jan 11 17:40:54 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit b898b23442dc94337980c0f8dc71a3f7d572756b[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Jan 11 17:39:08 2014 +0800
+
+    finished payroll calendar revision
+
+[33mcommit 2aafcb58e70cd7d6c918ffa290018a21786f633f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Jan 10 19:01:47 2014 +0800
+
+     done 13month month pay
+
+[33mcommit 9e06deb667292c270d5340ebd996f66cde6dafde[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Jan 10 10:32:06 2014 +0800
+
+    module encountered bugs
+
+[33mcommit 5aa3e0c9fea9ad9697ffec704b04d17f1efb5837[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 9 18:18:02 2014 +0800
+
+    revisde payroll calendar
+
+[33mcommit 386d55b8a528da141eacb460091ef08fb76571e8[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 9 16:05:27 2014 +0800
+
+    thirtheen month pay module
+
+[33mcommit c364969c2bcebe45f61fb842914d6538be9424a6[m
+Merge: 53d1446 6eaeb6c
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 9 14:47:35 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 53d1446dfa2a522751660db4b8f2d1bad1630423[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 9 14:47:14 2014 +0800
+
+    module 13month pay added
+
+[33mcommit 6eaeb6c264d95ba4fd98a8df17647325fccbee14[m
+Merge: 4094073 000fb5b
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Jan 9 14:23:15 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 4094073590b9e93dda23c1e6797e44bfa953285e[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Jan 9 14:22:29 2014 +0800
+
+    new files for income controller
+
+[33mcommit 000fb5b432bfd809d94ac88a3d499196b6c43807[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 9 13:26:36 2014 +0800
+
+    clean workday codes a bit
+
+[33mcommit 7fe1f9b437fcbf0f70aa6bc996462bbd3d536eb2[m
+Merge: 16635db ea52d18
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 9 13:18:54 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 16635db5376d06a85158b37fda368a9d2ea8e7ea[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 9 13:17:11 2014 +0800
+
+    added ajax delete workshift
+
+[33mcommit 9b4415663ce31c269b44181276332fe93699518b[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 9 10:55:21 2014 +0800
+
+    finished workday! at last :D
+
+[33mcommit ea52d185a005b77014d2a9a3cde73f2b3d9f392a[m
+Merge: e2fc82b 93750b1
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 17:07:25 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e2fc82bfa674c10c6e09ae4415012bd7e109f6e8[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 17:06:53 2014 +0800
+
+    new updated files for payroll information
+
+[33mcommit 5596647275947f245b9af24397172be2fcc7c4e5[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Jan 8 14:39:01 2014 +0800
+
+    updated database payroll_calendar
+
+[33mcommit be97ebe437dc55512378f73abde03ee367947621[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Jan 8 14:20:10 2014 +0800
+
+    updated error on thirtenn month modules
+
+[33mcommit 93750b1d71f47d0123d596a52a1690a90c56ac60[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Jan 8 13:25:31 2014 +0800
+
+    module konsumpayroll
+
+[33mcommit 14206aa8e07a5f20f554516a1beb943d7a8da5a9[m
+Merge: 5bd3e33 0de8995
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Jan 8 13:04:47 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 5bd3e3313b7e1be82148a350f8cd799c82cccc9d[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Jan 8 13:04:24 2014 +0800
+
+    module priority of deductions updated
+
+[33mcommit 0de899584769003af5f9b63b5f0b47533f3035ea[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 10:44:12 2014 +0800
+
+    new updated file for control panel
+
+[33mcommit f4db7930701dc7a859ee0abd35dfcf5d582abcca[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 10:27:15 2014 +0800
+
+    new updated file for control panel
+
+[33mcommit e77f3d08633b434d3d5c2732bdb532047600c106[m
+Merge: f399da2 b2ae256
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 10:04:59 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f399da229cde97ea6864746000b14c1f9d4c3feb[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Jan 8 10:04:30 2014 +0800
+
+    control panel file updated
+
+[33mcommit b2ae2562b82147f25d9ea2c1e3496d505edbecc8[m
+Merge: 93006e6 f4810b4
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Jan 7 18:57:01 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 93006e6ebc1166381794a64cb12e7fb3d20a4a97[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Jan 7 18:56:41 2014 +0800
+
+    priority of deduction modules added
+
+[33mcommit f4810b4b3f35e4b93d8c74d50e5eb0928011e6de[m
+Merge: 23c43ec ffce8dc
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Jan 7 18:18:36 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 23c43ec15187dafe0e8b3b2ed935dfaaebb59eb8[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Jan 7 18:17:49 2014 +0800
+
+    new payroll journal entries file
+
+[33mcommit ffce8dc212af20f0683f86750ba328f809bd9f35[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Jan 7 15:23:47 2014 +0800
+
+    updated module
+
+[33mcommit a003b4b06d1e1ac12154451c7ffd3aeb32307110[m
+Merge: 427f01c 202f8f9
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Jan 7 14:27:05 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 427f01c8b241213b94c4d6565261b79a9d47de67[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Jan 7 14:26:43 2014 +0800
+
+    added 13month settings on payroll setup
+
+[33mcommit 202f8f99bbc9d5c53472b641615b5018faeb1aaa[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Jan 6 15:04:46 2014 +0800
+
+    updates for accural information
+
+[33mcommit 2cc93f8ec07ccb6b5d53d1e27816207baafd998e[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Jan 3 17:40:12 2014 +0800
+
+    new updated file
+
+[33mcommit eaf5c85315d3f792958ff5263e97272b556ca5ff[m
+Merge: ab682c5 a330ec7
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Jan 3 17:34:18 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ab682c587be9b34b48fff96ca13fbee4149533c1[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Jan 3 17:33:40 2014 +0800
+
+    new updated files
+
+[33mcommit a330ec7568c878ccadd51c629518a61b84bda9c7[m
+Merge: 17367d8 f4f045c
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Jan 3 17:19:54 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 17367d8875ca9c096249003c385f0a5330a6ee9b[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Jan 3 17:19:17 2014 +0800
+
+    modfied companysetup and db
+
+[33mcommit f4f045c718864a454542120879605bb16ccab265[m
+Merge: 9666349 300ae31
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Jan 3 17:19:14 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 966634947fd7aec9ec62f0b97212c4ff70e3dee9[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Jan 3 17:18:45 2014 +0800
+
+    finished dynamic add or update in workday, break time, workshift, work settings
+
+[33mcommit 300ae31146869ad4a5bff1a33d65f6554520f2ea[m
+Merge: b16e2a0 22ec1a5
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Jan 3 17:14:53 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit b16e2a09123e50e52557545d299dc67f33b0c534[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Jan 3 17:14:14 2014 +0800
+
+    new updated files
+
+[33mcommit 22ec1a563ca88142342a9eb8f8d83fe8d66a6751[m
+Merge: 1df3dae 3bca1da
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 2 17:56:39 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 1df3dae102f8fddc5ce1377c262d316560c1d1e6[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Jan 2 17:55:51 2014 +0800
+
+    fixed all errors, completed dynamic add or update workdays, break time and workday settings. The only remains is workshift, still having problem submitting
+
+[33mcommit 3bca1da5962be1a79f804fc42262cf826da962c9[m
+Merge: 525224a cd3cff7
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Jan 2 17:25:06 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 525224a01e40f82823aa7e0b648ad880ac0996b9[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Jan 2 17:24:29 2014 +0800
+
+    new updated files
+
+[33mcommit cd3cff777f63fcfc1fbc819b00d34a9738810ca2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 2 15:46:59 2014 +0800
+
+    updated inquiries
+
+[33mcommit 9679a65a5079da4b8a2331c3508ed9303c6cc549[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 2 15:46:08 2014 +0800
+
+    updated hr inquiries
+
+[33mcommit 30d3aa6b8aebe1bbeda78d2ea201e253287f6482[m
+Merge: 31dd40f 91c5dc9
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 2 09:49:10 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 31dd40f7631ad0f5f3c26362465801e6e1719bc9[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Jan 2 09:48:51 2014 +0800
+
+    modified databse
+
+[33mcommit 91c5dc9fd1b60645a7ae86c76311a249ceebaa26[m
+Merge: 88e2e66 068ea2e
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Wed Jan 1 19:20:37 2014 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 88e2e660d76f11b724d4e98fc79c8ac0d3d79f38[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Wed Jan 1 19:19:38 2014 +0800
+
+    merge test branch
+
+[33mcommit 068ea2e509171a7db3af97a9a0dce74d637b21bb[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 27 15:26:49 2013 +0800
+
+    updated fixes
+
+[33mcommit 8d5758c11df962d6c07edc56d546f501bb690a52[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 27 10:30:31 2013 +0800
+
+    updated global helper
+
+[33mcommit c32e54e06fd95b245c7c3aaf62a277bccdc48e88[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 27 09:19:25 2013 +0800
+
+    added add function to workdays, breaktime, workshift and workday settings. Added accordion and other custom scripts, fixed many error upon submission
+
+[33mcommit 6e03ba7b6e8d6ecc1956f4c41ee1a89e11e5ff70[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 26 16:21:53 2013 +0800
+
+    added activity logs on approval
+
+[33mcommit 9506e801e12ff0b6855319132c9f458182e467e2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 26 10:36:47 2013 +0800
+
+    invalid withholding annual
+
+[33mcommit 824d63c729224b0fbbe90046b057cb95fc774e88[m
+Merge: b49dede 6069eb6
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Dec 20 16:54:50 2013 +0800
+
+    new updated files
+
+[33mcommit b49dede3d8b13593bcdf71090f4047a5f54f4e57[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Dec 20 16:52:27 2013 +0800
+
+    new updated files
+
+[33mcommit 6069eb6580401e2c473baf8f8775078342f595c7[m
+Merge: 7a7f4c4 b871085
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 20 15:30:38 2013 +0800
+
+    updated database
+
+[33mcommit 7a7f4c4f520f83f882d10f4d74f7f2ff05324b13[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 20 15:28:41 2013 +0800
+
+    updated dtabse
+
+[33mcommit b87108558927b552934806679cb301ae0cd1f875[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 19 19:24:28 2013 +0800
+
+    new updated files
+
+[33mcommit d9922e89d654bbc7eb733b80cbc4b7597088396a[m
+Merge: fef4525 2edede1
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 19 10:16:29 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fef4525c75174345ce4c22e1d8ccc02347679e18[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 19 10:16:08 2013 +0800
+
+    Updated databases
+
+[33mcommit 8178e7b014cfdc92e11ef214cc559fc4d4e71c44[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 19 08:37:08 2013 +0800
+
+    new updated files
+
+[33mcommit 2edede11253ae060b13ad96f9103f9c41eaa8438[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 15:02:58 2013 +0800
+
+    new updated file
+
+[33mcommit 4e3cfb9f375307686623f9a7f389301b4f6ed1cd[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 14:35:44 2013 +0800
+
+    new updated file
+
+[33mcommit 9a735e868a7712ae4993666bec85dc5374e11327[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 14:09:17 2013 +0800
+
+    new updated file
+
+[33mcommit 905f59ccbb14dceb044c3b0cf28714eab6e94481[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 14:02:29 2013 +0800
+
+    new updated files
+
+[33mcommit d0df6899ae5fae67807e657b8fb249a9df6bbaf0[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 13:37:10 2013 +0800
+
+    new updated file
+
+[33mcommit 25281ce8c99304f899539fbff5808e9fac75d839[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 13:22:26 2013 +0800
+
+    new updated files
+
+[33mcommit 6acef7099916e6957b848acc171f92f6b0adfd47[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 11:37:49 2013 +0800
+
+    new updated files
+
+[33mcommit 98fe89a9a3667a22609ba94254b4192780e9089a[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 18 11:37:10 2013 +0800
+
+    new updated filed
+
+[33mcommit f929f8f667f25e0f86bd2efffac2a1851298b6fe[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 17:51:57 2013 +0800
+
+    Employee sidebar menu update
+
+[33mcommit 799cf9c0aa691b11030c9a5e0622d495fbaea058[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 17:46:22 2013 +0800
+
+    new updated files
+
+[33mcommit 0852d9bb087b6a85884e5b5132cb6259b7a418f3[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 17:37:30 2013 +0800
+
+    new updated files
+
+[33mcommit 24ccbd9e3b39fcdaa6b544e953c8165f5ef01f73[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 14:47:21 2013 +0800
+
+    delete employee loan files
+
+[33mcommit 5a251f90ee97877d4d19e4bafcfdc0ae1229e9fb[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 14:32:33 2013 +0800
+
+    new updated file
+
+[33mcommit f745b67542b816f0b1d783ed397bfc034ed9e5ff[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 14:23:54 2013 +0800
+
+    new updated files
+
+[33mcommit 2f98b256956c5518bf0938614481b1234c0b6898[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 14:18:45 2013 +0800
+
+    new updated files
+
+[33mcommit 2d6b3543e9bdfe88bdb56bee930a8af96acc3e88[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 13:32:53 2013 +0800
+
+    new updated files
+
+[33mcommit 0f84b3929878822ff6b489697b94bfe649e38eb0[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 17 10:37:01 2013 +0800
+
+    new updated files pagination
+
+[33mcommit 0992fed35730cb953be3361ee385be532be13e0d[m
+Merge: 4fed6aa 7fd6499
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 17 10:19:44 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 4fed6aa0bf0dc70409f7033534a3298a6d84e614[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 17 10:19:27 2013 +0800
+
+    owners listings
+
+[33mcommit 153ecfa416aceae916f315a325530b05448f6957[m
+Merge: 1b0cbc3 7fd6499
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 18:09:04 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 1b0cbc3b83180f15e125573e7e2d41c46f6e383c[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 18:07:37 2013 +0800
+
+    completed payroll setup's overtime settings, enable ajax delete and update overtime type and allowance type
+
+[33mcommit 7fd6499427dafd00b4d427ea3bb05540e93f2d77[m
+Merge: f86175c 779ab99
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Dec 16 16:56:07 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f86175c16e315788cfb7608869cc56a6c177e355[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Dec 16 16:55:23 2013 +0800
+
+    new updated files
+
+[33mcommit afb1517927ebdaea3985f3161c2d741ab7dd734e[m
+Merge: b371302 779ab99
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 14:28:53 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit b3713023eff89d06bb452e1b445ed66ebcd4fde2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 14:28:32 2013 +0800
+
+    added export modules called it module_literature
+
+[33mcommit 779ab9944ac13a0d3c84f64e2f4932f121366cfc[m
+Merge: ba94dfd 25bf4fe
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 11:51:38 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ba94dfd051962584738a321d172de9bf4797f44b[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 11:50:10 2013 +0800
+
+    finished save and update overtime settings
+
+[33mcommit 25bf4fe1e3ffc2d4a543777420c64b381c6921d8[m
+Merge: 480bef1 ac0994a
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 11:03:58 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 480bef11223c2aaada1a3505f2e1cb0174e884a4[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 11:03:35 2013 +0800
+
+    masking company setup
+
+[33mcommit ac0994a2ca6922e2833207c565b36cff0d685deb[m
+Merge: 45fcd82 d8d42d4
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 09:42:16 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 45fcd82cbc7bc76ddeed153749954e1acc284a2e[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Dec 16 09:41:16 2013 +0800
+
+    rename table leave to leave_type and payroll_group_setup to payroll_group
+
+[33mcommit d8d42d4645cd450e6a1ae406bb62fe125d1d8466[m
+Merge: d9eb763 ee5920c
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 08:24:21 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d9eb763597fd292f6911e3fc1dd49e5192fd5687[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 16 08:24:04 2013 +0800
+
+    updated inquiry
+
+[33mcommit ee5920cb1b72ebd8794491236665792018e48f21[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Sun Dec 15 17:51:55 2013 +0800
+
+    completed add overtime type and allowance type in payroll set-up's overtime settings
+
+[33mcommit 57c194001a0e760a38e066612c2efc65924c0fde[m
+Merge: 8710909 7b68a68
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Sat Dec 14 18:59:36 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 87109097c2b9389c2ad9f4b3d3b6379b16c84ff6[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Sat Dec 14 18:59:14 2013 +0800
+
+    completed payroll setup's payroll calendar, ajax listing add ang update
+
+[33mcommit 7b68a68e7253c6168a522d0949a349bbd68a2cb7[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Dec 14 17:09:41 2013 +0800
+
+    added files
+
+[33mcommit d69cf62b27e72a7bdad82836088e8d65b6395906[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Dec 14 17:03:53 2013 +0800
+
+    inquiry model
+
+[33mcommit cfeec5717f519c890960473d21b5dc2f8571b521[m
+Merge: 2062a0a 8bad11e
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Dec 14 16:21:49 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 2062a0abdeff62cea1a71e09a4eadb0966bfaafa[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Dec 14 16:21:32 2013 +0800
+
+    inquiry modules adding adjustments and reasons
+
+[33mcommit 8bad11e9444d49fe306582460d59409043097c31[m
+Merge: f62b5bb 2743172
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 20:47:15 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f62b5bbe85d4cea8f28ecabd7ef5abd9befd88bd[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 20:46:51 2013 +0800
+
+    completed payroll calendar save functionality
+
+[33mcommit 2743172e77bd74288ab605225b6f13d34edcb44a[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 18:53:06 2013 +0800
+
+    updated database
+
+[33mcommit 59b219c5aea4cb4b34e3e81e37815e23bfdac361[m
+Merge: a2827f9 93ad1f8
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 17:36:54 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 93ad1f883aad0e901d522b3ca4e7daef3b9b08ac[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 17:22:48 2013 +0800
+
+    added payrollcalendar database
+
+[33mcommit d48c79b7df2e8d16292954e412cf4a4d915c3fac[m
+Merge: 6d1c001 e969be8
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 17:14:54 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6d1c001751210285b9f70ddc2f1d1dfb68f95de9[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 17:14:36 2013 +0800
+
+     added inquiry modules queery
+
+[33mcommit a2827f9c724d944c77292a36e5a2113177c38bc2[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 16:23:42 2013 +0800
+
+    added payroll setup income in sidebar menu
+
+[33mcommit e969be814d5d15a171c7b56faab9d28c46cd0078[m
+Merge: 7133341 026045a
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 16:10:35 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7133341c99907f97105693a766939501e0230ab5[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 16:09:20 2013 +0800
+
+    added payroll setup income
+
+[33mcommit 026045a827dab881af0e9c512dac7a3e6c0aec12[m
+Merge: 151b939 07c4333
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Dec 13 13:48:11 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 151b9396b0b1af61d771c2fa7fb416d2c23d5af8[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Dec 13 13:45:59 2013 +0800
+
+    new updated files
+
+[33mcommit 07c4333fa7cf47138f238e1acb7a3823f58ea396[m
+Merge: 8af09ad 97622d7
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 11:52:02 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 8af09adb05574f30d6b13d0a31aa3bb023dfd7a3[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Fri Dec 13 11:34:30 2013 +0800
+
+    added payroll setup payroll calendar
+
+[33mcommit 97622d7aa2336ca0e81116d885ab91d0f9e01933[m
+Merge: f297dd4 24bd35b
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 10:06:30 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f297dd49b00751beaa7240c592dc59aea5f0ead7[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 13 10:06:08 2013 +0800
+
+    updated geenerated sql
+
+[33mcommit 24bd35bb22adc4ba1c532e911df41f1be30fba76[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Thu Dec 12 18:02:33 2013 +0800
+
+    completed payroll setup banks
+
+[33mcommit fc3f0d26ef8224c556405f97b66b57bb1fb1cfc4[m
+Merge: be9b9b6 fdf21dd
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Thu Dec 12 14:35:26 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit be9b9b6710f3ee02ac47a33ef38126e4ce499982[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Thu Dec 12 14:34:53 2013 +0800
+
+    completed rest day
+
+[33mcommit a6a8dd8f70748c9d9786db215a0f60462923aafd[m
+Merge: 58bda06 fdf21dd
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 12 11:07:16 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fdf21dd0b0a73ed72b3dffd7b3243ba998ad9d78[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 12 11:02:20 2013 +0800
+
+    updated hdmf
+
+[33mcommit 58bda068c2152c67c31eb8353c1dac67108d9cae[m
+Merge: 31e719b fd27a64
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 12 11:01:25 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fd27a645ccde3266cb70d3e7896a55d6563423e6[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 12 10:57:25 2013 +0800
+
+    updated tables due to minor files deleted
+
+[33mcommit 31e719b50a5768b3d2f5b85151808dedcdfe1448[m
+Merge: fc102b3 2524a6b
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 12 10:43:55 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fc102b3b61796866a6c6f00ac4c324ed148d39b2[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 12 10:43:21 2013 +0800
+
+    new employee files
+
+[33mcommit 2524a6bfc0599ce1082719f6c26ee4eca2e949d7[m
+Merge: ec75896 a343fc8
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 12 10:36:42 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ec758966c8069d3ba2f219b6ffde3a26dd6e5aa0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 12 10:36:23 2013 +0800
+
+    sql updated
+
+[33mcommit a343fc8383cc8606c10dce253c63e7f1cf5f8a27[m
+Merge: d2e5a94 1ec5af6
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 11 15:48:24 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d2e5a9493dc929cb3f85b0367367f6dc1d8cfba8[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 11 15:47:09 2013 +0800
+
+    updated files
+
+[33mcommit 1ec5af6731645720dcd2d5ae951cb0b6a78b2bc3[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 11 15:44:15 2013 +0800
+
+    UPDATED! SQL
+
+[33mcommit 09346a2c3324fc8eec755ee0fd527c03325d5a59[m
+Merge: 3ab2c5c 964c1fe
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 11 15:00:41 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 3ab2c5cdaf675ada5c752251b7dd5803f39cab52[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 11 15:00:22 2013 +0800
+
+    tables modules
+
+[33mcommit 964c1fe4459427b2fd13c9874f179a2f5d04d05c[m
+Merge: 52b89ce 910fa71
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Dec 11 14:33:26 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 52b89ceefcc217cf643743b9240ffb0ea41268e2[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Dec 11 14:32:52 2013 +0800
+
+    forget to stage changes in payroll group view
+
+[33mcommit 23247262f3370e6d10cbdb07be8c608b499f5fdc[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Dec 11 14:31:53 2013 +0800
+
+    added payroll group, complete with ajax add, edit delete
+
+[33mcommit a38bfa5843b10cdf55363b5a07f3d07dae04c61c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 11 13:19:56 2013 +0800
+
+    added philhealth sss etc
+
+[33mcommit 910fa717b38de21a54bf56cd8c2589213095e165[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 10 17:34:47 2013 +0800
+
+    started tables modules
+
+[33mcommit b57c991acffc6d9968a82fcc15a0906918de6f78[m
+Merge: 198dc39 04942c5
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 10 13:11:28 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 198dc396b33269c5596ec11645e8b80994168885[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 10 13:11:10 2013 +0800
+
+    users module and permissions are now on sync mode
+
+[33mcommit 04942c58b957b0e80724460a49f0bb64516c44bc[m
+Merge: fcd9e44 8a9ea3d
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Dec 6 21:27:48 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fcd9e44d48faf58c395acc54ecb1f82201684bd5[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Dec 6 21:08:57 2013 +0800
+
+    completed witholding tax, complete with ajax set and update
+
+[33mcommit 8a9ea3d5fd7b187bea2b9c5a0475dad87cc779a5[m
+Merge: 7a55d74 1f2b151
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 6 15:34:24 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7a55d7453d83b98dc09149d96356ac0a2211147b[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Dec 6 15:34:09 2013 +0800
+
+    Added roles modules
+
+[33mcommit 1f2b1517c5eaeec01703ddde2789a9f1cc0882bf[m
+Merge: 6c874d1 3f00d0d
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Dec 6 14:41:59 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6c874d16cad75ae6c0b6bad3deef9c95ed61475b[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Dec 6 14:18:49 2013 +0800
+
+    additional code in loans
+
+[33mcommit f3ca6a82063f3c7d1260b19e3d7fa3d9f91995aa[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Dec 6 14:09:12 2013 +0800
+
+    added loan, complete with ajax edit, edit and delete
+
+[33mcommit 72d09647ae3ccd6ccbb64cad4af15caf7043de64[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 5 16:38:14 2013 +0800
+
+    added users modules
+
+[33mcommit a41a53b2af2b5cd3495c5909e84b1e053c061612[m
+Merge: e18fc1b 3f00d0d
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 5 10:37:56 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e18fc1bc0da49580c8937670e416bfd123595b77[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 5 10:36:48 2013 +0800
+
+    Updated users modules
+
+[33mcommit 3f00d0d2b5a3847bc937d3ab49aacf391c977dd7[m
+Merge: 68218ca ae3fc5d
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 5 10:35:37 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 68218cae0fc18527c65829babe755dd8c95ef521[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Dec 5 10:35:10 2013 +0800
+
+    new updated files
+
+[33mcommit ae3fc5d8e59311b89b932fdfb56b913a9922e2c3[m
+Merge: e243685 151dd10
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 5 08:58:30 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e243685445e936db7036f14aa55882e1199cfbb0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Dec 5 08:58:12 2013 +0800
+
+    redirect dynamic fixed
+
+[33mcommit 640fb2adb4bda619f1868f3e04cfea87803d2c7e[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Dec 4 17:56:17 2013 +0800
+
+    new updated files
+
+[33mcommit 151dd107e2557c069d73807b6fea7eb2fde495ca[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Dec 4 17:20:37 2013 +0800
+
+    finished night shift differential settings
+
+[33mcommit ee9c402d1f798cbe8bd15c967489bfc18c519a2b[m
+Merge: 19fe013 e33e82a
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 4 16:12:27 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 19fe013e7b25c4354fffe52d1afb98a4662fb878[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 4 16:11:51 2013 +0800
+
+    Application , leave,overtime,timesheet,expenses,payroll run search by date , search by name paginations done
+
+[33mcommit 748d3b75d2e26bbe0cc058bd5f93dcfd025dc8e2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 4 16:09:57 2013 +0800
+
+    Application , leave,overtime,timesheet,expenses,payroll run search by date , search by name paginations done
+
+[33mcommit e42cc7f4c635b8c91d0ad2956ca71fdb532ba50e[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 4 16:08:55 2013 +0800
+
+    Application , leave,overtime,timesheet,expenses,payroll run search by date , search by name paginations done
+
+[33mcommit e33e82af6ade48eaaa56fa18db21f24b52c649c0[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Dec 4 13:27:30 2013 +0800
+
+    fixed new issues in expenses
+
+[33mcommit de1f343a26c8a0ade36a9615da90a11399e19a05[m
+Merge: e4aa412 4e949a3
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Dec 4 10:50:01 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e4aa412ca7409f8124ffc92044159215abeb4bd9[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 3 18:07:14 2013 +0800
+
+    search via date and name application timesheets,expenses,overtime applications
+
+[33mcommit a4b7a9b381bd4d005faabcefb47520ca16515f24[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Dec 3 17:45:00 2013 +0800
+
+    finished expenses in payroll setup, complete with ajax add, edit and delete
+
+[33mcommit ca9090ec7e6c59a410d525b86ef54ab80c86cb8f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 3 14:58:55 2013 +0800
+
+    added leave application search by date by employee name
+
+[33mcommit 6232ceb07ad868453f8d84b5c8a553c6e8357784[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Dec 3 14:21:53 2013 +0800
+
+    completed payroll setup hours type, complete with ajax, edit and delete
+
+[33mcommit fc8bfdcc358e881fed100b4d77aa20332e9fa24c[m
+Merge: fccfa55 4e949a3
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 3 13:51:23 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fccfa5596eb371c056f8fc23bce7c30f80a8e84a[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Dec 3 13:50:48 2013 +0800
+
+    new updated files
+
+[33mcommit 4e949a30fedcad3d02778384d07442c9f53ca1d7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Dec 3 13:24:41 2013 +0800
+
+    added new session for hr login
+
+[33mcommit d941b11da663f9c738f642eb64837e8e0da44ce3[m
+Merge: a024eac c66efa0
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Dec 3 13:11:45 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit a024eac84abaa08cab04e4ffe0e338596f29b084[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Dec 3 13:11:19 2013 +0800
+
+    added new notes on notes.txt
+
+[33mcommit c66efa08445fec6c082a37952bdb59e6d9bf0630[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 3 13:06:01 2013 +0800
+
+    added psa_id for company setup hr
+
+[33mcommit ad7e63e63f06ac15d25583f56fe9627e3bd578e1[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 3 10:32:33 2013 +0800
+
+    Upddated database for hr
+
+[33mcommit ee4c49d42aa73c86c1cbabe72fa0ab71e7bcbeb4[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Dec 3 10:29:26 2013 +0800
+
+    Added database JC
+
+[33mcommit ce59d02ef723c2838501aa1eeddbf51fa50abb09[m
+Merge: a841c7b 5ca4383
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Dec 2 17:44:56 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit a841c7b05aadf510fadbb2c23c1bff0790e5cb0f[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Dec 2 17:37:11 2013 +0800
+
+    new updated files
+
+[33mcommit 5ca43834a3f0af951f233e8e9a139abe62cfd3c7[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 2 17:37:09 2013 +0800
+
+    updated and added database created search module leave application
+
+[33mcommit ebd900a16afa773330b50ea56190a94cedc2b98f[m
+Merge: 42bff8a 1a6b78b
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 2 14:25:17 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 42bff8ae4156066d258c8d1174f2fa4eaefb302c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Dec 2 14:24:58 2013 +0800
+
+    UPDATED DATABASE employee and hr application does not collide
+
+[33mcommit 1a6b78b06a70539101ffa2e442b2cc0ed02b5246[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sun Dec 1 16:50:20 2013 +0800
+
+    finished HR setup holiday settings, complete with ajax add, edit and delete
+
+[33mcommit ff089748f4afbb0029a1db3c905b87597fb3fa31[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sun Dec 1 16:08:06 2013 +0800
+
+    added new pages on payroll setup
+
+[33mcommit e9218891cec7c9469a31dd1ab06fe8e422091af1[m
+Merge: 316b50c f332875
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 18:00:03 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 316b50c9677eb267ac267a95e80775376b998993[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 17:59:25 2013 +0800
+
+    completed de minimis
+
+[33mcommit f33287529f3d9bd2a981ec090f31c88462d5dfe0[m
+Merge: e2d55dc 24cc663
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Nov 30 15:56:36 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e2d55dcb6c187504e80642bb11d2d2e5446f1076[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Sat Nov 30 15:56:13 2013 +0800
+
+    Added notification modules
+
+[33mcommit 24cc6636a36e371ac96ac11818170cc3a46df727[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 14:55:41 2013 +0800
+
+    forgot to include .gitignore
+
+[33mcommit d7abf9fc3ac86e8cd811103bf6c069c2c57fd6cc[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 14:54:09 2013 +0800
+
+    deleted unnecessary files in uploads
+
+[33mcommit 11dd59b2489518f2d729632577e49c342004d8d4[m
+Merge: 080e7e0 17de593
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 14:40:47 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 080e7e065d6712e8c9e3c62af7afab26781ada3a[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 30 14:40:09 2013 +0800
+
+    completed earnings module, with complete add, edit and delete
+
+[33mcommit 17de59354b35bc70fd3aa8aee37a3894ff3a61fa[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 20:29:21 2013 +0800
+
+    updated menu templates for approver
+
+[33mcommit b801b57c5b68767867cc7a589c71646dd04b85ad[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 20:07:55 2013 +0800
+
+    Done approver module
+
+[33mcommit d2ce86844d8f9c9295d6f48cef50ca4ad509d76a[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 19:34:13 2013 +0800
+
+    added approvers modules and paginations
+
+[33mcommit 33954cbae77c256f4fdaec931c7ef2686cb7fcf7[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 18:36:13 2013 +0800
+
+    Updated pagination
+
+[33mcommit fdd3fb9fd951e2070a18a544b661ed95a5695c32[m
+Merge: fd0aebf 7a7276e
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Nov 29 18:09:37 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit fd0aebf58d585453a4a88d80494a34b1e84c050c[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Nov 29 18:08:39 2013 +0800
+
+    new updated files
+
+[33mcommit 7a7276e9e51896b4f4b2fce9cbea39fc02c5180c[m
+Merge: c8b3270 ce6f7c3
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 17:23:40 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit c8b32706e1bf2148f0c3d74b07d69bef60921f9d[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 29 17:23:21 2013 +0800
+
+    Added approver modules
+
+[33mcommit ce6f7c342bc2c039d7d0769d6401a1b5f366f749[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 29 16:30:32 2013 +0800
+
+    fixed css issues
+
+[33mcommit 850acde82355a20fa1afc0f4d50ac2641e2b2301[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 29 13:16:05 2013 +0800
+
+    started working on payroll setup, added static pages of accural, banks, de minimis, earnings, 13 month pay and 13 month pay settings
+
+[33mcommit fcdd8d0f5bccde76d781684d4103458142481acd[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 29 09:47:27 2013 +0800
+
+    moved some css from global.css to my custom css, jc.css
+
+[33mcommit d80d8972a8f7581f6aadc9994f7ff23dbd297952[m
+Merge: 6760c82 5af87d3
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 29 09:20:11 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6760c826c50562d88eb2aa898f99ac7f849f7dfd[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 29 09:18:46 2013 +0800
+
+    changed sidebar menu name in hr-setup
+
+[33mcommit 5af87d308780c50617348c4da9a689deddb70937[m
+Merge: f1b04d4 941c10c
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 28 17:35:43 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f1b04d42d09bd12e927e24c4808a8f0e87773cff[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 28 17:35:08 2013 +0800
+
+    Done approver list only
+
+[33mcommit 941c10c0602f0cd06efb04bf33a2c8b7787d6723[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 28 17:21:36 2013 +0800
+
+    added script to add more row in add more dialog box, allow multiple items to be added at the same time
+
+[33mcommit 66da92917b0372484b27b6b01d9ddf86f6b9c713[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 28 15:38:15 2013 +0800
+
+    HR setup leave properties can now be saved
+
+[33mcommit 3f8901605661bb63f959ae6e5831649bdf25c6d0[m
+Merge: a201bca 770bd5d
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 28 15:13:58 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit a201bcaad3c28b5442eaee8e14b4b7bd1bc8fa24[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 28 15:13:39 2013 +0800
+
+    Approver module
+
+[33mcommit 770bd5d19af0e491d660bf8b610e2fa6387284b7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 28 14:27:17 2013 +0800
+
+    added update functionality in all HR module except employment type. Hide delete button by default, show only if there are items to be deleted. fixed issues on department and positions
+
+[33mcommit 647d730131e33bffbc5a50ad1f192c69c711b1c7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 27 14:52:46 2013 +0800
+
+    added update in department and positions
+
+[33mcommit 59347d5d5398ca2a1418fc352d2261a137e677df[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 27 14:25:02 2013 +0800
+
+    updated overtime
+
+[33mcommit 137e3a159c109e4b1a6ebbf3dea4b5e4fa81138b[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 27 14:13:58 2013 +0800
+
+    updated sql
+
+[33mcommit d4387db5774154a60ca0d6b3af32a51192863121[m
+Merge: 6a17148 b35e127
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 27 09:31:34 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6a17148f8e88ea6d4f504aab84c25eb2fccabe8e[m
+Merge: ad2d161 80abace
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 27 09:31:19 2013 +0800
+
+    Added users validation
+
+[33mcommit b35e1278cfb9cc35470344c9e1162d34b1d0b367[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 27 09:30:49 2013 +0800
+
+    fixed error in admin login
+
+[33mcommit 09caf323cad2d0406ac883d7bd44e33f4a9662d7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 26 17:46:23 2013 +0800
+
+    applied all the changes in HR set-up, from madz
+
+[33mcommit ad2d161caab9e64bb51e2c4ade801d99ae4a1d74[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Nov 26 15:06:41 2013 +0800
+
+    updated cusers
+
+[33mcommit 80abacee6d165c5cb75a9ae51a17a29e1e6dc2de[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 18:04:41 2013 +0800
+
+    changed static sub domain to the company domain name
+
+[33mcommit 667deb4276464087fbc3b863ecf562fdaa21d680[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 16:38:40 2013 +0800
+
+    updated sessions
+
+[33mcommit a3aa8693911d437932085c249358040b7db97b3c[m
+Merge: cb20f09 e3ec02d
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 16:08:09 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit e3ec02dd3ddca16d1977cb333821f71350dbecca[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 16:07:59 2013 +0800
+
+    added sub domain session
+
+[33mcommit cb20f091e6e78c14b82a0a736d324e85c449ae4d[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 16:07:50 2013 +0800
+
+    updated new sessions
+
+[33mcommit 51560d4ed3d1292512a23f8e69f71659a1e0c49f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 15:31:11 2013 +0800
+
+    updated format databse
+
+[33mcommit 5479430604695ade701ac97e189a493dcb53a343[m
+Merge: d1e3f3f 8c41033
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 15:22:31 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d1e3f3f38e2ab9bcf6d0f5bac5e2d3571ae549d3[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 15:21:57 2013 +0800
+
+    updated database
+
+[33mcommit 8c41033b21dc61e03e64c3783f9b4d1f3e3acc5d[m
+Merge: ee03b18 6bff5b0
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 15:13:50 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ee03b18b3f93a0d3e9e8154ff174455a7968508e[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 15:12:48 2013 +0800
+
+    fixed issues in approval groups
+
+[33mcommit 6bff5b03700d2d19ed123d652052bbd54b5da3ca[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 14:14:24 2013 +0800
+
+    Fixed error on company_id session
+
+[33mcommit 76aeccd9d39f2a205448001c47812a28c3e65644[m
+Merge: 46ad543 a55bac5
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 13:58:17 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 46ad54303ca9277b6bf2ac15315e5dd4cbb0e7ec[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 13:57:54 2013 +0800
+
+    fixed issues in employment type
+
+[33mcommit a55bac52316ed297ec88adc02c4f006c9ddac370[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 13:55:50 2013 +0800
+
+    updated empty database
+
+[33mcommit 3a4eb5714cf47871c86485e525e415f397561333[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 13:49:53 2013 +0800
+
+    updated database
+
+[33mcommit 3784931ee78f29edefe5ed89c028059b441d3c0c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 11:31:28 2013 +0800
+
+    Databse generated
+
+[33mcommit 6efa6cd2a542560ed94a815d5f57bba608e2b879[m
+Merge: 352110e e684727
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 10:54:22 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 352110e90b25eba84ced2bf102dbd7735b30d51b[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 25 10:53:49 2013 +0800
+
+    added some md5 on login
+
+[33mcommit e6847278ed7370ed189b3f18d0c580a600d8c220[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 10:00:54 2013 +0800
+
+    updated databases uniformity
+
+[33mcommit dadf81b18c2479b99d9b64fa7967662f76ae7172[m
+Merge: 876c806 f6584de
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 09:37:24 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 876c806dfb96a6ca4318ebaf626a08fa2633eb9e[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 25 09:36:43 2013 +0800
+
+    Deleted unwanted codes
+
+[33mcommit f6584de7f0ea578838c00f4793783c7193fd3b2d[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Sat Nov 23 17:25:23 2013 +0800
+
+    finalized HR set-up
+
+[33mcommit 64095b2245487f1226a713a9910c472e4c220c47[m
+Merge: 803f786 6d0a568
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 22 15:53:58 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 803f786d3c7ca61abbdaf8a631b7e0457462960e[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 22 15:41:37 2013 +0800
+
+    replaced static company_id with the a dynamic legit company_id generated fro company setup
+
+[33mcommit 6d0a568e096bf2235e3e4433b3ca8e1ac6c221b0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 22 15:35:45 2013 +0800
+
+    Validation and template assignments when loggedin
+
+[33mcommit a476522a4e4083aeb380778af8375f57953dd7dd[m
+Merge: f84b029 66c8c7b
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 22 10:41:21 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f84b029de02e91c13c4768152647ef450d354625[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 22 10:40:51 2013 +0800
+
+    Updated jc conflicts
+
+[33mcommit 66c8c7bf93472947816e0c14f33313559ede5e99[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 22 10:13:18 2013 +0800
+
+    deleted ranks
+
+[33mcommit e960dbc32a6e2499d8d875d4bfdf3d29ed22712a[m
+Merge: ead5ff9 e72b8c4
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 22 10:05:43 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ead5ff914f4e4b178fb05498ff96118f312ed819[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Nov 22 10:03:51 2013 +0800
+
+    completed leaves. rank deletion savepoint:not yet deleted
+
+[33mcommit e72b8c4e4f16fb9144c49792ffc637fbd67d4c07[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 21 17:11:23 2013 +0800
+
+    Added company owner , hr , dashboard profile crud and databases
+
+[33mcommit d7a0e006fd389c4ce55a4a97cfe27e86de48875e[m
+Merge: cae5770 ecf76f9
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 21 10:19:34 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit cae5770fb7754ce28a7fafa39fe4f61ce429c043[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 21 10:19:06 2013 +0800
+
+    updated database
+
+[33mcommit ecf76f9d546b86746f378bfe95344e029054d8f3[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 21 10:16:04 2013 +0800
+
+    fixed some ambigious query in approval groups
+
+[33mcommit d6f3b1be68d5927f525ad0b24620092d2055a1eb[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 21 10:04:19 2013 +0800
+
+    added database
+
+[33mcommit 918bb35bfdc1006932c245c0c2bcba6cf88364c7[m
+Merge: f1c71c0 fb39783
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 20 17:39:00 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit f1c71c0b7d726f1dacd42c4ade9e25c518a1fd37[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 20 17:36:53 2013 +0800
+
+    completed job grade
+
+[33mcommit 5625c97ebc9c345f9d9b1381dd067ecc054c7a21[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 20 17:10:31 2013 +0800
+
+    udpated company helpers
+
+[33mcommit fb397836b735032b57a1a081f2b64c7f09c54d1b[m
+Merge: a1e22c6 e409623
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 20 16:58:53 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit a1e22c6cc8e335f552a14414b2b1c8d63ab5727b[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 20 16:58:35 2013 +0800
+
+    ADMIN ALL okay validation i think
+
+[33mcommit e40962393706e4247e2910bfd4f166ec9c6ec28f[m
+Merge: 4ac0713 048a22e
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 20 15:38:02 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 4ac0713e96633cdffdd3e5645445bfc1aa0808d4[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 20 15:37:07 2013 +0800
+
+    completed ranks
+
+[33mcommit 048a22e78c1628b1a1c9d1c5eb8244b085bdee1a[m
+Merge: 78ae720 8793742
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 20 09:42:09 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 78ae720aa93537bfb99f4bdf345e86f8b24cb534[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 20 09:41:53 2013 +0800
+
+    updated status board and updated database
+
+[33mcommit 8793742193cb73d3c3e9bb14bf16fab39ee89abb[m
+Merge: 11b6b29 1342414
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 17:46:27 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 11b6b29b381a94f6c8d0b114e5f4a70581fa414e[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 17:45:48 2013 +0800
+
+    modified gitignore in root and added gitignore on uploads/companies
+
+[33mcommit 1342414d6484aa30a78c17b9b3b3ddbf6e911abe[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Nov 19 16:51:56 2013 +0800
+
+    updated sql
+
+[33mcommit ece0f50aade2dd9a8bc85382015bbc3ffb388247[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 16:39:44 2013 +0800
+
+    changed some code
+
+[33mcommit 88518b0337ae29781ea64eaab8470d2d2c41a1a6[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 16:33:54 2013 +0800
+
+    added quick notes
+
+[33mcommit 9a31f985c0897c4a5461d73d1c2dc5ab13116985[m
+Merge: 497e6e5 ef674fa
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Nov 19 16:19:43 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 497e6e56ee1a0650aa86959fb16641ff82e1975c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Nov 19 16:18:48 2013 +0800
+
+    updated all admin
+
+[33mcommit ef674fa70a596076969f9646676553f0f5cf62fa[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 16:16:22 2013 +0800
+
+    deleted unnecessary files and added gitignore to exclude files that are unique on our end, like config and database
+
+[33mcommit 101d68ef5a799cf57a572ed04d1be88227f62836[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 15:52:27 2013 +0800
+
+    emptyied uploads folder
+
+[33mcommit ae5e920142a9961f5a643495b992aa5052e8b232[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 15:12:14 2013 +0800
+
+    completed project and project locations
+
+[33mcommit 7b8f5045877457d0e2892222613829df436be6d7[m
+Merge: 47a092c 8e34ec4
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 08:50:52 2013 +0800
+
+    fixed conflicts in custom.css
+
+[33mcommit 47a092ce4ce69db33b7b2f6b6a3252631da3982c[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Nov 19 08:46:18 2013 +0800
+
+    added project and project locations
+
+[33mcommit 8e34ec41fd6ed73988bc3107fa1532b99938016b[m
+Merge: 94b5d92 95bf911
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Nov 19 08:37:18 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 94b5d928e055b2d4b249c6f81ea0b166a5935147[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Nov 19 08:36:29 2013 +0800
+
+    updated files
+
+[33mcommit 95bf911a1d0fcbae92fde76e3e99bcccdb0ab1af[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 18 11:23:41 2013 +0800
+
+    updated scripting validation ajax
+
+[33mcommit bd425b7ac3e4aa43e43c9a391b28900a1bc4cfdc[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 15 13:43:57 2013 +0800
+
+    updated company list links and subdomains only
+
+[33mcommit b2e0478fceffc87cefc1bee181fc9453d973e254[m
+Merge: 30e91b6 ecea462
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 15 12:43:27 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 30e91b6d792a6778e28522bcd8e946af89639d14[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Nov 15 12:42:34 2013 +0800
+
+    validation for uploads and account helpers
+
+[33mcommit ecea462776b579c999536986a7bc7c10d9ba85e1[m
+Merge: 0ace99f d88981b
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 14 18:02:42 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 0ace99fa19a6cecc083e17e0b8be2d2bf63d58e0[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 14 18:01:47 2013 +0800
+
+    completed 3 modules, from hr set-up which is employment type, department and positions approval groups
+
+[33mcommit d88981bd5d4b626a2b36999f4bcb55c2524739a6[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 14 16:37:44 2013 +0800
+
+    Updated failure validations
+
+[33mcommit cf273a8cf71b62b25fe029864ef09be6f59f9101[m
+Merge: d6efa7e e7ed820
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 14 11:06:14 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d6efa7e1539c4ea1a4e8f255e70e01305a3f3168[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 14 11:05:37 2013 +0800
+
+    updated validation due to errors
+
+[33mcommit e28726494f4ab87055614333ec69b1cf79edbc23[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 13 13:18:43 2013 +0800
+
+    updated cost center and scripts
+
+[33mcommit e7ed820242268574fad8d9da918fb7088a84f094[m
+Merge: f63a928 f4c32a5
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 11 17:59:37 2013 +0800
+
+    updates
+
+[33mcommit f63a928fed66672f8c3c1683a93acfecc872b7e7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 11 15:20:00 2013 +0800
+
+    wrap
+
+[33mcommit f4c32a568420d652b0e01a72af21b30f69035255[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 15:16:44 2013 +0800
+
+    updated company
+
+[33mcommit 44367dffdc9a739c20b2fbefd4352f00c5fc5aed[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 14:48:57 2013 +0800
+
+    updated sql generated
+
+[33mcommit e568051d257808b5be8b61fe7978bd368e46769d[m
+Merge: 50f1e19 114dfdb
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 14:43:47 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 50f1e19ff0277b3e0620ef31827c16936269e6b5[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 14:43:31 2013 +0800
+
+    updated company_setup
+
+[33mcommit 114dfdb0081aa58235fa281e7936b35f0749251d[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 11 14:05:24 2013 +0800
+
+    added PSA ID
+
+[33mcommit 0f9d9284f3e15fc7051fc48766096aeb67f617ba[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 13:20:24 2013 +0800
+
+    updated sql
+
+[33mcommit bffc9727345193b8a9e599bc6117e63a7195e3e0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 13:15:57 2013 +0800
+
+    update add approval groups sql
+
+[33mcommit 7ef70b811e95fbb90fe3ffea33214e8f1269322c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 11 13:11:49 2013 +0800
+
+    updated sql
+
+[33mcommit 08415d2c48df722aa26a5c3f560cd733f8079308[m
+Merge: 77db201 8f9a82b
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 7 15:29:38 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 77db2013918a7a707c9d80f36842d39251cd4906[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 7 15:28:56 2013 +0800
+
+    updated validation errors
+
+[33mcommit 8f9a82b26095a2162cdccfc8226d0bf9a15d2690[m
+Merge: 762c592 baf84db
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 7 12:28:20 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 762c592d685220c4b0b2f9823c3e132afbc81f0a[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Nov 7 12:27:48 2013 +0800
+
+    fixed authentication, updated admin login and corrected wrong redirects
+
+[33mcommit baf84db59eaa3353b896e880098a271d5adcefc5[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Nov 7 08:53:09 2013 +0800
+
+    updated admin
+
+[33mcommit 30d62534df9bff53458baec911c6e33aa618fcaa[m
+Merge: b6bf0e8 b69b0de
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 6 16:28:30 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit b6bf0e8c32e56bc8b722240d35412560e42fa864[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 6 16:25:38 2013 +0800
+
+    added configs for template for easy update
+
+[33mcommit 5ae098a295159f5630c94d2092606ab45c8d61db[m
+Merge: bc9096c b69b0de
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 16:05:45 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit bc9096c7f904c494eb9c52c852d6809a64b4c0cd[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 16:05:01 2013 +0800
+
+    updated files
+
+[33mcommit b69b0deaff177291c178c8fbde49d2ba22310f0b[m
+Merge: 412c221 293e862
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 15:56:57 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 412c221c3e7ada041c813cc212a7035f6dbc66d4[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 15:56:36 2013 +0800
+
+    updated database
+
+[33mcommit 293e862cce80d107e59d97b0d0ea120da9d8411a[m
+Merge: bf1243f b20ffaa
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 15:32:53 2013 +0800
+
+    updated files
+
+[33mcommit acbfbed4363fe4097f4661a8ed2ef75446c3b13a[m
+Merge: 6e9ada6 b20ffaa
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 15:03:52 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6e9ada6dd006ff6ac5a6312a7164cc22d18eaf80[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 15:03:21 2013 +0800
+
+    udpated admin
+
+[33mcommit bf1243f8592f9ba5d1237a9cedcf24b8ef74b310[m
+Merge: 3a21dcc 87e36c9
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 14:57:15 2013 +0800
+
+    updated files
+
+[33mcommit b20ffaaee6582838d4fba170b1c456aa60e26de3[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 6 14:51:14 2013 +0800
+
+    changed jquery UI theme to non gradient
+
+[33mcommit a2f04f7bc9db9a0ec2a1adbed49bc280a99f7b1f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 14:02:18 2013 +0800
+
+    updated admin
+
+[33mcommit 2bf9114ef47889750a1063f11712e336dd6564c6[m
+Merge: 33436c0 87e36c9
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 13:28:28 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 33436c01b8f305291df2c904677af91adb007c07[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 13:27:40 2013 +0800
+
+    updated script
+
+[33mcommit 3a21dccd944a00df22776b167c78819a41822d88[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 13:15:30 2013 +0800
+
+    updated files
+
+[33mcommit 156223124b593cd257a752e480cb26591e405c7c[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Nov 6 13:13:45 2013 +0800
+
+    updated files
+
+[33mcommit 87e36c96b30b0886a1395dfc7becf6e425d24c64[m
+Merge: 93df1bb 1654a75
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 6 11:50:39 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 93df1bba4e82d7f9b0cde10a9075bbf2ceb868b6[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Nov 6 11:49:23 2013 +0800
+
+    updates
+
+[33mcommit 1654a755eeca9ab8ce1b0c1b2841eeafdc76e7b1[m
+Merge: 85a6846 9b0b7f7
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 09:17:50 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 85a6846376bfedff85ebba861bb0e6a2b9c11fc5[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Nov 6 09:17:37 2013 +0800
+
+    updated js
+
+[33mcommit 08e75fa3f828626b9deb27acb0ed89c835fa60d8[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Nov 5 18:56:17 2013 +0800
+
+    Udpated company principal
+
+[33mcommit 9b0b7f71c877ab57b8fb064236d899400939be33[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 4 17:36:35 2013 +0800
+
+    updates
+
+[33mcommit 8311c057bb67cd1542e84324906b88a86c0bb6b2[m
+Merge: 69b6933 5e472d7
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 4 14:24:08 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 69b6933e19eb6abee1d02bd0c8dc8926d211095e[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 4 14:23:42 2013 +0800
+
+    adding principal functionalities
+
+[33mcommit 5e472d71e37956d6d8cefcae00a8440affe09e87[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 4 13:43:36 2013 +0800
+
+    updates
+
+[33mcommit d3a89ffa01fcb798f370a183558e8d633ee9d1ed[m
+Merge: bda11fc 2088567
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 4 10:17:11 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit bda11fc7e9fee3988e46bab83aaafda064d59be3[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Nov 4 10:16:54 2013 +0800
+
+    updates
+
+[33mcommit 2088567601aa33b54865ec2791c50c1ef888a9de[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Nov 4 10:13:06 2013 +0800
+
+    updated company
+
+[33mcommit 5227bcea6daec2765938bb62044352f50d1e536f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 31 16:33:16 2013 +0800
+
+    updated document type
+
+[33mcommit b72accc0d8938448c816e20775ca493787534634[m
+Merge: a65bcf2 5cd9dad
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 31 09:08:09 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit a65bcf2a2429e5af0658f17148861b0a83c52ffb[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 31 09:07:54 2013 +0800
+
+    udpated doc types
+
+[33mcommit 5cd9dad87b45b12bc1defc908c4f6fa683e64ac0[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 15:45:43 2013 +0800
+
+    updated file employee
+
+[33mcommit c2e9061dbfb0476254db653915b1e24344b5aba0[m
+Merge: 179f389 5f9085a
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 30 14:23:31 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 179f389a09f737159a322cdfff3dfc925f7f5e39[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 30 14:23:08 2013 +0800
+
+    updated sql
+
+[33mcommit 5f9085a50ddfdf649c555d42c0a0822c4a8a60e3[m
+Merge: bdb2669 5c8a42b
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 14:22:25 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit bdb266938c187c9b1349cb9411f4d4a6e35693e4[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 14:21:54 2013 +0800
+
+    updated file employee
+
+[33mcommit 5c8a42b708368250dd9bb539863a63f6d7cd6245[m
+Merge: f7c0f3f cc6aa1d
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 30 14:19:53 2013 +0800
+
+    updated global helper
+
+[33mcommit f7c0f3f03a2ee62a867483b81c9cb7a3f8e47307[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 30 14:16:12 2013 +0800
+
+    updated company usercredentials
+
+[33mcommit cc6aa1d1d705c0b25d6b5ccccebe16b278c31155[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 14:13:07 2013 +0800
+
+    updated file employee
+
+[33mcommit adadc338dc3372bd60d0d9106269e1c6f8b1f98e[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 11:24:43 2013 +0800
+
+    updated file message empty helper
+
+[33mcommit 63c38add62ce12d60a703dede140492aefe094fe[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 11:11:34 2013 +0800
+
+    updated file message empty config
+
+[33mcommit 63e7f833407d5b722554a09188e8d045875a8fcb[m
+Merge: cf9dc63 03836bd
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 10:37:57 2013 +0800
+
+    updated files employee
+
+[33mcommit cf9dc63c2589bc0514bda7d8fec0fef70822adb1[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 30 09:48:20 2013 +0800
+
+    updated files
+
+[33mcommit 03836bd6f54f48d29321bc9632e767eb36486400[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 30 09:42:47 2013 +0800
+
+    updated company newest secure zone
+
+[33mcommit e21e761913adf6fba29197446de4a147f1ca3019[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 29 13:50:47 2013 +0800
+
+    updated template files
+
+[33mcommit fd1f992ba49d772c6297bc31b2a1af126cec9008[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 29 13:23:44 2013 +0800
+
+    updated company ajax list and add popup style
+
+[33mcommit 5534584e5ffcf6dcdc332f1f0a16039585864720[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 29 08:45:31 2013 +0800
+
+    updated company setup and edit due to revised subdomain
+
+[33mcommit 4218f007ecb85e6430f4089aef7248fbc37a868f[m
+Merge: d5094c4 d935cfa
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 25 15:28:22 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d5094c4f442d0bfbcf06b20bb9be37e707cb91df[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 25 15:27:46 2013 +0800
+
+    updated admin company settings
+
+[33mcommit d935cfa90dc146d41f78fb0dba37948f4d0654cf[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 25 15:26:53 2013 +0800
+
+    added landing pages
+
+[33mcommit 63c0055d4d256bf1bf86160f4624100bb253f6ac[m
+Merge: ebd8f40 964e062
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 25 09:00:23 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit ebd8f404f5a664474fe9ff55cd8cadd76d50b890[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 25 09:00:06 2013 +0800
+
+    upated company setup and libraries
+
+[33mcommit 964e062d45de64cc533d38fd0129a3f21fe1e721[m
+Merge: 6216011 4bbef95
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 24 17:43:05 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6216011d6602be035b7b94a258d60b47a85ce7c5[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 24 17:41:20 2013 +0800
+
+    updated authentication
+
+[33mcommit cc8e969687f3d50de71b1a57ae6e94e31c340012[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 24 17:40:29 2013 +0800
+
+    revised notification
+
+[33mcommit 62503a9fd32b04812dacf80973400d5a9f878899[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 17:58:06 2013 +0800
+
+    update fields
+
+[33mcommit 4bbef95b6097ed8f7bd7afc445d62797d26af2dc[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 17:56:01 2013 +0800
+
+    Updated files on both template as well as the company
+
+[33mcommit fb27a63bbb375775f9850aa28b67a7e43215fe02[m
+Merge: 5ca4fd1 bb6131b
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 15:45:57 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 5ca4fd11fee591b43592867b7d5c8c78c8a5baf0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 15:45:27 2013 +0800
+
+    updated template for jc
+
+[33mcommit bb6131b3773b4414138ccef2b9c642a14b944a04[m
+Merge: 00644d5 5929630
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Oct 23 14:52:41 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 00644d54a9b39feed2839ed3408eb63aef51c275[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Oct 23 14:51:39 2013 +0800
+
+    save session upon authentication
+
+[33mcommit 592963020c648870f7a5abbc407da1384eb7efde[m
+Merge: b0b9cbc 41020df
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 14:48:40 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit b0b9cbc3f1fa2f95c084bc9521fccf1078bc9886[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 14:48:05 2013 +0800
+
+    Updated administrator company setup as well as scriptings
+
+[33mcommit 41020df6c87bebfbec6f9d12be11c1269b7ff583[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Oct 23 13:56:56 2013 +0800
+
+    updated authentication
+
+[33mcommit 0789ebface9e248fa4d93d46bc8d034027bc4773[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Wed Oct 23 13:35:23 2013 +0800
+
+    added login page, with correct redirect and authentication
+
+[33mcommit bf0d4e4083a82724a7201be89b8b7600585a0d5b[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 23 11:15:39 2013 +0800
+
+    updated file
+
+[33mcommit 371cdc4278f0a6822a73e6d9d9645bbc43fffbf9[m
+Merge: 3b74133 9e422d4
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 23 11:07:44 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 3b74133fc38e491a0231d449fb7db35434885cf1[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 23 11:07:11 2013 +0800
+
+    updated file for routing
+
+[33mcommit 9e422d415897d1581e492d36e86b2b3373ce85f0[m
+Merge: 6729620 ffdc59a
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 11:01:00 2013 +0800
+
+    Updated files for new routing style
+
+[33mcommit 6729620ec595bb25ef9c82676379f62a2b4a6a07[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 23 10:51:18 2013 +0800
+
+    updated unsure files
+
+[33mcommit ffdc59abc5f683ceaeb48d0edcacd562ab63872b[m
+Merge: bea96fe 17c7832
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 23 10:46:25 2013 +0800
+
+    updated file for routing
+
+[33mcommit 5707530309b4afa3dbebf3f46df9702d2b77cc2a[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 22 17:49:12 2013 +0800
+
+    temp wrap
+
+[33mcommit 4f0afc37d9ba4ae0f32adfd6f4e3ce9a9ad351d2[m
+Merge: d8fb9d8 17c7832
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 22 17:33:54 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit d8fb9d8516f56ae954235d1fdc59dbf2357dcc69[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 22 17:33:02 2013 +0800
+
+    updated the files reversing statement due to jc is having difficulties on db schema
+
+[33mcommit bea96fe2c4b2db729bed45486d5dc215000853b8[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Oct 22 17:30:16 2013 +0800
+
+    updated files for employee
+
+[33mcommit 17c78326f0b447a072ab7eb0d22d5b462a775bb4[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Oct 22 17:26:27 2013 +0800
+
+    added authentication
+
+[33mcommit 10b45807fe807b1dcf2be7050ca37415301596e6[m
+Merge: 3bdfe70 ee51aef
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Oct 22 13:20:30 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 3bdfe7009e2d838827cc494ab7fac2ce4864cd0c[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Tue Oct 22 13:19:46 2013 +0800
+
+    updated routes
+
+[33mcommit ee51aef8cb7dbae7f2300d6dc4ec9f06e1dae647[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Tue Oct 22 13:09:37 2013 +0800
+
+    updated database
+
+[33mcommit 62d960f2ad428666cfab4c82e95e76d14f97d550[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Tue Oct 22 10:20:44 2013 +0800
+
+    updated files for konsumpay auth
+
+[33mcommit c9e23d27c663f0a713aa7dd9725cdb8b2cf9c831[m
+Merge: c5b3f48 a383d45
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Oct 21 17:30:16 2013 +0800
+
+    udpate chrislib
+
+[33mcommit c5b3f48c7d4746f24ac761ba09d88204b43de2d0[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Oct 21 17:27:51 2013 +0800
+
+    updated users
+
+[33mcommit a383d45413daadf0269e086b17abc27a19413da9[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Oct 21 17:21:53 2013 +0800
+
+    updated files for login controller
+
+[33mcommit 41dc1073a0b4443e6e405990a8686ad24833432c[m
+Merge: 3f62989 8b9674c
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Oct 21 17:00:57 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 3f62989398ba6fe4e52abd284e56ea8ccf729473[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Mon Oct 21 16:58:17 2013 +0800
+
+    updated files for company owner authentication
+
+[33mcommit 8b9674c2bb7c514cf4feee8ea7d7a0ddf5ca3557[m
+Merge: 7d53322 4c05f31
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 16:18:46 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7d533225596249b9a04b6758de4fc9edf5a0c2df[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 16:18:24 2013 +0800
+
+    added note for advance topics
+
+[33mcommit 4c05f31acbaea27b06cb380398c2b0de247014fd[m
+Author: Joe Christian Alcomendras <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 15:47:10 2013 +0800
+
+    removed some duplicate lines
+
+[33mcommit 6a4e8438291c78be8cdf4013173c029e986d0703[m
+Merge: c623fae 8755e2f
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 15:43:59 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit c623fae21a0f7baac2ce30567551ab0e1f5b2857[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 15:41:33 2013 +0800
+
+    added reset topic on readme
+
+[33mcommit 8755e2fdf0b8adab413ccfb8eaaa6ef0887468db[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Mon Oct 21 15:27:43 2013 +0800
+
+    Updated admin all edit , delete using ajax filter
+
+[33mcommit 574a779ceef940b89135714a8b2178175546f088[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 13:16:33 2013 +0800
+
+    added rebase topic on readme
+
+[33mcommit 7e7a7dee23e5d31d6f8d09f3705c8803ff59b460[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Mon Oct 21 13:19:09 2013 +0800
+
+    added git reference tutorial
+
+[33mcommit 43257c6fec769af3d81ab101ac7c3e739c6fa660[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 17:06:32 2013 +0800
+
+    Updated template
+
+[33mcommit ddb4b776b1ecc5eabe8270a3abe49d86f1199596[m
+Merge: 51a050b 690cb15
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 16:26:50 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 51a050bb2eaa0649e24596a0c06ee3794fad7d74[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 16:26:20 2013 +0800
+
+    updated authentication for admin as well ass the template
+
+[33mcommit 690cb156fcf2ebf7179f7347414cfc9dbd673403[m
+Merge: 7a38184 3dc70c1
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 16:03:09 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7a381843c88430f283e2af0d1d0de802742a00c7[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 16:02:11 2013 +0800
+
+    added new info and reference to branching topic
+
+[33mcommit 3dc70c199225b6b46023279f25da73d96a4c401e[m
+Merge: 7b8a5df e4b0aa3
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 15:50:57 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7b8a5dfe126eb03eead76ff589c26d599dfb7817[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 15:50:13 2013 +0800
+
+    Konsumpayroll Authentication Library
+
+[33mcommit e4b0aa3535a2b6dab24fd5f1c3e19b2a2116db6d[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:28:22 2013 +0800
+
+    updated sql for admin purposes
+
+[33mcommit 8fc9c1f12696d18cd73b98a51124dc2857c50ee5[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:19:40 2013 +0800
+
+    Updated sqls
+
+[33mcommit e17552b39d0584d7575ba6e58f82455b8146cedd[m
+Merge: 1963be1 cbd69f8
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:17:27 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 1963be149da2c9ee359a064e4b1990ae27a5b15d[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:16:45 2013 +0800
+
+    Updated sql for backup purposes
+
+[33mcommit cbd69f8ba8391f39e910bf50a34c703f37668115[m
+Merge: 06e46e2 0901721
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 15:14:08 2013 +0800
+
+    Konsumpayroll Authentication Library
+
+[33mcommit 06e46e225e93be69f54e3b8a60f83f46895f094c[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 15:05:29 2013 +0800
+
+    Konsumpayroll Authentication Library
+
+[33mcommit 0901721c83f32782c4105126a1da4909b1dce271[m
+Merge: c364643 2bc64a6
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:04:08 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit c3646431437ac74b2ba6e0bb4bdc074d094024aa[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 15:03:45 2013 +0800
+
+    Updated users for admin as well as the scripts and templates for cookies
+
+[33mcommit 3fd592ff1e937cbde84deaefb494cf78b877507e[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 14:57:06 2013 +0800
+
+    test merge conflicts
+
+[33mcommit cb63a1a3d721d9a9fd54065b1ac6da6a747c694d[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 14:51:55 2013 +0800
+
+    added new information on braching, deleted some test files
+
+[33mcommit 94afd02ef86f4737f1cd1777042c2c2caf1e718a[m
+Merge: 5c954c4 aa1ad72
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 14:17:59 2013 +0800
+
+    Merge branch 'master' into test
+
+[33mcommit aa1ad72d5d6f6961bc2f39e179bc52c9c71d5270[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 14:15:33 2013 +0800
+
+    added new content to branching
+
+[33mcommit 41cd5bbe49f1328a4c7774e804106aa8d2e51633[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 14:06:44 2013 +0800
+
+    added branching topic on readme
+
+[33mcommit 35694bf985723c9d2f9e84c50dbbc144a08ffa42[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 13:57:20 2013 +0800
+
+    appended test_hotfix file
+
+[33mcommit 5c954c4f7d7c84eabb3e41b2d95697bea4d0f977[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 13:51:08 2013 +0800
+
+    added some test file to test branch
+
+[33mcommit 2bc64a6feeacbfe35cbbf441c48fbcb950325b8f[m
+Merge: 6bf23e1 42e0a6e
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 13:41:55 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 6bf23e1486a31acf7b5b581a2e9b2022515908c0[m
+Merge: 7b9b693 8d1f8a4
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 12:53:10 2013 +0800
+
+    updated new content to readme
+
+[33mcommit 42e0a6e1b6bb9d80f40d330d2c0bc488d6b6a973[m
+Merge: 7b9b693 8d1f8a4
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 12:53:10 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 7b9b6934207679d894b97068998f4e8a8c80009f[m
+Merge: 9f7f9cc 61c35a5
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 11:14:15 2013 +0800
+
+    fixed readme
+
+[33mcommit 8d1f8a41e5f0e350be877ec2a35e35e4a3639504[m
+Merge: 9f7f9cc 61c35a5
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 11:14:15 2013 +0800
+
+    fixed readme
+
+[33mcommit 9f7f9cc93898487f5a593abfc88cec0eb0e61dec[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 11:06:04 2013 +0800
+
+    fixed readme
+
+[33mcommit 61c35a56a914f3c5ecd58de25ebe20db4dd4fe24[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 18 11:06:04 2013 +0800
+
+    fixed readme
+
+[33mcommit a8be521b6304980552828e734bc138193c69d4cf[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 10:54:15 2013 +0800
+
+    updated 4 conflict
+
+[33mcommit d5589df39ac7edecf891c3bc77d4887483785363[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 10:48:49 2013 +0800
+
+    test 3 for conflicts git
+
+[33mcommit 9e914aac7fa1c099e7c422a666bbe6984b96808f[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 10:47:37 2013 +0800
+
+    Test conflict sa read me
+
+[33mcommit e2641a1e6078d94825a183d8b99fef4d899da8ed[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 10:46:32 2013 +0800
+
+    Test for conflict purposes only
+
+[33mcommit 9d606e04ae69fbcff27e81d483f0dcf6287d6c92[m
+Merge: 3d28ea8 c8f3485
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 09:15:48 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 3d28ea8870c3cdfc0dff663fe2ea58abba288fe4[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Fri Oct 18 09:15:27 2013 +0800
+
+    Created Users controller
+
+[33mcommit c8f348558c8cad48c8916056d8abd48d55df5fec[m
+Merge: 1ef8ed8 ade3a46
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 09:13:27 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 1ef8ed82fe1c58de05c22b6f4a261883a5955217[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Fri Oct 18 09:12:20 2013 +0800
+
+    updated file chrislib
+
+[33mcommit ade3a46a17dfbfe747f1f640bb8d182eb81b298c[m
+Merge: 15d4d4c 695e825
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 17 17:37:02 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 15d4d4cf6ae4cfbf03aff66891a3b41ccf4ca012[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 17 17:36:22 2013 +0800
+
+    added tagging on readme
+
+[33mcommit d09ac5ed9619fe88e655b96b78aa705f4d984924[m
+Merge: cd4f01b 695e825
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Oct 17 17:12:07 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit cd4f01b001ccb355b92ae48c52e00af574d28db7[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Oct 17 17:09:23 2013 +0800
+
+    updated files
+
+[33mcommit 695e825794a0bdbb818ee52eb03635629944a1ed[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 17 16:52:40 2013 +0800
+
+    Updated template added ui
+
+[33mcommit 545be4e26a61084f0d47b093dd9694317a5ade0e[m
+Merge: 757b22f b943247
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 17 15:34:19 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 757b22f86abc58c831dfe935f2b756cd34a8eb83[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Thu Oct 17 15:32:47 2013 +0800
+
+    uncommented route for subdomain
+
+[33mcommit b9432473e7b7f51c017001d2c50bd069e4abc3df[m
+Merge: 4111fad b4fbc2a
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 17 14:45:13 2013 +0800
+
+    updated conflict on routings
+
+[33mcommit 4111fadb838431701cab5b7896572b5c4b0b20dd[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 17 14:43:56 2013 +0800
+
+    Added activity logs on admin
+
+[33mcommit b4fbc2a07f07dec6e92f358679844f5bbe6c3851[m
+Merge: a5817bf 9a18a1c
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Oct 17 11:00:19 2013 +0800
+
+    updated files
+
+[33mcommit a5817bf4dcc09a3be6ee21a4805ca5a7a4b62f3b[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Thu Oct 17 10:58:07 2013 +0800
+
+    updated files
+
+[33mcommit 9a18a1ce95d8f274194a35ee874042d886f74076[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Thu Oct 17 10:50:45 2013 +0800
+
+    Updated themes ang uri routings for cloudbase
+
+[33mcommit 8cc9e80dd715edbd78f9a3e29c02d1e1396dd2b2[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 16:40:20 2013 +0800
+
+    Deleted company_approvers and change to company due to redundancy
+
+[33mcommit 6aec88c824a49b17adf7f48a0879f54b4b97667c[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 16:01:58 2013 +0800
+
+    Updated all on sidebar menu controller approvers as well as the views on company info ,gov registration , company approvers , principal cost center
+
+[33mcommit f97c4c073e4606a7a45171f6547d44e281889cb1[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 15:32:55 2013 +0800
+
+    updated company for hr controllers and views
+
+[33mcommit ddf65f1706f2fa8bdcb8c4892c92e80946060dc9[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 14:32:30 2013 +0800
+
+    Updated new hr controllers
+
+[33mcommit d135193421dab37d5fe139fb1a10d60eb9fc7817[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 14:24:54 2013 +0800
+
+    new updates
+
+[33mcommit 8ef2eea6ab6355e36664ab51dde4d09072b7d930[m
+Merge: c7232fe e04febd
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 14:04:18 2013 +0800
+
+    Updated the conflicts between company approvers
+
+[33mcommit e04febd1978ed9269a994f878f5dfd16eaa08dd3[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:56:58 2013 +0800
+
+    new updates
+
+[33mcommit c7232fed94f15bea4b1bd31809599bbb6f887ed3[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 13:54:29 2013 +0800
+
+    added new test controller
+
+[33mcommit 0cd87b78911108dfbad7b0bbc62d6dcc4ed618bf[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:52:10 2013 +0800
+
+    new updates
+
+[33mcommit 76eb0e957e9d6bd1b840a1530ee06305a5317008[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 13:48:47 2013 +0800
+
+    new updates
+
+[33mcommit 5aefc44c875a782b30e026f08cb4bcc68d2d3e7c[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 12:59:34 2013 +0800
+
+    company approvers 3
+
+[33mcommit a5a8217273b388bc854c70de3aaf0b5abc3323ac[m
+Author: chris <christophercuizons@gmail.com>
+Date:   Wed Oct 16 12:55:33 2013 +0800
+
+    nag add ko oi
+
+[33mcommit fdbbcbe666f023ef19b08a626a3871ca62cc93e1[m
+Author: jonathan <jonathanbangga@gmail.com>
+Date:   Wed Oct 16 10:35:21 2013 +0800
+
+    new template
+
+[33mcommit bec22a19aed9d74b796ae4c220edae1fbd4ede76[m
+Merge: 286ed69 f18526d
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:47:13 2013 +0800
+
+    Merge branch 'master' of https://github.com/bigfootglobal/konsumpayroll
+
+[33mcommit 286ed6946b6e82ffc53090dc20bc4a4590dae1c1[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:25:00 2013 +0800
+
+    added readme, htaccess, routes and test funtion in welcome controller class
+
+[33mcommit f18526d5dd5064512ee82cb9ab86d21fc00af2cb[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:25:00 2013 +0800
+
+    added readme, htaccess and routes
+
+[33mcommit cf9eb4c8d874942d05e837eb6cb07eeb8c55a7c0[m
+Author: jc <vaultdweller123@gmail.com>
+Date:   Fri Oct 11 15:19:10 2013 +0800
+
+    my first commit

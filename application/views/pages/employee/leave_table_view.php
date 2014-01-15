@@ -23,7 +23,7 @@
 				foreach($leave as $row){
 		?>
 			<tr>
-				<td><?php print $row->leave_type_name;?></td>
+				<td><?php print $row->leave_type;?></td>
 				<td><?php print $row->date_filed;?></td>
 				<td><?php print date("M d, Y g:i A",strtotime($row->date_start));?></td>
 				<td><?php print date("M d, Y g:i A",strtotime($row->date_end));?></td>
@@ -58,7 +58,7 @@
             <tbody>
             <tr>
               <td style="width:80px">Leave Type</td>
-              <td><select style='min-width: 205px;' class='txtselect select-medium' name='leave_type'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type', $row_ltype->leave_type_name); ?>'><?php print $row_ltype->leave_type_name;?></option><?php } }?></select>
+              <td><select style='min-width: 205px;' class='txtselect select-medium' name='leave_type'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type', $row_ltype->leave_type); ?>'><?php print $row_ltype->leave_type;?></option><?php } }?></select>
               </tr>
             <tr>
               <td style="vertical-align: top;">Reason</td>
@@ -233,6 +233,53 @@
 		}else{
 			jQuery(".return_date_sec").removeClass("emp_str");
 		}
+
+		// Start DateTime
+		
+		var spl_start_date = jQuery(".start_date").val().split("-");
+	    var spl_end_date = jQuery(".end_date").val().split("-");
+	    var spl_return_date = jQuery(".return_date").val().split("-");
+		
+	    var start_date_hr = jQuery(".start_date_hr").val();
+	    var start_date_min = jQuery(".start_date_min").val();
+	    var start_date_sec = jQuery(".start_date_sec").val();
+
+	    var new_start_date = spl_start_date[1]+"/"+spl_start_date[2]+"/"+spl_start_date[0]+" ";
+    	var new_end_date = spl_end_date[1]+"/"+spl_end_date[2]+"/"+spl_end_date[0]+" ";
+    	var new_return_date = spl_return_date[1]+"/"+spl_return_date[2]+"/"+spl_return_date[0]+" ";
+	    
+	    // End DateTime
+	    var end_date_hr = jQuery(".end_date_hr").val();
+	    var end_date_min = jQuery(".end_date_min").val();
+	    var end_date_sec = jQuery(".end_date_sec").val();
+
+	    // Return DateTime
+	    var return_date_hr = jQuery(".return_date_hr").val();
+	    var return_date_min = jQuery(".return_date_min").val();
+	    var return_date_sec = jQuery(".return_date_sec").val();
+		
+		var newdate_start_date = new Date(new_start_date+" "+start_date_hr+":"+start_date_min+" "+start_date_sec);
+	    var newdate_end_date = new Date(new_end_date+" "+end_date_hr+":"+end_date_min+" "+end_date_sec);
+	    var newdate_return_date = new Date(new_return_date+" "+return_date_hr+":"+return_date_min+" "+return_date_sec);
+	    
+	    var why = "";
+
+	     if(end_date != ""){
+	    	if(newdate_start_date > newdate_end_date){
+		       why += "- Invalid End Date value <br />";
+		    }
+	     }
+
+	    if(return_date != ""){
+	    	if(newdate_end_date > newdate_return_date){
+		       why += "- Invalid Return Date value";
+		    }
+	    }
+		
+		if(why != ""){
+			alert(why);
+			return false;
+	    }
 		
 		if(error != ""){
 			return false;

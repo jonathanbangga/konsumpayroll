@@ -23,7 +23,7 @@
 	              <td><?php print $counter++;?></td>
 	              <td><?php print ucwords($row->first_name)." ".ucwords($row->last_name);?></td>
 	              <td><?php print $row->payroll_cloud_id;?></td>
-	              <td><?php print $row->leave_type_name;?></td>
+	              <td><?php print $row->leave_type;?></td>
 	              <td><?php print $row->leave_credits;?></td>
 	              <td></td>
 	              <td><?php print $row->as_of;?></td>
@@ -97,7 +97,7 @@
 	    tbl += "<td><input readonly='readonly' type='text' name='emp_id[]' class='ihide txtfield emp_id"+size+"' /></td>";
 	    tbl += "<td><input type='text' name='emp_name[]' class='txtfield emp_name emp_name"+size+"' class_val='class_val"+size+"' attr_uname_val='"+size+"'></td>";
 	    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
-	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_type[]'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type[]', $row_ltype->leave_type_name); ?>'><?php print $row_ltype->leave_type_name;?></option><?php } }?></select></td>";
+	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='leave_type[]'><?php if($leave_type == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($leave_type as $row_ltype){?> <option value='<?php print $row_ltype->leave_type_id;?><?php echo set_select('leave_type[]', $row_ltype->leave_type); ?>'><?php print $row_ltype->leave_type;?></option><?php } }?></select></td>";
 	    tbl += "<td><input type='text' name='remaining_hours[]' class='remaining_hours txtfield'></td>";
 	    tbl += "<td></td>";
 	    tbl += "<td><input type='text' name='as_of[]' class='as_of txtfield datepickerCont' id='as_of"+size+"' /></td>";
