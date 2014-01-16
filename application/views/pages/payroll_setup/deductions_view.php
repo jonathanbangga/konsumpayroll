@@ -23,7 +23,7 @@
               <tr>
                 <td>
                   <select class="txtselect select-medium" name="deduction_payroll_group[]">
-                  	<option value='<?php print $row->payroll_group_id;?><?php echo set_select('deduction_payroll_group', $row->payroll_group_name); ?>'><?php print $row->payroll_group_name;?></option>
+                  	<option value='<?php print $row->payroll_group_id;?><?php echo set_select('deduction_payroll_group', $row->name); ?>'><?php print $row->name;?></option>
                   </select>
                  </td>
                  <?php 
@@ -95,7 +95,11 @@
               </tr>
               <?php 
               		} 
-              	}
+              	}else{
+					echo "<td colspan='5'>";
+						print msg_empty();
+					echo "</td>";
+				}
               ?>
             </tbody>
           </table>
@@ -418,6 +422,16 @@
 	}
 
 	function validateForm(){
+
+		<?php 
+			if($payroll_group == NULL){
+		?>
+			alert("- Please add new Payroll Group");
+			return false;
+		<?php
+			}
+        ?>
+		
 		if(!jQuery(".other_deduction_cont input:checkbox").is(":checked")){
 			var error = "1";
 		}
