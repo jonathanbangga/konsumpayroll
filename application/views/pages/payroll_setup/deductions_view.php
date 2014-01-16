@@ -95,7 +95,11 @@
               </tr>
               <?php 
               		} 
-              	}
+              	}else{
+					echo "<td colspan='5'>";
+						print msg_empty();
+					echo "</td>";
+				}
               ?>
             </tbody>
           </table>
