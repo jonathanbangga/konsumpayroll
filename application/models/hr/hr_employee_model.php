@@ -844,7 +844,7 @@
 			$sql = $this->db->query("
 				SELECT *FROM leave_type
 				WHERE company_id = '{$comp_id}'
-				AND status = 'Active'
+				AND deleted = '0'
 			");
 			
 			if($sql->num_rows() > 0){

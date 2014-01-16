@@ -28,7 +28,7 @@
 	              <td><?php print $row->payroll_cloud_id;?></td>
 	              <td><?php print $row->valid_from;?></td>
 	              <td><?php print $row->until;?></td>
-	              <td><?php print $row->payroll_group_name;?></td>	              
+	              <td><?php print $row->name;?></td>	              
 	              <td><a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" shifts_schedule_id="<?php print $row->shifts_schedule_id;?>">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" shifts_schedule_id="<?php print $row->shifts_schedule_id;?>">DELETE</a></td>
 	            </tr>
             <?php 			
@@ -67,7 +67,7 @@
 	        <tr>
 	          <td>Payroll Group:</td>
               <td>
-              	<select style='min-width: 148px;' class='txtselect select-medium payroll_group_edit' name='payroll_group_edit'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->payroll_group_name); ?>'><?php print $row_pg->payroll_group_name;?></option><?php } }?></select>
+              	<select style='min-width: 148px;' class='txtselect select-medium payroll_group_edit' name='payroll_group_edit'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->name); ?>'><?php print $row_pg->name;?></option><?php } }?></select>
               </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@
 			    tbl += "<td><input type='text' name='emp_no[]' readonly='readonly' class='txtfield emp_no"+size+"' class_val='class_val"+size+"'></td>";
 		        tbl += "<td><input type='text' name='valid_from[]' class='valid_from txtfield datepickerCont'></td>";
 		        tbl += "<td><input type='text' name='until[]' class='txtfield until datepickerCont' id='dob"+size+"'></td>";
-		        tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->payroll_group_name); ?>'><?php print $row_pg->payroll_group_name;?></option><?php } }?></select></td>";
+		        tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == NULL){print "<option value=''>".msg_empty()."</option>";}else{foreach($payroll_group as $row_pg){?> <option value='<?php print $row_pg->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_pg->name); ?>'><?php print $row_pg->name;?></option><?php } }?></select></td>";
 		        tbl += "<td><a href='javascript:void(0);' style='width:127px;' class='btn btn-red btn-action delRow' attr_rowno='"+size+"'>DELETE</a></td>";
 	            tbl += "</tr>";
 		              

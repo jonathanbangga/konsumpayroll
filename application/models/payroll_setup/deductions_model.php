@@ -18,7 +18,6 @@ class Deductions_model extends CI_Model {
     	$sql = $this->db->query("
     		SELECT *FROM payroll_group
     		WHERE company_id = '{$comp_id}'
-    		AND status = 'Active'
     	");
 
     	if($sql->num_rows() > 0){
