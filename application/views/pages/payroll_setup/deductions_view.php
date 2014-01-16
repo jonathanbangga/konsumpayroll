@@ -23,7 +23,7 @@
               <tr>
                 <td>
                   <select class="txtselect select-medium" name="deduction_payroll_group[]">
-                  	<option value='<?php print $row->payroll_group_id;?><?php echo set_select('deduction_payroll_group', $row->payroll_group_name); ?>'><?php print $row->payroll_group_name;?></option>
+                  	<option value='<?php print $row->payroll_group_id;?><?php echo set_select('deduction_payroll_group', $row->name); ?>'><?php print $row->name;?></option>
                   </select>
                  </td>
                  <?php 
