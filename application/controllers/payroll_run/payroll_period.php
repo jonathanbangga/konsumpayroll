@@ -40,8 +40,10 @@ class Payroll_period extends CI_Controller {
 			$period = $period_sql->row();
 			if($pp_id==""){
 				$this->payroll_period_model->add_payroll_period($pg,$period->first_payroll_date,$pfrom,$pto);
+				setcookie("msg", "Submission has been saved!"); 
 			}else{
 				$this->payroll_period_model->update_payroll_period($pg,$period->first_payroll_date,$pfrom,$pto);
+				setcookie("msg", "Changes has been saved!"); 
 			}	
 			
 		}
@@ -76,10 +78,6 @@ class Payroll_period extends CI_Controller {
 			 $ret = json_encode($arr);
 		}
 		echo $ret;
-	}
-	
-	public function test(){
-		echo date('Y-m-d',strtotime('01/31/2014'));
 	}
 	
 }

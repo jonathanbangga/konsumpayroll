@@ -1,6 +1,6 @@
 <?php 
 $attr = array('id'=>'jform');
-echo form_open("/{$this->session->userdata('sub_domain')}/payroll_run/payroll_period",$attr); 
+echo form_open("/{$this->session->userdata('sub_domain2')}/payroll_run/payroll_period",$attr); 
 // payroll period
 
 if($pp_sql->num_rows()>0){
@@ -20,6 +20,7 @@ if($pp_sql->num_rows()>0){
 
 ?>
 <div class="main-content"> 
+<div style="display:none;" class="highlight_message">Message</div>
 <!-- MAIN-CONTENT START -->
 	<p>Select payroll date and payroll group you want to process.</p>
 	<table class="jtbl">
@@ -80,6 +81,10 @@ if($pp_sql->num_rows()>0){
 <!-- FOOTER-GRP-BTN END --> 
 </div>
 <?php echo form_close(); ?>
+
+<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
+
 <style>
 .jtbl td{
 	padding: 9px;
@@ -88,13 +93,15 @@ if($pp_sql->num_rows()>0){
 <script>
 jQuery(document).ready(function(){
 
+	// load highlight message script
+	redirect_highlight_message();
 
 	// get payroll period
 	jQuery("#payroll_group").change(function(){
 		var pg_id = jQuery(this).val();
 		jQuery.ajax({
 			type: "POST",
-			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_run/payroll_period/ajax_get_payroll_period",
+			url: "/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/payroll_period/ajax_get_payroll_period",
 			data: {
 				pg_id: pg_id,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
@@ -114,7 +121,7 @@ jQuery(document).ready(function(){
 		var pc_id = jQuery(this).val();
 		jQuery.ajax({
 			type: "POST",
-			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_run/payroll_period/ajax_get_range",
+			url: "/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/payroll_period/ajax_get_range",
 			data: {
 				pc_id: pc_id,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
