@@ -422,6 +422,16 @@
 	}
 
 	function validateForm(){
+
+		<?php 
+			if($payroll_group == NULL){
+		?>
+			alert("- Please add new Payroll Group");
+			return false;
+		<?php
+			}
+        ?>
+		
 		if(!jQuery(".other_deduction_cont input:checkbox").is(":checked")){
 			var error = "1";
 		}
