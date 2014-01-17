@@ -200,4 +200,10 @@ select#jpayroll_group{
 .input_pad{
 	height:27px;
 }
+.iseparate{
+	border-top: 1px solid #CCCCCC;
+    clear: both;
+    overflow: hidden;
+    padding: 20px 0 10px;
+}
 /*** end input css global chris ***/

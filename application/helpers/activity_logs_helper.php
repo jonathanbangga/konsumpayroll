@@ -75,7 +75,8 @@
 	 * @return dates
 	 */
 	function idates_slash($str){
-		return ($str == "0000-00-00" || $str == "01/01/1970" || $str =="1970-01-01") ? null : date("d/m/Y",strtotime($str));
+	#	return ($str == "0000-00-00" || $str == "01/01/1970" || $str =="1970-01-01") ? null : date("d/m/Y",strtotime($str));
+	return ($str == "0000-00-00" || $str == "01/01/1970" || $str =="1970-01-01") ? null : date("Y-m-d",strtotime($str));
 	}
 	
 	/**
@@ -91,12 +92,11 @@
 		}else{
 			switch($type):
 				case "date":
-					$str = date("d/m/Y",strtotime(str_replace("/","-",$str)));
-					
+					//$str = date("d/m/Y",strtotime(str_replace("/","-",$str)));
 					return  date("Y-m-d",strtotime($str));
 				break;
 				case "date_time":
-					$str =  str_replace("/","-",$str);
+				//	$str =  str_replace("/","-",$str);
 					return idates_time($str);
 				break;
 			endswitch;	

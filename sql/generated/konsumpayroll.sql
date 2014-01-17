@@ -2252,6 +2252,232 @@ CREATE TABLE IF NOT EXISTS `workday` (
   PRIMARY KEY (`workday_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deductions_income`
+--
+
+CREATE TABLE IF NOT EXISTS `deductions_income` (
+  `deductions_income_id` int(55) NOT NULL AUTO_INCREMENT,
+  `income` varchar(255) NOT NULL,
+  `basis_for_sss` enum('Yes','No') NOT NULL,
+  `basis_for_philhealth` enum('Yes','No') NOT NULL,
+  `basis_for_hdmf` enum('Yes','No') NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`deductions_income_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deductions_other_deductions`
+--
+
+CREATE TABLE IF NOT EXISTS `deductions_other_deductions` (
+  `deductions_other_deductions_id` int(55) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `view` enum('Yes','No') NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`deductions_other_deductions_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deductions_payroll_group`
+--
+
+CREATE TABLE IF NOT EXISTS `deductions_payroll_group` (
+  `deductions_payroll_group_id` int(55) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(55) NOT NULL,
+  `sss` varchar(255) NOT NULL,
+  `philhealth` varchar(255) NOT NULL,
+  `hdmf` varchar(255) NOT NULL,
+  `withholding_tax` varchar(255) NOT NULL,
+  `comp_id` varchar(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`deductions_payroll_group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `income`
+--
+
+CREATE TABLE IF NOT EXISTS `income` (
+  `income_id` int(55) NOT NULL AUTO_INCREMENT,
+  `basic_pay` enum('No','Yes') NOT NULL,
+  `overtime` enum('No','Yes') NOT NULL,
+  `fixed_allowance` enum('No','Yes') NOT NULL,
+  `holiday_premium_pay` enum('No','Yes') NOT NULL,
+  `night_shift_differential` enum('No','Yes') NOT NULL,
+  `commission` enum('No','Yes') NOT NULL,
+  `piece_rate_pay` enum('No','Yes') NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`income_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_journal_entries_earnings`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_journal_entries_earnings` (
+  `payroll_journal_entries_id` int(55) NOT NULL AUTO_INCREMENT,
+  `earnings` varchar(255) NOT NULL,
+  `account_code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`payroll_journal_entries_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_journal_entries_expense_reimbursement`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_journal_entries_expense_reimbursement` (
+  `payroll_journal_entries_expense_reimbursement_id` int(55) NOT NULL AUTO_INCREMENT,
+  `expense_reimbursement` varchar(255) NOT NULL,
+  `account_code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`payroll_journal_entries_expense_reimbursement_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_journal_entries_government_contributions`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_journal_entries_government_contributions` (
+  `payroll_journal_entries_government_contributions_id` int(55) NOT NULL AUTO_INCREMENT,
+  `government_contributions` varchar(255) NOT NULL,
+  `account_code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`payroll_journal_entries_government_contributions_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_journal_entries_other_deductions`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_journal_entries_other_deductions` (
+  `payroll_journal_entries_other_deductions_id` int(55) NOT NULL AUTO_INCREMENT,
+  `other_deductions` varchar(255) NOT NULL,
+  `account_code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`payroll_journal_entries_other_deductions_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll_journal_entries_witholding_tax`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_journal_entries_witholding_tax` (
+  `payroll_journal_entries_witholding_tax_id` int(55) NOT NULL AUTO_INCREMENT,
+  `others` varchar(255) NOT NULL,
+  `account_code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`payroll_journal_entries_witholding_tax_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+--
+-- Table structure for table `thirteen_month_pay`
+--
+
+CREATE TABLE IF NOT EXISTS `thirteen_month_pay` (
+  `thirteen_month_pay_id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_tmp_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `process_by` varchar(50) NOT NULL,
+  `first_month_payroll_date` date NOT NULL,
+  `first_month_payroll_from` date NOT NULL,
+  `first_month_payroll_to` date NOT NULL,
+  `second_month_payroll_date` date NOT NULL,
+  `second_month_payroll_from` date NOT NULL,
+  `second_month_payroll_to` date NOT NULL,
+  `third_month_payroll_date` date NOT NULL,
+  `third_month_payroll_from` date NOT NULL,
+  `third_month_payroll_to` date NOT NULL,
+  `fourth_month_payroll_date` date NOT NULL,
+  `fourth_month_payroll_from` date NOT NULL,
+  `fourth_month_payroll_to` date NOT NULL,
+  `fifth_month_payroll_date` date NOT NULL,
+  `fifth_month_payroll_from` date NOT NULL,
+  `fifth_month_payroll_to` date NOT NULL,
+  `sixth_month_payroll_date` date NOT NULL,
+  `sixth_month_payroll_from` date NOT NULL,
+  `sixth_month_payroll_to` date NOT NULL,
+  `seventh_month_payroll_date` date NOT NULL,
+  `seventh_month_payroll_from` date NOT NULL,
+  `seventh_month_payroll_to` date NOT NULL,
+  `eight_month_payroll_date` date NOT NULL,
+  `eight_month_payroll_from` date NOT NULL,
+  `eight_month_payroll_to` date NOT NULL,
+  `ninth_month_payroll_date` date NOT NULL,
+  `ninth_month_payroll_from` date NOT NULL,
+  `ninth_month_payroll_to` date NOT NULL,
+  `tenth_month_payroll_date` date NOT NULL,
+  `tenth_month_payroll_from` date NOT NULL,
+  `tenth_month_payroll_to` date NOT NULL,
+  `eleventh_month_payroll_date` date NOT NULL,
+  `eleventh_month_payroll_from` date NOT NULL,
+  `eleventh_month_payroll_to` date NOT NULL,
+  `twelveth_month_payroll_date` date NOT NULL,
+  `twelveth_month_payroll_from` date NOT NULL,
+  `twelveth_month_payroll_to` date NOT NULL,
+  `first_quarter_date` date NOT NULL,
+  `first_quarter_from` date NOT NULL,
+  `first_quarter_to` date NOT NULL,
+  `second_quarter_date` date NOT NULL,
+  `second_quarter_from` date NOT NULL,
+  `second_quarter_to` date NOT NULL,
+  `third_quarter_date` date NOT NULL,
+  `third_quarter_from` date NOT NULL,
+  `third_quarter_to` date NOT NULL,
+  `add_another_bonus` varchar(50) NOT NULL,
+  `thirteen_month_released_date` date NOT NULL,
+  `date` datetime NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`thirteen_month_pay_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
