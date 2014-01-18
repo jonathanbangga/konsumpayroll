@@ -22,32 +22,14 @@ class Timesheets extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		//$data['emp_sql'] = $this->exclude_list_model->get_employee($offset,$per_page);
+		if(isset($_FILES["file"]["tmp_name"])){
+			$this->import_csv($_FILES["file"]["tmp_name"]);
+			setcookie('msg','Import success!');
+		}
 		$this->layout->view('pages/payroll_run/timesheets_view',$data);
 	}
 	
-	public function test(){
-		echo '
-		<html>
-		<head>
-			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-			<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		</head>
-		<body>	
-		'.form_open_multipart("/{$this->session->userdata('sub_domain2')}/payroll_run/exclude_list/test_import").'
-			Browse: <input type="file" id="file" class="file" name="file" />
-			<input type="submit" name="go" value="go" />
-		'.form_close().'
-		</body>
-		</html>
-		';
-	}
-	
-	public function test_import(){
-	
-		
-		// csv file
-		$csv_file = $_FILES["file"]["tmp_name"];
+	public function import_csv($csv_file){
 		
 		// open file
 		$file=fopen($csv_file,"r") or exit("Unable to open file!");
@@ -62,7 +44,13 @@ class Timesheets extends CI_Controller {
 				// excludes empty data
 				if($data[0]!=""){
 					// insert data
-					$this->exclude_list_model->test_import($data[0],$data[1]);
+					$emp_sql = $this->timesheets_model->get_employee_id($data[0],$data[1],$data[2]);
+					if($emp_sql->num_rows()>0){
+						$emp = $emp_sql->row();
+						$emp_id = $emp->emp_id;
+						$date = date("Y-m-d",strtotime($data[3]));
+						$this->timesheets_model->add_temp_employee_time_in($emp_id,$date,$data[4],$data[5],$data[6],$data[7],$data[8]);
+					}
 				}
 			}
 			$i++;

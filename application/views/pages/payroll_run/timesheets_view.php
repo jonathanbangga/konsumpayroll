@@ -1,4 +1,8 @@
+<?php
+echo form_open_multipart("/{$this->session->userdata('sub_domain2')}/payroll_run/timesheets"); 
+?>
 <div class="main-content"> 
+<div style="display:none;" class="highlight_message">Message</div>
 <!-- MAIN-CONTENT START -->
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
   ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
@@ -17,13 +21,13 @@
 		<tr>
 			<td>Choose file to import</td>
 			<td>
-				<input type="file" />
+				<input type="file" name="file" />
 			</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="submit" value="upload" />
+				<input type="submit" name="upload" class="btn" value="upload" />
 			</td>
 		</tr>
 	</tbody>
@@ -62,18 +66,6 @@
   </table>
 </div>
 <p class="pagination" style="margin-top:-25px;"><a href="#" class="prev">Previous</a> <a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#" class="next">Next</a> </p>
-<table width="600" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-	<td width="130">Choose file to import</td>
-	<td width="245"><div class="fileupload">
-		<input type="file" name="">
-		<span class="cusfile">
-		<input type="text" readonly value="" class="cusfield">
-		<input name="" type="submit" value="Browse" class="btn btn-grey">
-		</span> </div></td>
-	<td><input type="submit" class="btn btn-grey" value="upload"></td>
-  </tr>
-</table>
 <!-- MAIN-CONTENT END --> 
 </div>
 <div class="footer-grp-btn" style="width:820px;"> 
@@ -82,8 +74,19 @@
 <input class="btn right" name="" type="button" value="SAVE">
 <!-- FOOTER-GRP-BTN END --> 
 </div>
+<?php echo form_close(); ?>
+
+<link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
+<script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
+
 <style>
 .tbl1 td{
 	padding: 10px;
 }
 </style>
+<script>
+jQuery(document).ready(function(){
+	// load highlight message script
+	redirect_highlight_message();
+});
+</script>
