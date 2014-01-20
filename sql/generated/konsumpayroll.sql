@@ -2478,6 +2478,33 @@ CREATE TABLE IF NOT EXISTS `thirteen_month_pay` (
   PRIMARY KEY (`thirteen_month_pay_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_time_in`
+--
+
+CREATE TABLE IF NOT EXISTS `employee_time_in` (
+  `employee_time_in_id` int(55) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(55) NOT NULL,
+  `comp_id` int(55) NOT NULL,
+  `date` date NOT NULL,
+  `time_in` datetime NOT NULL,
+  `lunch_out` datetime NOT NULL,
+  `lunch_in` datetime NOT NULL,
+  `time_out` datetime NOT NULL,
+  `total_hours` decimal(10,2) NOT NULL,
+  `corrected` enum('No','Yes') NOT NULL,
+  `reason` text NOT NULL,
+  `time_in_status` enum('','pending','approved') NOT NULL,
+  `tardiness_min` varchar(55) NOT NULL,
+  `undertime_min` varchar(55) NOT NULL,
+  `notes` text NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`employee_time_in_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
