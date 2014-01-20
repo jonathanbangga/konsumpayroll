@@ -236,7 +236,6 @@
 				var el = jQuery(this);
 				var urls = "/<?php echo $this->session->userdata('sub_domain');?>/payroll_setup/priority_of_deductions/ajax_remove_other_loans";
 				var ids = el.attr("id");
-				
 				var fields = {
 					    "priority_of_deductions_other_id":ids,
 					    "ZGlldmlyZ2luamM": jQuery.cookie(itoken)    
@@ -249,8 +248,7 @@
 						modal: true,
 						dialogClass: 'transparent',
 						buttons: {
-							"Yes": function () {
-								
+							"Yes": function () {		
 								jQuery.post(urls,fields,function(json){				
 									el.parents("tr").remove();		
 								 	jQuery(".option_alert").dialog('close');	
