@@ -108,6 +108,7 @@ class Priority_of_deductions extends CI_Controller {
 			$id = $this->input->post('priority_of_deductions_other_id');
 			if(is_numeric($id)){
 				$res = $this->priority_of_deductions->remove_priority_of_deductions_other($this->company_id,$id);
+				$this->session->set_flashdata("success","Other Deductions had been deleted!"); # WRITE A TEMPORARY SESSION STATUS
 				echo json_encode(array("success"=>$res));
 			}else{
 				echo json_encode(array("success"=>'0','trigger'=>'hacked'));
@@ -122,9 +123,12 @@ class Priority_of_deductions extends CI_Controller {
 			$id = $this->input->post('priority_of_deductions_other_id');
 			if(is_numeric($id)){
 				$res = $this->priority_of_deductions->remove_priority_of_other_loan($this->company_id,$id);
+				$this->session->set_flashdata("success","Other Loans had been deleted!"); # WRITE A TEMPORARY SESSION STATUS
 				echo json_encode(array("success"=>$res));
+				return false;
 			}else{
 				echo json_encode(array("success"=>'0'));
+				return false;
 			}
 		}else{
 			show_404();

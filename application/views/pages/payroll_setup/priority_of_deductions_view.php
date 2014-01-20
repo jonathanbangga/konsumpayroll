@@ -15,9 +15,7 @@
 			<div class="ihide">
 			<?php echo validation_errors("<span class='error_zone'>","</span>");?>
 			</div>
-		</div>
-	
-        
+		</div>     
         <div class="tbl-wrap">
           <table class="tbl">
             <tr>
@@ -57,7 +55,9 @@
             	<tr>
             		<td>
             			<input type="hidden" value="<?php echo $other_deduc->priority_of_deductions_other_id;?>" class="txtfield" name="update_priority_id[]">
-           				<input type="text" value="<?php echo $other_deduc->name;?>" class="txtfield iwarn" name="update_priority_name[]"></td>
+           				<input type="hidden" value="<?php echo $other_deduc->name;?>" class="txtfield iwarn" name="update_priority_name[]">
+						<?php echo $other_deduc->name;?>
+						</td>
             		<td>
             		<input type="text" value="<?php echo $other_deduc->priority;?>" class="txtfield iwarn iprior" name="update_priority[]"></td>
             		<td>
@@ -100,24 +100,23 @@
               <td><input  class="txtfield iwarn iprior" name="sss_emergency_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_emergency_loan : ''; ?>" type="text"></td>
               <td>&nbsp;</td>
             </tr>
-            
             <?php 
             	if($other_loans){
             		foreach($other_loans as $more_loans):
             ?>
             	<tr>
              		<td>
-             		<input class="txtfield iwarn" name="update_loan_name[]" value="<?php echo $other_loans ? $more_loans->name : ''; ?>" type="text">
+					<?php echo $other_loans ? $more_loans->name : ''; ?>
+             		<input class="txtfield iwarn" name="update_loan_name[]" value="<?php echo $other_loans ? $more_loans->name : ''; ?>" type="hidden">
              		<input class="txtfield iwarn" name="update_pod_id[]" value="<?php echo $other_loans ? $more_loans->priority_of_deductions_other_loans_id : ''; ?>" type="hidden">
              		</td>
               		<td><input class="txtfield iwarn iprior" name="update_loan_priority[]" value="<?php echo $other_loans ? $more_loans->priority : ''; ?>" type="text"></td>
-             		<td><a href="javascript:void(0);" id="6" class="btn btn-red btn-action btn-remove jremove_other_loan">REMOVE</a></td>
+             		<td><a href="javascript:void(0);" id="<?php echo $other_loans ? $more_loans->priority_of_deductions_other_loans_id : ''; ?>" class="btn btn-red btn-action btn-remove jremove_other_loan_update">REMOVE</a></td>
            		 </tr>
             <?php 		
             		endforeach;
             	}
-            ?>
-            
+            ?>   
           </table>
           <br />
            <a id="jadd_other_loan" href="#" class="btn">Add More</a>
@@ -202,7 +201,8 @@
 							"Yes": function () {
 								jQuery.post(urls,fields,function(json){				
 									el.parents("tr").remove();		
-								 	jQuery(".option_alert").dialog('close');	
+								 	jQuery(".option_alert").dialog('close');
+									location.reload();									
 								});	
 							},
 							"No": function () {
@@ -228,6 +228,42 @@
 			}	
 			return false;
 		}
+		
+		// REMOVE OTHER FIELD UPDATE
+		function remove_loan_field_update(){
+			jQuery(document).on("click",".jremove_other_loan_update",function(e){
+				e.preventDefault();
+				var el = jQuery(this);
+				var urls = "/<?php echo $this->session->userdata('sub_domain');?>/payroll_setup/priority_of_deductions/ajax_remove_other_loans";
+				var ids = el.attr("id");
+				
+				var fields = {
+					    "priority_of_deductions_other_id":ids,
+					    "ZGlldmlyZ2luamM": jQuery.cookie(itoken)    
+					};
+					jQuery(".option_alert").empty().html("Are you sure you want to delete this?");
+					jQuery(".option_alert").dialog({
+						resizable: false,
+						height: 150,
+						width:"320",
+						modal: true,
+						dialogClass: 'transparent',
+						buttons: {
+							"Yes": function () {
+								
+								jQuery.post(urls,fields,function(json){				
+									el.parents("tr").remove();		
+								 	jQuery(".option_alert").dialog('close');	
+									location.reload();
+								});	
+							},
+							"No": function () {
+								 jQuery(".option_alert").dialog('close');
+							}
+						}
+					});	
+			});		
+		}
       	
         jQuery(function(){
         	add_other_fields();
@@ -236,6 +272,7 @@
         	remove_other_field_remove_updates(); // REMOVES THE OTHER WHICH HAS HAVE A VALUE
         	remove_other_loans(); // REMOVES OTHER LOANS
         	ishow_status();
+			remove_loan_field_update();
         	inum('.iprior');
         });
       	
