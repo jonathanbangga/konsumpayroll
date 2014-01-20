@@ -1,4 +1,5 @@
  <div class="tbl-wrap">
+        <h1>Company List</h1>
 	<?php if($company->num_rows()>0){ ?>
 		<table class="company-list-tbl">
 			<?php 
@@ -25,7 +26,7 @@
           </table>
 	<?php
 	}else{
-		echo "No company yet";
+		echo "No company has been set up yet";
 	}
 	?>   
         </div>
