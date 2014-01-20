@@ -1,5 +1,6 @@
 <div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validateForm()"');?>
+<p>List of employees and their information.</p>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
