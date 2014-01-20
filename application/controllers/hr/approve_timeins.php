@@ -32,7 +32,7 @@
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page = 2;
+			$this->per_page = 10;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -128,7 +128,7 @@
 		}
 
 		/**
-		 * APPROVES EXPENSES DENIED BECAUSE WE CAN
+		 * REJECT EXPENSES DENIED BECAUSE WE CAN
 		 */
 		public function reject(){
 			if($this->input->is_ajax_request()){
@@ -159,23 +159,19 @@
 			}
 		}
 		
+		/**
+		*	ADDING NOTES IN EVERY TIME IN ACCOUNTS
+		*	@return JSON
+		*/
 		public function ajax_add_notes(){
 			if($this->input->is_ajax_request()){
 				$eti = $this->input->post('employee_time_in_id');
-				
 				$this->form_validation->set_rules('employee_time_in_id','ID','required|trim|xss_clean|is_numeric');
 				$this->form_validation->set_rules('note','note','trim|xss_clean');
 				if($this->form_validation->run() == true){
-				
-						$fields = array(
-							"notes" => $this->db->escape_str($this->input->post('note'))
-						);
-						$where = array(
-							"employee_time_in_id"=>$eti,
-							"comp_id"=>$this->company_info->company_id
-						);
-						$this->timeins->update_field("employee_time_in",$fields,$where);		
-					
+					$fields = array("notes" => $this->db->escape_str($this->input->post('note')));
+					$where = array("employee_time_in_id"=>$eti,"comp_id"=>$this->company_info->company_id);
+					$this->timeins->update_field("employee_time_in",$fields,$where);		
 					echo json_encode(array("success"=>"1","error"=>""));		
 					return false;
 				}else{
@@ -183,7 +179,7 @@
 					return false;
 				}
 			}else{
-				echo 'test';
+				show_404();
 			}
 		}
 	
