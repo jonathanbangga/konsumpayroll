@@ -87,6 +87,15 @@ echo form_open_multipart("/{$this->session->userdata('sub_domain2')}/payroll_run
 <script>
 jQuery(document).ready(function(){
 	// load highlight message script
-	redirect_highlight_message();
+	console.log(jQuery.cookie("msg"));
+	if(jQuery.cookie("msg")!=null){
+		jQuery(".highlight_message").html(jQuery.cookie("msg"));
+		jQuery.removeCookie("msg",{ path: '/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/' });
+		jQuery.removeCookie("msg",{ path: '/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/' });
+		jQuery(".highlight_message").fadeIn();
+		setTimeout(function(){
+			jQuery(".highlight_message").fadeOut();	
+		},5000);
+	}
 });
 </script>
