@@ -100,7 +100,7 @@ jQuery(document).ready(function(){
 			// add exclude
 			jQuery.ajax({
 				type: "POST",
-				url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_run/exclude_list/ajax_add_exclude_list",
+				url: "/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/exclude_list/ajax_add_exclude_list",
 				data: {
 					el_id: el_id,
 					emp_id: emp_id,

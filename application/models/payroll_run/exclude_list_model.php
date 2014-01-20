@@ -73,6 +73,20 @@ class Exclude_list_model extends CI_Model {
 			AND `company_id` = {$this->company_id}
 		");
 	}
+	
+	public function test_import($name,$age){
+		$this->db->query("
+			INSERT INTO 
+			`test`(
+				`name`,
+				`age`
+			)
+			VALUES(
+				'".mysql_real_escape_string($name)."',
+				'".mysql_real_escape_string($age)."'
+			)
+		");
+	}
 		
 }
 /* End of file */
