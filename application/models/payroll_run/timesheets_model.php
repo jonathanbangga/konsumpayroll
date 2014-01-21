@@ -46,6 +46,24 @@ class Timesheets_model extends CI_Model {
 			AND  `company_id` ={$this->company_id}
 		");
 	}
+	
+	public function get_employee_timein_date($date){
+		return $this->db->query("
+			SELECT *
+			FROM `temp_employee_time_in`
+			WHERE `date` = '{$date}'
+			AND `comp_id` ={$this->company_id}
+		");
+	}
+	
+	public function delete_timein($employee_time_in_id){
+		$this->db->query("
+			DELETE 
+			FROM `temp_employee_time_in`
+			WHERE `employee_time_in_id` = {$employee_time_in_id}
+			AND `comp_id` ={$this->company_id}
+		");
+	}
 		
 }
 /* End of file */
