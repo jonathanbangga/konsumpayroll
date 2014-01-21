@@ -26,6 +26,7 @@
 		public function __construct() {
 			parent::__construct();
 			$this->load->model("hr/approve_payroll_run_model","payroll_run");
+			$this->authentication->check_if_logged_in();
 			$this->theme = $this->config->item('default');
 			$this->menu = "content_holders/user_hr_owner_menu";
 			$this->sidebar_menu = "content_holders/hr_approver_sidebar_menu";

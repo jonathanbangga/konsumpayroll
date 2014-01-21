@@ -26,6 +26,7 @@
 		public function __construct() {
 			parent::__construct();
 			$this->load->library("profile");
+			$this->authentication->check_if_logged_in();
 			$this->load->model("hr/approve_leave_model","leave");
 			$this->theme = $this->config->item('default');
 			$this->menu = "content_holders/user_hr_owner_menu";
