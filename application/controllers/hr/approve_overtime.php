@@ -170,9 +170,29 @@
 		public function we(){
 			$we2 = check_overtime_application(12);
 			$we = $this->overtime->ajax_overtime_logs_reject(12,$this->company_info->company_id);
-			
 			p($we);
 		}
+		
+		public function ajax_add_notes(){
+			if($this->input->is_ajax_request()){
+				$overtime_id = $this->input->post('overtime_id');
+				$this->form_validation->set_rules('overtime_id','ID','required|trim|xss_clean|is_numeric');
+				$this->form_validation->set_rules('note','note','trim|xss_clean');
+				if($this->form_validation->run() == true){
+					$fields = array("notes" => $this->db->escape_str($this->input->post('note')));
+					$where = array("overtime_id"=>$overtime_id,"company_id"=>$this->company_info->company_id);
+					$this->overtime->update_field("employee_overtime_application",$fields,$where);	
+					echo json_encode(array("success"=>"1","error"=>""));		
+					return false;
+				}else{
+					echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors_zone'>","</span>")));	
+					return false;
+				}
+			}else{
+				show_404();
+			}
+		}
+		
 	}
 
 /* End of file company_approvers.php */

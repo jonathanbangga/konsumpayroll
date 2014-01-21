@@ -66,7 +66,7 @@
 					<td><div class="users_textdesc"><?php echo $approvers->run_by;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_group_id;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->details;?></div></td>
-					<td><div class="users_text"><?php echo $approvers->note;?></div></td>
+					<td><div class="users_text"><textarea class="jnotes apview" pr_id="<?php echo $approvers->payroll_run_id;?>"><?php echo $approvers->note;?></textarea></div></td>
 					<td><div class="users_text"><?php echo $approvers->payroll_run_status;?></div></td>
 				</tr>		
 			<?php 		
@@ -232,6 +232,24 @@
 				}
 			});
 		}
+		
+		// ADD NOTES 
+		function add_notes(){
+			var url = "/<?php echo $this->subdomain;?>/hr/approve_payroll_run/ajax_add_notes/";
+			jQuery(document).on("blur",".jnotes",function(){
+				var el = jQuery(this);
+				var pr_id = el.attr("pr_id");
+				var note = el.val();
+					jQuery.post(url,{"payroll_run_id":pr_id,'note':note,'ZGlldmlyZ2luamM':jQuery.cookie(token),"submit":"true"},function(result){
+						var res = jQuery.parseJSON(result);
+						if(res.success == '1'){
+						
+						}else{
+							alert(res.error);
+						}
+					});
+			});
+		}
 
 		jQuery(function(){
 			check_all();
@@ -241,6 +259,7 @@
 			search_by_name();
 			search_by_date();
 			idate_ranges();
+			 add_notes();
 		});
 	</script>
 	

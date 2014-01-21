@@ -147,6 +147,25 @@
 			}
 		}
 		
+		public function ajax_add_notes(){
+			if($this->input->is_ajax_request()){
+				$payroll_run_id = $this->input->post('payroll_run_id');
+				$this->form_validation->set_rules('payroll_run_id','ID','required|trim|xss_clean|is_numeric');
+				$this->form_validation->set_rules('note','note','trim|xss_clean');
+				if($this->form_validation->run() == true){
+					$fields = array("note" => $this->db->escape_str($this->input->post('note')));
+					$where = array("payroll_run_id"=>$payroll_run_id,"company_id"=>$this->company_info->company_id);
+					$this->payroll_run->update_field("payroll_run",$fields,$where);	
+					echo json_encode(array("success"=>"1","error"=>""));		
+					return false;
+				}else{
+					echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors_zone'>","</span>")));	
+					return false;
+				}
+			}else{
+				show_404();
+			}
+		}
 		
 	
 	}

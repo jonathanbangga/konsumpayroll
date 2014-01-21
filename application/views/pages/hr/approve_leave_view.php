@@ -113,6 +113,7 @@
 	
 	<script type="text/javascript">
 		var token = "<?php echo itoken_cookie();?>";
+		// checking all input 
 		function check_all(){
 			jQuery(document).on("change","input[name='checkall']",function(e){
 			    e.preventDefault();
@@ -120,7 +121,7 @@
 			    if(el.is(":checked")){
 			        jQuery("input[name='leave_ids[]']").prop("checked","checked");
 			    }else{
-			      jQuery("input[name='leave_ids[]']").removeAttr("checked");
+					jQuery("input[name='leave_ids[]']").removeAttr("checked");
 			    }
 			});
 		}
@@ -216,20 +217,19 @@
 			    var d_from = jQuery("#jdate_from").val();
 			    var d_to = jQuery("#jdate_to").val();
 				if(d_from =="" || d_to == ""){
-				alert("Required Dates");	
+					alert("Required Dates");	
 				}else{
-			    window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
+					window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
 				}
 			});
 		}
 		// search name
 		function search_by_name(){
 			$('#jleave_search').keyup(function(e){
-			    if(e.keyCode == 13)
-			    {
+			    if(e.keyCode == 13){
 			        if(jQuery(this).val() !=""){
-			        var search = jQuery("#jleave_search").val();
-			        window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
+						var search = jQuery("#jleave_search").val();
+						window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
 			        }else{
 			           
 			        }
@@ -269,7 +269,3 @@
 			add_notes();
 		});
 	</script>
-	
-	
-	
-	

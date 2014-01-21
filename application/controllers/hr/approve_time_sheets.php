@@ -150,6 +150,26 @@
 				show_404();
 			}
 		}
+		
+		public function ajax_add_notes(){
+			if($this->input->is_ajax_request()){
+				$timesheets_id = $this->input->post('timesheets_id');
+				$this->form_validation->set_rules('timesheets_id','ID','required|trim|xss_clean|is_numeric');
+				$this->form_validation->set_rules('note','note','trim|xss_clean');
+				if($this->form_validation->run() == true){
+					$fields = array("note" => $this->db->escape_str($this->input->post('note')));
+					$where = array("timesheets_id"=>$timesheets_id,"company_id"=>$this->company_info->company_id);
+					$this->timesheets->update_field("employee_timesheets",$fields,$where);	
+					echo json_encode(array("success"=>"1","error"=>""));		
+					return false;
+				}else{
+					echo json_encode(array("success"=>"0","error"=>validation_errors("<span class='errors_zone'>","</span>")));	
+					return false;
+				}
+			}else{
+				show_404();
+			}
+		}
 	
 	}
 

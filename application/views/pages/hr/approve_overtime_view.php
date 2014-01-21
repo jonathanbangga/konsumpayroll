@@ -67,7 +67,7 @@
 					<td><div class="users_text"><?php echo $approvers->no_of_hours;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->with_nsd_hours;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->reason;?></div></td>
-					<td><div class="users_text"><?php echo $approvers->notes;?></div></td>
+					<td><div class="users_text"><textarea class="jovertime_notes jnotes" ot_id="<?php echo $approvers->overtime_id;?>"><?php echo $approvers->notes;?></textarea></div></td>
 					<td><div class="users_text"><?php echo $approvers->overtime_status;?></div></td>
 				</tr>	
 				<?php 		
@@ -229,6 +229,24 @@
 			});
 		}
 		
+		// ADD NOTES 
+		function add_notes(){
+			var url = "/<?php echo $this->subdomain;?>/hr/approve_overtime/ajax_add_notes/";
+			jQuery(document).on("blur",".jnotes",function(){
+				var el = jQuery(this);
+				var eti = el.attr("ot_id");
+				var note = el.val();
+					jQuery.post(url,{"overtime_id":eti,'note':note,'ZGlldmlyZ2luamM':jQuery.cookie(token),"submit":"true"},function(result){
+						var res = jQuery.parseJSON(result);
+						if(res.success == '1'){
+						
+						}else{
+							alert(res.error);
+						}
+					});
+			});
+		}
+		
 		
 		jQuery(function(){
 			check_all();
@@ -239,5 +257,6 @@
 			idate_ranges();
 			search_by_date();
 			search_by_name();
+			add_notes();
 		});
 	</script>
