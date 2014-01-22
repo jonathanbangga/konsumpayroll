@@ -206,4 +206,9 @@ select#jpayroll_group{
     overflow: hidden;
     padding: 20px 0 10px;
 }
+
+.aghanims{
+	width:250px;
+	height:50px;
+}
 /*** end input css global chris ***/
