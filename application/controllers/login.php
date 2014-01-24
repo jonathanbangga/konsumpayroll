@@ -20,6 +20,8 @@ class Login extends CI_Controller {
 	
 	public function admin(){
 		$data['page_title'] = "Login";
+	
+		if($this->session->userdata("account_id") !="" && $this->session->userdata("account_id") == 1) redirect('/admin/dashboard'); # added by bogart
 		$this->layout->set_layout('admin_login_template');
 		$this->layout->view('pages/admin/login_view',$data);
 	}
@@ -29,7 +31,7 @@ class Login extends CI_Controller {
 	}
 	
 	public function access_denied(){
-		echo "ACCESS DENIED!!!!";
+		show_error("ACCESS DENIED!!!!");
 	}
 	
 }

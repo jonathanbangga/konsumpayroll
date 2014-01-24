@@ -7,7 +7,7 @@ class Account_model extends CI_Model {
     }
 	
 	public function get_account($user,$pass,$account_type){
-
+		if($user !="" && $pass !="" && $account_type !=""){
 		$sql = $this->db->query("
 			SELECT *, a.`account_id` AS main_account_id, psa.sub_domain AS main_sub_domain
 			FROM `accounts` AS a
@@ -18,21 +18,26 @@ class Account_model extends CI_Model {
 			AND a.`password` = '{$pass}'
 			AND a.`account_type_id` = {$account_type}
 		");
-
 		return $sql;
-		
+		}else{
+			return false;
+		}
 	} 
 	
 	public function check_employee($account){
-		$sql = $this->db->query("
-			SELECT *FROM accounts
-			WHERE account_id = '{$account}'
-			AND deleted = '0'
-		");
-		if($sql->num_rows() > 0){
-			$row = $sql->row();
-			$sql->free_result();
-			return $row->user_type_id;
+		if(is_numeric($account)){
+			$sql = $this->db->query("
+				SELECT *FROM accounts
+				WHERE account_id = '{$account}'
+				AND deleted = '0'
+			");
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->user_type_id;
+			}else{
+				return false;
+			}
 		}else{
 			return false;
 		}

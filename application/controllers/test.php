@@ -12,6 +12,22 @@ class Test extends CI_Controller {
 		echo "</pre>";
 	}
 	
+	public function iemail(){
+		$this->load->library('email');
+		$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Your Name');
+		$this->email->to('christopher.cuizon@techgrowthglobal.com');
+		$this->email->cc('christopher.cuizon@techgrowthglobal.com');
+		$this->email->bcc('christopher.cuizon@techgrowthglobal.com');
+		$this->email->subject('Email Test');
+		$this->email->message('Testing the email class.');
+		$this->email->send();
+		echo $this->email->print_debugger();
+	}
+	
+	public function destroy(){
+		$this->session->all_userdata();
+	}
+	
 	
 	
 }

@@ -76,9 +76,18 @@ class Authentication {
 	
 	public function check_if_logged_in(){
 		$account = $this->ci->session->userdata('account_id');
-		if($account==""){
-			redirect('/login/access_denied');
-		}
+		$account_type_id = $this->ci->session->userdata("account_type_id");
+		$uri_admin = $this->ci->uri->segment(1);
+		# added by christopher cuizon updated on jc code
+		if($account=="") redirect('/login/access_denied');
+		switch($account_type_id):
+			case "1": // admin
+				return ($uri_admin == 'admin') ? true : redirect('/login/access_denied');
+			break;
+			case "2":
+				if($uri_admin == 'admin') redirect('/login/access_denied'); #wtf dong you are not invited
+			break;			
+		endswitch;		
 	}
 	
 	public function logout(){
