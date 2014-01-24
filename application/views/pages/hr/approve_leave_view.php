@@ -58,47 +58,26 @@
 						foreach($application as $key=>$approvers):
 				?>
 				<tr class="jleave_list">
-					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>">
-					</td>
-					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					
+					<td><input type="checkbox" name="leave_ids[]" class="leave_ids" value="<?php echo $approvers->employee_leaves_application_id;?>"></td>
+					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>	
+					<td><div class="users_text"><?php echo $approvers->full_name;?></div></td>
 					<td>
-						
-						<div class="users_text"><?php echo $approvers->full_name;?></div>
+						<div class="users_text">
+						<?php 
+							$leave_type_name_details = $this->leave->check_leave_type($approvers->leave_type_id,$approvers->company_id);
+							echo $leave_type_name_details ? $leave_type_name_details->leave_type : '';
+						?>
+						</div>
 					</td>
-					<td>
-						
-						<div class="users_text"><?php echo $approvers->leave_type_id;?></div>
-					</td>
-					<td>
-						
-						<div class="users_text"><?php echo idates($approvers->date_start);?></div>
-					</td>
-					<td>
-						
-						<div class="users_text"><?php echo idates_time($approvers->date_start);?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->reasons;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->reasons;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->leave_application_status;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->attachments;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->note;?></div>
-					</td>
-					<td>
-						<div class="users_text"></div>
-					</td>
-					
-				</tr>
-				
+					<td><div class="users_text"><?php echo idates($approvers->date_start);?></div></td>
+					<td><div class="users_text"><?php echo idates_time($approvers->date_start);?></div></td>
+					<td><div class="users_text"><?php echo $approvers->date_start;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->reasons;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->leave_application_status;?></div></td>
+					<td><div class="users_text"><?php echo $approvers->attachments;?></div></td>
+					<td><div class="users_text"><textarea class="jnotes notes_textarea" ela_id="<?php echo $approvers->employee_leaves_application_id;?>"><?php echo $approvers->note;?></textarea></div></td>
+					<td><div class="users_text"></div></td>
+				</tr>				
 				<?php 		
 						endforeach;
 					}else{
@@ -134,6 +113,7 @@
 	
 	<script type="text/javascript">
 		var token = "<?php echo itoken_cookie();?>";
+		// checking all input 
 		function check_all(){
 			jQuery(document).on("change","input[name='checkall']",function(e){
 			    e.preventDefault();
@@ -141,7 +121,7 @@
 			    if(el.is(":checked")){
 			        jQuery("input[name='leave_ids[]']").prop("checked","checked");
 			    }else{
-			      jQuery("input[name='leave_ids[]']").removeAttr("checked");
+					jQuery("input[name='leave_ids[]']").removeAttr("checked");
 			    }
 			});
 		}
@@ -206,6 +186,7 @@
 			});	
 		}
 
+		// triggering responses
 		function trigger_return_response(url){
 			var refresh = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists";
 			jQuery.post(url,{"leave_ids[]":fields(),'ZGlldmlyZ2luamM':jQuery.cookie(token),"submit":"true"},function(result){
@@ -223,40 +204,56 @@
 				}
 			});
 		}
-
+		
+		// fields for getting all values
 		function fields(){
 			var checked_fields = array_fields("input[name='leave_ids[]']:checked");
 			return checked_fields;
 		}
-
-
-		
+	
 		// DATEPICKERS
 		function search_by_date(){
 			jQuery(document).on("click","#jleave_go",function(e){
 			    var d_from = jQuery("#jdate_from").val();
 			    var d_to = jQuery("#jdate_to").val();
 				if(d_from =="" || d_to == ""){
-				alert("Required Dates");	
+					alert("Required Dates");	
 				}else{
-			    window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
+					window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_dates/"+d_from+"/"+d_to;
 				}
 			});
 		}
 		// search name
 		function search_by_name(){
 			$('#jleave_search').keyup(function(e){
-			    if(e.keyCode == 13)
-			    {
+			    if(e.keyCode == 13){
 			        if(jQuery(this).val() !=""){
-			        var search = jQuery("#jleave_search").val();
-			        window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
+						var search = jQuery("#jleave_search").val();
+						window.location.href = "/<?php echo $this->subdomain;?>/hr/approve_leave/lists_names/"+search; 
 			        }else{
 			           
 			        }
 			    }else{
 			      
 			    }
+			});
+		}
+		
+		// ADD NOTES 
+		function add_notes(){
+			var url = "/<?php echo $this->subdomain;?>/hr/approve_leave/ajax_add_notes/";
+			jQuery(document).on("blur",".jnotes",function(){
+				var el = jQuery(this);
+				var eti = el.attr("ela_id");
+				var note = el.val();
+					jQuery.post(url,{"employee_leaves_application_id":eti,'note':note,'ZGlldmlyZ2luamM':jQuery.cookie(token),"submit":"true"},function(result){
+						var res = jQuery.parseJSON(result);
+						if(res.success == '1'){
+						
+						}else{
+							alert(res.error);
+						}
+					});
 			});
 		}
 		
@@ -268,9 +265,7 @@
 			idate_ranges();
 			search_by_date();
 			search_by_name();
+			
+			add_notes();
 		});
 	</script>
-	
-	
-	
-	

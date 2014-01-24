@@ -2496,7 +2496,7 @@ CREATE TABLE IF NOT EXISTS `employee_time_in` (
   `total_hours` decimal(10,2) NOT NULL,
   `corrected` enum('No','Yes') NOT NULL,
   `reason` text NOT NULL,
-  `time_in_status` enum('','pending','approved') NOT NULL,
+  `time_in_status` enum('pending','approved','reject') NOT NULL,
   `tardiness_min` varchar(55) NOT NULL,
   `undertime_min` varchar(55) NOT NULL,
   `notes` text NOT NULL,

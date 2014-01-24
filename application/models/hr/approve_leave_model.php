@@ -249,6 +249,24 @@
 			}
 		}
 		
+		/**
+		 * CHECK LEAVE TYPE 
+		 * this will trigger the leave type details
+		 * @param int $leave_type_id
+		 * @param int $company_id
+		 * @return object
+		 */		
+		public function check_leave_type($leave_type_id,$company_id){
+			if(is_numeric($leave_type_id) && is_numeric($company_id)){
+				$query = $this->db->query("SELECT * FROM leave_type WHERE leave_type_id = '{$this->db->escape_str($leave_type_id)}' AND company_id = '{$this->db->escape_str($company_id)}'");
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
 	}
 	
 /* End of file Approve_leave_model */

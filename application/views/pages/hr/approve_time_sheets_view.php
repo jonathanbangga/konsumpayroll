@@ -67,7 +67,7 @@
 					<td><div class="users_text"><?php echo $approvers->tardiness;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->undertime;?></div></td>
 					<td><div class="users_text"><?php echo $approvers->timesheet;?></div></td>
-					<td><div class="users_text"><?php echo $approvers->note;?></div></td>
+					<td><div class="users_text"><textarea class="jnotes jts_area" ts_id="<?php echo $approvers->timesheets_id;?>"><?php echo $approvers->note;?></textarea></div></td>
 					<td><div class="users_text"><?php echo $approvers->timesheets_status;?></div></td>
 				</tr>
 				<?php 		
@@ -226,6 +226,24 @@
 			});
 		}
 		
+		// ADD NOTES 
+		function add_notes(){
+			var url = "/<?php echo $this->subdomain;?>/hr/approve_time_sheets/ajax_add_notes/";
+			jQuery(document).on("blur",".jnotes",function(){
+				var el = jQuery(this);
+				var ts_id = el.attr("ts_id");
+				var note = el.val();
+					jQuery.post(url,{"timesheets_id":ts_id,'note':note,'ZGlldmlyZ2luamM':jQuery.cookie(token),"submit":"true"},function(result){
+						var res = jQuery.parseJSON(result);
+						if(res.success == '1'){
+						
+						}else{
+							alert(res.error);
+						}
+					});
+			});
+		}
+		
 		jQuery(function(){
 			check_all();
 			approve_this();
@@ -235,6 +253,7 @@
 			search_by_date();
 			idate_ranges();
 			
+			add_notes();
 		});
 	</script>
 	

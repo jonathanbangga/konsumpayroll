@@ -1,7 +1,8 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
-        <p>To generate payroll reports by department, select the department from the list and click arrow right otherwise<br>
-          add department if it still doesn't exist.</p>
+        <p>To generate payroll reports by department or by position, select departments from the list by ticking the tickboxes. If you 
+        want to further add positions a pop up will appear to prompt you to create positions per department, tick on the positions as well if you want to generate payroll report by positions.</p>
+        <p>If no department has been created yet click on add department button. If you don't want to add positions for that department just close the pop up by clicking the x icon.</p>
         <div class="tbl-wrap department-wrap">
           <!-- TBL-WRAP START -->
           <ul id="deptnpos">

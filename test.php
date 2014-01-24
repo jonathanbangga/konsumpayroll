@@ -1,6 +1,6 @@
 <?php
 //phpinfo();
-
+error_reporting(E_ALL);
 
 $to = "christopher.cuizon@techgrowthglobal.com";
 $header = "From: {$to}";

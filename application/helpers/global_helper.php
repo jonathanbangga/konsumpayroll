@@ -187,6 +187,33 @@
 		$row = $query->row();
 		return $row;
 	}
+		
+	function icompany_logo(){	
+		$CI =& get_instance();
+		
+		if($CI->uri->segment(2) == 'company_setup' || $CI->uri->segment(2) == 'hr_setup' || $CI->uri->segment(2) == 'payroll_setup'){
+			if($CI->session->userdata("company_id")){
+				$q = $CI->db->query("SELECT * FROM company WHERE company_id = {$CI->session->userdata("company_id")}");
+				$res = $q->row();
+				$q->free_result();
+				return image_exist($res->company_logo,$res->company_id);
+			}else{
+				return '/assets/theme_2013/images/photo_not_available.png';
+			}
+		}else if($CI->uri->segment(1) == "admin"){
+			return '/assets/theme_2013/images/img-logo2.jpg';
+		}else{
+			$company = whose_company();
+			if($company){
+				$q = $CI->db->query("SELECT * FROM assigned_company ac LEFT JOIN company c on c.company_id = ac.company_id WHERE c.sub_domain = '".$company->sub_domain."'");
+				$res = $q->row();
+				$q->free_result();
+				return image_exist($res->company_logo,$res->company_id);
+			}else{
+				return '/assets/theme_2013/images/photo_not_available.png';
+			}
+		}
+	}
 	
 	/**
 	 * Replaces spaces with underscore
