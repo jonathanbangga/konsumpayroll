@@ -1,7 +1,8 @@
 <div style="display:none;" class="highlight_message">Message</div>
 <div class="main-content">
-<p>Create an approval group and assign approver for each approval group. Leaves, overtime, timesheet or expenses<br>
-  if an approval, assign it here.</p>
+<p>Create an approval group and assign approver for each approval group. If leaves, overtime, timesheet or expenses<br>
+  has an approval process define them here.</p>
+<p>If the approver is an employee, go back to this module once you have added the employees.</p>
 
 <div class="tbl-wrap">
 <?php 
