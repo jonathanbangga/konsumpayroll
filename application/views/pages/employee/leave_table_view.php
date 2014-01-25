@@ -172,17 +172,17 @@
 <script>
 	function validate_form(){
 		var error = "";
-	    var leave_type = jQuery("input[name='leave_type']").val();
+	    var leave_type = jQuery("select[name='leave_type']").val();
 	    var reason = jQuery(".reason").val();
 	    var start_date = jQuery(".start_date").val();
 	    var end_date = jQuery(".end_date").val();
 	    var return_date = jQuery(".return_date").val();
 
 		if(leave_type == ""){
-			jQuery("input[name='leave_type']").addClass("emp_str");
+			jQuery("select[name='leave_type']").addClass("emp_str");
 			error = 1;
 		}else{
-			jQuery("input[name='leave_type']").removeClass("emp_str");
+			jQuery("select[name='leave_type']").removeClass("emp_str");
 		}
 
 		if(reason == ""){
