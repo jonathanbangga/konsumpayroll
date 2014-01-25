@@ -517,8 +517,13 @@
 				$sql->free_result();
 				
 				// compute number of day
-				$startDate = strtotime("{$row->time_in}");
-				$endDate = strtotime("{$date_val} {$time_val}");
+				
+				#$startDate = strtotime("{$row->time_in}");
+				#$endDate = strtotime("{$date_val} {$time_val}");
+				
+				$startDate = strtotime("{$row->date}");
+				$endDate = strtotime("{$date_val}");
+				
 				$interval = $endDate - $startDate;
 				$days = floor($interval / (60 * 60 * 24));
 				
@@ -558,8 +563,11 @@
 				$sql->free_result();
 				
 				// compute number of day
-				$startDate = strtotime("{$row->time_in}");
-				$endDate = strtotime("{$current_datetime} {$time_val}");
+				#$startDate = strtotime("{$row->time_in}");
+				#$endDate = strtotime("{$current_datetime} {$time_val}");
+				
+				$startDate = strtotime("{$row->date}");
+				$endDate = strtotime("{$current_datetime}");
 				$interval = $endDate - $startDate;
 				$days = floor($interval / (60 * 60 * 24));
 				
@@ -656,8 +664,12 @@
 				$time_val = date("H:i:s");
 				
 				// compute number of day
-				$startDate = strtotime("{$row->time_in}");
-				$endDate = strtotime("{$date_val} {$time_val}");
+				#$startDate = strtotime("{$row->time_in}");
+				#$endDate = strtotime("{$date_val} {$time_val}");
+				
+				$startDate = strtotime("{$row->date}");
+				$endDate = strtotime("{$date_val}");
+				
 				$interval = $endDate - $startDate;
 				$days = floor($interval / (60 * 60 * 24));
 				
@@ -729,12 +741,12 @@
 		 * @param unknown_type $emp_id
 		 * @param unknown_type $lunch_out_val
 		 */
-		public function update_time_out($comp_id, $emp_id, $employee_time_in_id){
+		public function update_time_out($comp_id, $emp_id, $employee_time_in_id, $under_min_val){
 			$date_val = date("Y")."-".date("m")."-".date("d");
 			$current_time = date('Y-m-d H:i:s');
 			$sql = $this->db->query("
 				UPDATE employee_time_in
-				SET time_out = '{$current_time}'
+				SET time_out = '{$current_time}', undertime_min = '{$under_min_val}'
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
 				AND employee_time_in_id = '{$employee_time_in_id}'
@@ -918,9 +930,10 @@
 		 * @param unknown_type $lunch_in
 		 * @param unknown_type $time_out
 		 * @param unknown_type $reason
+		 * @param unknown_type $hours_worked
 		 */
 		public function update_employee_time_log(
-			$comp_id, $emp_id, $employee_timein, $time_in, $lunch_out, $lunch_in, $time_out, $reason
+			$comp_id, $emp_id, $employee_timein, $time_in, $lunch_out, $lunch_in, $time_out, $reason, $hours_worked
 		){
 			if($lunch_out != "0000-00-00 00:00:00" || $lunch_in != "0000-00-00 00:00:00" || $time_out != "0000-00-00 00:00:00"){
 				$compute_timein_lunchout = (strtotime($lunch_out) - strtotime($time_in)) / 3600; 
@@ -929,6 +942,9 @@
 				$second_hours_worked = round($compute_lunchin_timeout,2);
 				
 				$total_hours_worked = $first_hours_worked + $second_hours_worked;
+				if($total_hours_worked > $hours_worked){
+					$total_hours_worked = $hours_worked;
+				}
 			}else{
 				$total_hours_worked = "0.00";
 			}
@@ -945,7 +961,7 @@
 			$sql = $this->db->query("
 				UPDATE employee_time_in
 				SET time_in = '{$time_in}', lunch_out = '{$lunch_out}', lunch_in = '{$lunch_in}', time_out = '{$time_out}', 
-				reason = '{$reason}', tax_status = 'pending', corrected = 'Yes', total_hours = '{$total_hours_worked}'
+				reason = '{$reason}', time_in_status = 'pending', corrected = 'Yes', total_hours = '{$total_hours_worked}'
 				WHERE comp_id = '{$comp_id}'
 				AND emp_id = '{$emp_id}'
 				AND employee_time_in_id = '{$employee_timein}'
@@ -994,8 +1010,9 @@
 		 * Total Hours Worked
 		 * @param unknown_type $comp_id
 		 * @param unknown_type $emp_id
+		 * @param unknown_type $hours_worked
 		 */
-		public function total_hours($comp_id, $emp_id){
+		public function total_hours($comp_id, $emp_id, $hours_worked){
 			$sql = $this->db->query("
 				SELECT *FROM employee_time_in
 				WHERE comp_id = '{$comp_id}'
@@ -1014,6 +1031,10 @@
 				$second_hours_worked = round($compute_lunchin_timeout,2);
 				
 				$total_hours_worked = $first_hours_worked + $second_hours_worked;
+				if($total_hours_worked > $hours_worked){
+					$total_hours_worked = $hours_worked;
+				}
+				
 				$sql_update = $this->db->query("
 					UPDATE employee_time_in
 					SET total_hours = '{$total_hours_worked}'
@@ -1056,6 +1077,9 @@
 				}
 			}
 			*/
+			
+			/*
+			 * Version 1.0
 			$sql = $this->db->query("
 				SELECT *FROM employee_shifts_schedule ess
 				LEFT JOIN workday w ON ess.payroll_group_id = w.payroll_group_id 
@@ -1079,6 +1103,22 @@
 					return FALSE;
 				}
 			}
+			*/
+			
+			// for rest day
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON ess.payroll_group_id = rd.payroll_group_id 
+				WHERE ess.company_id = '{$comp_id}'
+				AND ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '{$weekDay_value}'
+			");
+			
+			if($sql->num_rows() > 0){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
 		}
 		
 		/**
@@ -1087,7 +1127,7 @@
 		 * @param unknown_type $emp_id
 		 * @param unknown_type $weekDay_value
 		 */
-		public function date_weekDay_value($comp_id, $emp_id, $weekDay_value){
+		public function date_weekDay_value($comp_id, $emp_id, $weekDay_value, $start_time){
 			/*
 			$sql = $this->db->query("
 				SELECT *FROM employee_shifts_schedule
@@ -1106,6 +1146,9 @@
 				}
 			}
 			*/
+			
+			/*
+			 * Version 1.0
 			$sql = $this->db->query("
 				SELECT *FROM employee_shifts_schedule ess
 				LEFT JOIN workday w ON ess.payroll_group_id = w.payroll_group_id 
@@ -1129,6 +1172,445 @@
 					$new_weekday_val = date("h:i:s A",strtotime($work_start_time))."-".date("h:i:s A",strtotime($work_end_time));
 					return $new_weekday_val;
 				}
+			}
+			*/
+			
+			// for rest day return value 0
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON ess.payroll_group_id = rd.payroll_group_id 
+				WHERE ess.company_id = '{$comp_id}'
+				AND ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '{$weekDay_value}'
+			");
+			
+			if($sql->num_rows() > 0){
+				return "0";
+			}else{
+
+				$zero = "00:00:00";
+				
+				// for uniform working days
+				$sql_uniform_wd = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN uniform_working_day uwd ON ess.payroll_group_id = uwd.payroll_group_id
+					WHERE ess.company_id = '{$comp_id}'
+					AND ess.emp_id = '{$emp_id}'
+					AND uwd.working_day = '{$weekDay_value}'
+				");
+				
+				if($sql_uniform_wd->num_rows() > 0){
+
+					$row = $sql_uniform_wd->row();
+					$sql_uniform_wd->free_result();
+					$work_start_time = $row->work_start_time;
+					$work_end_time = $row->work_end_time;
+
+					$new_weekday_val = date("h:i:s A",strtotime($work_start_time))."-".date("h:i:s A",strtotime($work_end_time));
+					return $new_weekday_val;
+				}else{
+					// workshift working days
+					$sql_workshift = $this->db->query("
+						SELECT *FROM employee_shifts_schedule ess
+						LEFT JOIN workshift w ON ess.payroll_group_id = w.payroll_group_id
+						WHERE ess.company_id = '{$comp_id}'
+						AND ess.emp_id = '{$emp_id}'
+					");
+					
+					if($sql_workshift->num_rows() > 0){
+						$row_workshift = $sql_workshift->row();
+						$sql_workshift->free_result();
+						$work_start_time = $row_workshift->start_time;
+						$work_end_time = $row_workshift->end_time;
+						
+						$new_weekday_val = date("h:i:s A",strtotime($work_start_time))."-".date("h:i:s A",strtotime($work_end_time));
+						return $new_weekday_val;
+					}else{
+						// flexible working days
+						$new_weekday_val = date("h:i:s A",strtotime($start_time))."-".date("H:i:s",strtotime($start_time) + 60 * 60 * 9); // 9 = company worked hours
+						return $new_weekday_val;
+					}
+				}
+			}
+		}
+		
+		/**
+		 * Get Employee Shift Schedule Information
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $day
+		 */
+		public function get_shift_sched($emp_id,$day){
+			/*
+			 version 1.0
+			 $sql = $this->db->query("
+				SELECT *FROM workday w
+				LEFT JOIN employee_shifts_schedule ess ON ess.payroll_group_id = w.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND w.working_day = '{$day}'
+			");
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->work_start_time;
+			}
+			*/
+			
+			/*
+			option 1
+			$sql = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN uniform_working_day uwd ON uwd.payroll_group_id = ess.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND uwd.working_day = '{$day}'
+			");
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->work_start_time;
+			}
+			*/
+			
+			// option 2
+			
+			// rest day
+			$rest_day = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON rd.payroll_group_id = ess.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '{$day}'
+			");
+			
+			if($rest_day->num_rows() == 0){
+				// uniform working days settings
+				$sql = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN uniform_working_day_settings uwds ON uwds.payroll_group_id = ess.payroll_group_id
+					WHERE ess.emp_id = '{$emp_id}'
+				");
+				if($sql->num_rows() > 0){
+					$row = $sql->row();
+					$sql->free_result();
+					return $row->latest_time_in_allowed;
+				}else{
+					// uniform working days
+					$sql_uniform_working_days = $this->db->query("
+						SELECT *FROM employee_shifts_schedule ess
+						LEFT JOIN uniform_working_day uwd ON uwd.payroll_group_id = ess.payroll_group_id
+						WHERE ess.emp_id = '{$emp_id}'
+					");
+					
+					if($sql_uniform_working_days->num_rows() > 0){
+						$row_uniform_working_days = $sql_uniform_working_days->row();
+						$sql_uniform_working_days->free_result();
+						return $row_uniform_working_days->work_start_time;
+					}else{
+						// flexible working days
+						$sql_flexible_days = $this->db->query("
+							SELECT *FROM employee_shifts_schedule ess
+							LEFT JOIN flexible_hours fh ON fh.payroll_group_id = ess.payroll_group_id
+							WHERE ess.emp_id = '{$emp_id}'
+						");
+						
+						if($sql_flexible_days->num_rows() > 0){
+							$row_flexible_days = $sql_flexible_days->row();
+							$sql_flexible_days->free_result();
+							return $row_flexible_days->latest_time_in_allowed;
+						}else{
+							// workshift working days
+							$sql_workshift = $this->db->query("
+								SELECT *FROM employee_shifts_schedule ess
+								LEFT JOIN workshift w ON w.payroll_group_id = ess.payroll_group_id
+								WHERE ess.emp_id = '{$emp_id}'
+							");
+							
+							if($sql_workshift->num_rows() > 0){
+								$row_workshift = $sql_workshift->row();
+								$sql_workshift->free_result();
+								return $row_workshift->start_time;
+							}else{
+								return "00:00:00";
+							}
+						}
+					}
+				}
+			}else{
+				return "00:00:00";
+			}
+			
+		}
+		
+		/**
+		 * Get Employee Work End Time
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $day
+		 */
+		public function undertime_min($emp_id,$day){
+			/*
+			Version 1
+			$sql = $this->db->query("
+				SELECT *FROM workday w
+				LEFT JOIN employee_shifts_schedule ess ON ess.payroll_group_id = w.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND w.working_day = '{$day}'
+			");
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row->work_end_time;
+			}
+			*/
+			
+			// rest day
+			$rest_day = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON rd.payroll_group_id = ess.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '{$day}'
+			");
+			
+			if($rest_day->num_rows() == 0){
+				// uniform working days
+				$sql_uniform_working_days = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN uniform_working_day uwd ON uwd.payroll_group_id = ess.payroll_group_id
+					WHERE ess.emp_id = '{$emp_id}'
+				");
+				
+				if($sql_uniform_working_days->num_rows() > 0){
+					$row_uniform_working_days = $sql_uniform_working_days->row();
+					$sql_uniform_working_days->free_result();
+					return $row_uniform_working_days->work_end_time;
+				}else{
+					// flexible working days
+					$sql_flexible_days = $this->db->query("
+						SELECT *FROM employee_shifts_schedule ess
+						LEFT JOIN flexible_hours fh ON fh.payroll_group_id = ess.payroll_group_id
+						WHERE ess.emp_id = '{$emp_id}'
+					");
+					
+					if($sql_flexible_days->num_rows() > 0){
+						
+						$flexible_compute_time = $this->db->query("
+							SELECT * FROM `employee_time_in` WHERE emp_id = '{$emp_id}'
+							ORDER BY employee_time_in_id DESC
+							LIMIT 1
+						");
+						
+						if($flexible_compute_time->num_rows() > 0){
+							$row_flexible_compute_time = $flexible_compute_time->row();
+							$flexible_compute_time->free_result();
+							$time_in = explode(" ", $row_flexible_compute_time->time_in);;
+							$flexible_work_end = $time_in[1];
+							
+							$end_time = date("H:i:s",strtotime($flexible_work_end) + 60 * 60 * 9); // 9 = company worked hours
+							return $end_time;
+						}else{
+							return "00:00:00";
+						}
+						
+					}else{
+						// workshift working days
+						$sql_workshift = $this->db->query("
+							SELECT *FROM employee_shifts_schedule ess
+							LEFT JOIN workshift w ON w.payroll_group_id = ess.payroll_group_id
+							WHERE ess.emp_id = '{$emp_id}'
+						");
+						
+						if($sql_workshift->num_rows() > 0){
+							$row_workshift = $sql_workshift->row();
+							$sql_workshift->free_result();
+							return $row_workshift->end_time;
+						}else{
+							return "00:00:00";
+						}
+					}
+				}
+			}else{
+				return "00:00:00";
+			}
+		}
+		
+		/**
+		 * Get Total Hours Value
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $week_day
+		 */
+		public function total_hours_value($emp_id,$week_day){
+			// rest day
+			$rest_day = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON rd.payroll_group_id = ess.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '{$week_day}'
+			");
+			
+			if($rest_day->num_rows() == 0){
+				// uniform working days
+				$sql_uniform_working_days = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN uniform_working_day uwd ON uwd.payroll_group_id = ess.payroll_group_id
+					WHERE ess.emp_id = '{$emp_id}'
+					AND uwd.working_day = '{$week_day}'
+				");
+				
+				if($sql_uniform_working_days->num_rows() > 0){
+					$row_uniform_working_days = $sql_uniform_working_days->row();
+					$sql_uniform_working_days->free_result();
+					return $row_uniform_working_days->working_hours;
+				}else{
+					// flexible working days
+					$sql_flexible_working_days = $this->db->query("
+						SELECT *FROM employee_shifts_schedule ess
+						LEFT JOIN flexible_hours fh ON fh.payroll_group_id = ess.payroll_group_id
+						WHERE ess.emp_id = '{$emp_id}'
+					");
+					
+					if($sql_flexible_working_days->num_rows() > 0){
+						$row_flexible_working_days = $sql_flexible_working_days->row();
+						$sql_flexible_working_days->free_result();
+						return $row_flexible_working_days->total_hours_for_the_day;
+					}else{
+						// workshift working days
+						$sql_workshift_working_days = $this->db->query("
+							SELECT *FROM employee_shifts_schedule ess
+							LEFT JOIN workshift w ON w.payroll_group_id = ess.payroll_group_id
+							WHERE ess.emp_id = '{$emp_id}'
+						");
+						
+						if($sql_workshift_working_days->num_rows() > 0){
+							$row_workshift_working_days = $sql_workshift_working_days->row();
+							$sql_workshift_working_days->free_result();
+							return $row_workshift_working_days->working_hours;
+						}else{
+							return 0;
+						}
+					}
+				}
+			}else{
+				return 0;
+			}
+		}
+		
+		/**
+		 * Get Holiday Date Informatio		 
+		 * @param unknown_type $date_start
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $comp_id
+		 */
+		public function get_holiday_date($date_start,$emp_id,$comp_id){
+			$new_date_start = date("Y-m-d",strtotime($date_start));
+			#$new_date_start = strtotime($date_start);
+			$sql = $this->db->query("
+				SELECT *FROM holiday
+				WHERE company_id = '{$comp_id}'
+				AND date = '{$date_start}'
+				AND status = 'Active'
+			");
+			if($sql->num_rows() > 0){
+				return true;
+				/*
+				$results = $sql->result();
+				foreach($results as $row){
+					$holiday_date = date("Y-m-d",strtotime($row->date));
+					#$holiday_date = strtotime($row->date);
+					if($new_date_start == $holiday_date){
+						return true;	
+					}else{
+						return false;
+					}	
+				}
+				*/
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		 * Get Return Date Value
+		 * @param unknown_type $emp_id
+		 * @param unknown_type $date
+		 */
+		public function get_return_date_val($comp_id,$emp_id,$date){
+			// rest day
+			$rest_day = $this->db->query("
+				SELECT *FROM employee_shifts_schedule ess
+				LEFT JOIN rest_day rd ON rd.payroll_group_id = ess.payroll_group_id
+				WHERE ess.emp_id = '{$emp_id}'
+				AND rd.rest_day = '".date('l',strtotime($date))."'
+			");
+			
+			if($rest_day->num_rows() == 0){
+				// uniform working days
+				$sql_uniform_working_days = $this->db->query("
+					SELECT *FROM employee_shifts_schedule ess
+					LEFT JOIN uniform_working_day uwd ON uwd.payroll_group_id = ess.payroll_group_id
+					WHERE ess.emp_id = '{$emp_id}'
+					AND uwd.working_day = '".date('l',strtotime($date))."'
+				");
+											
+				if($sql_uniform_working_days->num_rows() > 0){
+					$row_uniform_working_days = $sql_uniform_working_days->row();
+					$sql_uniform_working_days->free_result();
+					$uniform_return_date_val = (strtotime(date('H:i:s',strtotime($date))) - strtotime($row_uniform_working_days->work_start_time)) / 3600;
+					
+					if($uniform_return_date_val<0){
+						if(abs($uniform_return_date_val) >= 12){
+							return (24-(abs($uniform_return_date_val))) / 8;
+						}else{
+							return 0;
+						}
+					}else{
+						return $uniform_return_date_val / 8;
+					}
+				}else{
+					// flexible working days
+					$sql_flexible_working_days = $this->db->query("
+						SELECT *FROM employee_shifts_schedule ess
+						LEFT JOIN flexible_hours fh ON fh.payroll_group_id = ess.payroll_group_id
+						WHERE ess.emp_id = '{$emp_id}'
+					");
+					
+					if($sql_flexible_working_days->num_rows() > 0){
+						$row_flexible_working_days = $sql_flexible_working_days->row();
+						$sql_flexible_working_days->free_result();
+						$flexible_return_date_val = (strtotime(date('H:i:s',strtotime($date))) - strtotime($row_flexible_working_days->latest_time_in_allowed)) / 3600;
+						if($flexible_return_date_val<0){
+							if(abs($flexible_return_date_val) >= 12){
+								return (24-(abs($flexible_return_date_val))) / 8;
+							}else{
+								return 0;
+							}
+						}else{
+							return $flexible_return_date_val / 8;
+						}
+					}else{
+						// workshift working days
+						$sql_workshift_working_days = $this->db->query("
+							SELECT *FROM employee_shifts_schedule ess
+							LEFT JOIN workshift w ON w.payroll_group_id = ess.payroll_group_id
+							WHERE ess.emp_id = '{$emp_id}'
+						");
+						
+						if($sql_workshift_working_days->num_rows() > 0){
+							$row_workshift_working_days = $sql_workshift_working_days->row();
+							$sql_workshift_working_days->free_result();
+							$workshift_return_date_val = (strtotime(date('H:i:s',strtotime($date))) - strtotime($row_workshift_working_days->start_time)) / 3600;
+							if($workshift_return_date_val<0){
+								if(abs($workshift_return_date_val) >= 12){
+									return (24-(abs($workshift_return_date_val))) / 8;
+								}else{
+									return 0;
+								}
+							}else{
+								return $workshift_return_date_val / 8;
+							}
+						}else{
+							return 0;
+						}
+					}
+				}
+			}else{
+				return 0;
 			}
 		}
 		

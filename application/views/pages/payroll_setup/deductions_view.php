@@ -431,15 +431,21 @@
 		<?php
 			}
         ?>
-		
-		if(!jQuery(".other_deduction_cont input:checkbox").is(":checked")){
-			var error = "1";
-		}
 
-		if(error == "1"){
-		    jQuery(".error_msg_cont").html("<p>- Please select payroll group</p>");
-		    return false;
-		}
+		<?php 
+			if($other_deduction != NULL){
+		?>
+			if(!jQuery(".other_deduction_cont input:checkbox").is(":checked")){
+				var error = "1";
+			}
+	
+			if(error == "1"){
+			    jQuery(".error_msg_cont").html("<p>- Please select payroll group</p>");
+			    return false;
+			}
+		<?php
+			}
+        ?>
 	}
 
 	function addRow(){

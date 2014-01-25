@@ -117,7 +117,8 @@
 				"margin-right":"5px",
 				"display":"inline"
 				});
-			var size = jQuery(".dateFrom").length + 1;
+			// var size = jQuery(".dateFrom").length + 1;
+			var size = shuffle_str("1234frds");
 			addNewEmp(size);
 			//_datepicker();
 			_datePicker_AddRow();
@@ -130,6 +131,19 @@
 		});
     }
 
+	function shuffle_str(str) {
+	    var a = str.split(""),
+	        n = a.length;
+
+	    for(var i = n - 1; i > 0; i--) {
+	        var j = Math.floor(Math.random() * (i + 1));
+	        var tmp = a[i];
+	        a[i] = a[j];
+	        a[j] = tmp;
+	    }
+	    return a.join("");
+	}
+	
 	function _datepicker(){
 		$( ".dateFrom" ).datepicker({
             dateFormat: 'yy-mm-dd',

@@ -42,6 +42,7 @@
 		 * index page
 		 */
 		public function index() {
+			
 			$data['page_title'] = "Leave History";
 			
 			// init pagination
@@ -65,7 +66,7 @@
 				
 				$start_date = $this->input->post('start_date');
 				$start_date_hr = $this->input->post('start_date_hr');
-				$start_date_min = $this->input->post('start_date_min'); 
+				$start_date_min = $this->input->post('start_date_min');
 				$start_date_sec = $this->input->post('start_date_sec');
 				
 				$end_date = $this->input->post('end_date');
@@ -134,15 +135,41 @@
 				if($this->input->post('shift_schedule')){
 					$weekDay_value = $this->input->post('weekDay_value');
 					$query_weekDay_value = $this->employee->weekDay_value($this->company_id, $this->emp_id, $weekDay_value);
-					print ($query_weekDay_value) ? 1.25 : 0 ;
+					//print ($query_weekDay_value) ? 0 : 1.25 ; // 1.25 = 10/8
+					print 0;
 					return false;
 				}
 				
 				// start date for shift schedule
 				if($this->input->post('result_shift_schedule')){
 					$date_weekDay_value = $this->input->post('date_weekDay_value');
-					$date_query_weekDay_value = $this->employee->date_weekDay_value($this->company_id, $this->emp_id, $date_weekDay_value);
+					$start_time = $this->input->post('start_time');
+					$date_query_weekDay_value = $this->employee->date_weekDay_value($this->company_id, $this->emp_id, $date_weekDay_value, $start_time);
 					print $date_query_weekDay_value;
+					return false;
+				}
+				
+				// Get Total Hours Between Start Date to End Date
+				if($this->input->post('getTotal_hours')){
+					$week_day = $this->input->post('week_day');
+					$total_hours_value = $this->employee->total_hours_value($this->emp_id,$week_day);
+					print $total_hours_value;
+					return false;
+				}
+				
+				// Get Holiday Date Value
+				if($this->input->post('get_holiday_date')){
+					$date_start = $this->input->post('date_start');
+					$get_holiday_date = $this->employee->get_holiday_date($date_start,$this->emp_id,$this->company_id);
+					($get_holiday_date) ? print "Holiday" : print "0" ;
+					return false;
+				}
+				
+				// Return Date Value
+				if($this->input->post('get_return_date_val')){
+					$date = $this->input->post('date');
+					$get_return_date_val = $this->employee->get_return_date_val($this->company_id,$this->emp_id,$date);
+					print $get_return_date_val;
 					return false;
 				}
 			}
@@ -153,5 +180,5 @@
 	
 	}
 
-/* End of file sss_tbl.php */
-/* Location: ./application/controllers/hr/sss_tbl.php */
+/* End of file emp_leave.php */
+/* Location: ./application/controllers/employee/emp_leave.php */

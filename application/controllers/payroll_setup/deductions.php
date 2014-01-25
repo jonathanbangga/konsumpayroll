@@ -16,7 +16,7 @@ class Deductions extends CI_Controller {
 		$this->load->model('payroll_setup/deductions_model','deductions_model');	
 		$this->load->model('konsumglobal_jmodel','jmodel');
 		$this->url = "/".$this->uri->segment(1)."/".$this->uri->segment(2)."/".$this->uri->segment(3)."/".$this->uri->segment(4);
-		$this->company_id = 2;#$this->session->userdata('company_id');
+		$this->company_id = $this->session->userdata('company_id');
 	}
 
 	public function index(){

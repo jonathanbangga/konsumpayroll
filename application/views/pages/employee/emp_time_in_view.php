@@ -51,7 +51,7 @@
 					<td><span class="ihide"><?php print $row->total_hours;?></span><?php print $row->total_hours;?></td>
 					<td><span class="ihide"><?php print $row->corrected;?></span><?php print $row->corrected;?></td>
 					<td><span class="ihide"><?php print $row->reason;?></span><?php print $row->reason;?></td>
-					<td><span class="ihide"><?php print $row->tax_status;?></span><?php print $row->tax_status;?></td>
+					<td><span class="ihide"><?php print $row->time_in_status;?></span><?php print $row->time_in_status;?></td>
 					<td>
 					<?php 
 						print '<a href="javascript:void(0);" class="btn btn-action change_log_btn" attr_timein_id="'.$row->employee_time_in_id.'">CHANGE</a>';
