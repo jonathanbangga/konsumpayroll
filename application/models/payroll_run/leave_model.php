@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Timekeeping_model extends CI_Model {
+class Leave_model extends CI_Model {
 
 	protected $company_id;
 
@@ -10,7 +10,7 @@ class Timekeeping_model extends CI_Model {
 		$this->company_id = $this->session->userdata('company_id');
     }
 	
-	public function get_timekeeping($payroll_group_id,$offset="",$limit=""){
+	public function get_leave($payroll_group_id,$offset="",$limit=""){
 		$str_limit = "";
 		if($limit!=""){
 			$str_limit = "LIMIT {$offset}, {$limit}"; 
