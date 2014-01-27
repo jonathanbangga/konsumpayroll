@@ -87,7 +87,12 @@ class Authentication {
 			case "2":
 				if($uri_admin == 'admin') redirect('/login/access_denied'); #wtf dong you are not invited
 			break;			
-		endswitch;		
+		endswitch;	
+		# this functions enable to check if the person is trying to play our security defenses therefore we must check if the data is really valid and let her in if its true otherwise then redirect to access denied
+		if($this->ci->uri->segment(2) == "dashboard" && $this->ci->uri->segment(3) == "company_list"){
+			$letme_in = $this->ci->account_model->dashboard_access($this->ci->session->userdata('psa_id'),trim($this->ci->uri->segment(1)));
+			($letme_in->result == 0) ? redirect('/login/access_denied') : '';
+		} 
 	}
 	
 	public function logout(){

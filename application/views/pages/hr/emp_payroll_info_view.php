@@ -53,7 +53,7 @@
 	              <td><?php print $row->bank_route;?></td>
 	              <td><?php print $row->bank_account;?></td>
 	              <td><?php print $row->account_type;?></td>
-	              <td><?php print $row->payroll_group_name;?></td>
+	              <td><?php print $row->name;?></td>
 	              <td><?php print $row->default_project;?></td>
 	              <td><?php print emp_name($row->timeSheet_approval_grp);?></td>
 	              <td><?php print emp_name($row->overtime_approval_grp);?></td>
@@ -144,7 +144,7 @@
 		    <td><input type='text' name='account_type' class='valid_to txtfield'></td></tr>
 		    <tr>
 		    	<td style="width:155px;">Payroll Group</td>
-		    <td><select style='min-width: 148px;' class='txtselect select-medium payroll_group_edit' name='payroll_group'><?php if($payroll_group == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($payroll_group as $row_payroll_group){?> <option value='<?php print $row_payroll_group->payroll_group_id;?><?php echo set_select('payroll_group', $row_payroll_group->payroll_group_name); ?>'><?php print $row_payroll_group->payroll_group_name;?></option><?php } }?></select></td></tr>
+		    <td><select style='min-width: 148px;' class='txtselect select-medium payroll_group_edit' name='payroll_group'><?php if($payroll_group == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($payroll_group as $row_payroll_group){?> <option value='<?php print $row_payroll_group->payroll_group_id;?><?php echo set_select('payroll_group', $row_payroll_group->name); ?>'><?php print $row_payroll_group->name;?></option><?php } }?></select></td></tr>
 		    <tr>
 		    	<td style="width:155px;">Default Project</td>
 		    <td><select class='txtselect select-medium default_project_edit' name='default_project'><option value='Real<?php echo set_select('default_project', 'Real'); ?>'>Real</option><option value='Real Regular<?php echo set_select('default_project', 'Real Regular'); ?>'>Real Regular</option></select></td></tr>
@@ -227,7 +227,7 @@
 	    tbl += "<td><input type='text' name='bank_route[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='bank_account[]' class='valid_to txtfield'></td>";
 	    tbl += "<td><input type='text' name='account_type[]' class='valid_to txtfield'></td>";
-	    tbl += "<td><select style='min-width: 148px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($payroll_group as $row_payroll_group){?> <option value='<?php print $row_payroll_group->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_payroll_group->payroll_group_name); ?>'><?php print $row_payroll_group->payroll_group_name;?></option><?php } }?></select></td>";
+	    tbl += "<td><select style='min-width: 148px;' class='txtselect select-medium' name='payroll_group[]'><?php if($payroll_group == null){ print "<option>".msg_empty()."</option>"; }else{ foreach($payroll_group as $row_payroll_group){?> <option value='<?php print $row_payroll_group->payroll_group_id;?><?php echo set_select('payroll_group[]', $row_payroll_group->name); ?>'><?php print $row_payroll_group->name;?></option><?php } }?></select></td>";
 	    tbl += "<td><select class='txtselect select-medium' name='default_project[]'><option value='Real<?php echo set_select('default_project[]', 'Real'); ?>'>Real</option><option value='Real Regular<?php echo set_select('default_project[]', 'Real Regular'); ?>'>Real Regular</option></select></td>";
 	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='timeSheet_approval_grp[]'><?php if($timesheet_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($timesheet_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('timeSheet_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";
 	    tbl += "<td><select style='min-width: 130px;' class='txtselect select-medium' name='overtime_approval_grp[]'><?php if($overtime_approver == NULL){ print "<option value=''>".msg_empty()."</option>"; }else{ foreach($overtime_approver as $row){ ?> <option value='<?php print $row->emp_id;?><?php echo set_select('overtime_approval_grp[]', $row->emp_id); ?>'><?php print $row->first_name." ".$row->last_name;?></option> <?php } } ?> </select></td>";

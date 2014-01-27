@@ -36,5 +36,8 @@ $config['per_page'] = 10;
 // jAllowed TYPE
 $config['allowed_types'] = 'doc|docx|xls|xlsx|ppt|pptx|pdf|txt|jpg|png|jpeg|bmp|gif|avi|flv|mpg|wmv|mp3|wma|wav|zip|rar|sql';
 
+// jTotal_Hours Worked
+$config['hrs_worked'] = "10";
+
 /* End of file konsumpayroll_templates.php */
 /* Location: ./application/config/konsumpayroll_templates.php */

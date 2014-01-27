@@ -288,7 +288,7 @@
 		if(calculateTime() == "1"){
 			return false;
     	}
-	    
+
 		/*if(jQuery(".avail_leave_cont tr input:text").hasClass("emp_str") || jQuery(".avail_leave_cont tr select").hasClass("emp_str")){
 	    	return false;
 	    }*/
@@ -336,7 +336,7 @@
 	    weekday[3]="Wednesday";
 	    weekday[4]="Thursday";
 	    weekday[5]="Friday";
-	    weekday[6]="Saturday"
+	    weekday[6]="Saturday";
 	    return weekday[d.getDay()];
 	}
 
@@ -348,7 +348,7 @@
 			data: {
 				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
 				'shift_schedule':'1',
-				'weekDay_value': weekDay_value,
+				'weekDay_value': weekDay_value
 			},
 			async: false,
 			success: function(data){
@@ -358,7 +358,25 @@
 	    return z;
 	}
 
-	function result_shift_schedule(_value){
+	function getTotal_hours(week_day){
+		var z = "";
+		$.ajax({
+			url: window.location.href,
+			type: "POST",
+			data: {
+				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+				'getTotal_hours':'1',
+				'week_day': week_day
+			},
+			async: false,
+			success: function(data){
+				z = data;
+			}
+	    });
+	    return z;
+	}
+	
+	function result_shift_schedule(_value,start){
 		var z = "";
 		$.ajax({
 			url: window.location.href,
@@ -367,6 +385,43 @@
 				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
 				'result_shift_schedule':'1',
 				'date_weekDay_value': _value,
+				'start_time':start
+			},
+			async: false,
+			success: function(data){
+				z = data;
+			}
+	    });
+		return z;
+	}
+
+	function get_holiday_date(date_start){
+		var z = "";
+		$.ajax({
+			url: window.location.href,
+			type: "POST",
+			data: {
+				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+				'get_holiday_date':'1',
+				'date_start': date_start
+			},
+			async: false,
+			success: function(data){
+				z = data;
+			}
+	    });
+		return z;
+	}
+
+	function get_return_date_val(_date){
+		var z = "";
+		$.ajax({
+			url: window.location.href,
+			type: "POST",
+			data: {
+				'ZGlldmlyZ2luamM':jQuery.cookie("<?php echo itoken_cookie();?>"),
+				'get_return_date_val':'1',
+				'date': _date
 			},
 			async: false,
 			success: function(data){
@@ -407,7 +462,15 @@
 	            return "1";
 		    }else{
 		    	var hours_labor = 8;
-			    var total_leave_requested = total_comLay / hours_labor;
+
+		    	// check if date is holiday
+		    	var _Holiday = get_holiday_date(date_start); // timeformat yyyy-mm-dd
+		    	if(_Holiday == "Holiday"){
+		    		var total_leave_requested = 0;
+		    	}else{
+		    		var total_leave_requested = total_comLay / hours_labor;
+		    	}
+		    	
 				jQuery(".total_leave_request").val(total_leave_requested.toFixed(2));
 		    }	
 		}else{
@@ -415,12 +478,43 @@
 			var company_hours_worked = 10;
 			var hours_labor = 8;
 		    var no_of_days = endDate.getDate() - startDate.getDate();
-    		var get_days_between = no_of_days - 1;
+		    
+    		//var get_days_between = no_of_days - 1;
+
+    		var nDifference = Math.abs(endDate - startDate);
+    		var one_day = 1000*60*60*24;
+    		var get_days_between = (Math.round(nDifference/one_day)) - 1;
 		    
 		    // hours work per day
-		    var hours_work_per_day = 1.25;
+		    var hours_work_per_day = 1.25; // 10 / 8 = 1.25
 		    if(get_days_between > 0){
-	            var get_hours_work_between = hours_work_per_day * get_days_between;
+	            // var get_hours_work_between = hours_work_per_day * get_days_between;
+
+				// ====
+					var get_hours_work_between = 0;
+					for(var new_counter = 1;new_counter <= get_days_between;new_counter++){
+						var increment_day = new Date(new_date_start);
+						increment_day.setTime(increment_day.getTime() +  (new_counter * 24 * 60 * 60 * 1000));
+						var increment_someDate_fullyear = increment_day.getFullYear();
+			    	    var increment_someDate_month = increment_day.getMonth() + 1;
+			    	    var increment_someDate_day = increment_day.getDate();
+			    	    var increment_some_new_date = increment_someDate_month+"/"+increment_someDate_day+"/"+increment_someDate_fullyear;
+
+			    		// check if date value is holiday
+		    			var _Holiday = get_holiday_date(increment_someDate_fullyear+"/"+increment_someDate_month+"/"+increment_someDate_day); // timeformat yyyy-mm-dd
+				    	if(_Holiday == "Holiday"){
+				    		get_hours_work_between = parseFloat(get_hours_work_between) + 0;
+				    	}else{
+				    		var tot_hours_getWeekDay = getWeekDay(increment_some_new_date);
+							var tot_hours_getTotal_hours = getTotal_hours(tot_hours_getWeekDay);
+							
+							var week_day_value = parseFloat(tot_hours_getTotal_hours) / hours_labor;
+							get_hours_work_between = parseFloat(get_hours_work_between) + parseFloat(week_day_value);
+				    	}
+			    		
+					}
+				// ====
+	            
 		    }else{
 		        var get_hours_work_between = 0;
 		    }
@@ -446,11 +540,12 @@
 		    var zero_hours = 0;
 		    for(var new_counter = 0;new_counter<=length_new_total_hours_worked_array;new_counter++){
 		       var weekDay_value = split_new_total_hours_worked_array[new_counter];
-		       zero_hours = parseFloat(zero_hours) + parseFloat(getWeekDay_value_ajax(weekDay_value));
+		       // zero_hours = parseFloat(zero_hours) + parseFloat(getWeekDay_value_ajax(weekDay_value));
+		       zero_hours = 0;
 		    }
 
-			var start_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_start));
-			var end_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_end));
+			var start_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_start),start);
+			var end_date_shift_schedule = result_shift_schedule(getWeekDay(new_date_end),end);
 
 			if(start_date_shift_schedule == "0"){
 				var new_start_date_shift_schedule = 0;
@@ -492,16 +587,32 @@
 			}else{
 				var result_start_date_shift_sched = (compute_end_date.getTime() - compute_start_date.getTime()) / 1000 / 60 / 60;
 			}
-			
-			if(result_start_date_shift_sched >= company_hours_worked){ // 10 total hours worked
-				var total_start_date_shift_sched = company_hours_worked;
-				var overall_start_date_shift_sched = company_hours_worked / hours_labor; // 8 = labor code hours worked
+
+			// ===========
+
+				var new_start_date_day = new Date(new_date_start);
+				var new_start_date_someDate_fullyear = new_start_date_day.getFullYear();
+	    	    var new_start_date_someDate_month = new_start_date_day.getMonth() + 1;
+	    	    var new_start_date_someDate_day = new_start_date_day.getDate();
+	    	    var new_start_date_some_new_date = new_start_date_someDate_month+"/"+new_start_date_someDate_day+"/"+new_start_date_someDate_fullyear;
+
+				var new_start_date_tot_hours_getWeekDay = getWeekDay(new_start_date_some_new_date);
+				var new_start_date_tot_hours_getTotal_hours = getTotal_hours(new_start_date_tot_hours_getWeekDay);
+				var new_start_date_week_day_value = parseFloat(new_start_date_tot_hours_getTotal_hours);
+
+			// ===========
+
+			if(result_start_date_shift_sched >= new_start_date_week_day_value){ // company_hours_worked){ // 10 total hours worked
+				var total_start_date_shift_sched = new_start_date_week_day_value; // company_hours_worked
+				// var overall_start_date_shift_sched = company_hours_worked / hours_labor; // 8 = labor code hours worked
+				var overall_start_date_shift_sched = new_start_date_week_day_value / hours_labor; // 8 = labor code hours worked
 			}else{
 				var total_start_date_shift_sched = result_start_date_shift_sched; // minus 1 more lunch break
 				var overall_start_date_shift_sched = result_start_date_shift_sched; // minus 1 more lunch break
 				if(overall_start_date_shift_sched < 0){
 					if(compute_end_date == 0){
-						overall_start_date_shift_sched = company_hours_worked / hours_labor; // labor code hours worked
+						// overall_start_date_shift_sched = company_hours_worked / hours_labor; // labor code hours worked
+						overall_start_date_shift_sched = new_start_date_week_day_value / hours_labor; // labor code hours worked
 					}else{
 						overall_start_date_shift_sched = 0;
 					}
@@ -531,22 +642,40 @@
 				var compute_end_date_end = 0;
 			}
 			
-			// overall start date shift schedule
+			// overall end date shift schedule
 			if(compute_end_date_end == 0){
 				var result_end_date_shift_sched = -1;
 			}else{
 				var result_end_date_shift_sched = (compute_end_date.getTime() - compute_end_date_end.getTime()) / 1000 / 60 / 60;
 			}
-				
-			if(result_end_date_shift_sched >= company_hours_worked){ // 10 total hours worked
-				var total_end_date_shift_sched = company_hours_worked;
-				var overall_end_date_shift_sched = company_hours_worked / hours_labor; // 8 = labor code hours worked
+
+			// ===========
+
+				var new_end_date_day = new Date(new_date_end);
+				var new_end_date_someDate_fullyear = new_end_date_day.getFullYear();
+	    	    var new_end_date_someDate_month = new_end_date_day.getMonth() + 1;
+	    	    var new_end_date_someDate_day = new_end_date_day.getDate();
+	    	    var new_end_date_some_new_date = new_end_date_someDate_month+"/"+new_end_date_someDate_day+"/"+new_end_date_someDate_fullyear;
+
+				var new_end_date_tot_hours_getWeekDay = getWeekDay(new_end_date_some_new_date);
+				var new_end_date_tot_hours_getTotal_hours = getTotal_hours(new_end_date_tot_hours_getWeekDay);
+				var new_end_date_week_day_value = parseFloat(new_end_date_tot_hours_getTotal_hours);
+	
+			// ===========
+			
+			// if(result_end_date_shift_sched >= company_hours_worked){ // 10 total hours worked
+			if(result_end_date_shift_sched >= new_end_date_week_day_value){ // 10 total hours worked
+				// var total_end_date_shift_sched = company_hours_worked;
+				var total_end_date_shift_sched = new_end_date_week_day_value;
+				// var overall_end_date_shift_sched = company_hours_worked / hours_labor; // 8 = labor code hours worked
+				var overall_end_date_shift_sched = new_end_date_week_day_value / hours_labor; // 8 = labor code hours worked
 			}else{
 				var total_end_date_shift_sched = result_end_date_shift_sched; // minus 1 more lunch break
 				var overall_end_date_shift_sched = result_end_date_shift_sched; // minus 1 more lunch break
 				if(overall_end_date_shift_sched < 0){
 					if(compute_end_date_end == 0){
-						overall_end_date_shift_sched = company_hours_worked / hours_labor;
+						// overall_end_date_shift_sched = company_hours_worked / hours_labor;
+						overall_end_date_shift_sched = new_end_date_week_day_value / hours_labor;
 					}else{
 						overall_end_date_shift_sched = 0;
 					}
@@ -556,6 +685,36 @@
 			}
 			// Total Start Date Shift Sched End ======================
 		    
+		    // Return Date Value
+		    var return_date_value = jQuery(".return_date").val();
+		    var return_date_hr = jQuery(".return_date_hr").val();
+		    var return_date_min = jQuery(".return_date_min").val();
+		    var return_date_ss = jQuery(".return_date_sec").val();
+			var overall_return_date_shift_sched = parseFloat(get_return_date_val(return_date_value+" "+return_date_hr+":"+return_date_min+" "+return_date_ss));
+		    // ===============
+		    
+		    	// check holidays
+		    	
+		    	// Start Date
+    			var start_Holiday = get_holiday_date(date_start);
+		    	if(start_Holiday == "Holiday"){
+		    		overall_start_date_shift_sched = 0;
+		    	}
+
+		    	// End Date
+    			var end_Holiday = get_holiday_date(date_end);
+		    	if(end_Holiday == "Holiday"){
+		    		overall_end_date_shift_sched = 0;
+		    	}
+
+		    	// Return Date
+    			var return_Holiday = get_holiday_date(return_date_value);
+		    	if(return_Holiday == "Holiday"){
+		    		overall_return_date_shift_sched = 0;
+		    	}
+		    	
+		    // ===============
+		    
 		    // overall rest day hours work
 		    var overall_rd_hours_work = zero_hours;
 
@@ -563,15 +722,16 @@
 			var overall_get_hours_work_between = get_hours_work_between;
 
 			// Total Leave Requested
-			var total_leave_requested = parseFloat(overall_start_date_shift_sched) + parseFloat(overall_end_date_shift_sched) + parseFloat(overall_get_hours_work_between) - parseFloat(overall_rd_hours_work);
-
+			var total_leave_requested = parseFloat(overall_return_date_shift_sched) + parseFloat(overall_start_date_shift_sched) + parseFloat(overall_end_date_shift_sched) + parseFloat(overall_get_hours_work_between) - parseFloat(overall_rd_hours_work);
+			
 			//console.log(new_start_date_shift_schedule+" "+new_end_date_shift_schedule);
 			console.log("Total Start Date Shift Sched: "+overall_start_date_shift_sched);
 			console.log("Total End Date Shift Sched: "+overall_end_date_shift_sched);
 		    console.log("Hours worked between: "+overall_get_hours_work_between);
 		    console.log("Rest Day: "+overall_rd_hours_work);
+		    console.log("Total Return Date Requested: "+overall_return_date_shift_sched.toFixed(2));
 		    console.log("Total Leave Requested: "+total_leave_requested.toFixed(2));
-		    
+
 		    jQuery(".total_leave_request").val(total_leave_requested.toFixed(2));
 		}
 	}

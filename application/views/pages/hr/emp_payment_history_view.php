@@ -96,15 +96,16 @@
 		    <td><input type='text' name='principal[]' class='principal txtfield' value="<?php print $new_principal_value;?>" /></td>
 		    <td><input type='text' name='penalty[]' class='penalty txtfield'></td>
 		    <td>
-			    <span class="">Installment:
+			    <span class="ihide">Installment:
 			    <?php print $interest." + ".$principal;?>
 			    	<input type="text" name="installment_value[]" style="width:auto;" value="<?php print $interest + $principal;?>" />
 	            </span>
             </td>
-		    <td><span class="">Remaining Cash Amount: <?php print $debit_amount;?></span></td>
-		    <td><span>New Cash Amount:
-		    	<input type="text" name="remaining_cash_amount[]" style="width:auto;" value="<?php print $new_remaining_cash_amount;?>" />
-		    </span>
+		    <td><span class="ihide">Remaining Cash Amount: <?php print $debit_amount;?></span></td>
+		    <td>
+		    	<span class="ihide">New Cash Amount:
+			    	<input type="text" name="remaining_cash_amount[]" style="width:auto;" value="<?php print $new_remaining_cash_amount;?>" />
+			    </span>
 		    </td>
 		   </tr>
           </tbody></table>

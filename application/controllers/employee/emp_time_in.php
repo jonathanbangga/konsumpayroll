@@ -30,6 +30,7 @@
 			$this->menu = $this->config->item('jb_employee_menu');
 			$this->zero_time = "0000-00-00 00:00:00";
 			$this->min_log = 5;
+			$this->hours_worked = 9;
 			
 			$this->company_info = whose_company();
 			
@@ -45,7 +46,31 @@
 		 * index page
 		 */
 		public function index() {
-
+			
+			/*
+			print "08:00:00 <br/>";
+			$end_time = date("H:i:s",strtotime("08:00:00") + 60 * 60 * 9);
+			return false;
+			*/
+			/*
+			$payroll_sched_timein = "10:00 PM";
+			$time_in = "10:30 PM";
+			$time_x=(strtotime($time_in) - strtotime($payroll_sched_timein)) / 3600;
+			
+			if($time_x<0){
+				#print $time_z= (24-(abs($time_x))) . " late ";
+				//print $time_z= (24-(abs($time_x))) * 60 ;
+				if(abs($time_x) >= 12){
+					// print $time_z= (24-(abs($time_x))) * 60 . " late ";
+					print $time_z= (24-(abs($time_x))) * 60;	
+				}
+			}else{
+				// start late time
+				// print $time_x * 60 . " late ";
+				print $time_x * 60;
+			}
+			*/
+			
 			$data['page_title'] = "Time In";
 			$data['min_log'] = $this->min_log;
 			
@@ -112,11 +137,34 @@
 					
 					// insert employee time in value
 					if($time_in_is_empty){
+						
+						// check time in schedule, for late computation
+						$payroll_sched_timein =  $this->employee->get_shift_sched($this->emp_id, date('l'));
+						$time_in = date('H:i:s');
+						$time_x=(strtotime($time_in) - strtotime($payroll_sched_timein)) / 3600;
+						
+						if($payroll_sched_timein != "00:00:00"){
+							if($time_x<0){
+								if(abs($time_x) >= 12){
+									// print $time_z= (24-(abs($time_x))) * 60 . " late ";
+									$min_late = round((24-(abs($time_x))) * 60, 2);	
+								}else{
+									$min_late = "";
+								}
+							}else{
+								// print $time_x * 60 . " late ";
+								$min_late = round($time_x * 60, 2);
+							}
+						}else{
+							$min_late = "";
+						}
+							
 						$add_time_in = array(
 							'emp_id'=>$this->emp_id,
 							'comp_id'=>$this->company_id,
 							'time_in'=>date('Y-m-d H:i:s'),
 							'date'=>$date_val,
+							'tardiness_min'=>$min_late,
 							'reason'=>''
 						);
 						$insert_emp_leave = $this->jmodel->insert_data('employee_time_in',$add_time_in);
@@ -216,11 +264,19 @@
 								}
 							}elseif($current_time_in != $this->zero_time && $current_lunch_out != "" && $current_lunch_in != "" && $current_time_out == $this->zero_time){
 								// update time out from employee time in
-								$update_time_out = $this->employee->update_time_out($this->company_id, $this->emp_id, $employee_time_in_id);
+								$undertime_min = $this->employee->undertime_min($this->emp_id, date('l'));
+								
+								if(strtotime(date('H:i:s')) < strtotime($undertime_min)){
+									$under_min_val = round((strtotime($undertime_min) - strtotime(date('H:i:s'))) / 60, 2);
+								}else{
+									$under_min_val = "";
+								}
+								
+								$update_time_out = $this->employee->update_time_out($this->company_id, $this->emp_id, $employee_time_in_id, $under_min_val);
 								if($update_time_out){
 									
 									// compute total hours worked
-									$total_hours = $this->employee->total_hours($this->company_id, $this->emp_id);
+									$total_hours = $this->employee->total_hours($this->company_id, $this->emp_id, $this->hours_worked);
 									if($total_hours){
 										echo json_encode(array("success"=>1,"url"=>$this->url));
 										return false;
@@ -256,9 +312,13 @@
 						$lunch_in = ($get_timein_info->lunch_in==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->lunch_in));
 						$time_out = ($get_timein_info->time_out==$this->zero_time) ? "00:00:00" : date("g:i:A",strtotime($get_timein_info->time_out));
 						
-						$current_time_val = date("Y-m-d H:i:s");
+						#$current_time_val = date("Y-m-d H:i:s");
 						
-						$startDate = strtotime("{$get_timein_info->time_in}");
+						#$startDate = strtotime("{$get_timein_info->time_in}");
+						#$endDate = strtotime("{$current_time_val}");
+						
+						$current_time_val = date("Y-m-d");
+						$startDate = strtotime("{$get_timein_info->date}");
 						$endDate = strtotime("{$current_time_val}");
 						$interval = $endDate - $startDate;
 						$days = floor($interval / (60 * 60 * 24));
@@ -342,7 +402,7 @@
 				$this->form_validation->set_rules("reason", 'Reason', 'trim|required|xss_clean');
 				if ($this->form_validation->run()==true){
 					$update_employee_time_log = $this->employee->update_employee_time_log(
-						$this->company_id, $this->emp_id, $employee_timein, $time_in, $lunch_out_date." ".$lunch_out, $lunch_in_date." ".$lunch_in, $time_out_date." ".$time_out, $reason
+						$this->company_id, $this->emp_id, $employee_timein, $time_in, $lunch_out_date." ".$lunch_out, $lunch_in_date." ".$lunch_in, $time_out_date." ".$time_out, $reason, $this->hours_worked
 					);
 					if($update_employee_time_log){
 						$this->session->set_flashdata('message', '<div class="successContBox highlight_message">Successfully updated!</div>');
