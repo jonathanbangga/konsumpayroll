@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Timekeeping extends CI_Controller {
+class Leave extends CI_Controller {
 	
 	protected $theme;
 	protected $sidebar_menu;
@@ -13,20 +13,20 @@ class Timekeeping extends CI_Controller {
 		$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
-		$this->load->model('payroll_run/timekeeping_model');	
+		$this->load->model('payroll_run/leave_model');	
 	}
 
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "Timekeeping and Leave";
+		$data['page_title'] = "leave";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		$pp = $this->timekeeping_model->get_payroll_period()->row();
+		$pp = $this->leave_model->get_payroll_period()->row();
 		
 		// pagination settings
-		$config['base_url'] = "/{$this->session->userdata('sub_domain2')}/payroll_run/timekeeping/index";
-		$config['total_rows'] = $this->timekeeping_model->get_timekeeping($pp->payroll_group_id)->num_rows(); // all results
+		$config['base_url'] = "/{$this->session->userdata('sub_domain2')}/payroll_run/leave/index";
+		$config['total_rows'] = $this->leave_model->get_leave($pp->payroll_group_id)->num_rows(); // all results
 		$config['per_page'] = 1; // per page
 		$config['uri_segment'] = 5; //page number
 		
@@ -57,8 +57,8 @@ class Timekeeping extends CI_Controller {
 		$per_page = $config['per_page'];
 		
 
-		$data['tk_sql'] = $this->timekeeping_model->get_timekeeping($pp->payroll_group_id,$offset,$per_page);
-		$this->layout->view("pages/payroll_run/timekeeping_view",$data);
+		$data['tk_sql'] = $this->leave_model->get_leave($pp->payroll_group_id,$offset,$per_page);
+		$this->layout->view("pages/payroll_run/leave_view",$data);
 	}
 	
 }
