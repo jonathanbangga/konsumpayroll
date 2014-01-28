@@ -1,6 +1,3 @@
-<br />
-<h1><?php echo $page_title;?></h1>
-
 	<div class="tbl-wrap">	
 		<div class="successContBox ihide"></div>
 		<?php echo form_open("",array("onsubmit"=>"return save_users();"));?>
@@ -9,7 +6,7 @@
 			<tbody>
 				<tr>
 					<th style="width:50px;">Line</th>
-					<th style="width:170px;">Employee ID</th>
+					<th style="width:170px;">Payroll Cloud ID</th>
 					<th style="width:170px;">Email</th>
 					<th style="width:170px;">First Name</th>
 					<th style="width:170px;">Middle Name</th>
@@ -63,14 +60,12 @@
 	</div>
 		
 	<div class="left pagi-lefts">
-		<!-- <a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a> -->
-		<input type="submit" onclick="return false;" id="add-more-users"  name="add" value="ADD USERS" class="btn" />
+	<a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a>
 		<input type="submit" name="save" value="SAVE" class="btn ihide" />
 	</div>
 	<div class="right pagi-rights"><?php  echo $pagi;?></div>
 	<p>&nbsp;</p>
 	<?php echo form_close();?>
-	
 	<div class="footer-grp-btn ihide">
 	<!-- FOOTER-GRP-BTN START -->
 	<a href="/company/hr_setup/locations" class="btn btn-gray left">BACK</a> <a href="/company/hr_setup/leaves" class="btn btn-gray right"> CONTINUE</a>

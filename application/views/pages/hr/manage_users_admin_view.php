@@ -66,9 +66,52 @@
 	<p>&nbsp;</p>
 	<?php echo form_close();?>
 </div>	
-<div class="show_employee ihide"> 
-<p>Employee</p>
-</div>
+<!-- emploeee details -->
+	<div class="show_employee ihide"> 
+		<table class="tbl emp_employee_list" style="width:100%">
+			<tbody>
+				<tr>
+					<th style="width:50px;">Line</th>
+					<th style="width:80px;">Employee ID</th>
+					<th style="width:200px;">Employee Name</th>
+					<th style="width:170px;">Email Address</th>
+					<th style="width:170px">Action</th>
+				</tr>
+				<?php
+					if($normal_employee){ 
+						foreach($normal_employee as $ne_key=>$ne_val):
+				?>
+				<tr>
+					<td><?php echo ($ne_key++)+1;?></td>
+					<td>
+						<div class="users_text"><?php echo $ne_val->payroll_cloud_id;?></div>
+					</td>
+					<td>
+						<input type="hidden" value="<?php echo $ne_val->account_id;?>" name="admin_category_account_id" id="admin_category_account_id">
+						<div class="users_text"><?php echo $ne_val->first_name." ".$ne_val->last_name;?></div>
+					</td>
+					<td>
+						<input type="hidden" class="inp_user" value="<?php echo $ne_val->email;?>" name="admin_category_email[]">
+						<div class="users_text"><?php echo $ne_val->email;?></div>
+					</td>
+					<td>
+						<a invite_approvers="46" href="javascript:void(0);" class="btn btn-gray btn-action jmanageinvite_users">INVITE</a>
+						<a edit_approvers="46" href="javascript:void(0);" class="btn btn-gray btn-action jmanage_users">EDIT</a> 
+					</td>
+				</tr>
+				<?php	
+						endforeach;
+					} 
+				?>	
+			</tbody>
+		</table>
+		<div class="left pagi-lefts">
+			<br />
+			<input type="button" onclick="return false;" id="add-more-employee"  name="add" value="ADD EMPLOYEE" class="btn" />
+			<input type="submit" name="save_employee" value="SAVE" class="btn ihide" />
+		</div>
+	</div>
+<!-- end employee details -->
 	
 	<div class="footer-grp-btn ihide">
 	<!-- FOOTER-GRP-BTN START -->
@@ -179,6 +222,24 @@
 			    search_name();
 			    jQuery("input[name='save']").show();
 			});
+		}
+		
+		// ADD NORMAL EMPLOYEE
+		function add_normal_employee(){
+			jQuery(document).on("click","#add-more-employee",function(e){
+				e.preventDefault();
+				var el = jQuery(this);
+				
+				 var html = '<tr>';
+				    html +='<td></td>';
+				    html +='<td><input type="text" class="inp_user" name="payroll_cloud_id[]"></td>';
+				    html +='<td><input type="text" class="inp_user" name="employee_fullname[]"></td>';
+				    html +='<td><input type="text" class="inp_user" name="email[]"></td>';
+				    html +='<td><a href="#" class="btn btn-red btn-action jdel_users_append">REMOVE</a></td>';
+				    html +='</tr>'; 				
+					jQuery(".emp_employee_list").append(html);
+			});
+		
 		}
 
 		// input payroll group
@@ -355,5 +416,6 @@
 			edit_users();
 			showhide_users_admin();
 			 send_invites();
+			 add_normal_employee();
 		});
 	</script>

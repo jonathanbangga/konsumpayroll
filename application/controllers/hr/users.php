@@ -146,6 +146,7 @@ class Users extends CI_Controller {
 	
 		$data['permission_type'] = $this->users->permission_type($this->company_info->company_id);
 		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+		$data['normal_employee'] = $this->users->normal_employee($this->company_info->company_id);
 		// save
 			if($this->input->post('save')){
 				$payroll_cloud_id = $this->input->post('payroll_cloud_id');
