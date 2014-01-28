@@ -23,6 +23,7 @@ class Holiday_settings extends CI_Controller {
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
 		$data['hs_sql'] = $this->holiday_settings_model->get_holiday_settings();
+		$data['ht_sql'] = $this->holiday_settings_model->get_hours_type();
 		$this->layout->view('pages/payroll_setup/holiday_settings_view',$data);
 	}
 	
@@ -31,7 +32,7 @@ class Holiday_settings extends CI_Controller {
 		$type = $this->input->post('type');
 		$date = $this->input->post('date');
 		foreach($holiday as $index=>$val){
-			$date2 = date('Y-m-d',strtotime(str_replace("/","-",$date[$index])));
+			$date2 = date('Y-m-d',strtotime($date[$index]));
 			$this->holiday_settings_model->add_holiday_settings($val,$type[$index],$date2);
 		}
 	}
