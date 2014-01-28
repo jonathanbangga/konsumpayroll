@@ -9,6 +9,7 @@
 	  <th width="116">Employee ID</th>
 	  <th width="116">Employee Name</th>
 	  <th width="156">Pay Date</th>
+	  <th width="156">Holiday Day</th>
 	  <th width="126">Hours Type</th>
 	  <th width="126">Rate</th>
 	  <th width="106">No. of Hours</th>
@@ -19,6 +20,7 @@
 		<td><?php echo $hp->payroll_cloud_id; ?></td>
 		<td><?php echo $hp->first_name.' '. $hp->last_name; ?></td>
 		<td><?php echo date('m/d/Y',strtotime($hp->payroll_period)); ?></td>
+		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
