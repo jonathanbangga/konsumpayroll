@@ -27,7 +27,6 @@
 				Holiday/Premium
 			</a>
 		</li>
-		<li><a href="">Holiday/Premium</a></li>
 		<li><a href="">Night Differential</a></li>
 		<li><a href="">Overtime</a></li>
 		<li><a href="">Hours Worked</a></li>

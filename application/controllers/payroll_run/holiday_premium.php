@@ -22,7 +22,9 @@ class Holiday_premium extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
-		//$data['tk_sql'] = $this->holiday_premium->get_leave($pp->payroll_group_id,$offset,$per_page);
+		// get payroll group
+		$pp = $this->holiday_premium_model->get_payroll_period()->row();
+		$data['hp_sql'] = $this->holiday_premium_model->get_holiday_premium_employee_listing($pp->payroll_group_id);
 		$this->layout->view("pages/payroll_run/holiday_premium_view",$data);
 	}
 	
