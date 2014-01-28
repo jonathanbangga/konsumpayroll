@@ -18,7 +18,10 @@
 				foreach($hs_sql->result() as $hs){ ?>
 				  <tr>
 					<td><span class="holiday_span"><?php echo $hs->holiday_name; ?></span></td>
-					<td><span class="type_span"><?php echo $hs->type; ?></span></td>
+					<td>
+						<input type="hidden" class="hour_type_id" value="<?php echo $hs->hour_type_id; ?>" />
+						<span class="type_span"><?php echo $hs->hour_type_name; ?></span>
+					</td>
 					<td><span class="date_span"><?php echo $hs->date; ?></span></td>
 					<td>
 						<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit">EDIT</a> 
@@ -62,9 +65,12 @@
 		<p>
 			Type:<br />
 			<select class="txtselect" id="edit_type">
-				<option value="-1">Select</option>
-				<option value="Regular">Regular</option>
-				<option value="Special">Special</option>
+				<?php 
+					foreach($ht_sql->result() as $ht){  ?>
+						<option value="<?php echo $ht->hour_type_id; ?>"><?php echo $ht->hour_type_name; ?></option>
+					<?php
+					}
+					?>
 			</select>
 		</p>
 		<p>
@@ -93,11 +99,11 @@ jQuery(document).ready(function(){
 			'<tr>'+
 				'<td><input class="txtfield holiday" type="text"></td>'+
 				'<td>'+
-					'<select class="txtselect type">'+
-						'<option value="-1">Select</option>'+
-						'<option value="Regular">Regular</option>'+
-						'<option value="Special">Special</option>'+
-					'</select>'+
+					'<select class="txtselect type"><?php 
+					foreach($ht_sql->result() as $ht){ 
+						echo '<option value="'.$ht->hour_type_id.'">'.$ht->hour_type_name.'</option>';
+					}
+					?></select>'+
 				'<td><input class="txtfield date" type="text"></td>'+
 				'</td>'+
 				'<td>'+
@@ -192,11 +198,11 @@ jQuery(document).ready(function(){
 		var obj = jQuery(this);
 		var holiday_id = obj.parents("tr").find(".holiday_id").val();
 		var holiday = obj.parents("tr").find(".holiday_span").html();
-		var type = obj.parents("tr").find(".type_span").html();
+		var hour_type_id = obj.parents("tr").find(".hour_type_id").val();
 		var date = obj.parents("tr").find(".date_span").html();
 		jQuery("#edit_holiday").val(holiday);
 		jQuery("#edit_type option").each(function(){
-			if(jQuery(this).val()==type){
+			if(jQuery(this).val()==hour_type_id){
 				jQuery(this).prop("selected",true);
 			}
 		});

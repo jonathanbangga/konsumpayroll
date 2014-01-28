@@ -13,8 +13,9 @@ class Holiday_settings_model extends CI_Model {
 	public function get_holiday_settings(){
 		return $this->db->query("
 			SELECT *
-			FROM `holiday`
-			WHERE `company_id` = {$this->company_id}
+			FROM `holiday` AS h
+			LEFT JOIN `hours_type` AS ht ON h.`hour_type_id` = ht.`hour_type_id` 
+			WHERE h.`company_id` = {$this->company_id}
 		");
 	}
 	
@@ -23,7 +24,7 @@ class Holiday_settings_model extends CI_Model {
 			INSERT INTO
 			`holiday` (
 				`holiday_name`,
-				`type`,
+				`hour_type_id`,
 				`date`,
 				`company_id`
 			)
@@ -50,10 +51,18 @@ class Holiday_settings_model extends CI_Model {
 			UPDATE `holiday`
 			SET
 				`holiday_name` = '{$holiday_name}',
-				`type` = '{$type}',
+				`hour_type_id` = '{$type}',
 				`date` = '{$date}'
 			WHERE `holiday_id` = {$holiday_id}
 			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_hours_type(){
+		return $this->db->query("
+			SELECT *
+			FROM `hours_type`
+			WHERE `company_id` = {$this->company_id}
 		");
 	}
 		
