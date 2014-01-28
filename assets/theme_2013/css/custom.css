@@ -212,3 +212,11 @@ select#jpayroll_group{
 	height:50px;
 }
 /*** end input css global chris ***/
+/** chris manage users css **/
+.emp_users_list .inp_user{
+	width:158px;
+}
+.tbl.emp_users_list {
+    width: 100%;
+}
+/** end manage users chris **/

@@ -18,7 +18,7 @@
 				
 			 <tr>
                 <td><span class="hours_type_span"><?php echo $ht->hour_type_name ?></span></td>
-                <td><span class="pay_rate_span"><?php echo $ht->pay_rate ?></span></td>
+                <td><span class="pay_rate_span"><?php echo $ht->pay_rate ?>%</span></td>
                 <td>
 					<a href="javascript:void(0);" class="btn btn-gray btn-action btn-edit">EDIT</a> 
 					<a href="javascript:void(0);" class="btn btn-red btn-action btn-delete">DELETE</a>
