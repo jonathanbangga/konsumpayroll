@@ -15,8 +15,8 @@
 		Timesheet
 	</a>
 </li>			
-<li><a href="">Timekeeping &amp; Leave</a>
-  <ul>
+<li id="tl_parent_menu"><a href="javascript:void(0);">Timekeeping &amp; Leave</a>
+  <ul id="tl_child_menu" style="display:none;">
 	<li><a href="">Leave</a></li>
 	<li><a href="">Holiday/Premium</a></li>
 	<li><a href="">Night Differential</a></li>
@@ -30,3 +30,10 @@
 <li><a href="">Loans &amp; Deductions</a></li>
 <li><a href="">Payroll</a></li>
 </ul>
+<script>
+jQuery(document).ready(function(){
+	jQuery("#tl_parent_menu").click(function(){
+		jQuery("#tl_child_menu").slideToggle();
+	});
+});
+</script>

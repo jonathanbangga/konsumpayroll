@@ -43,6 +43,26 @@ class Account_model extends CI_Model {
 		}
 	}
 	
+	/**** CHRIS CODES ADDED ****/
+	/**
+	*	DASHBOARD ACCESS ENABLES YOU TO DEFINE IF THE PERSON BEHIND THIS DASHBOARD IS THE RIGHT PERSON
+	*	@param int $psa_id ( payroll_system_account_id )
+	*	@param string $sub_domain
+	*	@return boolean
+	*/
+	public function dashboard_access($psa_id,$sub_domain){
+		if(is_numeric($psa_id) && $sub_domain !=""){
+			$query = $this->db->query("SELECT count(*) as result FROM payroll_system_account psa WHERE psa.payroll_system_account_id = '{$this->db->escape_str($psa_id)}' AND sub_domain = '{$this->db->escape_str($sub_domain)}'");
+			$row = $query->row();
+			$query->free_result();
+			return $row;
+		}else{
+			return false;
+		}
+	}
+	/**** END CHRIS CODES ****/
+	
+	
 }
 
 ?>
