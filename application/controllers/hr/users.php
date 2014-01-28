@@ -22,7 +22,9 @@ class Users extends CI_Controller {
 	var $subdomain;
 	public function __construct() {
 		parent::__construct();
-		$this->theme = $this->config->item('default');
+		$this->load->library('parser');
+		$this->load->library('email');
+		$this->theme = $this->config->item('temp_control_panel');
 		$this->load->model("hr/users_model","users");
 		$this->num_pagi = 3;
 		$this->segment_url = 4;
@@ -30,7 +32,7 @@ class Users extends CI_Controller {
 		$this->menu = "content_holders/user_hr_owner_menu";
 		$this->sidebar_menu = 'content_holders/hr_approver_sidebar_menu';
 		$this->company_info =  whose_company();
-		$this->per_page = 5;
+		$this->per_page = 10;
 		$this->segment = 5;
 		$this->subdomain = $this->uri->segment(1);
 		if($this->company_info == false){
@@ -127,8 +129,132 @@ class Users extends CI_Controller {
 			}
 		// save section	
 		$this->layout->set_layout($this->theme);	
-		$this->layout->view('pages/hr/users_view', $data);
+		$this->layout->view('pages/hr/manage_users_admin_view', $data);
 	}
+	
+	public function add_admin(){
+		$url = "/{$this->subdomain}/hr/users/index";
+		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+		$data['page_title'] = "Manage Users";	
+		$data['sidebar_menu'] =$this->sidebar_menu;	
+		$data['total_rows'] = $this->users->fetch_approvers_users_count($this->company_info->company_id);
+		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
+		$data['pagi'] = $this->pagination->create_links();
+		$data['company_info'] = $this->company_info;
+		$data['approval_group'] = $this->users->fetch_approval_group($this->company_info->company_id);
+		$data['approval_process'] = $this->users->approval_process($this->company_info->company_id);
+	
+		$data['permission_type'] = $this->users->permission_type($this->company_info->company_id);
+		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+		// save
+			if($this->input->post('save')){
+				$payroll_cloud_id = $this->input->post('payroll_cloud_id');
+				$emp_email  = $this->input->post('email');
+				$emp_fullname 	= $this->input->post("employee_fullname");
+				$emp_permission	= $this->input->post('permission');	
+				if($emp_email){
+					foreach($payroll_cloud_id as $k=>$v){
+						$this->form_validation->set_rules("payroll_cloud_id[".$k."]","Payroll Cloud ID (".$k."):","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
+						$this->form_validation->set_rules("email[".$k."]","Employee Email (".$k."):","required|trim|xss_clean|valid_email|is_unique[accounts.email]");
+						$this->form_validation->set_rules("employee_fullname[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("permission[".$k."]","Permission (".$k."):","trim|xss_clean");
+					}		
+				}		
+				if($this->form_validation->run() == TRUE){	
+					foreach($payroll_cloud_id as $key=>$val){
+						$account_fields = array(
+									"payroll_cloud_id" 	=> $this->db->escape_str($val),
+									//"password"			=> md5($password[$key]),
+									"account_type_id"	=> 2, // 2 which is users only
+									"user_type_id"		=> 3,  // 3 Defines as HR on user_type table
+									"email"				=> $emp_email[$key],
+									"payroll_system_account_id" => $this->session->userdata("psa_id")
+						);	
+						$account_id = $this->users->save_fields("accounts",$account_fields);
+						// CREATE EMPLOYEE
+						$fields = array(
+							"last_name" 	=> $this->db->escape_str($emp_fullname[$key]),
+							"first_name" 	=> $this->db->escape_str($emp_fullname[$key]),
+							"account_id"	=> $this->db->escape_str($account_id),
+							"company_id"	=> $this->company_info->company_id
+						);
+						$emp_id = $this->users->save_fields("employee",$fields);
+						// CREATE COMPANY APPROVERS
+						$approvers_fields = array(
+							"company_id"	=> $this->company_info->company_id,
+							"account_id"	=> $account_id,
+							"level"			=> "",
+							"deleted"		=> '0',
+							"users_roles_id"=>$this->db->escape_str($emp_permission[$key])
+						);
+						$this->users->save_fields("company_approvers",$approvers_fields);
+						// ADD PAYROLL TO APPROVAL PROCESS
+						$employee_info = $this->users->employee_info($account_id);
+						if($approval_process_id[$key]){
+							if($employee_info){
+								$appgroups_fields = array(
+									"approval_process_id" => $approval_process_id[$key],
+									"emp_id"		=> $employee_info->emp_id,
+									"company_id"	=> $this->company_info->company_id
+								);
+								$this->users->save_fields("approval_groups",$appgroups_fields);
+							}
+						}	
+					}	
+					echo json_encode(array("success"=>"1","error"=>""));
+					return false;
+				}else{
+					$data['error'] = validation_errors("<span class='errors'>","</span>");
+					echo json_encode(array("success"=>"0","error"=>$data['error']));
+					return false;
+				}
+			}
+		// save section	
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/hr/manage_users_admin_view', $data);
+	}
+	
+	/**
+	*	THIS FUNCTIONS SEND EMAIL TO THE EMPLOYEE ONLY INCLUDING HR WHICH ADMIN
+	*	@return send mail
+	*/
+	public function send_invite(){
+		$this->invitemail_layout();
+		redirect('kons/hr/users/test');
+	}
+	
+	public function test(){
+		echo json_encode(array("send_mail"=>"2"));
+	}
+	
+	public function invitemail_layout(){
+		$data = array(
+			"title"				=>"oh yeah",
+			"page_content" 	=> "babay",
+			"token"				=> "werdsfds",
+			"page_title"		=> "Email",
+			"full_name"		=> "christopher cuizon",
+			"admin"				=> "Konsumpayroll"
+		);
+		$content = $this->parser->parse("email_test_view",$data);
+		$this->email->clear();
+		$config['wordwrap'] = TRUE;
+		$config['mailtype'] = 'html';
+		$config['charset'] = 'utf-8';
+		$this->email->initialize($config);
+		$this->email->set_newline("\r\n");
+		$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Konsum Payroll Account Recovery');
+		$this->email->to('christophercuizons@gmail.com');
+		$this->email->cc('christopher.cuizon@techgrowthglobal.com');
+		$this->email->bcc('christopher.cuizon@techgrowthglobal.com');
+		$this->email->subject('Email Test teste333333');
+		$this->email->message($content);
+		$email_check = $this->email->send();	
+		
+	}
+	
+	
+	
 	
 	public function search_name(){
 		$name = $this->input->post("name");

@@ -1402,7 +1402,21 @@
 							$time_in = explode(" ", $row_flexible_compute_time->time_in);;
 							$flexible_work_end = $time_in[1];
 							
-							$end_time = date("H:i:s",strtotime($flexible_work_end) + 60 * 60 * 9); // 9 = company worked hours
+							// flexible total hours per day
+							$sql_flexible_working_days = $this->db->query("
+								SELECT *FROM employee_shifts_schedule ess
+								LEFT JOIN flexible_hours fh ON fh.payroll_group_id = ess.payroll_group_id
+								WHERE ess.emp_id = '{$emp_id}'
+							");
+							
+							if($sql_flexible_working_days->num_rows() > 0){
+								$row_flexible_working_days = $sql_flexible_working_days->row();
+								$sql_flexible_working_days->free_result();
+								$row_flexible_working_days->total_hours_for_the_day;
+							}
+							
+							//$end_time = date("H:i:s",strtotime($flexible_work_end) + 60 * 60 * 9); // 9 = company worked hours
+							$end_time = date("H:i:s",strtotime($flexible_work_end) + 60 * 60 * $row_flexible_working_days);
 							return $end_time;
 						}else{
 							return "00:00:00";
