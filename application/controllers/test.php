@@ -1,6 +1,4 @@
 <?php 
-error_reporting(E_ALL);
-ini_set( 'display_errors','1'); 
 class Test extends CI_Controller {
 	
 	public function __construct() {
@@ -10,9 +8,7 @@ class Test extends CI_Controller {
 	}
 
 	public function index(){
-		echo "<pre>";
-		print_r($this->session->all_userdata());
-		echo "</pre>";
+		
 	}
 	
 	public function iemail(){	
@@ -31,19 +27,19 @@ class Test extends CI_Controller {
 		$config['charset'] = 'utf-8';
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");
-		$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Your Name');
+		$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Konsum Payroll Account Recovery');
 		$this->email->to('christophercuizons@gmail.com');
 		$this->email->cc('christopher.cuizon@techgrowthglobal.com');
 		$this->email->bcc('christopher.cuizon@techgrowthglobal.com');
-		$this->email->subject('Email Test teste ');
+		$this->email->subject('Email Test teste333333');
 		$this->email->message($content);
-		$this->email->send();
-		
+		$email_check = $this->email->send();	
+		if($email_check){
+			redirect('/we/test/success');
+		}
 	}
 	
-	public function destroy(){
-		$this->session->all_userdata();
-	}
+	
 	
 	public function nemail(){
 		$to  = 'christopher.cuizon@techgrowthglobal.com';
@@ -57,7 +53,20 @@ class Test extends CI_Controller {
 	}
 	
 	public function e(){
-		print_r(phpinfo());
+			$data = array(
+			"title"				=>"oh yeah",
+			"page_content" 	=> "babay",
+			"token"				=> "werdsfds",
+			"page_title"		=> "Email",
+			"full_name"		=> "christopher cuizon",
+			"admin"				=> "Konsumpayroll"
+		);
+		$content = $this->parser->parse("email_test_view",$data);
+		redirect('/we/test/b');
+	}
+	
+	public function success(){
+		echo "<h1>Please do check the email</h1>";
 	}
 	
 	public function emailthis(){	
@@ -66,7 +75,7 @@ class Test extends CI_Controller {
 			"page_content" 	=> "babay",
 			"token"				=> "werdsfds",
 			"page_title"		=> "Email",
-			"full_name"		=> "christopher cuizon",
+			"full_name"		=> "Christopher cuizon",
 			"admin"				=> "Konsumpayroll"
 		);
 		$this->parser->parse("email_test_view",$data);
