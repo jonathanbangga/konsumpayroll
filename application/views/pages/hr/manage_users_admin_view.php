@@ -12,7 +12,7 @@
 		<div class="successContBox ihide"></div>
 		<?php echo form_open("",array("onsubmit"=>"return save_users();"));?>
 		<!-- TBL-WRAP START -->
-		<table class="tbl emp_users_list">
+		<table class="tbl emp_users_list" style="width:100%;">
 			<tbody>
 				<tr>
 					<th style="width:50px;">Line</th>
@@ -108,7 +108,7 @@
 						<div class="users_textemp"><?php echo $ne_val->email;?></div>
 					</td>
 					<td>
-						<a invite_approvers="46" href="javascript:void(0);" class="btn btn-gray btn-action jmanageinvite_users">INVITE</a>
+						<a invite_approvers="<?php echo $ne_val->account_id;?>" href="javascript:void(0);" class="btn btn-gray btn-action jmanageinvite_users">INVITE</a>
 						<!--<a edit_approvers="46" href="javascript:void(0);" class="btn btn-gray btn-action jmanage_users">EDIT</a> -->
 					</td>
 				</tr>
@@ -259,11 +259,9 @@
 				var mark_email = jQuery("input[name='normal_email[]']").eq(field_data).val();	
 				if(mark_email !=""){
 					if(check_emailski(mark_email) == false){
-						
 						why_email_invalid = 1;
 					}
 				}
-			
 				if(mark_pcid == "") why_pcid = 1;
 				if(mark_efn == "") why_efn = 1;
 				if(mark_eln == "") why_eln = 1;
@@ -276,14 +274,12 @@
 			if(why_efn != "") why += "<p>- Please enter Employee First Name</p>";
 			if(why_eln != "") why += "<p>- Please enter Employee Last Name</p>";
 			if(why_emn != "") why += "<p>- Please enter Employee Middle Name</p>";
-			if(why_email != "") why += "<p>- Please enter Employee Email Address</p>";
-			
+			if(why_email != "") why += "<p>- Please enter Employee Email Address</p>";			
 			//if(why_email_invalid !="") why +="<p>- Please enter valid Employee Email Address</p>";
 			
 			if(why !=""){
 				var ierror_zon = jQuery("#jerror_admin").offset().top;
 				jQuery("html,body").animate({scrollTop:ierror_zon},"slow");
-
 				jQuery("#jerror_admin").html(why);
 				return false;
 			}else{
@@ -361,9 +357,9 @@
 			jQuery(document).on("click","#add-more-users",function(){
 			    var html = '<tr>';
 				    html +='<td><div class="add_quad"></div></td>';
-				    html +='<td><input type="text" class="inp_user" name="payroll_cloud_id[]"></td>';
-				    html +='<td><input type="text" class="inp_user" name="employee_fullname[]"></td>';
-				    html +='<td><input type="text" class="inp_user" name="email[]"></td>';
+				    html +='<td><input type="text" class="inp_user txtfield" name="payroll_cloud_id[]"></td>';
+				    html +='<td><input type="text" class="inp_user txtfield" name="employee_fullname[]"></td>';
+				    html +='<td><input type="text" class="inp_user txtfield" name="email[]"></td>';
 				//    html +='<td><input type="text" class="inp_user" name="middle_name[]"></td>';
 				//    html +='<td><input type="text" class="inp_user" name="last_name[]"></td>';    
 				//    html +='<td style="display:none;"><input type="hidden" class="inp_user" name="payroll_groups[]">';
@@ -387,11 +383,11 @@
 				var quad = jQuery(".emp_employee_list tr").length; 
 				var html = '<tr>';
 				    html +='<td><div class="add_empl">'+quad+'</div></td>';
-				    html +='<td><input type="text" class="inp_useremp" name="normal_payroll_cloud_id[]"></td>';
-				    html +='<td><input type="text" class="inp_useremp" name="normal_employee_firstname[]"></td>';
-				    html +='<td><input type="text" class="inp_useremp" name="normal_employee_middlename[]"></td>';
-				    html +='<td><input type="text" class="inp_useremp" name="normal_employee_lastname[]"></td>';
-				    html +='<td><input type="text" class="inp_useremp" name="normal_email[]"></td>';
+				    html +='<td><input type="text" class="inp_useremp txtfield" name="normal_payroll_cloud_id[]"></td>';
+				    html +='<td><input type="text" class="inp_useremp txtfield" name="normal_employee_firstname[]"></td>';
+				    html +='<td><input type="text" class="inp_useremp txtfield" name="normal_employee_middlename[]"></td>';
+				    html +='<td><input type="text" class="inp_useremp txtfield" name="normal_employee_lastname[]"></td>';
+				    html +='<td><input type="text" class="inp_useremp txtfield" name="normal_email[]"></td>';
 				    html +='<td><a href="#" class="btn btn-red btn-action jdel_users_append">REMOVE</a></td>';
 				    html +='</tr>'; 				
 					jQuery(".emp_employee_list").append(html);
@@ -554,15 +550,33 @@
 				e.preventDefault();
 				var el = jQuery(this);
 				var invite_approvers = el.attr("invite_approvers");
-				var urls = "/kons/hr/users/ajax_send_invite";
-				var fields = {
-				   "invite_id":invite_approvers,
-				   "ZGlldmlyZ2luamM":jQuery.cookie('d2FsYWd1ZGthdGlsYXdqYw'),					
-				};
-				jQuery.post(urls,fields,function(json){
-					var res = jQuery.parseJSON(json);	
-					console.log(res);
-				});			
+				
+				jQuery(".option_alert").html("Are you sure you want to sent an invite on this user?");
+					jQuery(".option_alert").dialog({
+						resizable: false,
+						height: 150,
+						modal: true,
+						buttons: {
+							"Yes": function () {
+								var urls = "/<?php echo $this->uri->segment(1);?>/hr/users/ajax_send_invite";
+								var fields = {
+								   "invite_id":invite_approvers,
+								   "ZGlldmlyZ2luamM":jQuery.cookie(itokens),					
+								};
+								jQuery.post(urls,fields,function(json){
+									var res = jQuery.parseJSON(json);	
+									jQuery(".option_alert").dialog("close");
+									
+								});		
+							},
+							No: function () {
+								jQuery(".option_alert").dialog("close");
+							}
+						}
+					});						
+				
+				
+				
 			});
 		}
 		

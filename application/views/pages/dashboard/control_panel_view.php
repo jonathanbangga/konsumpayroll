@@ -19,7 +19,7 @@
             <li><a href="#">
               <div><img src="/assets/theme_2013/images/img-panel-icon5.jpg" width="68" height="67" alt=" "></div>
               <span>Compliance</span> </a></li>
-            <li><a href="/<?php echo $this->uri->segment(1);?>/hr/users">
+            <li><a href="/<?php echo $this->uri->segment(1);?>/hr/users/add_admin">
               <div><img src="/assets/theme_2013/images/img-panel-icon6.jpg" width="68" height="67" alt=" "></div>
               <span>Users</span> </a></li>
             <li><a href="#">

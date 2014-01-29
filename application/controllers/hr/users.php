@@ -294,25 +294,39 @@ class Users extends CI_Controller {
 	*/
 	public function ajax_send_invite(){
 		$invite_id = $this->input->post('invite_id');
-		$this->invitemail_layout();
-		redirect('kons/hr/users/test');
+		$email_status = $this->invitemail_layout($invite_id);
+		if($email_status){
+			redirect($this->uri->segment(1)."/hr/users/invitation_success");
+		}else{
+			echo json_encode(array("status"=>"error"));
+			return false;
+		}
 	}
 	
-	public function test(){
+	/**
+	*	INVITATION SUCCESS RESPONSE STATUS
+	*/
+	public function invitation_success(){
 		echo json_encode(array("send_mail"=>"2"));
 	}
 	
+	/**
+	*	SENDING EMAIL THROugh HERE 
+	*	@param int $account_id
+	*	@return boolean
+	*/
 	public function invitemail_layout($account_id){
 		#$account_id = $this->input->post('account_id');
 		$invitations = $this->users->send_invitation($this->company_info->company_id,$account_id);
+	
 		if($invitations){
 			$name = $invitations->first_name." ".$invitations->last_name;
 			$data = array(
-				"title"				=>"Invitations",
-				"page_content" 	=> "Invitations",
+				"title"				=> "Invitations",
+				"page_content" 		=> "Invitations",
 				"token"				=> $invitations->token,
 				"page_title"		=> $invitations->email,
-				"full_name"		=> ucfirst($name),
+				"full_name"			=> ucfirst($name),
 				"admin"				=> "Konsumpayroll"
 			);
 			$content = $this->parser->parse("email_test_view",$data);
@@ -328,8 +342,10 @@ class Users extends CI_Controller {
 			$this->email->subject('Email Test teste333333');
 			$this->email->message($content);
 			$email_check = $this->email->send();	
-		}
-		
+			return true;
+		}else{
+			return false;
+		}	
 	}
 	
 	

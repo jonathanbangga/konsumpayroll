@@ -14,7 +14,7 @@ class Account_model extends CI_Model {
 			LEFT JOIN `payroll_system_account` AS psa ON ( a.`payroll_system_account_id` = psa.`payroll_system_account_id` ) 
 			LEFT JOIN employee e ON a.account_id = e.account_id
 			LEFT JOIN company c ON e.company_id = c.company_id
-			WHERE a.`payroll_cloud_id` = '{$user}'
+			WHERE a.`email` = '{$user}'
 			AND a.`password` = '{$pass}'
 			AND a.`account_type_id` = {$account_type}
 		");
