@@ -20,10 +20,10 @@
 		<td><?php echo $hp->payroll_cloud_id; ?></td>
 		<td><?php echo $hp->first_name.' '. $hp->last_name; ?></td>
 		<td><?php echo date('m/d/Y',strtotime($hp->payroll_period)); ?></td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
+		<td><?php echo ($hp->hol_day!="")?date('m/d/Y',strtotime($hp->hol_day)):''; ?></td>
+		<td><?php echo $hp->hour_type_name; ?></td>
+		<td><?php echo ($hp->pay_rate)?$hp->pay_rate.'%':''; ?></td>
+		<td><?php echo ($hp->counted_hol_hours>0)?$hp->counted_hol_hours:$hp->tot_hours; ?></td>
 	</tr>
 	<?php
 	}
@@ -31,7 +31,7 @@
   </table>
 </div>
 <p class="pagination">
-pagination
+<?php echo $pagination; ?>
 <div style="clear:both;"></div>
 </p>
 
