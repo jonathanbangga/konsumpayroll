@@ -789,6 +789,31 @@ function ierror_mark(fields){
 	return codered;
 }
 
+// VALIDATES MULTIPLE EMAIL
+function ierror_email(fields){
+	jQuery(fields).each(function(e){
+		var el = jQuery(this);
+		if(check_emailski(el.val()) == false){
+			jQuery(this).addClass('emp_str');
+		}else{
+			jQuery(this).removeClass('emp_str');
+		}
+	});
+}
+
+// VALIDATES PAYROLL CLOUD ID MUST BE 10 atleast
+function ierror_emp_minlength(fields){
+	jQuery(fields).each(function(e){
+		var el = jQuery(this);
+		if(el.val().length < 10){
+			jQuery(this).addClass('emp_str');
+		}else{
+			jQuery(this).removeClass('emp_str');
+		}
+	});
+}
+
+
 // MARK DUPLICATE
 function ierror_duplicate(fields){
 	var dup = 0;
@@ -882,6 +907,12 @@ function ishow_status(){
 			jQuery(this).fadeOut(6000);
 		});
 	}
+}
+
+//CHECK IF EMAIL IS VALID IF RETURN TRUE THEN VALID
+function check_emailski(email) {  
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }
 
 // NUMBERS ONLY

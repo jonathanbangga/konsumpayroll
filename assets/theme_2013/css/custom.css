@@ -219,4 +219,8 @@ select#jpayroll_group{
 .tbl.emp_users_list {
     width: 100%;
 }
+
+.inp_useremp {
+    padding: 3px;
+}
 /** end manage users chris **/

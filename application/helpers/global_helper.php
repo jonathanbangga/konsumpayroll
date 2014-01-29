@@ -403,4 +403,8 @@
 		return $row->$field;
 	}
 	
+	function tokenize(){
+		return random_string('alnum', 16);
+	}
+	
 	
