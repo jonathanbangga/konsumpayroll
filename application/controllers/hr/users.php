@@ -146,6 +146,8 @@ class Users extends CI_Controller {
 	
 		$data['permission_type'] = $this->users->permission_type($this->company_info->company_id);
 		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+		$data['normal_employee'] = $this->users->normal_employee($this->company_info->company_id);
+
 		// save
 			if($this->input->post('save')){
 				$payroll_cloud_id = $this->input->post('payroll_cloud_id');
@@ -214,11 +216,84 @@ class Users extends CI_Controller {
 		$this->layout->view('pages/hr/manage_users_admin_view', $data);
 	}
 	
+	public function add_employee(){
+		if($this->input->post('save_employee')){
+			$normal_payroll_cloud_id = $this->input->post('normal_payroll_cloud_id');
+			$normal_employee_firstname = $this->input->post('normal_employee_firstname');
+			$normal_employee_middlename = $this->input->post('normal_employee_middlename');
+			$normal_employee_lastname = $this->input->post('normal_employee_lastname');
+			$normal_payroll_cloud_id = $this->input->post('normal_payroll_cloud_id');
+			$normal_email = $this->input->post('normal_email');
+			
+			foreach($normal_payroll_cloud_id as $k=>$v){
+				$this->form_validation->set_rules("normal_payroll_cloud_id[".$k."]","Payroll Cloud ID (".$k."):","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]|min_length[8]|max_length[20]");
+				$this->form_validation->set_rules("normal_email[".$k."]","Employee Email (".$k."):","required|trim|xss_clean|valid_email|is_unique[accounts.email]");
+				$this->form_validation->set_rules("normal_employee_firstname[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
+				$this->form_validation->set_rules("normal_employee_middlename[".$k."]","Employee Middle Name (".$k."):","required|trim|xss_clean");
+				$this->form_validation->set_rules("normal_employee_lastname[".$k."]","Employee Last Name (".$k."):","required|trim|xss_clean");	
+			}		
+			
+			if($this->form_validation->run() == true){
+				foreach($normal_payroll_cloud_id as $key=>$val):
+					$account_fields = array(
+						"payroll_cloud_id" 	=> $this->db->escape_str($val),
+						"account_type_id"	=> 2, // 2 which is users only
+						"user_type_id"		=> 5,  // 3 Defines as HR on user_type table
+						"email"				=> $normal_email[$key],
+						"payroll_system_account_id" => $this->session->userdata("psa_id"),
+						"token"			=> tokenize()
+					);	
+				
+					$account_id = $this->users->save_fields("accounts",$account_fields);
+						// CREATE EMPLOYEE
+					$fields = array(
+						"last_name" 	=> $this->db->escape_str($normal_employee_lastname[$key]),
+						"first_name" 	=> $this->db->escape_str($normal_employee_firstname[$key]),
+						"middle_name" 	=> $this->db->escape_str($normal_employee_middlename[$key]),
+						"account_id"	=> $this->db->escape_str($account_id),
+						"company_id"	=> $this->company_info->company_id
+					);
+					$emp_id = $this->users->save_fields("employee",$fields);
+				endforeach;
+				echo json_encode(array("success"=>"1","error"=>""));
+				return false;
+			}else{
+				$data['error'] = validation_errors("<span class='errors'>","</span>");
+				echo json_encode(array("success"=>"0","error"=>$data['error']));
+				return false;
+			}
+		};
+	}
+	
+	public function ajax_check_email(){
+		if($this->input->is_ajax_request()){
+			$email = trim($this->input->post('email'));
+			$row = $this->users->existing_email($email);
+			echo json_encode(array("existings"=>$row));
+			return false;
+		}else{
+			show_404();
+		}
+	}
+	
+	public function ajax_check_employee_id(){		
+		if($this->input->is_ajax_request()){
+			$normal_payroll_cloud_id = trim($this->input->post('check_employee_id'));
+			$row = $this->users->existing_account($normal_payroll_cloud_id);
+			echo json_encode(array("existings"=>$row));
+			return false;
+		}else{
+			show_404();
+		}
+	}
+	
+	
 	/**
 	*	THIS FUNCTIONS SEND EMAIL TO THE EMPLOYEE ONLY INCLUDING HR WHICH ADMIN
 	*	@return send mail
 	*/
-	public function send_invite(){
+	public function ajax_send_invite(){
+		$invite_id = $this->input->post('invite_id');
 		$this->invitemail_layout();
 		redirect('kons/hr/users/test');
 	}
@@ -227,33 +302,35 @@ class Users extends CI_Controller {
 		echo json_encode(array("send_mail"=>"2"));
 	}
 	
-	public function invitemail_layout(){
-		$data = array(
-			"title"				=>"oh yeah",
-			"page_content" 	=> "babay",
-			"token"				=> "werdsfds",
-			"page_title"		=> "Email",
-			"full_name"		=> "christopher cuizon",
-			"admin"				=> "Konsumpayroll"
-		);
-		$content = $this->parser->parse("email_test_view",$data);
-		$this->email->clear();
-		$config['wordwrap'] = TRUE;
-		$config['mailtype'] = 'html';
-		$config['charset'] = 'utf-8';
-		$this->email->initialize($config);
-		$this->email->set_newline("\r\n");
-		$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Konsum Payroll Account Recovery');
-		$this->email->to('christophercuizons@gmail.com');
-		$this->email->cc('christopher.cuizon@techgrowthglobal.com');
-		$this->email->bcc('christopher.cuizon@techgrowthglobal.com');
-		$this->email->subject('Email Test teste333333');
-		$this->email->message($content);
-		$email_check = $this->email->send();	
+	public function invitemail_layout($account_id){
+		#$account_id = $this->input->post('account_id');
+		$invitations = $this->users->send_invitation($this->company_info->company_id,$account_id);
+		if($invitations){
+			$name = $invitations->first_name." ".$invitations->last_name;
+			$data = array(
+				"title"				=>"Invitations",
+				"page_content" 	=> "Invitations",
+				"token"				=> $invitations->token,
+				"page_title"		=> $invitations->email,
+				"full_name"		=> ucfirst($name),
+				"admin"				=> "Konsumpayroll"
+			);
+			$content = $this->parser->parse("email_test_view",$data);
+			$this->email->clear();
+			$config['wordwrap'] = TRUE;
+			$config['mailtype'] = 'html';
+			$config['charset'] = 'utf-8';
+			$this->email->initialize($config);
+			$this->email->set_newline("\r\n");
+			$this->email->from('christopher.cuizon@techgrowthglobal.com', 'Konsum Payroll Account Recovery');
+			$this->email->to($invitations->email);
+			$this->email->cc('christopher.cuizon@techgrowthglobal.com');
+			$this->email->subject('Email Test teste333333');
+			$this->email->message($content);
+			$email_check = $this->email->send();	
+		}
 		
 	}
-	
-	
 	
 	
 	public function search_name(){

@@ -14,6 +14,7 @@
 		 */
 		public function __construct() {
 			parent::__construct();
+			
 		}
 
 		/**
@@ -203,6 +204,76 @@
 			$query->free_result();
 			return $row;
 		}
+		
+		/**
+		*	DSPLAYS NORMAL EMPLOYEE NO  HR NO ACCOUNTANT
+		*	@param int $company_id
+		*	@return object
+		*/
+		public function normal_employee($company_id){
+			if(is_numeric($company_id)){
+				$company_id = $this->db->escape_str($company_id);
+				$query = $this->db->query("SELECT * FROM accounts a LEFT JOIN employee e on e.account_id = a.account_id WHERE a.user_type_id = '5' AND e.company_id = '".$company_id."' AND a.deleted= '0' AND e.deleted = '0'");
+				$result = $query->result();
+				$query->free_result();
+				return $result;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		*	CHECK IF EMAIL IS EXISTING OR N O T
+		*	@param email
+		* 	@return boolean
+		*/
+		public function existing_email($email){
+			if($email !=""){
+				$query = $this->db->query("SELECT * FROM accounts WHERE email='{$this->db->escape_str($email)}'");
+				$row = $query->num_rows();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+				/**
+		*	CHECK IF EMAIL IS EXISTING OR N O T
+		*	@param email
+		* 	@return boolean
+		*/
+		public function existing_account($payroll_cloud_id){
+			if($payroll_cloud_id){
+				$query = $this->db->query("SELECT * FROM accounts WHERE payroll_cloud_id='{$this->db->escape_str($payroll_cloud_id)}'");
+				$row = $query->num_rows();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+			
+		/**
+		*	SEND INVITATIONS DATAS
+		*	@param int $company_id
+		*	@param int $account_id
+		*	@return object
+		*/
+		public function send_invitation($company_id,$account_id){
+			if(is_numeric($company_id) && is_numeric($account_id)){
+				$company_id = $this->db->escape_str($company_id);
+				$account_id = $this->db->escape_str($account_id);
+				$query = $this->db->query("SELECT * FROM employee e LEFT JOIN accounts a on a.account_id = e.account_id WHERE e.company_id ='{$company_id}' AND a.account_id = '{$account_id}'");
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		
 	}
 
 /* End of file Company_model.php */
