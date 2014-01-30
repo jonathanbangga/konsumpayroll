@@ -133,9 +133,9 @@ class Users extends CI_Controller {
 	}
 	
 	public function add_admin(){
-		$url = "/{$this->subdomain}/hr/users/index";
+		$url = "/{$this->subdomain}/hr/users/add_admin";
 		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
-		$data['page_title'] = "Manage Users";	
+		$data['page_title'] = "Manage Users Admin";	
 		$data['sidebar_menu'] =$this->sidebar_menu;	
 		$data['total_rows'] = $this->users->fetch_approvers_users_count($this->company_info->company_id);
 		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
@@ -144,7 +144,7 @@ class Users extends CI_Controller {
 		$data['approval_group'] = $this->users->fetch_approval_group($this->company_info->company_id);
 		$data['approval_process'] = $this->users->approval_process($this->company_info->company_id);
 	
-		$data['permission_type'] = $this->users->permission_type($this->company_info->company_id);
+		$data['user_roles'] = $this->users->permission_type($this->company_info->company_id);
 		$data['approvers_list'] = $this->users->fetch_approvers_users($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
 		$data['normal_employee'] = $this->users->normal_employee($this->company_info->company_id);
 
@@ -152,13 +152,18 @@ class Users extends CI_Controller {
 			if($this->input->post('save')){
 				$payroll_cloud_id = $this->input->post('payroll_cloud_id');
 				$emp_email  = $this->input->post('email');
-				$emp_fullname 	= $this->input->post("employee_fullname");
+				$employee_firstname 	= $this->input->post("employee_firstname");
+				$employee_middlename 	= $this->input->post("employee_middlename");
+				$employee_lastname 	= $this->input->post("employee_lastname");
 				$emp_permission	= $this->input->post('permission');	
+				$approval_process_id = $this->input->post("approval_process_id");
 				if($emp_email){
 					foreach($payroll_cloud_id as $k=>$v){
 						$this->form_validation->set_rules("payroll_cloud_id[".$k."]","Payroll Cloud ID (".$k."):","required|trim|xss_clean|is_unique[accounts.payroll_cloud_id]");
 						$this->form_validation->set_rules("email[".$k."]","Employee Email (".$k."):","required|trim|xss_clean|valid_email|is_unique[accounts.email]");
-						$this->form_validation->set_rules("employee_fullname[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("employee_firstname[".$k."]","Employee First Name (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("employee_middlename[".$k."]","Employee Middle Name (".$k."):","required|trim|xss_clean");
+						$this->form_validation->set_rules("employee_lastname[".$k."]","Employee Last Name (".$k."):","required|trim|xss_clean");
 						$this->form_validation->set_rules("permission[".$k."]","Permission (".$k."):","trim|xss_clean");
 					}		
 				}		
@@ -166,17 +171,19 @@ class Users extends CI_Controller {
 					foreach($payroll_cloud_id as $key=>$val){
 						$account_fields = array(
 									"payroll_cloud_id" 	=> $this->db->escape_str($val),
-									//"password"			=> md5($password[$key]),
+									"password"			=> md5("password"),
 									"account_type_id"	=> 2, // 2 which is users only
 									"user_type_id"		=> 3,  // 3 Defines as HR on user_type table
 									"email"				=> $emp_email[$key],
-									"payroll_system_account_id" => $this->session->userdata("psa_id")
+									"payroll_system_account_id" => $this->session->userdata("psa_id"),
+									"token"=> tokenize()
 						);	
 						$account_id = $this->users->save_fields("accounts",$account_fields);
 						// CREATE EMPLOYEE
 						$fields = array(
-							"last_name" 	=> $this->db->escape_str($emp_fullname[$key]),
-							"first_name" 	=> $this->db->escape_str($emp_fullname[$key]),
+							"last_name" 	=> $this->db->escape_str($employee_lastname[$key]),
+							"first_name" 	=> $this->db->escape_str($employee_firstname[$key]),
+							"middle_name"=>$this->db->escape_str($employee_middlename[$key]),
 							"account_id"	=> $this->db->escape_str($account_id),
 							"company_id"	=> $this->company_info->company_id
 						);
@@ -192,17 +199,18 @@ class Users extends CI_Controller {
 						$this->users->save_fields("company_approvers",$approvers_fields);
 						// ADD PAYROLL TO APPROVAL PROCESS
 						$employee_info = $this->users->employee_info($account_id);
-						if($approval_process_id[$key]){
-							if($employee_info){
-								$appgroups_fields = array(
-									"approval_process_id" => $approval_process_id[$key],
-									"emp_id"		=> $employee_info->emp_id,
-									"company_id"	=> $this->company_info->company_id
-								);
-								$this->users->save_fields("approval_groups",$appgroups_fields);
-							}
-						}	
+						//if($approval_process_id[$key]){
+						//	if($employee_info){
+						//		$appgroups_fields = array(
+						//			"approval_process_id" => $approval_process_id[$key],
+						//			"emp_id"		=> $employee_info->emp_id,
+						//			"company_id"	=> $this->company_info->company_id
+						//		);
+						//		$this->users->save_fields("approval_groups",$appgroups_fields);
+						//	}
+						//}	
 					}	
+					 $this->session->set_flashdata("add_admin_succes","Successfully saved!");
 					echo json_encode(array("success"=>"1","error"=>""));
 					return false;
 				}else{
@@ -214,6 +222,20 @@ class Users extends CI_Controller {
 		// save section	
 		$this->layout->set_layout($this->theme);	
 		$this->layout->view('pages/hr/manage_users_admin_view', $data);
+	}
+	
+	public function employee_list(){
+		$url = "/{$this->subdomain}/hr/users/employee_list";
+		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+		$data['page_title'] = "Manage Users Employee";	
+		$data['sidebar_menu'] =$this->sidebar_menu;	
+		$data['total_rows'] = $this->users->count_normal_employee($this->company_info->company_id);
+		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
+		$data['pagi'] = $this->pagination->create_links();
+		$data['company_info'] = $this->company_info;
+		$data['normal_employee'] = $this->users->normal_employee($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/hr/manage_users_employee_view', $data);
 	}
 	
 	public function add_employee(){
@@ -255,6 +277,7 @@ class Users extends CI_Controller {
 					);
 					$emp_id = $this->users->save_fields("employee",$fields);
 				endforeach;
+				$this->session->set_flashdata("add_admin_succes","Successfully saved!");
 				echo json_encode(array("success"=>"1","error"=>""));
 				return false;
 			}else{

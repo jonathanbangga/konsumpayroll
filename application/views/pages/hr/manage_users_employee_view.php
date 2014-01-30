@@ -8,86 +8,14 @@
 <?php } ?>
 <!-- end status checker -->
 <p>
-<?php 
+<?php
 	echo anchor($this->uri->segment(1)."/hr/users/add_admin","ADMIN",array("class"=>"btn"));
 	echo "&nbsp;&nbsp;";
 	echo anchor($this->uri->segment(1)."/hr/users/employee_list","EMPLOYEE",array("class"=>"btn"));
 ?>
-
 </p>
 <div class="error_msg_cont" id="jerror_admin"></div>
-
-<div class="show_users">
-	<div class="tbl-wrap">	
-		<?php echo form_open("",array("onsubmit"=>"return save_users();"));?>
-		<!-- TBL-WRAP START -->
-		<table class="tbl emp_users_list" style="width:100%;">
-			<tbody>
-				<tr>
-					<th style="width:50px;">Line</th>
-					<th style="width:100px;">Employee ID</th>
-					<th style="width:170px;">Employee First Name</th>
-					<th style="width:170px;">Employee Middle Name</th>
-					<th style="width:170px;">Employee Last Name</th>
-					<th style="width:170px;">Email Address</th>
-					<th style="width:170px;">Roles</th>
-					<th style="width:170px">Action</th>
-				</tr>
-				<?php 
-					if($approvers_list){
-						foreach($approvers_list as $key=>$approvers):
-				?>
-				<tr>
-					<td><?php echo ($this->uri->segment(5))? $key+$this->uri->segment(5)+4:$key+1;?></td>
-					<td><div class="users_text"><?php echo $approvers->payroll_cloud_id;?></div></td>
-					<td>
-						<input type="hidden" id="account_id" name="update_account_id" value="<?php echo base64_encode($approvers->account_id);?>">
-						<div class="users_text"><?php echo $approvers->first_name;?></div>
-					</td>
-					<td>
-						<div class="users_text"><?php echo $approvers->middle_name;?></div>
-					</td>			
-					<td>
-						<div class="users_text"><?php echo $approvers->last_name;?></div>
-					</td>
-					<td>
-					<input type="hidden" name="update_email[]" value="<?php echo $approvers->email;?>" class="inp_user">
-					<div class="users_text"><?php echo $approvers->email;?></div></td>
-					<td>
-						<?php 
-							$permission_list =  $this->users->permission_define($company_info->company_id,$approvers->account_id);		
-						
-							if($permission_list){
-								echo $permission_list->roles;	
-							}
-						?>
-					</td>
-					<td> 
-					<a class="btn btn-gray btn-action jmanageinvite_users" href="javascript:void(0);" invite_approvers="<?php echo $approvers->account_id;?>">INVITE</a>
-						<!-- <a class="btn btn-gray btn-action jmanage_users" href="javascript:void(0);" edit_approvers="<?php echo $approvers->account_id;?>" >EDIT</a> -->
-					</td>
-				</tr>
-				<?php 		
-						endforeach;
-					}
-				?>
-			</tbody> 
-		</table>
-		<span class="ihides unameContBoxTrick"></span>
-		<!-- TBL-WRAP END -->
-	</div>
-		
-	<div class="left pagi-lefts">
-		<!-- <a id="add-more-users" href="javascript:void(0);" class="btn">ADD USERS</a> -->
-		<input type="button" onclick="return false;" id="add-more-users"  name="add" value="ADD USERS" class="btn" />
-		<input type="submit" name="save" value="SAVE" class="btn ihide" />
-	</div>
-	<div class="right pagi-rights"><?php  echo $pagi;?></div>
-	<p>&nbsp;</p>
-	<?php echo form_close();?>
-</div>	
-<!-- emploeee details -->
-	<div class="show_employee ihide"> 
+	<div class="show_employee"> 
 	<?php echo form_open($this->uri->segment(1)."/hr/users/add_employee",array("onsubmit"=>"return add_normal_employe();","id"=>"j_addemployee_form"));?>
 		<table class="tbl emp_employee_list" style="width:100%">
 			<tbody>
@@ -140,6 +68,9 @@
 			<input type="button" onclick="return false;" id="add-more-employee"  name="add" value="ADD EMPLOYEE" class="btn" />
 			<input type="submit" name="save_employee" value="SAVE" class="btn ihide" />
 		</div>
+		<br />
+		<div class="right pagi-rights"><?php  echo $pagi;?></div>
+		
 	<?php echo form_close();?>
 	</div>
 <!-- end employee details -->
@@ -195,11 +126,6 @@
 	</div>
 	<?php 
 		$options = "<option value=\"\">Please select roles</option>";
-		if($user_roles){
-			foreach($user_roles as $users_roles_key=>$users_roles_val){
-				$options .='<option value="'.$users_roles_val->users_roles_id.'">'.$users_roles_val->roles.'</option>';	
-			}
-		}	
 	?>	
 	<script type="text/javascript">
 		//token
@@ -215,20 +141,7 @@
 
 		// AUTOCOMPLETE
 		function search_name(){
-			var domain_url = "<?php echo $this->uri->segment(1);?>";
-			var availableTags = <?php echo $approval_group;?>;
-			jQuery("input[name='payroll_group[]']").autocomplete({
-				source: availableTags,select: function (event, ui) {
-					var el = jQuery(this);
-					if(ui.item.approval_process_id){
-				   		el.attr('process_id',ui.item.approval_process_id);
-				   		el.next().val(ui.item.approval_process_id);
-				   		el.attr("readonly","readonly");
-					}else{
-						el.attr('process_id','');
-				   }
-				}
-			});
+			// IDONT KNOW WHAT IS THIS
 		}
 		
 		// ADD NORMAL EMPLOYEE

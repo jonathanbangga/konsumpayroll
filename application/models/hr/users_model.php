@@ -210,10 +210,12 @@
 		*	@param int $company_id
 		*	@return object
 		*/
-		public function normal_employee($company_id){
+		public function normal_employee($company_id,$limit=10,$start=0){
 			if(is_numeric($company_id)){
 				$company_id = $this->db->escape_str($company_id);
-				$query = $this->db->query("SELECT * FROM accounts a LEFT JOIN employee e on e.account_id = a.account_id WHERE a.user_type_id = '5' AND e.company_id = '".$company_id."' AND a.deleted= '0' AND e.deleted = '0'");
+				$sql = "SELECT * FROM accounts a LEFT JOIN employee e on e.account_id = a.account_id WHERE a.user_type_id = '5' AND e.company_id = '".$company_id."' AND a.deleted= '0' AND e.deleted = '0' ";
+				if($limit){ $sql .=" LIMIT {$start},{$limit}"; }
+				$query = $this->db->query($sql);			
 				$result = $query->result();
 				$query->free_result();
 				return $result;
@@ -221,6 +223,24 @@
 				return false;
 			}
 		}
+		
+		/**
+		*	THIS WILL COUNT THE NORMAL EMPLOYEE
+		*	@param int $company_id
+		*	@return integer
+		*/
+		public function count_normal_employee($comp_id){
+			if(is_numeric($comp_id)){
+				$query = $this->db->query("SELECT count(*) as val FROM accounts a LEFT JOIN employee e on e.account_id = a.account_id WHERE a.user_type_id = '5' AND e.company_id = '".$comp_id."' AND a.deleted= '0' AND e.deleted = '0'");
+				$row = $query->row();
+				$num_rows = $query->num_rows();
+				$query->free_result();
+				return ($num_rows) ? $row->val : 0;
+			}else{
+				return false;
+			}		
+		}
+		
 		
 		/**
 		*	CHECK IF EMAIL IS EXISTING OR N O T
