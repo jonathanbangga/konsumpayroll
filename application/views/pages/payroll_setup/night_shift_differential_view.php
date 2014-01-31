@@ -21,6 +21,7 @@
 			  $to_hour = $to2[0];
 			  $to_min = $to2[1];
 			  $to_period = $to2[2];
+			  $rate_type = $nsd->rate_type;
 			  $rate = $nsd->rate;
 		  }else{
 			  $orig_from = "";
@@ -31,6 +32,7 @@
 			  $to_hour = "";
 			  $to_min = "";
 			  $to_period = "";
+			  $rate_type = "";
 			  $rate = "";
 		  }
 		  
@@ -92,9 +94,29 @@
           </table>
           <!-- TBL-WRAP END -->
         </div>
-        <p> Night Differential Rate (%)
-          <input style="width:55px; margin-left:5px;" class="txtfield" id="nsd_rate" type="text" value="<?php echo $rate; ?>">
+		
+        <p> 
+		<table class="ndr_field">
+			<tr>
+				<td>Night Differential Rate</td>
+				<td>
+					 <!--<input style="width:55px; margin-left:5px;" class="txtfield" id="nsd_rate" type="text" value="<?php echo $rate; ?>">-->
+					<select class="txtselect" id="rate_type">
+						<option value="">--select--</option>
+						<option value="fixed amount" <?php echo ($rate_type=='fixed amount')?'selected="selected"':''; ?>>fixed amount</option>
+						<option value="basic pay rate" <?php echo ($rate_type=='basic pay rate')?'selected="selected"':''; ?>>basic pay rate %</option>
+						<option value="hourly rate" <?php echo ($rate_type=='hourly rate')?'selected="selected"':''; ?>>hourly rate %</option>
+						<option value="daily rate" <?php echo ($rate_type=='daily rate')?'selected="selected"':''; ?>>daily rate %</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Value</td>
+				<td><input type="text" class="txtfield" id="rate" style="width: 25px;" value="<?php echo $rate; ?>" /></td>
+			</tr>
+		</table> 
         </p>
+	
 		<a href="javascript:void(0);" class="btn" id="save">SAVE</a>
         <!-- MAIN-CONTENT END -->
       </div>
@@ -106,6 +128,12 @@
 	  
 <link href="/assets/theme_2013/css/custom/jc.css" rel="stylesheet" />
 <script type="text/javascript"  src="/assets/theme_2013/js/jc.js"></script>
+
+<style>
+.ndr_field td{
+	padding: 4px 8px;
+}
+</style>
 	  
 <script>
 jQuery(document).ready(function(){
@@ -132,7 +160,8 @@ jQuery(document).ready(function(){
 		var empty = false;
 		var nsd_from = jQuery("#nsd_from").val();
 		var nsd_to = jQuery("#nsd_to").val();
-		var nsd_rate = jQuery("#nsd_rate").val();
+		var rate_type = jQuery("#rate_type").val();
+		var rate = jQuery("#rate").val();
 		var url = "<?php echo ($sql_nsd->num_rows()>0)?"ajax_update_nsd_settings":"ajax_add_nsd_settings" ?>";
 		var msg = "<?php echo ($sql_nsd->num_rows()>0)?"updated":"saved" ?>";
 		// ajax call
@@ -142,7 +171,8 @@ jQuery(document).ready(function(){
 			data: {
 				nsd_from: nsd_from, 
 				nsd_to: nsd_to,
-				nsd_rate: nsd_rate,
+				rate_type: rate_type,
+				rate: rate,
 				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
 			}
 		}).done(function(ret){

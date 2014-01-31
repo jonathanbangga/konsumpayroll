@@ -28,15 +28,17 @@ class Night_shift_differential extends CI_Controller {
 	public function ajax_add_nsd_settings(){
 		$nsd_from = date("H:i:s",strtotime($this->input->post('nsd_from')));
 		$nsd_to = date("H:i:s",strtotime($this->input->post('nsd_to')));
-		$nsd_rate = $this->input->post('nsd_rate');
-		$this->night_shift_differential_model->set_night_shift_differential_settings($nsd_from,$nsd_to,$nsd_rate);
+		$rate_type = $this->input->post('rate_type');
+		$rate = $this->input->post('rate');
+		$this->night_shift_differential_model->set_night_shift_differential_settings($nsd_from,$nsd_to,$rate_type,$rate);
 	}
 	
 	public function ajax_update_nsd_settings(){
 		$nsd_from = date("H:i:s",strtotime($this->input->post('nsd_from')));
 		$nsd_to = date("H:i:s",strtotime($this->input->post('nsd_to')));
-		$nsd_rate = $this->input->post('nsd_rate');
-		$this->night_shift_differential_model->update_night_shift_differential_settings($nsd_from,$nsd_to,$nsd_rate);
+		$rate_type = $this->input->post('rate_type');
+		$rate = $this->input->post('rate');
+		$this->night_shift_differential_model->update_night_shift_differential_settings($nsd_from,$nsd_to,$rate_type,$rate);
 	}
 	
 }

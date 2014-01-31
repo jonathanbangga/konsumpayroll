@@ -18,30 +18,33 @@ class Night_shift_differential_model extends CI_Model {
 		");
 	}
 	
-	public function set_night_shift_differential_settings($from_time="",$to_time="",$rate=""){
+	public function set_night_shift_differential_settings($from_time="",$to_time="",$rate_type="",$rate=""){
 		$this->db->query("
 			INSERT INTO 
 				`nightshift_differential_settings`(
 					`from_time`,
 					`to_time`,
+					`rate_type`,
 					`rate`,
 					`company_id`
 				)
 				VALUES(
 					'{$from_time}',
 					'{$to_time}',
+					'{$rate_type}',
 					'{$rate}',
 					{$this->company_id}
 				)
 		");
 	}
 	
-	public function update_night_shift_differential_settings($from_time="",$to_time="",$rate=""){
+	public function update_night_shift_differential_settings($from_time="",$to_time="",$rate_type="",$rate=""){
 		$this->db->query("
 			UPDATE `nightshift_differential_settings` 
 			SET
 				`from_time` = '{$from_time}',
 				`to_time` = '{$to_time}',
+				`rate_type` = '{$rate_type}',
 				`rate` = '{$rate}'
 			WHERE `company_id` = {$this->company_id}
 		");
