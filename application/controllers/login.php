@@ -15,7 +15,16 @@ class Login extends CI_Controller {
 	public function validate_login($account_type){
 		$user = mysql_real_escape_string($this->input->post('user'));
 		$pass = md5(mysql_real_escape_string($this->input->post('pass')));
-		$this->authentication->validate_login($user,$pass,$account_type); 
+		$this->form_validation->set_rules("user","user","trim|xss_clean|required");
+		$this->form_validation->set_rules("pass","password","trim|xss_clean|required");
+		
+		if($this->form_validation->run() == TRUE){
+			$this->authentication->validate_login($user,$pass,$account_type); 
+		}else{
+			$this->session->set_flashdata("error_nofields","Required username and password");
+		
+			redirect("/");
+		}
 	}
 	
 	public function admin(){

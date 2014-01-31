@@ -40,9 +40,8 @@
 				$sql = "SELECT DISTINCT * FROM company_approvers ca 
 						LEFT JOIN employee e on e.account_id = ca.account_id
 						LEFT JOIN accounts a on a.account_id = e.account_id
-						WHERE ca.company_id = {$this->db->escape_str($comp_id)} and ca.deleted = '0' 
-						AND e.deleted = '0' AND a.deleted = '0' ORDER BY ca.level DESC 
-						";
+						WHERE ca.company_id = {$this->db->escape_str($comp_id)} and ca.deleted = '0' AND a.user_type_id = '3' 
+						AND e.deleted = '0' AND a.deleted = '0' ORDER BY ca.level DESC ";
 				if($limit){
 					$sql .=" LIMIT {$start},{$limit}";
 				}

@@ -24,6 +24,7 @@ class Authentication {
 				   'account_type_id'  => $a->account_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
+				$this->ci->session->set_flashdata("error_denied","The username and password is invalid");
 				redirect('/admin/dashboard');
 			}else{
 				redirect('/login/admin');
@@ -44,13 +45,16 @@ class Authentication {
 				if($a->user_type_id == 3 || $a->user_type_id == 2){
 					// redirect owner or hr
 					$this->ci->session->set_userdata($newdata);
+					
 					redirect("/{$a->main_sub_domain}/dashboard/company_list");
 				}elseif($a->user_type_id == 5){
 					// redirect employee
 					$this->ci->session->set_userdata($newdata);
+					
 					redirect("/{$a->company_name}/employee/emp_time_in");
 				}
 			}else{
+				$this->ci->session->set_flashdata("error_denied","The username and password is invalid");
 				redirect('/');
 			}
 			

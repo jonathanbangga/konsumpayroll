@@ -23,6 +23,7 @@
 			$this->theme = $this->config->item('default');
 			$this->menu = "content_holders/hr_company_sidebar_menu";
 			$this->load->model("hr/company_model","company");
+			$this->authentication->check_if_logged_in();	
 		}
 		
 		/**

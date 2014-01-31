@@ -1,9 +1,17 @@
+
 <?php echo form_open("login/validate_login/2");?>
 <div class="logo3">
       <!-- LOGO3 START -->
       <img src="/assets/theme_2013/images/img-logo3.png" alt=" ">
       <!-- LOGO3 END -->
     </div>
+	<p class="error">
+	<?php 
+	echo $this->session->flashdata("error_denied");
+	echo $this->session->flashdata("error_nofields");
+	?>
+	</p>
+
     <table style="width:180px" class="marginA">
   <tr>
     <td colspan="2"><input class="txtfield input-bungot" name="user" type="text" placeholder="Email"></td>
