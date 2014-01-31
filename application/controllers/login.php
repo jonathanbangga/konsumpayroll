@@ -21,7 +21,7 @@ class Login extends CI_Controller {
 		if($this->form_validation->run() == TRUE){
 			$this->authentication->validate_login($user,$pass,$account_type); 
 		}else{
-			$this->session->set_flashdata("error_nofields","Required username and password");
+			$this->session->set_flashdata("error_nofields","Required email and password");
 		
 			redirect("/");
 		}

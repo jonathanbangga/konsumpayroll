@@ -310,7 +310,6 @@ class Users extends CI_Controller {
 		}
 	}
 	
-	
 	/**
 	*	THIS FUNCTIONS SEND EMAIL TO THE EMPLOYEE ONLY INCLUDING HR WHICH ADMIN
 	*	@return send mail
@@ -349,7 +348,7 @@ class Users extends CI_Controller {
 				"page_content" 		=> "Invitations",
 				"token"				=> $invitations->token,
 				"page_title"		=> $invitations->email,
-				"full_name"			=> ucfirst($name),
+				"full_name"		=> ucfirst($name),
 				"admin"				=> "Konsumpayroll"
 			);
 			$content = $this->parser->parse("email_test_view",$data);
@@ -419,7 +418,7 @@ class Users extends CI_Controller {
 					$where = array("account_id"=>$this->db->escape_str($this->input->post('jaccount_id')));
 					// EMPLOYEE UPDATES
 					$fields_employee = array(
-						"first_name"	=>$this->db->escape_str($this->input->post('jfname')),
+						"first_name"		=>$this->db->escape_str($this->input->post('jfname')),
 						"middle_name"	=>$this->db->escape_str($this->input->post('jmname')),
 						"last_name"		=>$this->db->escape_str($this->input->post('jlname'))
 					);
@@ -500,10 +499,11 @@ class Users extends CI_Controller {
 							endforeach;
 						}
 						$this->users->save_fields("user_roles",$fields);
+						$this->session->set_flashdata("permission_stats","Permissions had been saved!");
 						echo json_encode(array("success"=>"1","error"=>""));	
 						return false;	
 					}else{
-						echo json_encode(array("success"=>"1","error"=>""));	
+						echo json_encode(array("success"=>"0","error"=>""));	
 						return false;
 					}
 				}else{
@@ -517,6 +517,33 @@ class Users extends CI_Controller {
 		$this->layout->view('pages/hr/roles_view', $data);
 	}
 	
+	public function permissions_list(){
+		$data['page_title'] = "Edit Users roles";	
+		$url  = $this->uri->segment(1)."/hr/users/permissions_list"; # url check
+		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+		$data['total_rows'] = $this->users->count_user_roles_list($this->company_info->company_id,"administrator");
+		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
+		$data['pagi'] = $this->pagination->create_links();
+		$data['admin_users_list'] = $this->users->user_roles_list($this->company_info->company_id,"administrator",$this->per_page,(($page-1) * $this->per_page));
+		$data['sidebar_menu'] =$this->sidebar_menu;	
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/hr/roles_list_view', $data);	
+	}
+	
+	public function permissions_edit(){
+		$data['page_title'] = "Edit Users roles";	
+		$url  = $this->uri->segment(1)."/hr/users/permissions_list"; # url check
+		$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
+		$data['total_rows'] = $this->users->count_user_roles_list($this->company_info->company_id,"administrator");
+		init_pagination($url,$data['total_rows'],$this->per_page,$this->segment);
+		$data['pagi'] = $this->pagination->create_links();
+		$data['admin_users_list'] = $this->users->user_roles_list($this->company_info->company_id,"administrator",$this->per_page,(($page-1) * $this->per_page));
+		$data['sidebar_menu'] =$this->sidebar_menu;	
+		$this->layout->set_layout($this->theme);	
+		$this->layout->view('pages/hr/roles_list_view', $data);	
+	}
+	
+
 	// CALLBACK permissions
 	/**
 	 * Roles check callback is already been used
@@ -534,8 +561,7 @@ class Users extends CI_Controller {
 		}
 	}
 	// END CALL BACK Permissions
-	
-	
+
 }
 
 /* End of file users.php */

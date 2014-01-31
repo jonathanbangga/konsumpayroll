@@ -292,6 +292,72 @@
 			}
 		}
 		
+		/**
+		*	CHECK ALL USER ROLES LISTIING 
+		*	@param int $company_id
+		*	@param string $users_account_type
+		*	@return object
+		*/
+		public function user_roles_list($company_id,$users_account_type,$limit=10,$start=0){
+			if(is_numeric($company_id)){
+				#users_account_type when selecting this users_account_type (1 - admin , 2 - employee )
+				switch($users_account_type): 
+					case "administrator": // administrator
+						$sql = "SELECT * FROM `user_roles` WHERE company_id = '{$this->db->escape_str($company_id)}' and users_account_type = '1' and deleted= '0' ";
+						if($limit){
+							$sql .=" LIMIT {$start},{$limit}";
+						}
+						$query = $this->db->query($sql);
+						$result = $query->result();
+						$query->free_result();
+						return $result;
+					break;
+					case "employee": // employee
+						$query = $this->db->query("SELECT * FROM `user_roles` WHERE company_id = '{$this->db->escape_str($company_id)}' and users_account_type = '2 and deleted= '0'");
+						$result = $query->result();
+						$query->free_result();
+						return $result;
+					break;
+					default: 
+						return false;
+					break;
+				endswitch;
+			}else{
+				return false;
+			}
+		}
+		
+		public function count_user_roles_list($company_id,$users_account_type){
+			if(is_numeric($company_id)){
+				#users_account_type when selecting this users_account_type (1 - admin , 2 - employee )
+				switch($users_account_type): 
+					case "administrator": // administrator
+						$sql = "SELECT count(*) as val FROM `user_roles` WHERE company_id = '{$this->db->escape_str($company_id)}' and users_account_type = '1' and deleted= '0' ";
+						$query = $this->db->query($sql);
+						$num_rows = $query->num_rows();
+						$row = $query->row();
+						$query->free_result();
+						return ($num_rows) ? $row->val: 0;
+					break;
+					case "employee": // employee
+						$query = $this->db->query("SELECT count(*) as val FROM `user_roles` WHERE company_id = '{$this->db->escape_str($company_id)}' and users_account_type = '2 and deleted= '0'");
+						$num_rows = $query->num_rows();
+						$row = $query->row();
+						$query->free_result();
+						return ($num_rows) ? $row->val: 0;
+					break;
+					default: 
+						return false;
+					break;
+				endswitch;
+			}else{
+				return false;
+			}
+		}
+		
+		
+		
+		
 		
 	}
 
