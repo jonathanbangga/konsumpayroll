@@ -154,24 +154,32 @@ class Payroll_calendar extends CI_Controller {
 		}
 	}
 	
-	public function test(){
-		echo date("t",strtotime("January 2014"));
-	}
-	
 	public function capture_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period){
-		// while loop
-		$year = date("Y",strtotime($pd));
-		$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
-		$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
-		while($pd<$last_payroll){
-		
 	
-				$pd_day = date("d",strtotime($pd));
-				$pd_month_txtual = date("F",strtotime($pd));
-				if($pd_day==$first_semi_monthly){
-					//$day = ($second_monthly==-1)?date("t",strtotime($pd)):$second_monthly;	
+	
+		$pg = $this->payroll_calendar_model->get_payroll_group_via_id($pg_id)->row();
+		if($pg->period_type=="Monthly"){
+		
+			// monthly
+			// get last payroll date
+			$year = date("Y",strtotime($pd));
+			$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
+			$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
+			
+			// loop
+			while($pd<$last_payroll){			
+
+					// cut off
+					$cut_off_from2 = date('Y-m-d',strtotime($cut_off_to2."+ 1 day"));
+					$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to2."+ 30 days"));
+					
+					// get payroll period
+					$month = date("m",strtotime($cut_off_to2));
+					$year = date("Y",strtotime($cut_off_to2));
+					$pd_month_txtual = date("F",strtotime($pd));				
+					// if end of month
 					if($second_monthly==-1){
-						$day = date("t",strtotime($pd));
+						$day = date("t",strtotime($cut_off_to2));
 					}else{
 						if($second_monthly>=29&&$pd_month_txtual=="February"){
 							$day = date("t",strtotime($pd));
@@ -182,20 +190,107 @@ class Payroll_calendar extends CI_Controller {
 							$ld = date("t",strtotime($pd));
 							$day = ($ld==31)?$second_monthly:$ld;
 						}
-					}
-					$month = date("m",strtotime($pd));
-				}else{
-					$day = $first_semi_monthly;
-					$month = date("m",strtotime("{$pd_month_txtual} + 1 month"));
-				} 
-				$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
+					}	
+					
+					// set payroll period
+					$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
+					$period = date("n",strtotime($pd));
+					
+					$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+
+			}
+			
+		}else{
+		
+			// semi monthly
+			// while loop
+			$year = date("Y",strtotime($pd));
+			$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
+			$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
+			while($pd<$last_payroll){			
+		
+					$pd_day = date("d",strtotime($pd));
+					$pd_month_txtual = date("F",strtotime($pd));
+					if($pd_day==$first_semi_monthly){
+						//$day = ($second_monthly==-1)?date("t",strtotime($pd)):$second_monthly;	
+						if($second_monthly==-1){
+							$day = date("t",strtotime($pd));
+						}else{
+							if($second_monthly>=29&&$pd_month_txtual=="February"){
+								$day = date("t",strtotime($pd));
+							}else{
+								$day = $second_monthly;
+							}
+							if($second_monthly==31&&$pd_month_txtual!="February"){
+								$ld = date("t",strtotime($pd));
+								$day = ($ld==31)?$second_monthly:$ld;
+							}
+						}
+						$month = date("m",strtotime($pd));
+					}else{
+						$day = $first_semi_monthly;
+						$month = date("m",strtotime("{$pd_month_txtual} + 1 month"));
+					} 
+					$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
+					$cut_off_from2 = date('Y-m-d',strtotime($cut_off_to2."+ 1 day"));
+					$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to2."+ 15 days"));
+					$period = date("n",strtotime($pd));
+					
+					$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
+
+			}
+			
+		}
+	}
+	
+	public function test(){
+	
+		$pd = "2014-02-28";	
+		$second_monthly = -1;
+		$cut_off_from2 = "2014-01-27";
+		$cut_off_to2 = "2014-02-25";
+		
+		// get last payroll date
+		$year = date("Y",strtotime($pd));
+		$last_day = ($second_monthly==-1)?date("t",strtotime("December {$year}")):$second_monthly;
+		$last_payroll = date("Y-m-d",strtotime("December {$last_day} {$year}"));
+		
+		// loop
+		while($pd<$last_payroll){			
+
+				// cut off
 				$cut_off_from2 = date('Y-m-d',strtotime($cut_off_to2."+ 1 day"));
-				$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to2."+ 15 days"));
+				$cut_off_to2 = date('Y-m-d',strtotime($cut_off_to2."+ 30 days"));
+				
+				// get payroll period
+				$month = date("m",strtotime($cut_off_to2));
+				$year = date("Y",strtotime($cut_off_to2));
+				$pd_month_txtual = date("F",strtotime($pd));				
+				// if end of month
+				if($second_monthly==-1){
+					$day = date("t",strtotime($cut_off_to2));
+				}else{
+					if($second_monthly>=29&&$pd_month_txtual=="February"){
+						$day = date("t",strtotime($pd));
+					}else{
+						$day = $second_monthly;
+					}
+					if($second_monthly==31&&$pd_month_txtual!="February"){
+						$ld = date("t",strtotime($pd));
+						$day = ($ld==31)?$second_monthly:$ld;
+					}
+				}	
+				
+				// set payroll period
+				$pd = date("Y-m-d",strtotime("{$year}-{$month}-{$day}"));
 				$period = date("n",strtotime($pd));
+				
+				echo $pd.' - '.$cut_off_from2.' - '.$cut_off_to2.'<br />';
 				
 				$this->payroll_calendar_model->add_payroll_calendar($pg_id,$first_semi_monthly,$second_monthly,$pd,$cut_off_from2,$cut_off_to2,$period);
 
 		}
+		
 	}
 	
 }
