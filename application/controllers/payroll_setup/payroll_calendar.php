@@ -183,6 +183,7 @@ class Payroll_calendar extends CI_Controller {
 							$day = ($ld==31)?$second_monthly:$ld;
 						}
 					}
+					$month = date("m",strtotime($pd));
 				}else{
 					$day = $first_semi_monthly;
 					$month = date("m",strtotime("{$pd_month_txtual} + 1 month"));
