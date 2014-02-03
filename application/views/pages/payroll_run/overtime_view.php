@@ -5,7 +5,7 @@
           <table class="tbl" style="width:100%;">
             <tbody>
 				<tr>
-					<th style="width:50px;">ID</th>
+					<th style="width:50px;"><input type="checkbox" name="odeleteall" /></th>
 					<th style="width:135px">Employee ID</th>
 					<th style="width:200px">Employee Name</th>
 					<th style="width:160px">Overtime Date</th>
@@ -77,8 +77,7 @@
 							buttons: {
 								"Yes": function () {
 									var urls = "/<?php echo $this->uri->segment(1);?>/payroll_run/overtime/ajax_remove_overtime";
-									var return_url = "/<?php echo $this->uri->segment(1);?>/payroll_run/overtime/lists";
-									
+									var return_url = "/<?php echo $this->uri->segment(1);?>/payroll_run/overtime/lists";			
 									jQuery.post(urls,{	
 									'oid':oid,
 									'ZGlldmlyZ2luamM':jQuery.cookie(token),
@@ -87,7 +86,7 @@
 										if(res.success == true){
 											window.location.href = return_url;
 										}else{
-											
+											alert("Error encountered please refresh again,if problem still persist please contact administrator");
 										}
 										jQuery(".opt_selection").dialog("close");	
 									});
@@ -101,8 +100,11 @@
 			});
 		}
 		
+		// SELECT ALL 
+		
 		jQuery(function(){
 			delete_overtime();
 			god_signs();
+			icheck_box("odeleteall","overtime_id[]");
 		});
 	</script>
