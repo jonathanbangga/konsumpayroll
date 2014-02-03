@@ -932,6 +932,17 @@ function inum(iprior){
         }
     });    
 }
+
+// SHOW FADERS
+function god_signs(){
+	var successContBox = jQuery.trim(jQuery(".successContBox").text());
+	if(successContBox != ""){
+		jQuery(".successContBox").fadeIn("slow");
+		setTimeout(function(){
+			jQuery(".successContBox").fadeOut('100');
+		},3000);
+	}
+}
 		
 jQuery(function() {
 	kpay.hr.company_sidebar();

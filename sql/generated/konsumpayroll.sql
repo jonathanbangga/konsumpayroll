@@ -39,6 +39,42 @@ CREATE TABLE IF NOT EXISTS `thirteen_month_include_earnings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `break_time`
+--
+
+CREATE TABLE IF NOT EXISTS `break_time` (
+  `break_time_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `break_time_number` int(11) NOT NULL,
+  `workday` varchar(250) NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `worktype` varchar(250) NOT NULL,
+  `workshift_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`break_time_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=120 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uniform_working_day_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `uniform_working_day_settings` (
+  `uniform_working_day_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `number_of_breaks_per_day` int(11) NOT NULL,
+  `total_working_days_per_year` int(11) NOT NULL,
+  `allow_flexible_workhours` int(11) NOT NULL,
+  `latest_time_in_allowed` time NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`uniform_working_day_settings_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `payroll_period`
 --
 
@@ -1288,13 +1324,6 @@ CREATE TABLE IF NOT EXISTS `hdmf` (
   PRIMARY KEY (`hdmf_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `hdmf`
---
-
-INSERT INTO `hdmf` (`hdmf_id`, `salary_bracket_id`, `range_of_compensation_from`, `range_of_compensation_to`, `monthly_salary_credit`, `employer_contribution1`, `employee_contribution2`, `total`, `status`, `deleted`) VALUES
-(1, 1, 0.00, 999999999.00, 100.00, 100.00, 100.00, 200.00, 'Active', '0');
-
 -- --------------------------------------------------------
 
 --
@@ -1304,13 +1333,13 @@ INSERT INTO `hdmf` (`hdmf_id`, `salary_bracket_id`, `range_of_compensation_from`
 CREATE TABLE IF NOT EXISTS `holiday` (
   `holiday_id` int(11) NOT NULL AUTO_INCREMENT,
   `holiday_name` varchar(80) NOT NULL,
-  `type` enum('Regular','Special') NOT NULL,
+  `hour_type_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `company_id` int(11) NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`holiday_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
