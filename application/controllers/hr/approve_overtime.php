@@ -110,7 +110,7 @@
 					if($this->form_validation->run() == true){	
 						foreach($overtime_id as $key=>$val):
 							$fields = array(
-								"overtime_status" => "approve"
+								"overtime_status" => "approved"
 							);
 							$where = array(
 								"overtime_id"=>$val,

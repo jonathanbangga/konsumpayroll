@@ -24,7 +24,6 @@ class Authentication {
 				   'account_type_id'  => $a->account_type_id
 				);
 				$this->ci->session->set_userdata($newdata);
-				$this->ci->session->set_flashdata("error_denied","The username and password is invalid");
 				redirect('/admin/dashboard');
 			}else{
 				redirect('/login/admin');
@@ -54,7 +53,7 @@ class Authentication {
 					redirect("/{$a->company_name}/employee/emp_time_in");
 				}
 			}else{
-				$this->ci->session->set_flashdata("error_denied","The username and password is invalid");
+				$this->ci->session->set_flashdata("error_denied","The email and password is invalid");
 				redirect('/');
 			}
 			

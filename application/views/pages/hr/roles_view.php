@@ -1,3 +1,6 @@
+<div class="ihide permstats"><?php echo $this->session->flashdata("permission_stats");?></div>
+<p>&nbsp;</p>
+<h1><?php echo $page_title;?></h1>
 <div class="main-content">
         <!-- MAIN-CONTENT START -->
         <?php echo form_open('/robby_dubdub',array("onsubmit"=>"return save_roles();","id"=>"form_permis"));?>
@@ -56,17 +59,13 @@
             <option value="tables_edit">tables edit</option>
             <option value="tables_delete">tables delete</option>
           </select>
-          <select name="roles_areas[]" multiple="multiple" id="select_choosen" class="txtselect select-employement-type right"></select>
-          
-          <select name="hidden_roles[]" class="para_choio" style="overflow:hidden;height:0;width:0" multiple="multiple" id="hidden_roles">
-          
-          </select>
+          <select name="roles_areas[]" multiple="multiple" id="select_choosen" class="txtselect select-employement-type right"></select>   
+          <select name="hidden_roles[]" class="para_choio" style="overflow:hidden;height:0;width:0" multiple="multiple" id="hidden_roles"></select>
         
           <!-- EMPLOYMENT-TYPE-WRAP END -->
           <div class="clearB right">
           <input type="submit" name="submit" value="SUBMIT" class="btn" />
           </div>
-          
         </div>
         <?php echo form_close();?>
         <!-- MAIN-CONTENT END -->
@@ -78,7 +77,7 @@
       		jQuery("select[name='user_roles_type']").val('');
       		jQuery("input[name='roles']").val('');
         }
-      	
+      	// MOVE LEFT SELECT OPTIONS
       	function move_left(){
       		jQuery(document).on("click","#sign_left",function(e){
       		    e.preventDefault();
@@ -90,6 +89,7 @@
        		   
       		}); 
         }
+      	// MOVE RIGHT SELECT OPTIONS		
       	function move_right(){
       		jQuery(document).on("click","#sign_right",function(e){
       		    e.preventDefault();
@@ -121,20 +121,19 @@
 		function hide_employee_options(){
 			jQuery(document).on("change","select[name='user_roles_type']",function(e){
 			    var el = jQuery(this);
-			   if(el.val() == 2){
-			    jQuery("#form_permis").attr("onsubmit","return false;");
-			    jQuery(".assign_permis").fadeOut('slow');
-			   }else if(el.val()== 1){
-			    jQuery("#form_permis").attr("onsubmit","return save_roles();");
-			    jQuery(".assign_permis").fadeIn('slow');
-			   }else{
-			   jQuery("#form_permis").attr("onsubmit","return false;");
-			    jQuery(".assign_permis").fadeOut('slow');
-			   }
+				if(el.val() == 2){
+					jQuery("#form_permis").attr("onsubmit","return false;");
+					jQuery(".assign_permis").fadeOut('slow');
+				}else if(el.val()== 1){
+					jQuery("#form_permis").attr("onsubmit","return save_roles();");
+					jQuery(".assign_permis").fadeIn('slow');
+				}else{
+					jQuery("#form_permis").attr("onsubmit","return false;");
+					jQuery(".assign_permis").fadeOut('slow');
+				}
 			});
 		}
 		
-      	
         jQuery(function(){
         	move_left();
         	move_right();
