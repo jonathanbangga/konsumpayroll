@@ -38,38 +38,63 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/payroll_
 			  ?>
 			  
 			  <table style="margin-bottom:8px;">
-				<tr>
-				  <td style="display:none">
-					<input type="hidden" name="pc_id[]" class="pc_id" value="<?php echo $pc_id; ?>" />
-				  </td>
-				  <td style="width:314px;"> Indicate the date of the first semi-monthly payroll </td>
-				  <td style="width:120px;">
-					<select style="width:120px;" class="txtselect first_semi_monthly" name="first_semi_monthly[]">
-						<option value="">select</option>
-						<?php
-						for($i=1;$i<=15;$i++){?>
-							<option value="<?php echo $i; ?>" <?php echo ($i==$fsm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
-						<?php
-						}
-						?>
-					</select>
-					</td>
-				</tr>
-				<tr>
-				  <td>Indicate the date of your second monthly payroll</td>
-				  <td>
-					<select style="width:120px;" class="txtselect second_monthly" name="second_monthly[]">
-						<option value="">select</option>
-						<?php
-						for($i=16;$i<=31;$i++){?>
-							<option value="<?php echo $i; ?>" <?php echo ($i==$sm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
-						<?php
-						}
-						?>
-						<option value="-1" <?php echo ($sm==-1)?'selected="selected"':''; ?>>end of month</option>
-					</select>
-					</td>
-				</tr>
+			  <?php
+				if($pg->period_type=="Monthly"){ ?>
+				
+					<tr>
+					  <td>Indicate the date of your monthly payroll</td>
+					  <td>
+						<select style="width:120px;" class="txtselect second_monthly" name="second_monthly[]">
+							<option value="">select</option>
+							<?php
+							for($i=16;$i<=31;$i++){?>
+								<option value="<?php echo $i; ?>" <?php echo ($i==$sm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+							<option value="-1" <?php echo ($sm==-1)?'selected="selected"':''; ?>>end of month</option>
+						</select>
+						</td>
+					</tr>
+				
+				<?php
+				}else{ ?>
+					<tr>
+					  <td style="display:none">
+						<input type="hidden" name="pc_id[]" class="pc_id" value="<?php echo $pc_id; ?>" />
+					  </td>
+					  <td style="width:314px;"> Indicate the date of the first semi-monthly payroll </td>
+					  <td style="width:120px;">
+						<select style="width:120px;" class="txtselect first_semi_monthly" name="first_semi_monthly[]">
+							<option value="">select</option>
+							<?php
+							for($i=1;$i<=15;$i++){?>
+								<option value="<?php echo $i; ?>" <?php echo ($i==$fsm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+						</select>
+						</td>
+					</tr>
+					<tr>
+					  <td>Indicate the date of your second monthly payroll</td>
+					  <td>
+						<select style="width:120px;" class="txtselect second_monthly" name="second_monthly[]">
+							<option value="">select</option>
+							<?php
+							for($i=16;$i<=31;$i++){?>
+								<option value="<?php echo $i; ?>" <?php echo ($i==$sm)?'selected="selected"':''; ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+							<option value="-1" <?php echo ($sm==-1)?'selected="selected"':''; ?>>end of month</option>
+						</select>
+						</td>
+					</tr>
+				<?php
+				}
+			  ?>
+				
 			  </table>
 			  <p style="padding-bottom:8px;">State the first payroll for this group that will be run by this system
 				<input type="text" class="txtfield dp first_payroll_date" name="first_payroll_date[]" style="width:120px;" value="<?php echo ($fpd!="")?date("m/d/Y",strtotime($fpd)):''; ?>" />
@@ -189,8 +214,8 @@ jQuery(document).ready(function(){
 				obj.parents(".payroll-calendar-row").find(".pc_id").val(ret);
 				highlight_message("Payroll calendar has been saved");
 				*/
-				jQuery.cookie("msg", "Payroll calendar has been saved");
-				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
+				//jQuery.cookie("msg", "Payroll calendar has been saved");
+				//window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
 			});	
 			
 		}else{

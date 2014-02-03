@@ -111,5 +111,14 @@ class Payroll_calendar_model extends CI_Model {
 		");
 	}
 	
+	public function get_payroll_group_via_id($payroll_group_id){
+		return $this->db->query("
+			SELECT *
+			FROM `payroll_group`
+			WHERE `payroll_group_id` = {$payroll_group_id}
+			AND `company_id` = '{$this->company_id}'
+		");
+	}
+	
 }
 /* End of file */
