@@ -214,8 +214,8 @@ jQuery(document).ready(function(){
 				obj.parents(".payroll-calendar-row").find(".pc_id").val(ret);
 				highlight_message("Payroll calendar has been saved");
 				*/
-				//jQuery.cookie("msg", "Payroll calendar has been saved");
-				//window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
+				jQuery.cookie("msg", "Payroll calendar has been saved");
+				window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/payroll_calendar";
 			});	
 			
 		}else{
