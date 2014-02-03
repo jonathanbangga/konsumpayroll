@@ -39,6 +39,38 @@ CREATE TABLE IF NOT EXISTS `thirteen_month_include_earnings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payroll_period`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll_period` (
+  `payroll_period_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `payroll_period` date NOT NULL,
+  `period_from` date NOT NULL,
+  `period_to` date NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`payroll_period_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exclude_list`
+--
+
+CREATE TABLE IF NOT EXISTS `exclude_list` (
+  `exclude_list_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `exclude` int(11) NOT NULL,
+  `on_hold` int(11) NOT NULL,
+  `reason` varchar(250) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`exclude_list_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `priority_of_deductions`
 --
 
