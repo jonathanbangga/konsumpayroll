@@ -943,6 +943,21 @@ function god_signs(){
 		},3000);
 	}
 }
+
+// select all checkbox
+function icheck_box(inputcheck,inputallcheck){
+jQuery(document).on("change","input[name='"+inputcheck+"']",function(e){
+    var el = jQuery(this);
+    console.log(el.is(":checked"));
+    if(el.is(":checked")){
+        jQuery("input[name='"+inputallcheck+"']").prop("checked","checked");
+    }else{
+         jQuery("input[name='"+inputallcheck+"']").removeAttr("checked");
+    }
+});
+
+}
+
 		
 jQuery(function() {
 	kpay.hr.company_sidebar();

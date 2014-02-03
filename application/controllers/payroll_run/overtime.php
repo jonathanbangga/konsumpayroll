@@ -32,7 +32,7 @@
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =10;
+			$this->per_page =1;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
