@@ -50,7 +50,7 @@
           </table>
           <!-- TBL-WRAP END -->
 	</div>
-	<div class="left pagi-lefts"><a class="btn" href="javascript:void(0);" id="overtime_idelete">DELETE</a></div>
+	<div class="left pagi-lefts"><?php echo ($list) ? '<a class="btn" href="javascript:void(0);" id="overtime_idelete">DELETE</a>' : '';?></div>
 	<div class="right pagi-rights"><?php echo $pagi;?></div>
 	
 	<script type="text/javascript">

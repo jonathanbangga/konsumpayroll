@@ -39,6 +39,79 @@ CREATE TABLE IF NOT EXISTS `thirteen_month_include_earnings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `uniform_working_day`
+--
+
+CREATE TABLE IF NOT EXISTS `uniform_working_day` (
+  `workday_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `working_day` varchar(80) NOT NULL,
+  `work_start_time` time NOT NULL,
+  `work_end_time` time NOT NULL,
+  `working_hours` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
+  `deleted` enum('0','1') NOT NULL,
+  PRIMARY KEY (`workday_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flexible_hours`
+--
+
+CREATE TABLE IF NOT EXISTS `flexible_hours` (
+  `workday_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `total_hours_for_the_day` int(11) NOT NULL,
+  `total_hours_for_the_week` int(11) NOT NULL,
+  `total_days_per_year` int(11) NOT NULL,
+  `latest_time_in_allowed` time NOT NULL,
+  `number_of_breaks_per_day` int(11) NOT NULL,
+  `duration_of_lunch_break_per_day` int(11) NOT NULL,
+  `duration_of_short_break_per_day` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`workday_settings_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workshift`
+--
+
+CREATE TABLE IF NOT EXISTS `workshift` (
+  `workshift_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payroll_group_id` int(11) NOT NULL,
+  `shift_name` varchar(250) NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `working_hours` int(11) NOT NULL,
+  `selected` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`workshift_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workshift_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `workshift_settings` (
+  `workshift_settings_id` int(11) NOT NULL AUTO_INCREMENT,
+  `number_of_breaks_per_shift` int(11) NOT NULL,
+  `total_working_days_per_year` int(11) NOT NULL,
+  `grace_period_for_every_shift` int(11) NOT NULL,
+  `payroll_group_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`workshift_settings_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `break_time`
 --
 
@@ -2300,18 +2373,11 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 CREATE TABLE IF NOT EXISTS `workday` (
   `workday_id` int(11) NOT NULL AUTO_INCREMENT,
+  `workday_type` varchar(250) NOT NULL,
   `payroll_group_id` int(11) NOT NULL,
-  `working_day` varchar(80) NOT NULL,
-  `work_start_time` time NOT NULL,
-  `work_end_time` time NOT NULL,
-  `break_start_time` time NOT NULL,
-  `break_end_time` time NOT NULL,
-  `working_hours` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
   PRIMARY KEY (`workday_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
