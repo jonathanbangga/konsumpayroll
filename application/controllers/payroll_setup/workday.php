@@ -102,8 +102,39 @@ class Workday extends CI_Controller {
 				$index = $wd2[1];
 				$start_time = date("H:i:s",strtotime($start_time_h[$index].":".$start_time_m[$index]." ".$start_time_p[$index]));
 				$end_time = date("H:i:s",strtotime($end_time_h[$index].":".$end_time_m[$index]." ".$end_time_p[$index]));
+				
+				$work = 0;
+				$work2 = 0;
+				$w1 = strtotime($start_time);
+				$w2 = strtotime($end_time);
+				$work = $w2 - $w1;
+				$work2 = $work/3600;
+
+				$break = 0;
+				$break2 = 0;
+				for($i=0;$i<$break_last_index[$index];$i++){
+				
+					$bt_st_h = $this->input->post('bt_st_h'.$i);
+					$bt_st_m = $this->input->post('bt_st_m'.$i);
+					$bt_st_p = $this->input->post('bt_st_p'.$i);
+					$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
+					$bt_et_h = $this->input->post('bt_et_h'.$i);
+					$bt_et_m = $this->input->post('bt_et_m'.$i);
+					$bt_et_p = $this->input->post('bt_et_p'.$i);
+					$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
+		
+					$bt1 = strtotime($bt_start_time);
+					$bt2 = strtotime($bt_end_time);
+					$break = $bt2 - $bt1;
+					$break2 += $break/3600;
+					
+				}
+
+			
+				$wh = $work2-$break2;
+				
 				// save workdays
-				$this->workday_model->add_uniform_working_day($day,$start_time,$end_time,$working_hours[$index],$pg_id[$index]);
+				$this->workday_model->add_uniform_working_day($day,$start_time,$end_time,$wh,$pg_id[$index]);
 				// save break time
 				// loop through number of breaks
 				for($i=0;$i<$break_last_index[$index];$i++){
@@ -174,6 +205,26 @@ class Workday extends CI_Controller {
 	public function ajax_delete_workshift(){
 		$wsid = $this->input->post('wsid');
 		$this->workday_model->delete_workshift($wsid);
+	}
+	
+	public function test(){
+	
+		$time1 = strtotime('08:00:00');
+		$time2 = strtotime('18:00:00');
+		$work = $time2 - $time1;
+		$work2 = $work/3600;
+		
+		$time1 = strtotime('12:00:00');
+		$time2 = strtotime('13:00:00');
+		$break = $time2 - $time1;
+		$break2 = $break/3600;
+		
+		$working_hours = $work2-$break2;
+		
+		echo "work: ".$work2."<br />".
+			 "break: ".$break2."<br />".
+			 "working hours: ".$working_hours."<br />";
+		
 	}
 	
 }
