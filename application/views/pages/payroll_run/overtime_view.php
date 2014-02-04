@@ -23,22 +23,33 @@
 					<td><span class="payroll_group_span"><input type="checkbox" name="overtime_id[]" value="<?php echo $list_val->overtime_id;?>" /></span></td>
 					<td><span class="payroll_group_span"><?php echo $list_val->payroll_cloud_id;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $list_val->first_name." ".$list_val->last_name;?></span></td>
-					<td><span class="payroll_group_span">
-					<?php echo date("d/m/Y",strtotime($list_val->overtime_from)); ?>
-					<?php 	$overtime_data = $this->overtime->overtime_type($list_val->company_id,$list_val->overtime_from); ?>
-					</span>
-					</td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data ? $overtime_data->hour_type_name : '';?></span></td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data ? $overtime_data->pay_rate."%" : '';?></span></td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data ?  $list_val->start_time : '';?></span></td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data ? $list_val->end_time : '';?></span></td>
+					<td><span class="payroll_group_span"><?php echo date("d/m/Y",strtotime($list_val->overtime_from)); ?></span></td>
+					<?php
+						$overtime_data = $this->overtime->overtime_type($list_val->company_id,$list_val->overtime_from); 
+						echo $this->db->last_query();
+						p($overtime_data);
+						if($overtime_data){
+					?>
+					<td><span class="payroll_group_span"><?php echo $overtime_data->hour_type_name;?></span></td>
+					<td><span class="payroll_group_span"><?php echo $overtime_data->pay_rate."%";?></span></td>
+					<?php
+						}else{
+					?>
+					<td><span class="payroll_group_span"><?php echo "we";?></span></td>
+					<td><span class="payroll_group_span"><?php echo "2";?></span></td>
+					<?php
+						}
+					?>
+					
+					<td><span class="payroll_group_span"><?php echo $list_val->start_time;?></span></td>
+					<td><span class="payroll_group_span"><?php echo $list_val->end_time;?></span></td>
 					<td><span class="payroll_group_span">
 					<?php 
 							$start_d = strtotime($list_val->start_time);
 							$end_d	= strtotime($list_val->end_time);
 							$minus =  ($end_d - $start_d) ;
 							$total_val = $minus / (60*60);
-							echo $total_val;			
+							echo number_format($total_val,2);			
 					?>
 					</span></td>
 				<?php

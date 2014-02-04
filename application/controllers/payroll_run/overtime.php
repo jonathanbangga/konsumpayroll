@@ -32,24 +32,25 @@
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =1;
+			$this->per_page =12;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
 				return false;
 			}
+		
 		}
 		
 		public function lists(){
-			$data['page_title'] = "Overtime";
 			$uri = "/".$this->uri->segment(1)."/payroll_run/overtime/lists";
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 			$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);
 			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
-			$this->layout->set_layout($this->theme);
+			$data['page_title'] = "Overtime";
 			$data['pagi'] = $this->pagination->create_links();
 			$data['list'] =  $this->overtime->overtime_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
 			$data['sidebar_menu'] = $this->sidebar_menu;
+			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/payroll_run/overtime_view',$data);
 		}
 		

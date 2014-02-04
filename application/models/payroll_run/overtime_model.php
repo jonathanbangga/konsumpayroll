@@ -212,11 +212,8 @@
 		*/
 		public function overtime_type($company_id,$date){
 			if(is_numeric($company_id)){
-				$date = date("Y-m-d",strtotime(str_replace("-","/",$date)));
-				$query = $this->db->query("SELECT * FROM holiday h LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id 
-																WHERE ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' 
-																AND date = '{$date}'
-																");
+				$date = date("Y-m-d",strtotime($date));
+				$query = $this->db->query("SELECT * FROM holiday h LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id WHERE ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
 				$row = $query->row();
 				$query->free_result();
 				return $row;
@@ -242,10 +239,8 @@
 				return $this->db->affected_rows();
 			}
 		}
-		
-		
+
 	}
-	
 /* End of file Approve_leave_model */
 /* Location: ./application/models/hr/Approve_leave_model.php */;
 	
