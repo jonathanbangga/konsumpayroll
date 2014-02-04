@@ -427,22 +427,30 @@ $num_break = 0;
 	$flex_sql = $this->workday_model->get_flexible_hours($pg->payroll_group_id);
 	if($flex_sql->num_rows()>0){
 		$flex = $flex_sql->row();
+		$tot_h_pd = $flex->total_hours_for_the_day;
 		$tot_wd_pw = $flex->total_hours_for_the_week;
 		$tot_days_py = $flex->total_days_per_year;
 		$lta = $flex->latest_time_in_allowed;
 		$num_breaks_pd = $flex->number_of_breaks_per_day;
+		$bt1 = $flex->break1;
+		$bt2 = $flex->break2;
+		$bt3 = $flex->break3;
+		$bt4 = $flex->break4;
 		$dur_lb_pd = $flex->duration_of_lunch_break_per_day;
-		$dur_sb_pd = $flex->duration_of_short_break_per_day;
 		$lta_h = date("h",strtotime($lta));
 		$lta_m = date("i",strtotime($lta));
 		$lta_p = date("A",strtotime($lta));
 	}else{
+		$tot_h_pd = "";
 		$tot_wd_pw = "";
 		$tot_days_py = "";
 		$lta = "";
-		$num_breaks_pd = "";
+		$num_breaks_pd = 1;
+		$bt1 = "";
+		$bt2 = "";
+		$bt3 = "";
+		$bt4 = "";
 		$dur_lb_pd = "";
-		$dur_sb_pd = "";
 		$lta_h = "";
 		$lta_m = "";
 		$lta_p = "";
@@ -451,23 +459,23 @@ $num_break = 0;
 	?>
 
 	<div class="flexible_hours_div" <?php echo ($sel_wd=="Flexible Hours")?'style="display:block"':''; ?>> 
-		<table>
-			<tr>
-				<td>Total hours for the week:</td>
-				<td><input type="text" class="txtfield" name="tot_wd_pw[]" value="<?php echo $tot_wd_pw; ?>" /></td>
-				<td>Number of breaks per day:</td>
-				<td><input type="text" class="txtfield" name="num_breaks_pd[]" value="<?php echo $num_breaks_pd; ?>" /></td>
-			</tr>
-			<tr>
-				<td>Total days per year:</td>
-				<td><input type="text" class="txtfield" name="tot_days_py[]" value="<?php echo $tot_days_py; ?>" /></td>
-				<td>Duration of lunch break (per min) per day:</td>
-				<td><input type="text" class="txtfield" name="dur_lb_pd[]" value="<?php echo $dur_lb_pd; ?>" /></td>
-			</tr>
-			<tr>
-				<td>Latest Time in Allowed :</td>
-				<td>
-					<select name="lta_h[]" class="txtselect" style="width:60px;">
+		<div style="float: left;">
+			<table>
+				<tr>
+					<td>Total hours per day:</td><td><input type="text" name="tot_h_pd[]" class="txtfield" value="<?php echo $tot_h_pd; ?>" /></td>
+				</tr>
+				<tr>
+					<td>Total hours for the week:</td><td><input type="text" class="txtfield" name="tot_wd_pw[]" value="<?php echo $tot_wd_pw; ?>" /></td>
+				</tr>
+				
+				<tr>
+					<td>Total days per year:</td><td><input type="text" class="txtfield" name="tot_days_py[]" value="<?php echo $tot_days_py; ?>" /></td>
+				</tr>
+				
+				<tr>
+					<td>Latest Time in Allowed</td>
+					<td>
+						<select name="lta_h[]" class="txtselect" style="width:60px;">
 						<?php for($i=0;$i<=12;$i++){ 
 						$lta_h2 = intval($lta_h);
 						$day_num = sprintf("%02s", $i);
@@ -476,26 +484,73 @@ $num_break = 0;
 							<?php echo $day_num; ?>
 						</option>
 						<?php } ?>
-					</select>:
-					<select name="lta_m[]" class="txtselect" style="width:60px;">
-						<?php for($i=0;$i<=59;$i++){ 
-						$lta_m2 = intval($lta_m);
-						$day_num = sprintf("%02s", $i);
-						?>
-						<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$lta_m2)?'selected="selected"':''; ?>>
-							<?php echo $day_num; ?>
-						</option>
-						<?php } ?>
-					</select>
-					<select name="lta_p[]" class="txtselect" style="width:60px;margin-right: 90px;">
-						<option value="AM" <?php echo ($lta_p=="AM")?'selected="selected"':''; ?>>AM</option>
-						<option value="PM" <?php echo ($lta_p=="PM")?'selected="selected"':''; ?>>PM</option>
-					</select>
-				</td>
-				<td>Duration of short break (per min) per day:</td>
-				<td><input type="text" class="txtfield" name="dur_sb_pd[]" value="<?php echo $dur_sb_pd; ?>" /></td>
-			</tr>
-		</table> 
+						</select>:
+						<select name="lta_m[]" class="txtselect" style="width:60px;">
+							<?php for($i=0;$i<=59;$i++){ 
+							$lta_m2 = intval($lta_m);
+							$day_num = sprintf("%02s", $i);
+							?>
+							<option value="<?php echo $day_num; ?>" <?php echo ($day_num==$lta_m2)?'selected="selected"':''; ?>>
+								<?php echo $day_num; ?>
+							</option>
+							<?php } ?>
+						</select>
+						<select name="lta_p[]" class="txtselect" style="width:60px;margin-right: 90px;">
+							<option value="AM" <?php echo ($lta_p=="AM")?'selected="selected"':''; ?>>AM</option>
+							<option value="PM" <?php echo ($lta_p=="PM")?'selected="selected"':''; ?>>PM</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Duration of lunch break (per min) per day:</td><td><input type="text" class="txtfield" name="dur_lb_pd[]" value="<?php echo $dur_lb_pd; ?>" /></td>
+				</tr>
+				<tr>
+					<td>Number of short breaks per day</td><td><input type="text" class="txtfield num_breaks_pd" name="num_breaks_pd[]" value="<?php echo $num_breaks_pd; ?>" /></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div>
+			<table class="tbl_short_breaks">
+				<?php
+					if($bt1!=""){ ?>
+					<tr>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break1" value="<?php echo $bt1; ?>" /></td>
+					</tr>
+				<?php
+					}
+				?>
+				<?php
+					if($bt2!=""){ ?>
+					<tr>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break2" value="<?php echo $bt2; ?>" /></td>
+					</tr>
+				<?php
+					}
+				?>
+				<?php
+					if($bt3!=""){ ?>
+					<tr>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break3" value="<?php echo $bt3; ?>" /></td>
+					</tr>
+				<?php
+					}
+				?>
+				<?php
+					if($bt4!=""){ ?>
+					<tr>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break4" value="<?php echo $bt4; ?>" /></td>
+					</tr>
+				<?php
+					}
+				?>
+			</table>	
+		</div>
+		
+		<div style="clear:both;">&nbsp;</div>
+		
+		
 	</div>
 	
 		
@@ -1177,6 +1232,26 @@ jQuery(document).ready(function(){
 				}
 			}
 		});
+	});
+	
+	// flexible hours breaks script
+	jQuery(".num_breaks_pd").blur(function(){
+
+		var num = jQuery(this).val();
+		var str = "";
+		
+		if(num<=4){
+			for(var i=1;i<=num;i++){
+				str += '<tr>'+
+							'<td>Duration of short break '+i+'(per min) per day:</td>'+
+							'<td><input type="text" class="txtfield" name="flex_break'+i+'" value="" /></td>'+
+						'</tr>';
+			}		
+			jQuery(this).parents(".payroll_group_div").find(".tbl_short_breaks").html(str);
+		}else{
+			alert("you can only assign a maximum of 4 breaks");
+		}
+		
 	});
 	
 	

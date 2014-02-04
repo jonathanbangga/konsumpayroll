@@ -69,6 +69,7 @@ class Workday extends CI_Controller {
 						break;
 						case "Flexible Hours":
 							// flexible hours
+							$tot_h_pd = $this->input->post('tot_h_pd');	
 							$tot_wd_pw = $this->input->post('tot_wd_pw');					
 							$tot_days_py = $this->input->post('tot_days_py');
 							$lta_h = $this->input->post('lta_h');
@@ -77,10 +78,14 @@ class Workday extends CI_Controller {
 							$lta = date("H:i:s",strtotime($lta_h[$pgi].":".$lta_m[$pgi]." ".$lta_p[$pgi]));
 							$num_breaks_pd = $this->input->post('num_breaks_pd');
 							$dur_lb_pd = $this->input->post('dur_lb_pd');
-							$dur_sb_pd = $this->input->post('dur_sb_pd');
+							//$dur_sb_pd = $this->input->post('dur_sb_pd');
+							$b1 = $this->input->post('flex_break1');
+							$b2 = $this->input->post('flex_break2');
+							$b3 = $this->input->post('flex_break3');
+							$b4 = $this->input->post('flex_break4');
 							$main_pg_id = $this->input->post('main_pg_id');
 							// save
-							$this->workday_model->add_flexible_hours($tot_wd_pw[$pgi],$tot_days_py[$pgi],$lta,$num_breaks_pd[$pgi],$dur_lb_pd[$pgi],$dur_sb_pd[$pgi],$main_pg_id[$pgi]);
+							$this->workday_model->add_flexible_hours($tot_h_pd[$pgi],$tot_wd_pw[$pgi],$tot_days_py[$pgi],$lta,$num_breaks_pd[$pgi],$b1,$b2,$b3,$b4,$dur_lb_pd[$pgi],$main_pg_id[$pgi]);
 						break;
 						case "Workshift":
 							// workshift settings
