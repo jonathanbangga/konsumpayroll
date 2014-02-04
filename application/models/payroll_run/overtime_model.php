@@ -223,6 +223,24 @@
 		}
 		
 		/**
+		*	WHEN OVERTIME TYPE CAN"T DETECT THE DATE THEN BY DEFAULT WE CHOOSE THIS FUNCTIONALITY
+		*	@param int $company_id
+		*	@return boolean
+		*/
+		public function overtime_default($company_id){
+			if(is_numeric($company_id)){
+				$query = $this->db->query("SELECT ot.pay_rate,ot.ot_rate,ot.company_id,ht.hour_type_id,ot.deleted='0',ht.hour_type_name FROM `hours_type` ht
+														LEFT JOIN overtime_type ot  on ot.hour_type_id = ht.hour_type_id
+														WHERE ot.deleted = '0' AND ot.status ='Active' AND ht.default='1' AND ht.status = 'Active' AND ht.company_id= '{$this->db->escape_str($company_id)}'");
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
 		*	DELETS OVERTIME 
 		*	@param int $company_id
 		*	@param int $overtime_id
