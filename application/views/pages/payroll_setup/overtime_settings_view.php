@@ -21,7 +21,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 			  if($ot_sql->num_rows()>0){
 				foreach($ot_sql->result() as $ot){ ?>
 					<tr>
-						<td><span class="overtime_type_span"><?php echo $ot->overtime_type_name;	?></span></td>
+						<td><span class="overtime_type_span"><?php echo $ot->hour_type_name;	?></span></td>
 						<td><span class="pay_rate_span"><?php echo $ot->pay_rate; ?></span></td>
 						<td><span class="ot_rate_span"><?php echo $ot->ot_rate; ?></span></td>
 						<td>
@@ -230,12 +230,25 @@ jQuery(document).ready(function(){
 		jQuery("#empty").hide();
 		str = ''+
 			'<tr>'+
-							'<td><input style="width:115px;" class="txtfield overtime_type" name="overtime_type[]" type="text"></td>'+
+							'<td>'+
+								'<select name="overtime_type[]" class="txtselect overtime_type">'+
+									<?php
+									foreach($ht_sql->result() as $ht){ ?>
+										'<option value="<?php echo $ht->hour_type_id ?>"><?php echo $ht->hour_type_name ?></option>'+
+									<?php
+									}
+									?>
+								'</select>'+
+							'</td>'+
 							'<td><input style="width:115px;" class="txtfield pay_rate" name="pay_rate[]" type="text"></td>'+
 							'<td><input style="width:115px;" class="txtfield ot_rate" name="ot_rate[]" type="text"></td>'+
 							'<td><a href="#" class="btn btn-gray btn-action">EDIT</a> <a href="javascript:void(0);" class="btn btn-red btn-action btn-remove">REMOVE</a></td>'+
 						'</tr>';
 		jQuery(".ot_tbl tbody").append(str);
+		jQuery(".overtime_type").each(function(){
+			get_hour_type_rate(jQuery(this));
+		});
+		 
 	});
 	
 	// remove overtime type row
@@ -467,6 +480,27 @@ jQuery(document).ready(function(){
 	jQuery("#oalh_no").click(function(){
 		jQuery("#leave_type").slideUp();
 	});
+	
+	jQuery(document).on("change",".overtime_type",function(){
+	   get_hour_type_rate(jQuery(this));
+	});
+	
+	function get_hour_type_rate(obj){
+		var ht_id = obj.val();
+		// ajax call
+		jQuery.ajax({
+			type: "POST",
+			url: "/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings/ajax_get_rate",
+			data: {
+				ht_id: ht_id,
+				<?php echo itoken_name();?>: jQuery.cookie("<?php echo itoken_cookie(); ?>")
+			}
+		}).done(function(ret){
+			obj.parents("tr:first").find(".pay_rate").val(ret);
+			/*jQuery.cookie("msg", "Overtime type has been updated");
+			window.location="/<?php echo $this->session->userdata('sub_domain'); ?>/payroll_setup/overtime_settings";*/
+		});	
+	}
 
 });
 </script>

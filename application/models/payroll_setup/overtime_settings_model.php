@@ -13,8 +13,9 @@ class Overtime_settings_model extends CI_Model {
 	public function get_overtime_type(){
 		return $this->db->query("
 			SELECT *
-			FROM `overtime_type`
-			WHERE `company_id` = {$this->company_id}
+			FROM `overtime_type` AS ot
+			LEFT JOIN `hours_type` AS ht ON ot.`hour_type_id` = ht.`hour_type_id`
+			WHERE ot.`company_id` = {$this->company_id}
 		");
 	}
 	
@@ -26,18 +27,16 @@ class Overtime_settings_model extends CI_Model {
 		");
 	}
 	
-	public function add_overtime_type($overtime_type_name="",$pay_rate="",$ot_rate=""){
+	public function add_overtime_type($hour_type_id="",$ot_rate=""){
 		$this->db->query("
 			INSERT INTO
 			`overtime_type` (
-				`overtime_type_name`,
-				`pay_rate`,
+				`hour_type_id`,
 				`ot_rate`,
 				`company_id`
 			)
 			VALUES (
-				'".mysql_real_escape_string($overtime_type_name)."',
-				'".mysql_real_escape_string($pay_rate)."',
+				'".mysql_real_escape_string($hour_type_id)."',
 				'".mysql_real_escape_string($ot_rate)."',
 				'".mysql_real_escape_string($this->company_id)."'
 			)
@@ -159,6 +158,23 @@ class Overtime_settings_model extends CI_Model {
 				`minimum_ot_hours` = '".mysql_real_escape_string($minimum_ot_hours)."'
 			WHERE `allowance_type_id` = {$allowance_type_id}
 			AND `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_hour_type(){
+		return $this->db->query("
+			SELECT *
+			FROM `hours_type`
+			WHERE `company_id` = {$this->company_id}
+		");
+	}
+	
+	public function get_hour_type_via_id($hour_type_id){
+		return $this->db->query("
+			SELECT *
+			FROM `hours_type`
+			WHERE `company_id` = {$this->company_id}
+			AND `hour_type_id` = {$hour_type_id}
 		");
 	}
 		
