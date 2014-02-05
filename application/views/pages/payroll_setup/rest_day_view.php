@@ -1,12 +1,16 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
+		<?php
+$attributes = array('id' => 'jform');
+echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/rest_day", $attributes);
+?>
         <p>Specify rest days for different payroll group</p>
 		<?php
 			// get payroll group
 		if($pg_sql->num_rows()>0){
 			
-			foreach($pg_sql->result() as $pg){ 
+			foreach($pg_sql->result() as $index => $pg){ 
 			
 			// get assigned rest day
 			$rd_sql = $this->rest_day_model->get_rest_day($pg->payroll_group_id);
@@ -66,44 +70,44 @@
 			<div class="tbl-wrap">
 				<table style="margin-left:20px;">
 					<tr>
-					  <td style="width:120px;"><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Sunday" <?php echo $sun_ck; ?> />
+					  <td style="width:120px;"><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Sunday" <?php echo $sun_ck; ?> />
 					  <input type="hidden" class="rd_id" value="<?php echo $sun_hid; ?>" />
 						Sunday
 						</td>
-					  <td style="width:120px;"><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Thursday" <?php echo $thur_ck; ?> />
+					  <td style="width:120px;"><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Thursday" <?php echo $thur_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $thur_hid; ?>" />
 						Thursday
 						</td>
 					</tr>
 					<tr>
-					  <td><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Monday" <?php echo $mon_ck; ?> />
+					  <td><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Monday" <?php echo $mon_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $mon_hid; ?>" />
 						Monday
 						</td>
-					  <td><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Friday" <?php echo $fri_ck; ?> />
+					  <td><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Friday" <?php echo $fri_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $fri_hid; ?>" />
 						Friday
 						</td>
 					</tr>
 					<tr>
-					  <td><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Tuesday" <?php echo $tue_ck; ?> />
+					  <td><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Tuesday" <?php echo $tue_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $tue_hid; ?>" />
 						Tuesday
 						</td>
-					  <td><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Saturday" <?php echo $sat_ck; ?> />
+					  <td><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Saturday" <?php echo $sat_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $sat_hid; ?>" />
 						Saturday
 						</td>
 					</tr>
 					<tr>
-					  <td><input style="margin:2px 5px 0 0;" class="rest_day" type="checkbox" value="Wednesday" <?php echo $wed_ck; ?> />
+					  <td><input style="margin:2px 5px 0 0;" name="rd<?php echo $index; ?>[]" class="rest_day" type="checkbox" value="Wednesday" <?php echo $wed_ck; ?> />
 					   <input type="hidden" class="rd_id" value="<?php echo $wed_hid; ?>" />
 						Wednesday
 						</td>
 					  <td>&nbsp;</td>
 					</tr>
 				</table>
-				<input type="hidden" class="pg_id" value="<?php echo $pg->payroll_group_id ?>" />
+				<input type="hidden" class="pg_id" name="pg_id[]" value="<?php echo $pg->payroll_group_id ?>" />
 			</div>
 		<?php
 			}
@@ -114,8 +118,8 @@
 		?>
 		
 
-       
-		
+       <input type="submit" name="save" class="btn" value="SAVE" />
+	   <?php echo form_close(); ?>
         <!-- MAIN-CONTENT END -->
       </div>
       <div class="footer-grp-btn">
@@ -132,7 +136,7 @@ jQuery(document).ready(function(){
 
 	// load highlight message script
 	redirect_highlight_message();
-	
+	/*
 	// set rest day
 	jQuery(".rest_day").click(function(){
 		var pg_id = jQuery(this).parents(".tbl-wrap").find(".pg_id").val();
@@ -167,6 +171,7 @@ jQuery(document).ready(function(){
 			});
 		}
 	});
+	*/
 		
 });
 </script>
