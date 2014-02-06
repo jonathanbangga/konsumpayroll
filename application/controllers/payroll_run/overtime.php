@@ -32,8 +32,8 @@
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =12;
-			$this->segment = 5;
+			$this->per_page	= 2;
+			$this->segment	= 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
 				return false;
@@ -76,5 +76,5 @@
 		
 	}
 
-/* End of file Government_registration.php */
-/* Location: ./application/controllers/company/Government_registration.php */
+/* End of file overtime.php */
+/* Location: ./application/controllers/payroll_run/overtime.php */

@@ -247,7 +247,7 @@
 		*	@return boolean
 		*/
 		public function overtime_delete($company_id,$overtime_id){
-			if(is_numeric($company_id)){
+			if(is_numeric($company_id) && is_numeric($overtime_id)){
 				$where  = array(
 						"overtime_id"=>$this->db->escape_str($overtime_id),
 						"company_id"=>$this->db->escape_str($company_id)
@@ -255,6 +255,8 @@
 				$this->db->where($where);
 				$this->db->delete("employee_overtime_application");
 				return $this->db->affected_rows();
+			}else{
+				return false;
 			}
 		}
 

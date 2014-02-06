@@ -53,6 +53,15 @@
 			$this->layout->view('pages/payroll_run/hours_worked_view',$data);
 		}
 		
+		public function check_timeins(){
+			$query = $this->db->query("SELECT distinct(e.emp_id),sum(eti.total_hours) as res FROM employee  e
+													LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id 
+													WHERE eti.comp_id = '{$this->db->escape_str($this->company_info->company_id)}' group by e.emp_id");
+			$result = $query->result();	
+			$query->free_result();
+			return $result;
+		}
+		
 		public function ajax_remove_overtime(){
 			if($this->input->is_ajax_request()){
 			# overtime id 
@@ -75,5 +84,5 @@
 		
 	}
 
-/* End of file Government_registration.php */
-/* Location: ./application/controllers/company/Government_registration.php */
+/* End of file hoursworked.php */
+/* Location: ./application/controllers/company/hoursworked.php */
