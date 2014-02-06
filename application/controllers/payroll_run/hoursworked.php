@@ -26,7 +26,7 @@
 		public function __construct() {
 			parent::__construct();
 			$this->authentication->check_if_logged_in();
-			$this->load->model("payroll_run/overtime_model","overtime");
+			$this->load->model("payroll_run/hoursworked_model","hw");
 			$this->theme = $this->config->item('default');
 			$this->menu = 'content_holders/user_hr_owner_menu';
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
@@ -44,12 +44,13 @@
 			$data['page_title'] = "Hourswork";
 			$uri = "/".$this->uri->segment(1)."/payroll_run/overtime/lists";
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
-			$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);
-			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
-			$this->layout->set_layout($this->theme);
+			#$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);
+			#init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
-			$data['list'] =  $this->overtime->overtime_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+			$data['list'] =  $this->hw->hoursworked_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+			echo $this->db->last_query();
 			$data['sidebar_menu'] = $this->sidebar_menu;
+			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/payroll_run/hours_worked_view',$data);
 		}
 		
@@ -62,25 +63,7 @@
 			return $result;
 		}
 		
-		public function ajax_remove_overtime(){
-			if($this->input->is_ajax_request()){
-			# overtime id 
-				$overtime_id = $this->input->post("oid");
-				if($overtime_id){
-					foreach($overtime_id as $key=>$val):
-						$success = $this->overtime->overtime_delete($this->company_info->company_id,$val);
-					endforeach;
-					$this->session->set_flashdata("delete_success","Successfully deleted!");
-					echo json_encode(array("success"=>true));
-					return false;
-				}else{
-					echo json_encode(array("success"=>false));
-					return false;
-				}
-			}else{
-				show_404("what you doing dong?");
-			}
-		}
+		
 		
 	}
 

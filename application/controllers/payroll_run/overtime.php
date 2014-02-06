@@ -25,15 +25,16 @@
 		 */
 		public function __construct() {
 			parent::__construct();
-			$this->authentication->check_if_logged_in();
+		
 			$this->load->model("payroll_run/overtime_model","overtime");
 			$this->theme = $this->config->item('default');
 			$this->menu = 'content_holders/user_hr_owner_menu';
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page	= 2;
+			$this->per_page	= 3;
 			$this->segment	= 5;
+			$this->authentication->check_if_logged_in();
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
 				return false;

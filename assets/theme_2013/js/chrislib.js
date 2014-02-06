@@ -946,19 +946,34 @@ function god_signs(){
 
 // select all checkbox
 function icheck_box(inputcheck,inputallcheck){
-jQuery(document).on("change","input[name='"+inputcheck+"']",function(e){
-    var el = jQuery(this);
-    console.log(el.is(":checked"));
-    if(el.is(":checked")){
-        jQuery("input[name='"+inputallcheck+"']").prop("checked","checked");
-    }else{
-         jQuery("input[name='"+inputallcheck+"']").removeAttr("checked");
-    }
-});
+	jQuery(document).on("change","input[name='"+inputcheck+"']",function(e){
+		var el = jQuery(this);
+		console.log(el.is(":checked"));
+		if(el.is(":checked")){
+			jQuery("input[name='"+inputallcheck+"']").prop("checked","checked");
+		}else{
+			 jQuery("input[name='"+inputallcheck+"']").removeAttr("checked");
+		}
+	});
+}
 
+// idisable u right click heheh
+function disable_properties(){
+	jQuery(document).on('contextmenu', function() {
+		return false;
+	});
+	jQuery(document).keypress("u",function(e) {
+	  if(e.ctrlKey)
+		return false;
+	});
+	jQuery(document).click(function(e) {
+           if (e.ctrlKey) 
+               return false;          
+      });
 }
 
 		
 jQuery(function() {
 	kpay.hr.company_sidebar();
+	disable_properties();
 });

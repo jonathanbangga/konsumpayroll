@@ -28,8 +28,8 @@
 			</a>
 		</li>
 		<li><a href="">Night Differential</a></li>
-		<li <?php echo $uri=="overtime" ?  'class="selected"' : "";?>><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/overtime/lists" >Overtime</a></li>
-		<li><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/hoursworked/lists">Hours Worked</a></li>
+		<li <?php echo $uri=="overtime" ?  'class="selected"' : "";?>><a href="/<?php echo $this->uri->segment(1); ?>/payroll_run/overtime/lists" >Overtime</a></li>
+		<li><a href="/<?php echo $this->uri->segment(1); ?>/payroll_run/hoursworked/lists">Hours Worked</a></li>
 	  </ul>
 	</li>
 <li><a href="">Earnings &amp; Commissions</a></li>
