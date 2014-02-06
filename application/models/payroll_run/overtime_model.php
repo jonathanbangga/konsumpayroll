@@ -15,7 +15,7 @@
 		 * @return object
 		 */
 		public function overtime_list($company_id,$limit=10,$start=0){
-			if(is_numeric($company_id)){
+			if($company_id !="" && is_numeric($company_id)){
 				$start = intval($start);
 				$limit = intval($limit);
 				$query = $this->db->query(
@@ -79,7 +79,7 @@
 				$date_to = $this->db->escape($date_to);
 				$query = $this->db->query("SELECT count(*) as val FROM employee_overtime_application WHERE overtime_status  = 'approved' 
 						AND company_id = '{$this->db->escape_str($company_id)}' AND deleted='0' 
-						AND overtime_from >= {$date_from}	AND overtime_to <={$date_to}
+						AND overtime_from >= '{$date_from}'	AND overtime_to <='{$date_to}'
 				");
 				$row = $query->row();
 				$num_row = $query->num_rows();
@@ -212,11 +212,30 @@
 		*/
 		public function overtime_type($company_id,$date){
 			if(is_numeric($company_id)){
-				$date = date("Y-m-d",strtotime(str_replace("-","/",$date)));
-				$query = $this->db->query("SELECT * FROM holiday h LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id 
-																WHERE ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' 
-																AND date = '{$date}'
-																");
+				$date = date("Y-m-d",strtotime($date));
+				# oold $query = $this->db->query("SELECT * FROM holiday h LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id WHERE ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
+				$query = $this->db->query("SELECT * FROM holiday h 
+																LEFT JOIN overtime_type ot on ot.hour_type_id = h.hour_type_id 
+																LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id 
+																WHERE  ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		
+		/**
+		*	WHEN OVERTIME TYPE CAN"T DETECT THE DATE THEN BY DEFAULT WE CHOOSE THIS FUNCTIONALITY
+		*	@param int $company_id
+		*	@return boolean
+		*/
+		public function overtime_default($company_id){
+			if(is_numeric($company_id)){
+				$query = $this->db->query("SELECT ot.ot_rate,ot.company_id,ht.hour_type_id,ot.deleted='0',ht.hour_type_name FROM `hours_type` ht
+														LEFT JOIN overtime_type ot  on ot.hour_type_id = ht.hour_type_id
+														WHERE ot.deleted = '0' AND ot.status ='Active' AND ht.default='1' AND ht.status = 'Active'  AND ht.company_id= '{$this->db->escape_str($company_id)}'");
 				$row = $query->row();
 				$query->free_result();
 				return $row;
@@ -232,7 +251,7 @@
 		*	@return boolean
 		*/
 		public function overtime_delete($company_id,$overtime_id){
-			if(is_numeric($company_id)){
+			if(is_numeric($company_id) && is_numeric($overtime_id)){
 				$where  = array(
 						"overtime_id"=>$this->db->escape_str($overtime_id),
 						"company_id"=>$this->db->escape_str($company_id)
@@ -240,12 +259,12 @@
 				$this->db->where($where);
 				$this->db->delete("employee_overtime_application");
 				return $this->db->affected_rows();
+			}else{
+				return false;
 			}
 		}
-		
-		
+
 	}
-	
 /* End of file Approve_leave_model */
 /* Location: ./application/models/hr/Approve_leave_model.php */;
 	

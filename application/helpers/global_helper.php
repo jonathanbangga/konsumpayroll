@@ -179,6 +179,7 @@
 		$CI =& get_instance();
 		$psa_id = $CI->session->userdata("psa_id");
 		$company_name = trim($CI->db->escape_str($CI->uri->segment(1)));
+		if(is_numeric($psa_id)){
 		$query = $CI->db->query("
 									SELECT * FROM assigned_company ac
 									LEFT JOIN company c on c.company_id = ac.company_id
@@ -186,6 +187,9 @@
 								");
 		$row = $query->row();
 		return $row;
+		}else{
+			return false;
+		}
 	}
 		
 	function icompany_logo(){	
