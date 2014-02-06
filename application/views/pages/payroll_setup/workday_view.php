@@ -350,7 +350,9 @@ $num_break = 0;
 						}
 					  }
 					  ?>
-				   <td class="wh3"><input style="width:50px;" class="txtfield" name="working_hours[]" type="text" value="<?php echo $working_hours; ?>"></td>
+				   <td class="wh3">
+					<?php echo $working_hours; ?>
+				   </td>
 			
 				</tr>
 			<?php
@@ -445,7 +447,7 @@ $num_break = 0;
 		$tot_wd_pw = "";
 		$tot_days_py = "";
 		$lta = "";
-		$num_breaks_pd = 1;
+		$num_breaks_pd = "";
 		$bt1 = "";
 		$bt2 = "";
 		$bt3 = "";
@@ -516,7 +518,7 @@ $num_break = 0;
 				<?php
 					if($bt1!=""){ ?>
 					<tr>
-						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break1" value="<?php echo $bt1; ?>" /></td>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield flex_break" name="flex_break1" value="<?php echo $bt1; ?>" /></td>
 					</tr>
 				<?php
 					}
@@ -524,7 +526,7 @@ $num_break = 0;
 				<?php
 					if($bt2!=""){ ?>
 					<tr>
-						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break2" value="<?php echo $bt2; ?>" /></td>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield flex_break" name="flex_break2" value="<?php echo $bt2; ?>" /></td>
 					</tr>
 				<?php
 					}
@@ -532,7 +534,7 @@ $num_break = 0;
 				<?php
 					if($bt3!=""){ ?>
 					<tr>
-						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break3" value="<?php echo $bt3; ?>" /></td>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield flex_break" name="flex_break3" value="<?php echo $bt3; ?>" /></td>
 					</tr>
 				<?php
 					}
@@ -540,7 +542,7 @@ $num_break = 0;
 				<?php
 					if($bt4!=""){ ?>
 					<tr>
-						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield" name="flex_break4" value="<?php echo $bt4; ?>" /></td>
+						<td>Duration of short break (per min) per day:</td><td><input type="text" class="txtfield flex_break" name="flex_break4" value="<?php echo $bt4; ?>" /></td>
 					</tr>
 				<?php
 					}
@@ -779,7 +781,7 @@ $num_break = 0;
 					  ?>
 							
 							
-							<td><input style="width:50px;" class="txtfield text-nomal txtcenter" name="shift_wh[]" type="text" value="<?php echo $ws->working_hours; ?>"></td>
+							<td><?php echo $ws->working_hours; ?></td>
 							<td>
 								<div style="width: 140px;">
 									<a class="btn btn-red btn-action btn-delete" href="javascript:void(0);">DELETE</a>
@@ -810,7 +812,7 @@ $num_break = 0;
 
 </div>
 
-
+<hr style="border: 1px solid rgb(204, 204, 204);margin-bottom: 20px;">
 
 
 <?php
@@ -966,6 +968,9 @@ jQuery(document).ready(function(){
 	jQuery(".add-more").click(function(){
 		//jQuery(this).parents(".workshift_div").find(".bt").remove();
 		var pg_id = jQuery(this).parents(".payroll_group_div").find(".pg_id:first").val();
+		var num_of_shift = jQuery(this).parents(".payroll_group_div").find(".shift_name").length;
+		if(num_of_shift<1){
+		
 		jQuery(this).parents(".payroll_group_div").find(".empty").hide();
 		str = ''+
 			'<tr>'+
@@ -1060,7 +1065,7 @@ jQuery(document).ready(function(){
 				
 				
 				
-				str += '<td><input style="width:50px;" class="txtfield text-nomal txtcenter shift_wh" name="shift_wh[]" type="text" /></td>'+
+				str += '<td></td>'+
 				'<td>'+
 					'<div style="width: 140px;">'+
 						'<a class="btn btn-red btn-action btn-remove" href="javascript:void(0);" title="'+pg_id+'">REMOVE</a>'+
@@ -1069,6 +1074,11 @@ jQuery(document).ready(function(){
 			'</tr>';
 		jQuery(this).parents(".payroll_group_div").find(".ws_tbl tbody").append(str);
 		jQuery(this).parents(".payroll_group_div").find(".ws_last_index").val(i);
+		
+		}else{
+			alert("Only 1 shift can be created");
+		}
+		
 		
 		/*
 		jQuery(".workshift").each(function(index){
@@ -1244,11 +1254,13 @@ jQuery(document).ready(function(){
 			for(var i=1;i<=num;i++){
 				str += '<tr>'+
 							'<td>Duration of short break '+i+'(per min) per day:</td>'+
-							'<td><input type="text" class="txtfield" name="flex_break'+i+'" value="" /></td>'+
+							'<td><input type="text" class="txtfield flex_break" name="flex_break'+i+'" value="" /></td>'+
 						'</tr>';
 			}		
 			jQuery(this).parents(".payroll_group_div").find(".tbl_short_breaks").html(str);
 		}else{
+			var num_of_breaks = jQuery(this).parents(".payroll_group_div").find(".flex_break").length;
+			jQuery(this).parents(".payroll_group_div").find(".num_breaks_pd").val(num_of_breaks);
 			alert("you can only assign a maximum of 4 breaks");
 		}
 		
