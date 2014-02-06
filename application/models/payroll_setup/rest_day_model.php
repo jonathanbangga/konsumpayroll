@@ -49,6 +49,14 @@ class Rest_day_model extends CI_Model {
 			WHERE `rest_day_id` = {$rest_day_id}
 		");
 	}
+	
+	public function clear_rest_day(){
+		$this->db->query("
+			DELETE
+			FROM `rest_day` 
+			WHERE `company_id` = {$this->company_id}
+		");
+	}
 		
 }
 /* End of file */

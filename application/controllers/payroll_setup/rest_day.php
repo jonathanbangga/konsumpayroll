@@ -22,6 +22,19 @@ class Rest_day extends CI_Controller {
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		$data['pg_sql'] = $this->rest_day_model->get_payroll_group();
+		
+		$pg_id = $this->input->post('pg_id');
+		if($this->input->post('save')){
+			$this->rest_day_model->clear_rest_day();
+			foreach($pg_id as $i=>$pg_id_val){
+				$rd = $this->input->post('rd'.$i);
+				foreach($rd as $rd_val){
+					$this->rest_day_model->add_rest_day($pg_id_val,$rd_val);
+				}
+			}
+			setcookie('msg','Changes Saved!');
+		}
+		
 		$this->layout->view('pages/payroll_setup/rest_day_view',$data);
 	}
 	

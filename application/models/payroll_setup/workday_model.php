@@ -300,26 +300,34 @@ class Workday_model extends CI_Model {
 	}
 	
 	
-	public function add_flexible_hours($total_hours_for_the_week,$total_days_per_year,$latest_time_in_allowed,$number_of_breaks_per_day,$duration_of_lunch_break_per_day,$duration_of_short_break_per_day,$payroll_group_id){
+	public function add_flexible_hours($total_hours_for_the_day,$total_hours_for_the_week,$total_days_per_year,$latest_time_in_allowed,$number_of_breaks_per_day,$break1,$break2,$break3,$break4,$duration_of_lunch_break_per_day,$payroll_group_id){
 		$this->db->query("
 			INSERT INTO
 			`flexible_hours` (
+				`total_hours_for_the_day`,
 				`total_hours_for_the_week`,
 				`total_days_per_year`,
 				`latest_time_in_allowed`,
 				`number_of_breaks_per_day`,
 				`duration_of_lunch_break_per_day`,
-				`duration_of_short_break_per_day`,
+				`break1`,
+				`break2`,
+				`break3`,
+				`break4`,
 				`payroll_group_id`,
 				`company_id`
 			)
 			VALUES (
+				'".mysql_real_escape_string($total_hours_for_the_day)."',
 				'".mysql_real_escape_string($total_hours_for_the_week)."',
 				'".mysql_real_escape_string($total_days_per_year)."',
 				'".mysql_real_escape_string($latest_time_in_allowed)."',
 				'".mysql_real_escape_string($number_of_breaks_per_day)."',
 				'".mysql_real_escape_string($duration_of_lunch_break_per_day)."',
-				'".mysql_real_escape_string($duration_of_short_break_per_day)."',
+				'".mysql_real_escape_string($break1)."',
+				'".mysql_real_escape_string($break2)."',
+				'".mysql_real_escape_string($break3)."',
+				'".mysql_real_escape_string($break4)."',
 				'".mysql_real_escape_string($payroll_group_id)."',
 				'".mysql_real_escape_string($this->company_id)."'
 			)
