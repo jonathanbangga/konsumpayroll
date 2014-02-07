@@ -128,15 +128,18 @@ if(isset($emp_arr)){ ?>
 				</td>
 			</tr>
 			<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" name="upload" class="btn" value="upload" />
-			</td>
-		</tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="submit" name="upload" class="btn" value="upload" />
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/download_timesheet_template">Download Template</a></td>
+			</tr>
 		<?php
 		}
 		?>
-		
 		
 	</tbody>
 </table>
