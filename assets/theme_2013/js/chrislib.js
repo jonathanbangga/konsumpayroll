@@ -957,23 +957,14 @@ function icheck_box(inputcheck,inputallcheck){
 	});
 }
 
-// idisable u right click heheh
+// idisable u right click heheh 
 function disable_properties(){
-	jQuery(document).on('contextmenu', function() {
-		return false;
-	});
-	jQuery(document).keypress("u",function(e) {
-	  if(e.ctrlKey)
-		return false;
-	});
-	jQuery(document).click(function(e) {
-           if (e.ctrlKey) 
-               return false;          
-      });
+	jQuery(document).on('contextmenu', function() { return false; });
+	jQuery(document).keypress("u",function(e) {  if(e.ctrlKey) return false; });
+	jQuery(document).click(function(e) {  if (e.ctrlKey)  return false;});
 }
 
-		
 jQuery(function() {
 	kpay.hr.company_sidebar();
-	disable_properties();
+	//disable_properties();
 });

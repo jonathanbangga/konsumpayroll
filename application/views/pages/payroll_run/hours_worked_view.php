@@ -33,8 +33,8 @@
 				</tr>
 				<?php
 					if($list){
-						$test = "9:30:00";
-						foreach($list as $list_key=>$list_val):
+						$test = date("j A",strtotime("19:30:00"));
+						foreach($list as $list_key => $list_val):
 				?>
 				<tr>
 					<td><span class="payroll_group_span"><input type="checkbox" name="timein_id[]" /></span></td>
@@ -52,7 +52,7 @@
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-				</tr>
+				</tr> 
 				<?php
 						endforeach;
 					}
