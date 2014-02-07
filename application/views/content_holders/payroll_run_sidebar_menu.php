@@ -16,7 +16,7 @@
 		</a>
 	</li>			
 	<li id="tl_parent_menu"><a href="javascript:void(0);">Timekeeping &amp; Leave</a>
-	  <ul id="tl_child_menu" style="<?php echo ($uri=='leave'||$uri=='holiday_premium')?'display:block;':'display:none;'; ?>">
+	  <ul id="tl_child_menu" style="<?php echo ($uri=='leave'||$uri=='holiday_premium'||$uri=='night_differential')?'display:block;':'display:none;'; ?>">
 		<li <?php if($uri=='leave'){ echo 'class="selected"'; } ?>>
 			<a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/leave">
 				Leave
@@ -27,9 +27,13 @@
 				Holiday/Premium
 			</a>
 		</li>
-		<li><a href="">Night Differential</a></li>
-		<li <?php echo $uri=="overtime" ?  'class="selected"' : "";?>><a href="/<?php echo $this->uri->segment(1); ?>/payroll_run/overtime/lists" >Overtime</a></li>
-		<li><a href="/<?php echo $this->uri->segment(1); ?>/payroll_run/hoursworked/lists">Hours Worked</a></li>
+		<li <?php if($uri=='night_differential'){ echo 'class="selected"'; } ?>>
+			<a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/night_differential">
+				Night Differential
+			</a>
+		</li>
+		<li <?php echo $uri=="overtime" ?  'class="selected"' : "";?>><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/overtime/lists" >Overtime</a></li>
+		<li><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/holiday_premium">Hours Worked</a></li>
 	  </ul>
 	</li>
 <li><a href="">Earnings &amp; Commissions</a></li>

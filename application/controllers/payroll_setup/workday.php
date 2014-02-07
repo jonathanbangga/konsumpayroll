@@ -101,59 +101,65 @@ class Workday extends CI_Controller {
 	
 			// working days
 			$wt_name = $this->input->post('wt_name');
-			foreach($workday as $wd){
-				$wd2 = explode("-",$wd);
-				$day = $wd2[0];
-				$index = $wd2[1];
-				$start_time = date("H:i:s",strtotime($start_time_h[$index].":".$start_time_m[$index]." ".$start_time_p[$index]));
-				$end_time = date("H:i:s",strtotime($end_time_h[$index].":".$end_time_m[$index]." ".$end_time_p[$index]));
-				
-				$work = 0;
-				$work2 = 0;
-				$w1 = strtotime($start_time);
-				$w2 = strtotime($end_time);
-				$work = $w2 - $w1;
-				$work2 = $work/3600;
+			//echo count($workday);
+			//echo var_dump($workday);
+			if($workday){
+				if(count($workday)>0){
+					foreach($workday as $wd){
+						$wd2 = explode("-",$wd);
+						$day = $wd2[0];
+						$index = $wd2[1];
+						$start_time = date("H:i:s",strtotime($start_time_h[$index].":".$start_time_m[$index]." ".$start_time_p[$index]));
+						$end_time = date("H:i:s",strtotime($end_time_h[$index].":".$end_time_m[$index]." ".$end_time_p[$index]));
+						
+						// dynamic work hours script
+						$work = 0;
+						$work2 = 0;
+						$w1 = strtotime($start_time);
+						$w2 = strtotime($end_time);
+						$work = $w2 - $w1;
+						$work2 = $work/3600;
 
-				$break = 0;
-				$break2 = 0;
-				for($i=0;$i<$break_last_index[$index];$i++){
+						$break = 0;
+						$break2 = 0;
+						for($i=0;$i<$break_last_index[$index];$i++){
+						
+							$bt_st_h = $this->input->post('bt_st_h'.$i);
+							$bt_st_m = $this->input->post('bt_st_m'.$i);
+							$bt_st_p = $this->input->post('bt_st_p'.$i);
+							$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
+							$bt_et_h = $this->input->post('bt_et_h'.$i);
+							$bt_et_m = $this->input->post('bt_et_m'.$i);
+							$bt_et_p = $this->input->post('bt_et_p'.$i);
+							$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
 				
-					$bt_st_h = $this->input->post('bt_st_h'.$i);
-					$bt_st_m = $this->input->post('bt_st_m'.$i);
-					$bt_st_p = $this->input->post('bt_st_p'.$i);
-					$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
-					$bt_et_h = $this->input->post('bt_et_h'.$i);
-					$bt_et_m = $this->input->post('bt_et_m'.$i);
-					$bt_et_p = $this->input->post('bt_et_p'.$i);
-					$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
-		
-					$bt1 = strtotime($bt_start_time);
-					$bt2 = strtotime($bt_end_time);
-					$break = $bt2 - $bt1;
-					$break2 += $break/3600;
-					
+							$bt1 = strtotime($bt_start_time);
+							$bt2 = strtotime($bt_end_time);
+							$break = $bt2 - $bt1;
+							$break2 += $break/3600;
+							
+						}
+						
+						$wh = $work2-$break2;
+						
+						// save workdays
+						$this->workday_model->add_uniform_working_day($day,$start_time,$end_time,$wh,$pg_id[$index]);
+						// save break time
+						// loop through number of breaks
+						for($i=0;$i<$break_last_index[$index];$i++){
+							$bt_st_h = $this->input->post('bt_st_h'.$i);
+							$bt_st_m = $this->input->post('bt_st_m'.$i);
+							$bt_st_p = $this->input->post('bt_st_p'.$i);
+							$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
+							$bt_et_h = $this->input->post('bt_et_h'.$i);
+							$bt_et_m = $this->input->post('bt_et_m'.$i);
+							$bt_et_p = $this->input->post('bt_et_p'.$i);
+							$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
+							// add break time
+							$this->workday_model->add_break_time($pg_id[$index],$day,$bt_start_time,$bt_end_time,$i,$wt_name[$index]);
+						}			
+					}
 				}
-
-			
-				$wh = $work2-$break2;
-				
-				// save workdays
-				$this->workday_model->add_uniform_working_day($day,$start_time,$end_time,$wh,$pg_id[$index]);
-				// save break time
-				// loop through number of breaks
-				for($i=0;$i<$break_last_index[$index];$i++){
-					$bt_st_h = $this->input->post('bt_st_h'.$i);
-					$bt_st_m = $this->input->post('bt_st_m'.$i);
-					$bt_st_p = $this->input->post('bt_st_p'.$i);
-					$bt_start_time = date("H:i:s",strtotime($bt_st_h[$index].":".$bt_st_m[$index]." ".$bt_st_p[$index]));
-					$bt_et_h = $this->input->post('bt_et_h'.$i);
-					$bt_et_m = $this->input->post('bt_et_m'.$i);
-					$bt_et_p = $this->input->post('bt_et_p'.$i);
-					$bt_end_time = date("H:i:s",strtotime($bt_et_h[$index].":".$bt_et_m[$index]." ".$bt_et_p[$index]));
-					// add break time
-					$this->workday_model->add_break_time($pg_id[$index],$day,$bt_start_time,$bt_end_time,$i,$wt_name[$index]);
-				}			
 			}
 
 			// workshift
@@ -178,26 +184,61 @@ class Workday extends CI_Controller {
 			$ws_wt_name = $this->input->post('ws_wt_name');
 			$wsbtid = $this->input->post('wsbtid');
 			
-			foreach($shift_name as $index=>$sn){
-				$shift_st = date("H:i:s",strtotime($shift_st_h[$index].":".$shift_st_m[$index]." ".$shift_st_p[$index]));
-				$shift_et = date("H:i:s",strtotime($shift_et_h[$index].":".$shift_et_m[$index]." ".$shift_et_p[$index]));
-	
-				// save workshift
-				$wsid = $this->workday_model->add_workshift($pg_id_ws[$index],$sn,$shift_st,$shift_et,$shift_wh[$index],$ws_sel[$index]);
-				// loop through number of breaks
-				for($i=0;$i<$ws_last_index[$index];$i++){
-					$shift_bt_st_h = $this->input->post('shift_bt_st_h'.$i);
-					$shift_bt_st_m = $this->input->post('shift_bt_st_m'.$i);
-					$shift_bt_st_p = $this->input->post('shift_bt_st_p'.$i);
-					$shift_bt_st = date("H:i:s",strtotime($shift_bt_st_h[$index].":".$shift_bt_st_m[$index]." ".$shift_bt_st_p[$index]));
-					$shift_bt_et_h = $this->input->post('shift_bt_et_h'.$i);
-					$shift_bt_et_m = $this->input->post('shift_bt_et_m'.$i);
-					$shift_bt_et_p = $this->input->post('shift_bt_et_p'.$i);
-					$shift_bt_et = date("H:i:s",strtotime($shift_bt_et_h[$index].":".$shift_bt_et_m[$index]." ".$shift_bt_et_p[$index]));
-					// add break time
-					$this->workday_model->add_break_time($pg_id_ws[$index],'',$shift_bt_st,$shift_bt_et,$i,$ws_wt_name[$index],$wsid);
+			if($shift_name){
+			
+				foreach($shift_name as $index=>$sn){
+					$shift_st = date("H:i:s",strtotime($shift_st_h[$index].":".$shift_st_m[$index]." ".$shift_st_p[$index]));
+					$shift_et = date("H:i:s",strtotime($shift_et_h[$index].":".$shift_et_m[$index]." ".$shift_et_p[$index]));
+					
+					// dynamic work hours script
+					$work = 0;
+					$work2 = 0;
+					$w1 = strtotime($shift_st);
+					$w2 = strtotime($shift_et);
+					$work = $w2 - $w1;
+					$work2 = $work/3600;
+
+					$break = 0;
+					$break2 = 0;
+					for($i=0;$i<$ws_last_index[$index];$i++){
+					
+						$shift_bt_st_h = $this->input->post('shift_bt_st_h'.$i);
+						$shift_bt_st_m = $this->input->post('shift_bt_st_m'.$i);
+						$shift_bt_st_p = $this->input->post('shift_bt_st_p'.$i);
+						$shift_bt_st = date("H:i:s",strtotime($shift_bt_st_h[$index].":".$shift_bt_st_m[$index]." ".$shift_bt_st_p[$index]));
+						$shift_bt_et_h = $this->input->post('shift_bt_et_h'.$i);
+						$shift_bt_et_m = $this->input->post('shift_bt_et_m'.$i);
+						$shift_bt_et_p = $this->input->post('shift_bt_et_p'.$i);
+						$shift_bt_et = date("H:i:s",strtotime($shift_bt_et_h[$index].":".$shift_bt_et_m[$index]." ".$shift_bt_et_p[$index]));
+			
+						$bt1 = strtotime($shift_bt_st);
+						$bt2 = strtotime($shift_bt_et);
+						$break = $bt2 - $bt1;
+						$break2 += $break/3600;
+						
+					}
+					
+					$wh = $work2-$break2;
+		
+					// save workshift
+					$wsid = $this->workday_model->add_workshift($pg_id_ws[$index],$sn,$shift_st,$shift_et,$wh,$ws_sel[$index]);
+					// loop through number of breaks
+					for($i=0;$i<$ws_last_index[$index];$i++){
+						$shift_bt_st_h = $this->input->post('shift_bt_st_h'.$i);
+						$shift_bt_st_m = $this->input->post('shift_bt_st_m'.$i);
+						$shift_bt_st_p = $this->input->post('shift_bt_st_p'.$i);
+						$shift_bt_st = date("H:i:s",strtotime($shift_bt_st_h[$index].":".$shift_bt_st_m[$index]." ".$shift_bt_st_p[$index]));
+						$shift_bt_et_h = $this->input->post('shift_bt_et_h'.$i);
+						$shift_bt_et_m = $this->input->post('shift_bt_et_m'.$i);
+						$shift_bt_et_p = $this->input->post('shift_bt_et_p'.$i);
+						$shift_bt_et = date("H:i:s",strtotime($shift_bt_et_h[$index].":".$shift_bt_et_m[$index]." ".$shift_bt_et_p[$index]));
+						// add break time
+						$this->workday_model->add_break_time($pg_id_ws[$index],'',$shift_bt_st,$shift_bt_et,$i,$ws_wt_name[$index],$wsid);
+					}
 				}
+			
 			}
+			
 			
 			setcookie("msg","Submission successful!"); 
 		}
