@@ -57,7 +57,7 @@
 			$uri = "/{$this->uri->segment(1)}/hr/emp_amortization_schedule/index/{$this->loan_no}/";
 			$total_rows = $this->hr_emp->emp_amortization_sched_counter($this->company_id, $this->loan_no);
 			
-			$per_page = $this->config->item('per_page');
+			$per_page = 100;#$this->config->item('per_page');
 			$segment=6;
 			
 			init_pagination($uri,$total_rows,$per_page,$segment);
@@ -77,7 +77,7 @@
 			
 			if($this->input->post('add')){
 				$loan_no = $this->input->post('loan_no');
-				$payroll_date = $this->input->post('payroll_date');				
+				$payroll_date = $this->input->post('payroll_date');
 				#$payment = $this->input->post('payment');
 				$interest = $this->input->post('interest');
 				$principal = $this->input->post('principal');
@@ -92,6 +92,9 @@
 				
 				if ($this->form_validation->run()==true){
 					
+					$employee_amortization_schedule_group = $this->hr_emp->employee_amortization_schedule_group($this->loan_no, $this->company_id);
+					$loan_amount_parent = $this->hr_emp->loan_amount_parent($this->loan_no, $this->company_id);
+					$loan_amount_child = ($employee_amortization_schedule_group == 1) ? $loan_amount_parent : "0" ;
 					foreach($loan_no as $key=>$val){
 						$payment_val = $interest[$key] + $principal[$key];
                 	    $add_emp_amortization_sched = array(								
@@ -100,6 +103,8 @@
 							'interest' => $interest[$key],
 							'principal' => $principal[$key],
                 	    	'emp_loan_id' => $loan_no[$key],
+                	    	'employee_amortization_schedule_group' => $employee_amortization_schedule_group,
+                	    	'loan_amount_child' => $loan_amount_child,
                 	    	'comp_id' => $this->company_id
 						);
 

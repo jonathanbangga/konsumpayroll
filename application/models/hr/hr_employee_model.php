@@ -422,8 +422,25 @@
 		 * @param unknown_type $comp_id
 		 */
 		public function update_basic_emp($emp_id,$comp_id){
+			// get account id
+			$sql_get_account_id = $this->db->query("
+				SELECT *FROM employee
+				WHERE emp_id = '{$emp_id}'
+			");
+			
+			$row = $sql_get_account_id->row();
+			$account_id =  $row->account_id;
+			
+			// update or delete employee information
 			$delete_me = $this->db->query("UPDATE employee SET status = 'Inactive', deleted = '1' WHERE emp_id = '{$emp_id}' and company_id = '{$comp_id}'");
-			if($delete_me){
+			
+			// update or delete account information
+			$delete_accounts = $this->db->query("
+				UPDATE accounts SET deleted = '1'
+				WHERE account_id = '{$account_id}'
+			");
+			
+			if($delete_me && $delete_accounts){
 				return TRUE;
 			}else{
 				return FALSE;
@@ -2139,6 +2156,7 @@
 					*FROM employee_amortization_schedule
 					WHERE comp_id = '{$comp_id}'
 					AND emp_loan_id = '{$loan_id}'
+					GROUP BY employee_amortization_schedule_group
 					LIMIT ".$limit."
 				");
 				
@@ -2155,6 +2173,7 @@
 					*FROM employee_amortization_schedule
 					WHERE comp_id = '{$comp_id}'
 					AND emp_loan_id = '{$loan_id}'
+					GROUP BY employee_amortization_schedule_group
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -2196,11 +2215,22 @@
 		 */
 		public function emp_payment_history($limit, $start, $comp_id, $loan_id){
 			if($start==0){
+				/*
 				$sql = $this->db->query("
 					SELECT 
 					*FROM employee_payment_history
 					WHERE comp_id = '{$comp_id}'
 					AND employee_loans_id = '{$loan_id}'
+					LIMIT ".$limit."
+				");
+				*/
+				
+				$sql = $this->db->query("
+					SELECT 
+					*FROM employee_amortization_schedule
+					WHERE comp_id = '{$comp_id}'
+					AND emp_loan_id = '{$loan_id}'
+					GROUP BY employee_amortization_schedule_group
 					LIMIT ".$limit."
 				");
 				
@@ -2212,11 +2242,22 @@
 					return FALSE;
 				}
 			}else{
+				/*
 				$sql = $this->db->query("
 					SELECT 
 					*FROM employee_payment_history
 					WHERE comp_id = '{$comp_id}'
 					AND employee_loans_id = '{$loan_id}'
+					LIMIT ".$start.",".$limit."
+				");
+				*/
+				
+				$sql = $this->db->query("
+					SELECT 
+					*FROM employee_amortization_schedule
+					WHERE comp_id = '{$comp_id}'
+					AND emp_loan_id = '{$loan_id}'
+					GROUP BY employee_amortization_schedule_group
 					LIMIT ".$start.",".$limit."
 				");
 				
@@ -2275,21 +2316,16 @@
 		 */
 		public function update_payment_history(
 						$employee_payment_history_id,
-						$interest,
-						$principal,
-						$credit_balance_on_principal,
-						$credit_balance_on_interest,
+						$payment,
 						$penalty,
+						$remaining_cash_amount,
 						$comp_id
 						){
 			$sql = $this->db->query("
 				UPDATE employee_payment_history
-				SET interest = '{$interest}', 
-				principal = '{$principal}', 
-				credit_balance_on_principal = '{$credit_balance_on_principal}', 
-				credit_balance_on_interest = '{$credit_balance_on_interest}',
-				penalty = '{$penalty}'
-				WHERE  	employee_payment_history_id = '{$employee_payment_history_id}'
+				SET payment = '{$payment}', 
+				remaining_cash_amount = '{$remaining_cash_amount}', penalty = '{$penalty}'
+				WHERE employee_payment_history_id = '{$employee_payment_history_id}'
 				AND comp_id = '{$comp_id}'
 			");
 			
@@ -2758,6 +2794,94 @@
 			}else{
 				return false;
 			}
+		}
+		
+		/**
+		 * Payment History for last payment
+		 * @param unknown_type $comp_id
+		 * @param unknown_type $loan_no
+		 */
+		public function last_row_payment($comp_id, $loan_no){
+			$sql = $this->db->query("
+				SELECT *
+				FROM employee_payment_history
+				WHERE comp_id = '{$comp_id}'
+				AND employee_loans_id = '{$loan_no}'
+				ORDER BY employee_payment_history_id DESC
+				LIMIT 1 
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				$sql->free_result();
+				return $row;
+			}else{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * Employee Amortization Schedule Group ID
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function employee_amortization_schedule_group($loan_id,$comp_id){
+			$field_name = "employee_amortization_schedule_group";
+			$query = $this->db->query("
+				SELECT *
+				FROM `employee_amortization_schedule`
+				WHERE emp_loan_id = '{$loan_id}'
+				AND comp_id = '{$comp_id}'
+				GROUP BY employee_amortization_schedule_group
+				ORDER BY employee_amortization_schedule_group DESC
+				LIMIT 1
+			");
+			$row = $query->row(); 
+			if($query->num_rows() > 0){
+				$query->free_result();
+				$maxid = $row->$field_name;
+				return $maxid;
+			}else{
+				$maxid = 1;
+				return $maxid;
+			}
+		}
+		
+		/**
+		 * Loan Amount Parent Value
+		 * @param unknown_type $loan_id
+		 * @param unknown_type $comp_id
+		 */
+		public function loan_amount_parent($loan_id,$comp_id){
+			$sql = $this->db->query("
+				SELECT *FROM employee_loans
+				WHERE employee_loans_id = '{$loan_id}'
+				AND company_id = '{$comp_id}'
+			");
+			
+			if($sql->num_rows() > 0){
+				$row = $sql->row();
+				return $row->principal;
+			}else{
+				return 0;
+			}
+		}
+		
+		/**
+		 * Create New Amortization Schedule
+		 * @param unknown_type $loan_no
+		 */
+		public function create_new_amortization_schedule($loan_no){
+			$sql = $this->db->query("
+				SELECT * FROM `employee_amortization_schedule` 
+				WHERE `emp_loan_id` = '{$loan_no}'
+				GROUP BY `employee_amortization_schedule_group`
+				ORDER BY `employee_amortization_schedule_group` DESC
+				LIMIT 1
+			");
+			
+			$row = $sql->row();
+			return $row;
 		}
 		
 	}

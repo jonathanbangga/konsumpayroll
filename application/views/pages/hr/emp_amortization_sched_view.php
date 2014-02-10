@@ -6,14 +6,16 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:1070px;" class="tbl emp_conList">
+          
+          <!-- 
+          <table style="width:930px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
-              <th style="width:170px;">Payroll Date</th>
-              <th style="width:170px;">Principal</th>
-              <th style="width:170px;">Interest</th>
-              <th style="width:170px;">Installment</th>
-              <th style="width:170px;">Loan Balance</th>
+              <th>Payroll Date</th>
+              <th>Principal</th>
+              <th>Interest</th>
+              <th>Installment</th>
+              <th>Loan Balance</th>
               <th style="width:170px">Action</th>
             </tr>
             <?php 
@@ -47,6 +49,18 @@
             	}
             ?>
           </tbody></table>
+           -->
+           
+			<?php 
+				if($emp_amortization != NULL){
+					foreach($emp_amortization as $row){
+            			print view_table_group_amortization($row->emp_loan_id,$row->employee_amortization_schedule_group,$row->loan_amount_child);
+					}
+				}else{
+            		print "<tr class='msg_empt_cont'><td colspan='7' style='text-align:left;'>".msg_empty()."</td></tr>";
+            	}
+			?>
+           
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
@@ -62,6 +76,11 @@
 		 <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
 		 <!-- FOOTER-GRP-BTN END -->
 		 </div>
+		 <style>
+			.tbl-wrap > p {
+			    padding: 20px 0;
+			}
+		 </style>
 <?php print form_close();?>
 
 		<div class='editCont ihide' title='Edit Information'>
@@ -107,7 +126,7 @@
 	    tbl += "</tr>";
 	          
 	      // alert(tbl);
-	      jQuery(".emp_conList").append(tbl);
+	      jQuery(".emp_conList").last().append(tbl);
 	}
 	
 	function _addRowBtn(){

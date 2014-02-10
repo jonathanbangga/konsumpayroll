@@ -164,6 +164,7 @@
 							'account_type_id' => "2",
 							'email' => $emailaddress[$key],
 							'user_type_id'=>"5",
+							'token'=>tokenize(),
 							'deleted' => "0"
 						);
 							
@@ -211,6 +212,7 @@
 				}
 				
 				// Delete Employee Information
+				// Delete Account Information
 				if($this->input->post('del_empDB')){
 					$emp_id = $this->input->post('emp_id');
 					$delete_me = $this->hr_emp->update_basic_emp($emp_id,$this->company_id);
