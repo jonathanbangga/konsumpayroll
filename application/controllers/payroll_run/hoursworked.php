@@ -48,6 +48,7 @@
 			#init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
 			$data['list'] =  $this->hw->hoursworked_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+			p($data['list']);
 			echo $this->db->last_query();
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->set_layout($this->theme);
@@ -55,15 +56,11 @@
 		}
 		
 		public function check_timeins(){
-			$query = $this->db->query("SELECT distinct(e.emp_id),sum(eti.total_hours) as res FROM employee  e
-													LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id 
-													WHERE eti.comp_id = '{$this->db->escape_str($this->company_info->company_id)}' group by e.emp_id");
+			$query = $this->db->query("SELECT distinct(e.emp_id),sum(eti.total_hours) as res FROM employee  e LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id  WHERE eti.comp_id = '{$this->db->escape_str($this->company_info->company_id)}' group by e.emp_id");
 			$result = $query->result();	
 			$query->free_result();
 			return $result;
 		}
-		
-		
 		
 	}
 
