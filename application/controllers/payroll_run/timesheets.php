@@ -205,8 +205,11 @@ class Timesheets extends CI_Controller {
 		}
 	}
 	
-	public function test(){
-		echo date('Y-m-d m H:i:s',strtotime("12/11/2014 14:00"));
+	public function download_timesheet_template(){
+		$filename ="booking_report.csv";
+		header('Content-type: text/csv');
+		header('Content-Disposition: attachment; filename='.$filename);
+		echo "First Name,Middle Name,Last Name,Time In,Lunch Out,Lunch In,Time Out,Hours Worked";
 	}
 	
 }

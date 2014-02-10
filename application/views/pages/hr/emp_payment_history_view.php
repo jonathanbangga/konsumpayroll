@@ -1,114 +1,24 @@
+<?php print $this->session->flashdata('message');?>
 <p>Employee Name: <?php print ucwords($emp_info->first_name)." ".ucwords($emp_info->last_name);?></p>
 <p>Employee Number: <?php print $emp_info->payroll_cloud_id;?></p>
 <p>Loan Type: <?php print $emp_info->loan_type_name;?></p>
 <p>Date Granted: <?php print $emp_info->date_granted;?></p>
-<p>Loan Amount: <?php print number_format($emp_info->principal, 2);?></p>
 <div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validate_form()" enctype="multipart/form-data"');?>
 <div class="tbl-wrap">	
-		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:1240px;" class="tbl emp_conList">
-            <tbody><tr>
-              <th style="width:50px;"></th>
-              <th style="width:170px;">Payment</th>
-              <th style="width:170px;">Interest</th>
-              <th style="width:170px;">Principal</th>
-              <th style="width:170px">Penalty</th>
-              <th style="width:170px;">Credit Balance on Principal</th>
-              <th style="width:170px;">Loan Balance</th>
-              <th style="width:170px">Action</th>
-            </tr>
-            <?php 
-            	if($emp_payment_history != NULL){
-            		$counter = 1;
-            		$credit_balance_principal = 0;
-            		$interest_val = 0;
-            		$principal_val = 0;
-            		foreach($emp_payment_history as $row){
-            			
-            			// For Credit Balance On Principal
-            			$credit_balance_principal = ($credit_balance_principal + $row->principal);
-            			$balance_principal =  $total_princiapl_amortization - $credit_balance_principal;
-            			
-            			// Interest Total Amount
-            			$interest_val = $interest_val + $row->interest;
-            			
-            			// Principal Total Amount
-            			$principal_val = $principal_val + $row->principal;
-            			
-            			// For Loan Balance
-            			$loan_balance = $loan_amount - ( $interest_val + $principal_val);
-            ?>
-	            <tr class="payment_row_cont">
-	              <td><?php print $counter++;?></td>
-	              <td><?php print number_format($row->payment, 2);?></td>
-	              <td><?php print number_format($row->interest, 2);?></td>
-	              <td><?php print number_format($row->principal, 2);?></td>
-	              <td><?php print number_format($row->penalty, 2);?></td>
-	              <td><span class="ihide"><?php print $total_princiapl_amortization." - ".$credit_balance_principal." = ";?></span><?php print number_format($balance_principal, 2);?></td>
-	              <td><?php print number_format($loan_balance, 2);?></td>
-	              <td>
-	              	<a href="javascript:void(0);" class="btn btn-gray btn-action editBtnDb" employee_payment_history_id="<?php print $row->employee_payment_history_id;?>" >EDIT</a> 
-	              	<a href="javascript:void(0);" class="btn btn-red btn-action delBtnDb" employee_payment_history_id="<?php print $row->employee_payment_history_id;?>" >DELETE</a>
-              	  </td>
-	            </tr>
-            <?php
-            		}
-            	}
-            ?>
-            <?php
-				if($debit_amount == 0){
-					$new_interest_value = $interest;
-					$new_principal_value = $principal;
-					$new_remaining_cash_amount = $debit_amount;
-				}else{
-					// Total Remaining Cash Amount
-	            	$total_debit_amount_value = $debit_amount - $interest;
-	            	
-	            	// Compute New Interest Amount
-	            	if($total_debit_amount_value > 0){
-	            		$new_interest_value = 0;
-	            	}else{
-	            		// Returns the absolute value of number or convert to positive integer
-						$new_interest_value = abs($total_debit_amount_value);
-	            	}
-	            	
-	            	// Compute New Principal Amount
-	            	if($total_debit_amount_value > 0){
-	            		// Total Principal is greater than Remaining Cash Amount 
-	            		if($principal >= $total_debit_amount_value){
-	            			$new_principal_value = $principal - $total_debit_amount_value;
-	            			// Compute New Remaining Cash Amount
-	            			$new_remaining_cash_amount = 0;
-	            		}else{
-	            			// Total Remaining Cash Amount is greater than Principal
-	            			 $new_principal_value = 0;
-	            			 $new_remaining_cash_amount = $total_debit_amount_value - $principal;
-	            		}
-	            	}
+          <?php 
+			if($emp_payment_history != NULL){
+				$counter = 1;
+				$credit_balance_principal = 0;
+				$interest_val = 0;
+				$principal_val = 0;
+				$flag = ""; // if flag is equal to empty then display payment fields else create new amortization schedule
+				foreach($emp_payment_history as $row){
+					print view_table_group_payment_history($row->emp_loan_id, $row->employee_amortization_schedule_group, $row->loan_amount_child);
 				}
-            ?>
-            <tr>
-		    <td><input readonly='readonly' type='text' name='loan_no[]' class='ihide txtfield loan_no"+size+"' value='<?php print $emp_info->employee_loans_id;?>' /></td>
-		    <td><input type='text' name='payment[]' class='payment txtfield'></td>
-		    <td><input type='text' name='interest[]' class='interest txtfield' value="<?php print $new_interest_value;?>" /></td>
-		    <td><input type='text' name='principal[]' class='principal txtfield' value="<?php print $new_principal_value;?>" /></td>
-		    <td><input type='text' name='penalty[]' class='penalty txtfield'></td>
-		    <td>
-			    <span class="ihide">Installment:
-			    <?php print $interest." + ".$principal;?>
-			    	<input type="text" name="installment_value[]" style="width:auto;" value="<?php print $interest + $principal;?>" />
-	            </span>
-            </td>
-		    <td><span class="ihide">Remaining Cash Amount: <?php print $debit_amount;?></span></td>
-		    <td>
-		    	<span class="ihide">New Cash Amount:
-			    	<input type="text" name="remaining_cash_amount[]" style="width:auto;" value="<?php print $new_remaining_cash_amount;?>" />
-			    </span>
-		    </td>
-		   </tr>
-          </tbody></table>
+			}
+          ?>
           <span class="ihides unameContBoxTrick"></span>
           <!-- TBL-WRAP END -->
         </div>
@@ -133,24 +43,29 @@
           <table width="100%">
             <tbody>
             <tr>
+              <td style="width:70px">Payment</td>
+              <td>
+	              <input type="text" name="employee_payment_history_id" class="txtfield employee_payment_history_id ihide" />
+	              <input type='text' name='payment' class='payment txtfield'>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:155px">Penalty</td>
+              <td><input type='text' name='penalty' class='penalty txtfield'></td></tr>
+            <tr>
               <td style="width:155px">Interest</td>
               <td>
-              <input type="text" name="employee_payment_history_id" class="txtfield employee_payment_history_id ihide" />
-              <input type='text' name='interest' class='payment txtfield'></td>
-              </tr>
+              <input type="text" name="interest" class="interest txtfield" readonly="readonly" /></td>
+            </tr>
             <tr>
               <td style="width:155px">Principal</td>
               <td>
-              <input type="text" name="principal" class="principal txtfield" /></td>
+              <input type="text" name="principal" class="principal txtfield" readonly="readonly" /></td>
             </tr>
-              <tr><td style="width:155px">Credit Balance on Principal</td>
-              <td><input type='text' name='credit_balance_on_principal' class='credit_balance_on_principal txtfield'></td></tr>
-		    <tr>
-              <td style="width:155px">Credit Balance on Interest</td>
-              <td><input type='text' name='credit_balance_on_interest' class='credit_balance_on_interest txtfield'></td></tr>
-           	<tr>
-              <td style="width:155px">Penalty</td>
-              <td><input type='text' name='penalty' class='penalty txtfield'></td></tr>
+              <tr>
+	              <td style="width:155px">Last Remaining Cash Amount</td>
+	              <td><input type='text' name=remaining_cash_amount class='remaining_cash_amount txtfield' readonly="readonly" /></td>
+              </tr>
             <tr>
               <td>&nbsp;</td>
               <td>
@@ -162,6 +77,41 @@
         </div>
         <?php print form_close();?>
         </div>
+        
+        <div class='new_amor_cont ihide' title='New Amoritization Schedule'>
+			<?php print form_open('','onsubmit="return new_amor_cont_form()" enctype="multipart/form-data"');?>
+				  <div class="tbl-wrap">
+	          <!-- TBL-WRAP START -->
+	          <table width="100%">
+	            <tbody>
+	            <tr>
+	              <td style="width:155px">Principal</td>
+	              <td>
+	              <input type='hidden' name='loan_amount_child' class='loan_amount_child txtfield'>
+	              <input type='text' name='principal' class='principal txtfield'></td></tr>
+	              <tr><td style="width:155px">Interest</td>
+	              <td><input type='text' name='interest' class='interest txtfield'></td></tr>
+	            <tr>
+	              <td style="width:155px">Payroll Date</td>
+	              <td>
+	              <input type="text" name="payroll_date" class="payroll_date txtfield datepickerCont" />
+	            </tr>
+	            <tr>
+	              <td>&nbsp;</td>
+	              <td>
+		              <input type="submit" value="Add" name="add_new_amortization_sched" class="btn" />
+	              </td>
+	            </tr>
+	          </tbody></table>
+	          <!-- TBL-WRAP END -->
+	        </div>
+	        <?php print form_close();?>
+        </div>
+        <style>
+			.tbl-wrap > p {
+			    padding: 20px 0;
+			}
+		 </style>
 <script type="text/javascript"  src="/assets/theme_2013/js/external_js.js"></script>
 <script>
 	function addRow(size){
@@ -371,11 +321,13 @@
 							});
 							
 							jQuery("input[name='employee_payment_history_id']").val(status.employee_payment_history_id);
+							jQuery("input[name='payment']").val(status.payment);
 							jQuery("input[name='interest']").val(status.interest);
 							jQuery("input[name='principal']").val(status.principal);
-							jQuery("input[name='credit_balance_on_principal']").val(status.credit_balance_on_principal);
-							jQuery("input[name='credit_balance_on_interest']").val(status.credit_balance_on_interest);
+							//jQuery("input[name='credit_balance_on_principal']").val(status.credit_balance_on_principal);
+							//jQuery("input[name='credit_balance_on_interest']").val(status.credit_balance_on_interest);
 							jQuery("input[name='penalty']").val(status.penalty);
+							jQuery("input[name='remaining_cash_amount']").val(status.last_remaining_cash_amount);
 							
 							jQuery(".editCont input").removeClass("emp_str");
                         }else{
@@ -389,11 +341,13 @@
 
 	function validate_edit_form(){
 	    var employee_payment_history_id = jQuery.trim(jQuery("input[name='employee_payment_history_id']").val());
+	    var payment = jQuery.trim(jQuery("input[name='payment']").val());
 	    var interest = jQuery.trim(jQuery("input[name='interest']").val());
 	    var principal = jQuery.trim(jQuery("input[name='principal']").val());
-	    var credit_balance_on_principal = jQuery.trim(jQuery("input[name='credit_balance_on_principal']").val());
-	    var credit_balance_on_interest = jQuery.trim(jQuery("input[name='credit_balance_on_interest']").val());
 	    var penalty = jQuery.trim(jQuery("input[name='penalty']").val());
+	    var remaining_cash_amount = jQuery.trim(jQuery("input[name='remaining_cash_amount']").val());
+	    // var credit_balance_on_principal = jQuery.trim(jQuery("input[name='credit_balance_on_principal']").val());
+	    // var credit_balance_on_interest = jQuery.trim(jQuery("input[name='credit_balance_on_interest']").val());
 	    
 	    var error = "";
 	    if(employee_payment_history_id==""){
@@ -403,6 +357,13 @@
 	    	jQuery("input[name='employee_payment_history_id']").removeClass('emp_str');
 	    }
 	    
+	    if(payment==""){
+	        error = 1;
+	        jQuery("input[name='payment']").addClass('emp_str');
+	    }else{
+	    	jQuery("input[name='payment']").removeClass('emp_str');
+	    }
+
 	    if(interest==""){
 	        error = 1;
 	        jQuery("input[name='interest']").addClass('emp_str');
@@ -410,6 +371,41 @@
 	    	jQuery("input[name='interest']").removeClass('emp_str');
 	    }
 
+	    if(principal==""){
+	        error = 1;
+	        jQuery("input[name='principal']").addClass('emp_str');
+	    }else{
+	    	jQuery("input[name='principal']").removeClass('emp_str');
+	    }
+
+	    if(penalty==""){
+	        error = 1;
+	        jQuery("input[name='penalty']").addClass('emp_str');
+	    }else{
+	    	jQuery("input[name='penalty']").removeClass('emp_str');
+	    }
+
+	    if(remaining_cash_amount==""){
+	        error = 1;
+	        jQuery("input[name='remaining_cash_amount']").addClass('emp_str');
+	    }else{
+	    	jQuery("input[name='remaining_cash_amount']").removeClass('emp_str');
+	    }
+	    
+
+		// for remaining balance
+	    /*
+	    var installment_val = jQuery(".installment_val").text();
+	    var payment = jQuery("input[name='payment']").val();
+	    var half_percent = parseFloat(jQuery(".last_credit_balance").text()) * .5;
+	    if(payment >= half_percent){
+	        jQuery(".remaining_cash_amount").val("0");
+	    }else{
+	        var new_remaining_bal = parseFloat(payment) - parseFloat(installment_val);
+	        jQuery(".remaining_cash_amount").val(new_remaining_bal);
+	    } */
+	    
+	    /*
 	    if(principal==""){
 	        error = 1;
 	        jQuery("input[name='principal']").addClass('emp_str');
@@ -436,6 +432,7 @@
 	    }else{
 	    	jQuery("input[name='penalty']").removeClass('emp_str');
 	    }
+	    */
 
 	    if(error == 1){
 			return false;
@@ -469,6 +466,62 @@
 		    jQuery(this).find("a").addClass("btn");;
 		});
 	}
+
+	function remove_last_column(){
+		var x=jQuery(".emp_conList").length;
+		jQuery(".emp_conList").each(function(e){
+		    var _this = jQuery(this);
+		    e=e+1;
+		    if(e<x){
+		        var y=jQuery(this).find("tr");
+		        y.each(function(){
+		            jQuery(this).find("td").last().hide().remove();
+		            jQuery(this).find("th").last().hide().remove();
+		            _this.find(".cred_bal_prin_column").addClass("dili_last").removeClass("adj_row");
+		            jQuery(".dili_last").css("width","215px");
+		        });
+		    }
+		   
+		});
+	}
+
+	function _add_new_amortization_schedule(){
+		jQuery(".new_amor_cont").dialog({
+			draggable: false,
+			resizable: false,
+			height: 'auto',
+			width: "auto",
+			modal: true,
+			dialogClass: 'transparent'
+		});
+		var new_bal_prin = jQuery(".new_bal_prin").text();
+		jQuery(".loan_amount_child").val(jQuery.trim(new_bal_prin));
+	}
+	
+	function _dialog_amortization_sched(){
+		if(jQuery.trim(jQuery(".new_amortization_flag").text()) == 1 || jQuery.trim(jQuery(".new_amortization_flag").text()) != ""){
+			var dialog = "<div class='ihide dialog_amortization_sched' title='Create New Amortization Schedule'>Would you like to create new amortization schedule?</div>";
+			jQuery(".dialog_amortization_sched").remove();
+			jQuery("body").append(dialog);
+			jQuery('.dialog_amortization_sched').dialog({
+				draggable: false,
+				resizable: false,
+				height: 'auto',
+				width: "auto",
+				modal: true,
+				dialogClass: 'transparent',
+				buttons: {
+					'Yes': function() {
+						jQuery(this).dialog("close");
+						_add_new_amortization_schedule();
+					},
+					'No': function() {
+						jQuery(this).dialog("close");
+					}
+				}
+			});
+		}
+	}
 	
 	jQuery(function(){
 		_addRowBtn();
@@ -478,5 +531,7 @@
 		_edit_information();
 		pagination();
 		loan_li();
+		remove_last_column();
+		_dialog_amortization_sched();
 	});
 </script>

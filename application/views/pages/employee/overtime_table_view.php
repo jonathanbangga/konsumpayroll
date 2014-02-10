@@ -204,8 +204,8 @@
         function calculateTime() {
 
     	    // get values time
-    	    var start = jQuery(".start_date_hr").val()+":"+jQuery(".start_date_min").val();
-    	    var end = jQuery(".end_date_hr").val()+":"+jQuery(".end_date_min").val();
+    	    var start = jQuery(".start_date_hr").val()+":"+jQuery(".start_date_min").val()+" "+jQuery(".start_date_sec").val();
+   	    	var end = jQuery(".end_date_hr").val()+":"+jQuery(".end_date_min").val()+" "+jQuery(".end_date_sec").val();
     	     
     	    // get values start date
     	    var date_start = jQuery(".start_date").val();

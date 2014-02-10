@@ -177,6 +177,15 @@ class Overtime_settings_model extends CI_Model {
 			AND `hour_type_id` = {$hour_type_id}
 		");
 	}
+	
+	public function get_default_hour_type(){
+		return $this->db->query("
+			SELECT *
+			FROM `hours_type`
+			WHERE `company_id` = {$this->company_id}
+			AND `default` = 1
+		");
+	}
 		
 }
 /* End of file */
