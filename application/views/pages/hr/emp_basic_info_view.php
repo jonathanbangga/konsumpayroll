@@ -1,6 +1,6 @@
 <div class="error_msg_cont"></div>
 <?php print form_open('','onsubmit="return validateForm()"');?>
-<p>List of employees and their information.</p>
+<p>List of all employees of this company and their 201 information.</p>
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
@@ -352,7 +352,7 @@
 							success: function(data){
 								var status = jQuery.parseJSON(data);
 	                            	if(status.success == 1){
-										alert("<p>- The Employee Number field must contain a unique value.</p>");
+										alert("<p>- The Employee Number should be unique.</p>");
 										_this.addClass("emp_str");
 										_this.addClass("dup_str");
 										return false;
@@ -389,7 +389,7 @@
 							success: function(data){
 								var status = jQuery.parseJSON(data);
                             	if(status.success == 1){
-									alert("<p>- The Email Address field must contain a unique value.</p>");
+									alert("<p>- The Email Address should be unique.</p>");
 									_this.addClass("emp_str");
 									_this.addClass("dup_str");
 									return false;
@@ -430,7 +430,7 @@
 					      })
 					 });
 				}else{
-					alert("<p>- The Employee Number field must contain a unique value.</p>");
+					alert("<p>- The Employee Number should be unique.</p>");
 					return false;
 				}
 			}
