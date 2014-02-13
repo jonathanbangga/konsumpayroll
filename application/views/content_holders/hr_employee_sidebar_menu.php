@@ -14,7 +14,7 @@
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_fixed_allowances">Fixed Allowances</a></li>
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_deduction">Deductions</a></li>
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_leave">Leaves</a></li>
-	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_termination_information">Terminal Information</a></li>
+	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_termination_information">Termination Information</a></li>
 	        <li><a href="<?php print $this->uri->segment(1)?>/hr/emp_basic_pay_adjustment">Basic Pay Adjustment</a></li>
 	      </ul>
         </li>
