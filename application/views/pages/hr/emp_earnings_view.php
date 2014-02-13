@@ -57,7 +57,7 @@
         	<input type="submit" name="add" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
         </div>
-        <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
+        <div class='del_msg ihide' title='Are you sure'>Are you sure you want to delete this user?</div>
 <?php print form_close();?>
 
 		<div class='editCont ihide' title='Edit Information'>
