@@ -26,7 +26,7 @@
           </table>
 	<?php
 	}else{
-		echo "No company has been set up yet";
+		echo "No company has been set up yet. To create, please click [Add Company]";
 	}
 	?>   
         </div>
