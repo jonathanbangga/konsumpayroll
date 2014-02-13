@@ -58,7 +58,7 @@
 </div>
 <div class="ihide">
 <div class="source_error" title="Information"></div>
-<div class="opt_selection" title="Warning"></div>
+<div class="opt_selection" title="Are you sure?"></div>
 <div class="success_messages" title="Success"></div>
 </div>
 <?php print $this->load->view($script_library);?>
