@@ -3,7 +3,7 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:1580px;" class="tbl emp_conList">
+            <table style="width:1580px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
               <th style="width:170px;">Employee Name</th>
