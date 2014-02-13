@@ -46,7 +46,7 @@
 							"ZGlldmlyZ2luamM": jQuery.cookie(token)	
 					};
 
-					jQuery(".opt_selection").empty().html("Are you sure you want to delete this company?");
+					jQuery(".opt_selection").empty().html("If you delete this company all data to this company will be deleted.<br/> Are you sure you want to delete this?");
 					jQuery(".opt_selection").dialog({
 						resizable: false,
 						draggable: false,
