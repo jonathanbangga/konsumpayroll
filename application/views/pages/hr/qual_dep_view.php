@@ -48,7 +48,7 @@
 		          <input type="submit" class="btn ihide del_btn_dep" value="DELETE" name="del_dep">
 	          <?php print form_close();?>
 	        </div>
-          <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this dependent?</div>
+          <div class='del_msg ihide' title='Confirmation'>Ooopppss! Are you sure you want to delete this dependent?</div>
           <!-- TBL-WRAP END -->
         </div>
           <div class="pagiCont_btnCont">
