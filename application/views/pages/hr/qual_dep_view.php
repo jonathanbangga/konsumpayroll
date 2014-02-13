@@ -31,6 +31,7 @@
           	<?php print form_open('','onsubmit="return check_dep()"');?>
           		<span class="ihide qual_no_cont"></span>
           		<h1 class="emp_name_dep custom_h1"></h1><span class="ihide emp_idVal emp_idMain"></span>
+          		<p>To display the dependents of the employee, click view</p>
 				  <table style="width:100%" class="tbl emp_dept_contList">
 		            <tbody>
 			            <tr>
