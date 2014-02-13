@@ -366,7 +366,7 @@
 					emp_id.push(jQuery("input[name='emp_id[]']").eq(z).val());
 				}else{
 					var str_val = 1;
-					alert("The Employee Name must contain a unique value");
+					alert("Employee Name should be unique.");
 				}
 			}
 
