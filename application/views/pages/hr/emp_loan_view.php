@@ -68,7 +68,7 @@
 			 <a class="btn btn-gray left" href="javascript:history.go(-1);">BACK</a> 
 			 <!-- FOOTER-GRP-BTN END -->
 			 </div>
-        <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
+        <div class='del_msg ihide' title='Are you sure?'>Are you sure you want to delete this employee?</div>
 <?php print form_close();?>
 
 		<div class='editCont ihide' title='Edit Information'>
@@ -318,7 +318,7 @@
 					emp_id.push(jQuery("input[name='emp_id[]']").eq(z).val());
 				}else{
 					var str_val = 1;
-					alert("The Employee Name must contain a unique value");
+					alert("Employee Name should be unique.");
 				}
 			}
 
