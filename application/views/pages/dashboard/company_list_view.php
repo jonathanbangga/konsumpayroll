@@ -63,7 +63,7 @@
 								if(res.success == '0'){
 									alert(res.error);
 								}else{
-									jQuery(".success_messages").empty().html("<p>You have Successfully Deleted</p>");
+									jQuery(".success_messages").empty().html("<p>Successfully Deleted !</p>");
 									window.location.href = "/<?php echo $this->uri->segment(1);?>/dashboard/company_list";
 								}
 							});	
