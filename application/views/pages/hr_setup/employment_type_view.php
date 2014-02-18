@@ -1,7 +1,7 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Move employment type from left to right those that are applicable to your company. If there are employment <br>
+        <p>These are default employment type, move employment type from left to right those that are applicable to your company. If there are employment <br>
           type your company has that are not on the list, click on add more button. </p>
           <p>To select multiple list hold ctrl key from
           your keyboard while selecting lists. Do not remove your finger on ctrl key until you're done with the selection.</p>
