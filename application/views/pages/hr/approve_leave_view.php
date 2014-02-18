@@ -83,7 +83,7 @@
 					}else{
 				?>
 					<tr>
-						<td colspan="11">
+						<td colspan="12">
 							<?php echo msg_empty();?>
 						</td>
 					</tr>
@@ -150,7 +150,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one ");
 					return false;
 				}
 			});	
@@ -180,7 +180,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one ");
 					return false;
 				}
 			});	
