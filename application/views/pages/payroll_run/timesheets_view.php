@@ -92,7 +92,7 @@ $pp_start = $pp->period_from;
 
 <?php
 if(isset($emp_arr)){ ?>
-	The following employees are not inserted, because they did not exist in the employee record. Please review your data. And upload it again
+	The following employees are not inserted, because they did not exist in the employee record. Please review your data and upload it again
 	<?php foreach($emp_arr as $val){ ?>
 	<ul>
 		<li><?php echo $val; ?></li>
@@ -104,8 +104,7 @@ if(isset($emp_arr)){ ?>
 </p>
 <!-- MAIN-CONTENT START -->
 <div id="jtimesheet">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-  ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+<p>Choose what data to process either from the system time-ins or from CSV file. </p>
 <p>
 <table class="tbl1">
 	<tbody>
