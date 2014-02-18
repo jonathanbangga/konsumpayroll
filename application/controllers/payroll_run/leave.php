@@ -18,7 +18,7 @@ class Leave extends CI_Controller {
 
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "leave";
+		$data['page_title'] = "Leave";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
