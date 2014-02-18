@@ -104,8 +104,9 @@ if(isset($emp_arr)){ ?>
 </p>
 <!-- MAIN-CONTENT START -->
 <div id="jtimesheet">
-<p>Choose what data to process either from the system time-ins or from CSV file. </p>
-<p>
+<p>Choose what data to process either from the system time-ins or from CSV file. 
+You can also process data from both, the system will let you decide on this. </p>
+
 <table class="tbl1">
 	<tbody>
 		<tr>
@@ -130,12 +131,10 @@ if(isset($emp_arr)){ ?>
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" name="upload" class="btn" value="upload" />
+					<a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/download_timesheet_template">Download Template</a>
 				</td>
 			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/download_timesheet_template">Download Template</a></td>
-			</tr>
+			
 		<?php
 		}
 		?>
@@ -143,10 +142,7 @@ if(isset($emp_arr)){ ?>
 	</tbody>
 </table>
 
-
-
-
-</p>  
+ 
 <div class="tbl-wrap">
   <table width="915" border="0" cellspacing="0" cellpadding="0" class="tbl">
 	<tr>
