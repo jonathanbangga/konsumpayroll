@@ -1,8 +1,7 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+        <p>Earnings are additional compensation given by the company, specify whether a particular earning is taxable or not.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">
