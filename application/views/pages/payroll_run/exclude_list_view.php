@@ -5,8 +5,15 @@ echo form_open("/{$this->session->userdata('sub_domain2')}/payroll_run/exclude_l
 <div class="main-content"> 
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+        <p>The exclude list allows you to specify employees that will be set aside for the selected payroll period of payroll group.</p>
+        <p>The payroll of the employee that will be excluded will not be processed and will remain unprocessed until payroll admin unchecks the exclude checkbox. You can optionally specify the reason why not to include the employee in the payroll run
+         such as: No submission of Timesheet, AWOL - absence without leave or notice.
+         </p>
+         <p>NOTE: On the succeeding payroll period, you can choose to process the missed payroll run of the employee in the carry over section.
+         </p>
+         <p>For employees whose salary for the current payroll period is subject to be released during the employee's last pay
+         do not process the payroll and mark the employee as on hold. If you still want to process the payroll of that employee in the current run, you can do so.
+         </p>
         <div class="tbl-wrap">
           <table width="705" border="0" cellspacing="0" cellpadding="0" class="tbl">
             <tr>
