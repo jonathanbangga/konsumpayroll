@@ -33,6 +33,7 @@
 					<?php
 						}else{
 							$ot_default = $this->overtime->overtime_default($list_val->company_id);	
+							
 					?>
 					<td><span class="payroll_group_span"><?php echo $ot_default->hour_type_name;?></span></td>
 					<td><span class="payroll_group_span"><?php echo number_format($ot_default->ot_rate,1)."%";?></span></td>
