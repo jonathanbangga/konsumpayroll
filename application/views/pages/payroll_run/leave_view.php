@@ -1,8 +1,8 @@
 <div class="main-content"> 
 <!-- MAIN-CONTENT START -->
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-  ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
-  
+<p>
+The leave information here is automatically populated from the approved leaves when using the application leave of the system. 
+</p>
 <div class="tbl-wrap">
   <table width="1040" border="0" cellspacing="0" cellpadding="0" class="tbl">
 	<tr>

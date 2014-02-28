@@ -26,7 +26,7 @@
           </table>
 	<?php
 	}else{
-		echo "No company has been set up yet";
+		echo "No company has been set up yet. To create, please click [Add Company]";
 	}
 	?>   
         </div>
@@ -46,7 +46,7 @@
 							"ZGlldmlyZ2luamM": jQuery.cookie(token)	
 					};
 
-					jQuery(".opt_selection").empty().html("Are you sure you want to delete this company?");
+					jQuery(".opt_selection").empty().html("If you delete this company all data to this company will be deleted.<br/> Are you sure you want to delete this?");
 					jQuery(".opt_selection").dialog({
 						resizable: false,
 						draggable: false,
@@ -63,7 +63,7 @@
 								if(res.success == '0'){
 									alert(res.error);
 								}else{
-									jQuery(".success_messages").empty().html("<p>You have Successfully Deleted</p>");
+									jQuery(".success_messages").empty().html("<p>Successfully Deleted !</p>");
 									window.location.href = "/<?php echo $this->uri->segment(1);?>/dashboard/company_list";
 								}
 							});	

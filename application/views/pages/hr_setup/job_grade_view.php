@@ -2,7 +2,8 @@
      <div class="main-content">
 	 <div style="display:none;" class="highlight_message">Message</div>
        <!-- MAIN-CONTENT START -->
-     <p>Add all your levels for approvers. This is used for leave approval/entitlement. </p>
+     <p>If your company has grading system for your employees which could be the basis of their pay rate then add them below. </p>
+     <p>Skip if not applicable. </p>
       <div class="tbl-wrap">
       <!-- TBL-WRAP START -->
 	

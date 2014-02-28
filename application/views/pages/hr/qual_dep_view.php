@@ -31,6 +31,7 @@
           	<?php print form_open('','onsubmit="return check_dep()"');?>
           		<span class="ihide qual_no_cont"></span>
           		<h1 class="emp_name_dep custom_h1"></h1><span class="ihide emp_idVal emp_idMain"></span>
+          		<p>To display the dependents of the employee, click view</p>
 				  <table style="width:100%" class="tbl emp_dept_contList">
 		            <tbody>
 			            <tr>
@@ -48,7 +49,7 @@
 		          <input type="submit" class="btn ihide del_btn_dep" value="DELETE" name="del_dep">
 	          <?php print form_close();?>
 	        </div>
-          <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this dependent?</div>
+          <div class='del_msg ihide' title='Confirmation'>Ooopppss! Are you sure you want to delete this dependent?</div>
           <!-- TBL-WRAP END -->
         </div>
           <div class="pagiCont_btnCont">

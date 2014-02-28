@@ -46,7 +46,7 @@
 					<th style="width:170px;">Employee Name</th>
 					<th style="width:170px;">Date From</th>
 					<th style="width:170px;">Date To</th>
-					<th style="width:170px;">Hoursworked</th>
+					<th style="width:170px;">Hours Worked</th>
 					<th style="width:170px;">Tardiness</th>
 					<th style="width:170px;">Undertime</th>
 					<th style="width:170px;">Timesheet</th>
@@ -141,7 +141,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one ");
 					return false;
 				}
 			});	
@@ -171,7 +171,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one ");
 					return false;
 				}
 			});	

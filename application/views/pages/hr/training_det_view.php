@@ -3,7 +3,7 @@
 <div class="tbl-wrap">	
 		  <?php print $this->session->flashdata('message');?>
           <!-- TBL-WRAP START -->
-          <table style="width:1580px;" class="tbl emp_conList">
+            <table style="width:1580px;" class="tbl emp_conList">
             <tbody><tr>
               <th style="width:50px;"></th>
               <th style="width:170px;">Employee Name</th>
@@ -50,7 +50,7 @@
         	<input type="submit" name="save" class="btn right ihide saveBtn" value="SAVE" />&nbsp;&nbsp;
         	<div class="clearB"></div>
         </div>
-        <div class='del_msg ihide' title='Confirmation'>Do you really want to delete this user?</div>
+        <div class='del_msg ihide' title='Are you sure?'>Oooppss! Are you sure you want to delete this user?</div>
         <div class='editCont ihide' title='Edit Information'>
 			  <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
@@ -247,7 +247,7 @@
 							emp_id_val.push(jQuery("input[name='emp_id[]']").eq(z).val());
 						}else{
 							var str_val = 1;
-							alert("The Employee Name must contain a unique value");
+							alert(" Employee Name should be unique");
 						}
 						
 						emp_name_val.push(jQuery("input[name='emp_name[]']").eq(z).val());
@@ -327,14 +327,14 @@
 			if(training_hours == "") why_training_hours = 1;
 		}
 
-		if(why_emp_name != "") why += "<p>- Please enter Employee Name</p>";
-		if(why_emp_no != "") why += "<p>- Please enter Employee Number</p>";
-		if(why_dateFrom != "") why += "<p>- Please enter Date From</p>";
-		if(why_dateTo != "") why += "<p>- Please enter Date To</p>";
-		if(why_coursename != "") why += "<p>- Please enter Course Name</p>";
-		if(why_organizer != "") why += "<p>- Please enter Organizer</p>";
-		if(why_cost != "") why += "<p>- Please enter Cost</p>";
-		if(why_training_hours != "") why += "<p>- Please enter Training Hours</p>";
+		if(why_emp_name != "") why += "<p>- Please fill up Employee Name</p>";
+		if(why_emp_no != "") why += "<p>- Please fill up Employee Number</p>";
+		if(why_dateFrom != "") why += "<p>- Please fill up Date From</p>";
+		if(why_dateTo != "") why += "<p>- Please fill up Date To</p>";
+		if(why_coursename != "") why += "<p>- Please fill up Course Name</p>";
+		if(why_organizer != "") why += "<p>- Please fill up Organizer</p>";
+		if(why_cost != "") why += "<p>- Please fill up Cost</p>";
+		if(why_training_hours != "") why += "<p>- Please fill up Training Hours</p>";
 
 		if(why != ""){
 			jQuery(".error_msg_cont").html(why);

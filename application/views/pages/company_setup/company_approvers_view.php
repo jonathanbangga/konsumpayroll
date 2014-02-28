@@ -1,7 +1,7 @@
 	<div class="main-content">
 	<!-- MAIN-CONTENT START -->
-        <p>Input this form with the people you need to run the payroll process.<br>
-          The person is responsible for confirming the payroll run before releasing the funds.</p>
+        <p>Fill-in this table with the people you need to run the payroll process or the people responsible for releasing the funds.<br>
+       </p>
        <?php 
        	echo form_open("company/company_setup/approvers",array("onsubmit"=>"return add_approvers();"));
        	echo $error ? $error['error'] : '';

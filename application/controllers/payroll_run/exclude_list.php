@@ -18,7 +18,7 @@ class Exclude_list extends CI_Controller {
 
 	public function index(){
 		// header and menu's
-		$data['page_title'] = "Exclude list";
+		$data['page_title'] = "Exclude List";
 		$this->layout->set_layout($this->theme);
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		

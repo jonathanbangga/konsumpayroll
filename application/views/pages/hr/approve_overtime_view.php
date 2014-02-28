@@ -47,7 +47,7 @@
 					<th style="width:170px;">Overtime Date</th>
 					<th style="width:170px;">Date From</th>
 					<th style="width:170px;">Date To</th>
-					<th style="width:170px;">Hours</th>
+					<th style="width:170px;">Overtime Hours</th>
 					<th style="width:170px;">NSD Hours</th>
 					<th style="width:170px;">Reason</th>
 					<th style="width:170px;">Note</th>
@@ -144,7 +144,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one. ");
 					return false;
 				}
 			});	
@@ -174,7 +174,7 @@
 						}
 					});		
 				}else{
-					alert("Please check atleast one ");
+					alert("Please check at least one ");
 					return false;
 				}
 			});	

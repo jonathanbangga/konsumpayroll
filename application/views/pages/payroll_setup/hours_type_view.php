@@ -1,8 +1,8 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+        <p>Listed here are the default hour type, you can change the rate if this doesn't apply in your company. </p>
+        <p>You can add more hours type just specify the rate since this will be the basis in computing the premium of each hour type.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">

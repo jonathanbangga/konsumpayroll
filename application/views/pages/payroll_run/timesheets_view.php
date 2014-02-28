@@ -92,7 +92,7 @@ $pp_start = $pp->period_from;
 
 <?php
 if(isset($emp_arr)){ ?>
-	The following employees are not inserted, because they did not exist in the employee record. Please review your data. And upload it again
+	The following employees are not inserted, because they did not exist in the employee record. Please review your data and upload it again
 	<?php foreach($emp_arr as $val){ ?>
 	<ul>
 		<li><?php echo $val; ?></li>
@@ -104,9 +104,9 @@ if(isset($emp_arr)){ ?>
 </p>
 <!-- MAIN-CONTENT START -->
 <div id="jtimesheet">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-  ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
-<p>
+<p>Choose what data to process either from the system time-ins or from CSV file. 
+You can also process data from both, the system will let you decide on this. </p>
+
 <table class="tbl1">
 	<tbody>
 		<tr>
@@ -131,12 +131,10 @@ if(isset($emp_arr)){ ?>
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" name="upload" class="btn" value="upload" />
+					<a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/download_timesheet_template">Download Template</a>
 				</td>
 			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><a href="/<?php echo $this->session->userdata('sub_domain2'); ?>/payroll_run/timesheets/download_timesheet_template">Download Template</a></td>
-			</tr>
+			
 		<?php
 		}
 		?>
@@ -144,10 +142,7 @@ if(isset($emp_arr)){ ?>
 	</tbody>
 </table>
 
-
-
-
-</p>  
+ 
 <div class="tbl-wrap">
   <table width="915" border="0" cellspacing="0" cellpadding="0" class="tbl">
 	<tr>

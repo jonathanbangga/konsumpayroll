@@ -1,7 +1,8 @@
-
 <div class="successContBox highlight_message" style="display: none;"><?php echo $this->session->flashdata("delete_success");?></div>
 	<div class="tbl-wrap">
           <!-- TBL-WRAP START -->
+          <p>List of all employees approved overtime. 
+          In order for the employees to be listed here they must use the system's overtime application.</p>
           <table class="tbl" style="width:100%;">
             <tbody>
 				<tr>

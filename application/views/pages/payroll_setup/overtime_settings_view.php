@@ -5,8 +5,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 ?>
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+        <p>Listed here are the defualt hour type, please fill in the corresponding overtime rate. </p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl ot_tbl">
