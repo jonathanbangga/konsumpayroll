@@ -50,7 +50,7 @@
 		*	@param int $company_id
 		*	@return int $val
 		*/
-		public function count_hoursworked_list($company_id){
+		public function count_hoursworked_list($company_id) {
 			if(is_numeric($company_id)) {
 				$query = $this->db->query("SELECT count(*) as val from employee e LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id WHERE eti.comp_id = '{$this->db->escape_str($company_id)}' AND e.deleted = '0' AND e.status = 'Active' AND eti.deleted = '0'");
 				$row = $query->row();
@@ -60,6 +60,16 @@
 				return false;
 			}
 		}
+		
+		public function fetch_list($table,$where_array){
+			$where = array($where_array);
+			$query = $this->db->get_where($table,$where);
+			$result = $query->result();
+			$query->free_result();
+			return $result;
+		}
+		
+		
 	                                         
 	}
 /* End of file Approve_leave_model */

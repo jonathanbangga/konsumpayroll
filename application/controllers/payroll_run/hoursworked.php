@@ -44,13 +44,10 @@
 			$data['page_title'] = "Hourswork";
 			$uri = "/".$this->uri->segment(1)."/payroll_run/overtime/lists";
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
-			#$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);
-			#init_pagination($uri,$total_rows,$this->per_page,$this->segment);
+			$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);
+			init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
 			$data['list'] =  $this->hw->hoursworked_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
-		
-			p($data['list']);
-			echo $this->db->last_query();
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/payroll_run/hours_worked_view',$data);

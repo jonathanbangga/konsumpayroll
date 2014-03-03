@@ -18,6 +18,7 @@
 				</tr>
 				<?php
 					if($list){
+						p($list);
 						foreach($list as $list_key=>$list_val):
 				?>
 				<tr>
@@ -33,7 +34,7 @@
 					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rat : "0%";?></span></td>
 					<?php
 						}else{
-							$ot_default = $this->overtime->overtime_default($list_val->company_id);	
+							$ot_default = $this->overtime->overtime_default($list_val->company_id);
 							
 					?>
 					<td><span class="payroll_group_span"><?php echo $ot_default->hour_type_name;?></span></td>
@@ -100,8 +101,7 @@
 											alert("Error encountered please refresh again,if problem still persist please contact administrator");
 										}
 										jQuery(".opt_selection").dialog("close");	
-									});
-									
+									});		
 								},
 								No: function () {
 									jQuery(".opt_selection").dialog("close");
@@ -111,8 +111,7 @@
 			});
 		}
 		
-		// SELECT ALL 
-		
+		// SELECT ALL 	
 		jQuery(function(){
 			delete_overtime();
 			god_signs();

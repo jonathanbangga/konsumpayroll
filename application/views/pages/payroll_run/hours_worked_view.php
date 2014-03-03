@@ -34,13 +34,14 @@
 				<?php
 					if($list){
 						$test = date("j A",strtotime("19:30:00"));
+				
 						foreach($list as $list_key => $list_val):
 				?>
 				<tr>
 					<td><span class="payroll_group_span"><input type="checkbox" name="timein_id[]" /></span></td>
 					<td><span class="payroll_group_span"><?php echo $list_val->payroll_cloud_id;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $list_val->full_name;?></span></td>	
-					<td><span class="payroll_group_span"><?php echo $list_val->res / 30;?></span></td>
+					<td><span class="payroll_group_span"><?php echo $list_val->last_name." , ".$list_val->first_name;?></span></td>	
+					<td><span class="payroll_group_span"><?php echo "asd";?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
