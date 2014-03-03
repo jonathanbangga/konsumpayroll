@@ -104,9 +104,11 @@
 					<select class="txtselect" id="rate_type">
 						<option value="">--select--</option>
 						<option value="fixed amount" <?php echo ($rate_type=='fixed amount')?'selected="selected"':''; ?>>fixed amount</option>
-						<option value="basic pay rate" <?php echo ($rate_type=='basic pay rate')?'selected="selected"':''; ?>>basic pay rate %</option>
 						<option value="hourly rate" <?php echo ($rate_type=='hourly rate')?'selected="selected"':''; ?>>hourly rate %</option>
+						<!-- 
 						<option value="daily rate" <?php echo ($rate_type=='daily rate')?'selected="selected"':''; ?>>daily rate %</option>
+						<option value="basic pay rate" <?php echo ($rate_type=='basic pay rate')?'selected="selected"':''; ?>>basic pay rate %</option>
+						 -->
 					</select>
 				</td>
 			</tr>

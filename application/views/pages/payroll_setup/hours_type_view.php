@@ -8,6 +8,7 @@
           <table class="tbl">
             <tbody>
               <tr>
+              	<th style="width:135px;">Default</th>
                 <th style="width:135px;">Hour Type</th>
                 <th style="width:135px">Pay Rate</th>
                 <th style="width:160px">Action</th>
@@ -17,6 +18,7 @@
 				foreach($ht_sql->result() as $ht){ ?>
 				
 			 <tr>
+			 	<td><input type="radio" class="hours_type_default_val" name="hours_type_default_val" attr_hours_type_id="<?php print $ht->hour_type_id;?>"></td>
                 <td><span class="hours_type_span"><?php echo $ht->hour_type_name ?></span></td>
                 <td><span class="pay_rate_span"><?php echo $ht->pay_rate ?>%</span></td>
                 <td>

@@ -43,6 +43,7 @@
 		}
 		
 		public function lists(){
+			
 			$uri = "/".$this->uri->segment(1)."/payroll_run/overtime/lists";
 			$page = is_numeric($this->uri->segment(5)) ? $this->uri->segment(5) : 1;
 			$total_rows = $this->overtime->overtime_application_count($this->company_info->company_id);

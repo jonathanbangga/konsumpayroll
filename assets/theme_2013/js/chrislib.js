@@ -975,5 +975,5 @@ function disable_properties(){
 		
 jQuery(function() {
 	kpay.hr.company_sidebar();
-	disable_properties();
+	//disable_properties();
 });
