@@ -1,7 +1,8 @@
-
 <div class="successContBox highlight_message" style="display: none;"><?php echo $this->session->flashdata("delete_success");?></div>
 	<div class="tbl-wrap">
           <!-- TBL-WRAP START -->
+          <p>List of all employees approved overtime. 
+          In order for the employees to be listed here they must use the system's overtime application.</p>
           <table class="tbl" style="width:100%;">
             <tbody>
 				<tr>
@@ -32,7 +33,7 @@
 					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rate."%" : "0%";?></span></td>
 					<?php
 						}else{
-							$ot_default = $this->overtime->overtime_default($list_val->company_id);
+							$ot_default = $this->overtime->overtime_default($list_val->company_id);	
 					?>
 					<td><span class="payroll_group_span"><?php echo $ot_default->hour_type_name;?></span></td>
 					<td><span class="payroll_group_span"><?php echo number_format($ot_default->ot_rate,1)."%";?></span></td>
@@ -117,7 +118,6 @@
 			icheck_box("odeleteall","overtime_id[]");
 		});
 	</script>
-	
 	
 	<!-- FOR TESTING -->
 	

@@ -1,11 +1,8 @@
 <div class="main-content">
         <!-- MAIN-CONTENT START -->
-      
-
-      
       <p>This process is optional, only if your company accrues expenses like 13th month, christmas party,<br>
 
-retrechment, etc., Define te name and create the formula to below fields.</p>
+retrechment,and so on. Enter the name of the accrual process, define the variables that will be used (note: variables should be one of the columns in payroll run) and create the formula as accurate as possible.</p>
 
 <div class="tbl-wrap">
 <?php print $this->session->flashdata('message');?>

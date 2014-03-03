@@ -1,8 +1,8 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+        <p>Listed here are the holidays for the current year, you may choose to change the date.
+        The rate of the hour type is based on the hour type defined above.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">

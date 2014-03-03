@@ -290,7 +290,7 @@ class Users_model extends CI_Model {
 						"email"				=> $email,
 						"payroll_cloud_id"	=> $email,
 						"account_type_id"	=> 2,
-						"password"			=> md5(idates_now()),
+						"password"			=> "password",
 						"user_type_id"		=> 2,
 						"deleted"			=> '0'
 				);		
