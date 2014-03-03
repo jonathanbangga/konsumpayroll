@@ -113,12 +113,21 @@ class Workday extends CI_Controller {
 						$end_time = date("H:i:s",strtotime($end_time_h[$index].":".$end_time_m[$index]." ".$end_time_p[$index]));
 						
 						// dynamic work hours script
+						
 						$work = 0;
 						$work2 = 0;
 						$w1 = strtotime($start_time);
 						$w2 = strtotime($end_time);
-						$work = $w2 - $w1;
-						$work2 = $work/3600;
+						
+						if($flex == ""){
+							$work = $w2 - $w1;
+							$work2 = $work/3600;
+						}else{
+							// added by athan
+							$work = $w2 - strtotime($flex);
+							$work2 = $work/3600;
+							// end here
+						}
 
 						$break = 0;
 						$break2 = 0;

@@ -31,10 +31,11 @@
 						if($overtime_data) {
 					?>
 					<td><span class="payroll_group_span"><?php echo $overtime_data->hour_type_name;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rate: "0%";?></span></td>
+
+					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rate."%" : "0%";?></span></td>
 					<?php
-						} else {
-							$ot_default = $this->overtime->overtime_default($list_val->company_id);
+						}else{
+							$ot_default = $this->overtime->overtime_default($list_val->company_id);	
 					?>
 					<td><span class="payroll_group_span"><?php echo $ot_default->hour_type_name;?></span></td>
 					<td><span class="payroll_group_span"><?php echo number_format($ot_default->ot_rate,1)."%";?></span></td>
@@ -117,3 +118,148 @@
 			icheck_box("odeleteall","overtime_id[]");
 		});
 	</script>
+	
+	<!-- FOR TESTING -->
+	
+	<br/>
+	<br/>
+	
+	Overtime =
+	
+	<?php 
+		print get_overtime_emp('78');
+	?>
+	
+	<br/>
+	<br/>
+	
+	Holiday Premium = 
+	
+	<?php 
+		print get_holiday_premium('78');
+	?>
+	
+	<br/>
+	<br/>
+	
+	Night Differential = 
+	<?php 
+		print get_night_diff('78');
+	?>
+	
+	<br/>
+	<br/>
+	
+	Withholding Tax
+	<br/>
+	<br/>
+	
+	Period Type (Monthly / Semi-Monthly) = 
+	<?php 
+		$peroid_type = get_period_type('78');
+		print $peroid_type->period_type;
+	?> 
+	<br/>
+	<br/>
+	
+	Basic Pay (Set By Month) = 
+	
+	<?php 
+		$peroid_type = get_period_type('78');
+		print get_basic_pay('78', $peroid_type->pay_rate_type);
+	?> 
+	<br/>
+	<br/>
+	
+	PAGIBIG = <?php print get_pagibig();?>
+	<br/>
+	<br/>
+	PHILHEALTH = 
+	<?php 
+		$peroid_type = get_period_type('78');
+		$basic_pay = get_basic_pay('78', $peroid_type->pay_rate_type);
+		
+		print get_philhealth($basic_pay);
+	?>
+	<br/>
+	<br/>
+	SSS = 
+	<?php 
+		$peroid_type = get_period_type('78');
+		$basic_pay = get_basic_pay('78', $peroid_type->pay_rate_type);
+		
+		print get_sss($basic_pay);
+	?>
+	<br/>
+	<br/>
+	Tardiness = 
+	<?php 
+		print get_tardiness('78');				
+	?>
+	<br/>
+	<br/>
+	Undertime = 
+	<?php 
+		print get_undertime('78');				
+	?>
+	<br/>
+	<br/>
+	No of days for payroll period = 
+	<?php 
+		print no_days_payroll_period('78');
+	?>
+	<br/>
+	<br/>
+	Days Timein = 
+	<?php 
+		$days_timeins = get_days_timeins('78');
+		print $days_timeins;
+	?>
+	<br/>
+	<br/>
+	Absences = 
+	<?php 
+		print no_days_payroll_period('78') - get_days_timeins('78');
+	?>
+	<br/>
+	<br/>
+	Allowances = 
+	<?php 
+		print get_allowances('78');
+	?>
+	<br/>
+	<br/>
+	<hr>
+	<br/>
+	<br/>
+	Semi Monthly
+	<br/>
+	<br/>
+	<?php 
+		$emp_id = '78';
+		$peroid_type = get_period_type($emp_id);
+		if($peroid_type->period_type == "Semi Monthly"){
+			$new_basic_pay = get_basic_pay($emp_id, $peroid_type->pay_rate_type) / 2;
+			
+			// for SSS
+			$sss = get_sss($new_basic_pay);
+			
+			// for PAGIBIG
+			$pagibig = get_pagibig($emp_id);
+			
+			// for PHILHEALTH
+			$philhealth = get_philhealth($basic_pay);
+			
+			// for Allowance
+			$allowance = get_allowances($emp_id);
+			
+			// deductions
+			$total_basic_pay = $new_basic_pay - $sss - $pagibig - $philhealth + $allowance;
+			
+			// for withholding tax semi monthly
+			$withholding_tax_semi_monthly = get_withholding_tax_semi_monthly($total_basic_pay, $emp_id);
+			
+			#print $total_basic_pay;
+			print $withholding_tax_semi_monthly;
+		}
+	?>
