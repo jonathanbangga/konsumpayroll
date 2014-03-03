@@ -61,6 +61,12 @@
 			}
 		}
 		
+		/**
+		*	FETCH LIST TABLE
+		*	@param string $table
+		*	@param array $where_array
+		*	@return object
+		*/
 		public function fetch_list($table,$where_array){
 			$where = array($where_array);
 			$query = $this->db->get_where($table,$where);
@@ -69,8 +75,24 @@
 			return $result;
 		}
 		
+		/*
+		*   ROW LIST TABLE
+		*	@param string $table
+		*	@param array $where_array
+		*	@return object
+		*/
+		public function row_list($table,$where_array) {
+			if(!$table) {
+				return FALSE;
+			} else {
+				$where	= array($where_array);
+				$query	= $this->db->qet_where($table,$where);
+				$result	= $query->result();
+				$query->free_result();
+				return $result;
+			}
+		}
 		
-	                                         
 	}
 /* End of file Approve_leave_model */
 /* Location: ./application/models/hr/Approve_leave_model.php */;

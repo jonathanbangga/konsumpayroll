@@ -215,9 +215,9 @@
 				$date = date("Y-m-d",strtotime($date));
 				# oold $query = $this->db->query("SELECT * FROM holiday h LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id WHERE ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
 				$query = $this->db->query("SELECT * FROM holiday h 
-																LEFT JOIN overtime_type ot on ot.hour_type_id = h.hour_type_id 
-																LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id 
-																WHERE  ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
+														LEFT JOIN overtime_type ot on ot.hour_type_id = h.hour_type_id 
+														LEFT JOIN hours_type ht on ht.hour_type_id = h.hour_type_id 
+														WHERE  ht.status = 'Active' AND h.status = 'Active' AND h.deleted = '0' AND h.company_id= '{$this->db->escape_str($company_id)}' AND date = '{$date}'");
 				$row = $query->row();
 				$query->free_result();
 				return $row;
@@ -253,8 +253,8 @@
 		public function overtime_delete($company_id,$overtime_id){
 			if(is_numeric($company_id) && is_numeric($overtime_id)){
 				$where  = array(
-						"overtime_id"=>$this->db->escape_str($overtime_id),
-						"company_id"=>$this->db->escape_str($company_id)
+						"overtime_id"		=>$this->db->escape_str($overtime_id),
+						"company_id"	=>$this->db->escape_str($company_id)
 				);
 				$this->db->where($where);
 				$this->db->delete("employee_overtime_application");
@@ -263,7 +263,9 @@
 				return false;
 			}
 		}
-
+		
+		
+		
 	}
 /* End of file Approve_leave_model */
 /* Location: ./application/models/hr/Approve_leave_model.php */;

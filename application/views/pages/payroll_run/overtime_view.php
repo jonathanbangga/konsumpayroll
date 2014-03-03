@@ -17,8 +17,8 @@
 					<th style="width:160px">Total Time</th>
 				</tr>
 				<?php
-					if($list){
-						p($list);
+					if($list) {
+						#p($list);
 						foreach($list as $list_key=>$list_val):
 				?>
 				<tr>
@@ -28,14 +28,13 @@
 					<td><span class="payroll_group_span"><?php echo date("d/m/Y",strtotime($list_val->overtime_from)); ?></span></td>
 					<?php
 						$overtime_data = $this->overtime->overtime_type($list_val->company_id,$list_val->overtime_from); 
-						if($overtime_data){
+						if($overtime_data) {
 					?>
 					<td><span class="payroll_group_span"><?php echo $overtime_data->hour_type_name;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rat : "0%";?></span></td>
+					<td><span class="payroll_group_span"><?php echo $overtime_data->ot_rate > 0 ? $overtime_data->ot_rate: "0%";?></span></td>
 					<?php
-						}else{
+						} else {
 							$ot_default = $this->overtime->overtime_default($list_val->company_id);
-							
 					?>
 					<td><span class="payroll_group_span"><?php echo $ot_default->hour_type_name;?></span></td>
 					<td><span class="payroll_group_span"><?php echo number_format($ot_default->ot_rate,1)."%";?></span></td>

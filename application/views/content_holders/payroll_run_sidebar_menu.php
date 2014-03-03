@@ -2,7 +2,7 @@
 <!-- what the f ngano gi session mani <?php echo $this->session->userdata('sub_domain2'); ?> -->
 <ul>
 	<li <?php if($uri=='payroll_period'){ echo 'class="selected"'; } ?>>
-		<a href="/<?php $this->uri->segment(1);?>/payroll_run/payroll_period">
+		<a href="/<?php echo $this->uri->segment(1);?>/payroll_run/payroll_period">
 			Payroll Period
 		</a>
 	</li>
