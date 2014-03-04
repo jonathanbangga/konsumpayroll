@@ -82,6 +82,11 @@
 		$CI->load->library('upload', $config);
 		if(!$CI->upload->do_upload('upload')) {
 			$error = array("status"=>"0",'error' => $CI->upload->display_errors(),'upload_data'=>'');
+			/** added folder rights ANTI HACK **/
+			chmod("./uploads",0755);
+			chmod("./uploads/companies",0755);
+			chmod($path,0755);
+			/** end added ANTI HACK **/
 			return $error;
 		} else {
 			$data = array("status"=>"1",'error'=>'','upload_data' => $CI->upload->data());

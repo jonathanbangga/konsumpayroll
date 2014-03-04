@@ -13,16 +13,22 @@
 	  <th width="106">No. of Hours</th>
 	</tr>
 	<?php
-	foreach($nd_sql->result() as $hp){ ?>
+	if($nd_sql){
+		foreach($nd_sql->result() as $hp){ ?>
 		<tr>
-		<td><?php echo $hp->payroll_cloud_id; ?></td>
-		<td><?php echo $hp->first_name.' '. $hp->last_name; ?></td>
-		<td><?php echo date('m/d/Y',strtotime($hp->payroll_period)); ?></td>
-		<td><?php echo date('m/d/Y',strtotime($hp->ti_date)); ?></td>
-		<td><?php echo $hp->hour_type_name; ?></td>
-		<td><?php echo $hp->total_hours; ?></td>
-	</tr>
+			<td><?php echo $hp->payroll_cloud_id; ?></td>
+			<td><?php echo $hp->first_name.' '. $hp->last_name; ?></td>
+			<td><?php echo date('m/d/Y',strtotime($hp->payroll_period)); ?></td>
+			<td><?php echo date('m/d/Y',strtotime($hp->ti_date)); ?></td>
+			<td>
+					<?php echo $hp->hour_type_name; 
+						echo get_night_diff($hp->emp_id);
+					?>
+			</td>
+			<td><?php echo $hp->total_hours; ?></td>
+		</tr>
 	<?php
+		}
 	}
 	?>
   </table>
