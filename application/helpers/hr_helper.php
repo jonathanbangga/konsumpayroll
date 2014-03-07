@@ -2164,6 +2164,34 @@
 		
 		$counter = 8;
 		$amount = 0;
+		$tax_no = 0;
+		
+		// Check Employee Marital Status
+		$sql_marital_status = $CI->db->query("
+			SELECT *
+			FROM `employee`
+			WHERE emp_id = '{$emp_id}'	
+			AND status = 'Active'
+		");
+		
+		$row_marital_status = $sql_marital_status->row();
+		$marital_status = $row_marital_status->marital_status;
+		$no_dependent = $row_marital_status->no_of_dependents;
+		
+		if($marital_status == "Single"){
+			if($no_dependent == 0) $emp_status = 'S';
+			if($no_dependent == 1) $emp_status = 'S-1';
+			if($no_dependent == 2) $emp_status = 'S-2';
+			if($no_dependent == 3) $emp_status = 'S-3';
+			if($no_dependent >= 4) $emp_status = 'S-4';
+		}elseif($marital_status == "Married"){
+			if($no_dependent == 0) $emp_status = 'M';
+			if($no_dependent == 1) $emp_status = 'M-1';
+			if($no_dependent == 2) $emp_status = 'M-2';
+			if($no_dependent == 3) $emp_status = 'M-3';
+			if($no_dependent >= 4) $emp_status = 'M-4';
+		}
+		
 		for($access_amount=1; $access_amount<=$counter; $access_amount++){
 			
 			$add_one = ($access_amount == $counter) ? $access_amount : $access_amount + 1 ;
@@ -2172,7 +2200,7 @@
 				SELECT *, amount_excess{$access_amount} as amount
 				FROM `withholding_tax_status`
 				WHERE `tax_type` = 'Semi Monthly'
-				AND `tax_name` = 'S'
+				AND `tax_name` = '{$emp_status}'
 				AND `amount_excess{$access_amount}` <= '{$total_basic_pay}'
 				AND `amount_excess{$add_one}` >= '{$total_basic_pay}'
 			");
@@ -2180,10 +2208,53 @@
 			if($sql_semimonthly->num_rows() > 0){
 				$row = $sql_semimonthly->row();
 				$amount = $amount + $row->amount;
+				$tax_no = $tax_no + $access_amount;
 			}else{
 				$amount = $amount + 0;
+				$tax_no = $tax_no + 0;
 			}
 		}
 		
-		return $amount;
+		return $amount."-".$tax_no; // withholding tax table tax1, tax2 .....
+		
+	}
+	
+	/**
+	 * Get Withholding Tax for Initial and Additional Tax
+	 * @param unknown_type $tax_no
+	 * @param unknown_type $tax_type
+	 */
+	function get_withholding_tax_ini_add($tax_no, $tax_type){
+		
+		$withholding_tax_no = "tax".$tax_no;
+		
+		$CI =& get_instance();
+		
+		// for initial tax
+		$sql_tax_ini = $CI->db->query("
+			SELECT *
+			FROM `withholding_tax`
+			WHERE `tax_type` = '{$tax_type}'
+			AND tax_name = 'Initial Tax'
+		");
+		
+		if($sql_tax_ini->num_rows() > 0){
+			$row_ini = $sql_tax_ini->row();
+			$ini = $row_ini->$withholding_tax_no;
+		}
+		
+		// for additional tax
+		$sql_tax_add = $CI->db->query("
+			SELECT *
+			FROM `withholding_tax`
+			WHERE `tax_type` = '{$tax_type}'
+			AND tax_name = 'Additional Tax'
+		");
+		
+		if($sql_tax_add->num_rows() > 0){
+			$row_add = $sql_tax_add->row();
+			$add = $row_add->$withholding_tax_no;
+		}
+		
+		return $row_ini->$withholding_tax_no."-".$row_add->$withholding_tax_no;
 	}
