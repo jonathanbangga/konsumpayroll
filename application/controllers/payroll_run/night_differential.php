@@ -28,7 +28,7 @@ class Night_differential extends CI_Controller {
 		// pagination settings
 		$config['base_url'] = "/{$this->session->userdata('sub_domain2')}/payroll_run/night_differential/index";
 		$config['total_rows'] = $this->night_differential_model->nigh_differential_employee_listing($pp->payroll_group_id)->num_rows(); // all results
-		$config['per_page'] = 2; // per page
+		$config['per_page'] = 10; // per page
 		$config['uri_segment'] = 5; //page number
 		
 		// pagination mark up
