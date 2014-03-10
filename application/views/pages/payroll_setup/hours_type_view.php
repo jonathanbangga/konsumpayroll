@@ -1,7 +1,7 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Listed here are the default hour type, you can change the rate if this doesn't apply in your company. </p>
+        <p>Listed here are the default hours type, you can change the rate if this doesn't apply in your company. This will be the basis of computing the hourly rate of your employees.</p>
         <p>You can add more hours type just specify the rate since this will be the basis in computing the premium of each hour type.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
