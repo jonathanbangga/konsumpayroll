@@ -61,3 +61,10 @@
 .error_msg_cont p:last-child{
 	margin-bottom: 15px;
 }
+
+.maxheight {
+	height:100%;	
+}
+.e {
+	display:none;	
+}

@@ -6,7 +6,7 @@ echo form_open("/{$this->session->userdata('sub_domain2')}/payroll_run/timesheet
 <!-- MAIN-CONTENT START -->
 <p>Some time-in dates already exist and is in conflict with the existing time-in dates in the database.<br />
 The dates are follows:</p>
-<ul style="list-style-type: none;margin-bottom: 17px;"
+<ul style="list-style-type: none;margin-bottom: 17px;">
 	<?php foreach($conflict as $val){ ?>
 		<li><?php echo $val; ?></li>
 	<?php } ?>

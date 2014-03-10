@@ -37,11 +37,16 @@
 		<li><a href="/<?php echo $this->uri->segment(1);?>/payroll_run/hoursworked/lists">Hours Worked</a></li>
 	  </ul>
 	</li>
-<li><a href="">Earnings &amp; Commissions</a></li>
+	<li <?php echo ($uri=='earnings_commissions') ? 'class="selected"' : ''?>>
+	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/earnings_commissions/commission','Earnings &amp; Commissions')?>
+	</li>
 <li><a href="">Allowances</a></li>
 <li><a href="">Expense</a></li>
-<li><a href="">Loans &amp; Deductions</a></li>
-<li><a href="">Payroll</a></li>
+<li><a href="">Loans &amp; Deductions</a>
+</li>
+<li>
+<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/payroll/carry_over','Payroll')?>
+</li>
 </ul>
 <script>
 jQuery(document).ready(function(){

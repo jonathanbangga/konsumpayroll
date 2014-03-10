@@ -201,7 +201,7 @@ print no_days_payroll_period('78') - get_days_timeins('78');
 ?>
 <br/>
 <br/>
-Allowances =
+Allowance =
 <?php
 print get_allowances('78');
 ?>
@@ -214,30 +214,49 @@ Semi Monthly
 <br/>
 <br/>
 <?php
-$emp_id = '78';
-$peroid_type = get_period_type($emp_id);
-if($peroid_type->period_type == "Semi Monthly"){
-$new_basic_pay = get_basic_pay($emp_id, $peroid_type->pay_rate_type) / 2;
-
-// for SSS
-$sss = get_sss($new_basic_pay);
-
-// for PAGIBIG
-$pagibig = get_pagibig($emp_id);
-
-// for PHILHEALTH
-$philhealth = get_philhealth($basic_pay);
-
-// for Allowance
-$allowance = get_allowances($emp_id);
-
-// deductions
-$total_basic_pay = $new_basic_pay - $sss - $pagibig - $philhealth + $allowance;
-
-// for withholding tax semi monthly
-$withholding_tax_semi_monthly = get_withholding_tax_semi_monthly($total_basic_pay, $emp_id);
-
-#print $total_basic_pay;
-print $withholding_tax_semi_monthly;
-}
+	$emp_id = '78';
+	$peroid_type = get_period_type($emp_id);
+	if($peroid_type->period_type == "Semi Monthly"){
+		$new_basic_pay = get_basic_pay($emp_id, $peroid_type->pay_rate_type) / 2;
+		
+		// for SSS
+		$sss = get_sss($new_basic_pay);
+		
+		// for PAGIBIG
+		$pagibig = get_pagibig($emp_id);
+		
+		// for PHILHEALTH
+		$philhealth = get_philhealth($basic_pay);
+		
+		// for Allowance
+		$allowance = get_allowances($emp_id);
+		
+		// deductions
+		$total_basic_pay = $new_basic_pay - $sss - $pagibig - $philhealth + $allowance;
+		
+		// for withholding tax semi monthly
+		$withholding_tax_semi_monthly = explode("-",get_withholding_tax_semi_monthly($total_basic_pay, $emp_id));
+		
+		// get Initial Tax and Additional Tax
+		$withholding_tax_ini_add = explode("-",get_withholding_tax_ini_add($withholding_tax_semi_monthly[1],"Semi Monthly"));
+		
+		// for initial withholding tax
+		$withholding_tax_ini_val = $withholding_tax_ini_add[0];
+		
+		// for total withholding tax semi monthly (Initial and Additional Tax)
+		//$total_withholdting_tax_semi_monthly = ($total_basic_pay - $withholding_tax_semi_monthly[0])." * (".$withholding_tax_ini_add[1]."% / 100) + $withholding_tax_ini_add[0]";
+		
+		print ($total_basic_pay ." - ". $withholding_tax_semi_monthly[0])." * (".$withholding_tax_ini_add[1]."% / 100) + $withholding_tax_ini_add[0]"."<br>";
+		
+		$withholding_tax_add_val = ($total_basic_pay - $withholding_tax_semi_monthly[0]) * $withholding_tax_ini_add[1] / 100;
+		
+		$total_withholdting_tax_semi_monthly = $withholding_tax_add_val + $withholding_tax_ini_val;
+		
+		#print $total_basic_pay;
+		print "Total basic pay = ".$total_basic_pay;
+		
+		print "<br>";
+		
+		print "Withholding Tax - Semi Monthly = ".$total_withholdting_tax_semi_monthly;
+	}
 ?>
