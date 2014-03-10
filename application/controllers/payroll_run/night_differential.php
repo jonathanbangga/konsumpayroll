@@ -13,7 +13,12 @@ class Night_differential extends CI_Controller {
 		$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 		$this->authentication->check_if_logged_in();
 		// load
-		$this->load->model('payroll_run/night_differential_model');	
+		$this->company_info = whose_company();
+		if(count($this->company_info) == 0){
+			show_error("Invalid subdomain");
+			return false;
+		}
+		$this->load->model('payroll_run/night_differential_model',"nd");	
 	}
 
 	public function index(){
@@ -23,12 +28,12 @@ class Night_differential extends CI_Controller {
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		// data
 		// get payroll group
-		$pp = $this->night_differential_model->get_payroll_period()->row();
-		
+		$pp = $this->nd->get_payroll_period()->row();
+	#	p($this->session->all_userdata());
 		// pagination settings
 		$config['base_url'] = "/{$this->session->userdata('sub_domain2')}/payroll_run/night_differential/index";
-		$config['total_rows'] = $this->night_differential_model->nigh_differential_employee_listing($pp->payroll_group_id)->num_rows(); // all results
-		$config['per_page'] = 10; // per page
+		$config['total_rows'] = $this->nd->nigh_differential_employee_listing($pp->payroll_group_id)->num_rows(); // all results
+		$config['per_page'] = 50; // per page
 		$config['uri_segment'] = 5; //page number
 		
 		// pagination mark up
@@ -57,7 +62,15 @@ class Night_differential extends CI_Controller {
 		$offset = ($this->uri->segment($config['uri_segment'])=="")?0:$this->uri->segment($config['uri_segment']);
 		$per_page = $config['per_page'];
 		
-		$data['nd_sql'] = $this->night_differential_model->nigh_differential_employee_listing($pp->payroll_group_id,$offset,$per_page);
+		$data['nd_sql'] = $this->nd->nigh_differential_employee_listing($pp->payroll_group_id,$offset,$per_page);
+
+		$data['nd_timeins'] = $this->nd->employee_listings();
+		echo $this->db->last_query();
+#		echo $this->db->last_query();
+		$data['nd_data'] = $this->nd->get_night_different();
+#		p($data['nd_data']);
+		$data['nd_payroll_period'] = $this->nd->get_payroll_period_data();
+#		p($data['nd_timeins']);
 		$this->layout->view("pages/payroll_run/night_differential_view",$data);
 	}
 	

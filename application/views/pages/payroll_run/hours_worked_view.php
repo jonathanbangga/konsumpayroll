@@ -18,13 +18,16 @@
 					<td><span class="payroll_group_span"></span></td>
 					<td><span class="payroll_group_span"></span></td>
 					<td><span class="payroll_group_span"></span></td>	
-					<td><span class="payroll_group_span">Regular Day</span></td>
-					<td><span class="payroll_group_span">Holiday</span></td>
-					<td><span class="payroll_group_span">Paid Holiday</span></td>
-					<td><span class="payroll_group_span">Holiday</span></td>
-					<td><span class="payroll_group_span">Paid Holiday</span></td>
-					<td><span class="payroll_group_span">Night Differential</span></td>
-					<td><span class="payroll_group_span">Regular Hour</span></td>
+					<?php
+						if($hours_type) {
+							foreach($hours_type as $ht) :
+					?>
+					<td><span class="payroll_group_span"><?php echo $ht->hour_type_name;?></span></td>	
+					<?php
+							endforeach;
+						}
+					?>
+					<td><span class="payroll_group_span"></span></td>
 					<td><span class="payroll_group_span"></span></td>
 					<td><span class="payroll_group_span"></span></td>
 					<td><span class="payroll_group_span"></span></td>
@@ -39,15 +42,34 @@
 				?>
 				<tr>
 					<td><span class="payroll_group_span"><input type="checkbox" name="timein_id[]" /></span></td>
-					<td><span class="payroll_group_span"><?php echo $list_val->payroll_cloud_id;?></span></td>
+					<td><span class="payroll_group_span"><?php echo $list_val->emp_id."aid".$list_val->payroll_cloud_id;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $list_val->last_name." , ".$list_val->first_name;?></span></td>	
-					<td><span class="payroll_group_span"><?php echo "asd";?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
-					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
+					<?php
+						if($hours_type) {					
+							foreach($hours_type as $ht) :
+					?>
+					<td>
+						<span class="payroll_group_span">
+						<?php 
+						
+							$days_holiday = $this->hw->get_holiday_dates($this->company_info->company_id,$ht->hour_type_id);
+							if($days_holiday){
+							$emp_timein = $this->db->query("SELECT sum(eti.total_hours) as hours from employee_time_in eti WHERE comp_id ='{$this->company_info->company_id}' 
+														AND  eti.emp_id = '{$list_val->emp_id}' AND CAST(eti.time_out as date) IN ({$days_holiday})");
+							$emp_result = $emp_timein->result();
+							p($emp_result);
+							}else{
+								echo "none";
+							}
+						
+							echo $ht->hour_type_id."id";
+							echo $ht->hour_type_name;
+						?>
+						</span></td>	
+					<?php
+							endforeach;
+						}
+					?>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>
 					<td><span class="payroll_group_span"><?php echo $test;?></span></td>

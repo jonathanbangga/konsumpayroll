@@ -32,7 +32,7 @@
 			$this->sidebar_menu = $this->config->item('payroll_run_sidebar_menu');
 			$this->company_info = whose_company();
 			$this->subdomain = $this->uri->segment(1);
-			$this->per_page =1;
+			$this->per_page =100;
 			$this->segment = 5;
 			if(count($this->company_info) == 0){
 				show_error("Invalid subdomain");
@@ -49,6 +49,10 @@
 		#	init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
 			$data['list'] =  $this->hw->hoursworked_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
+				echo $this->db->last_query();
+			$data['hours_type'] = $this->hw->get_hourstype($this->company_info->company_id);
+		
+		#p($data['list']);
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->set_layout($this->theme);
 			$this->layout->view('pages/payroll_run/hours_worked_view',$data);

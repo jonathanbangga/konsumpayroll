@@ -29,17 +29,29 @@
 													AND e.deleted = '0' AND e.status = 'Active' AND a.deleted=  '0'  
 													AND eti.deleted = '0' 
 													group by e.emp_id LIMIT {$start},{$limit}"
-				);				
-				$query = $this->db->query("SELECT * FROM employee  e
-													LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id 
-													LEFT JOIN accounts a on e.account_id= e.account_id 
-													WHERE eti.comp_id = '{$this->db->escape_str($company_id)}' 
-													AND e.deleted = '0' AND e.status = 'Active' AND a.deleted=  '0'  
-													AND eti.deleted = '0' 
-													group by e.emp_id LIMIT {$start},{$limit}");
-				$result = $query->result();
-				$query->free_result();
-				return $result;
+				);			
+				
+				// PAYROLL PERIOD
+				$payroll_period = $this->get_payrollperiod($company_id);
+				
+				
+				if($payroll_period) {
+					$time_in = $payroll_period->period_from;
+					$time_out = $payroll_period->period_to;
+					
+					$query = $this->db->query("SELECT * FROM employee  e
+														LEFT JOIN `employee_time_in` eti on e.emp_id = eti.emp_id 
+														LEFT JOIN accounts a on e.account_id= a.account_id 
+														WHERE eti.comp_id = '{$this->db->escape_str($company_id)}' 
+														AND e.deleted = '0' AND e.status = 'Active' AND a.deleted=  '0'  AND a.user_type_id = '5' 
+														AND eti.time_in BETWEEN '{$time_in}' AND '{$time_out}' 
+														AND eti.deleted = '0' group by eti.emp_id LIMIT {$start},{$limit}");
+					$result = $query->result();
+					$query->free_result();
+					return $result;
+				} else {
+					return false;
+				}
 			}else{
 				return false;
 			}
@@ -56,6 +68,24 @@
 				$row = $query->row();
 				$query->free_result();
 				return $row;
+			} else {
+				return false;
+			}
+		}
+		
+		public function get_regular_holiday($company_id,$emp_id,$regular="yes") {
+			if(is_numeric($company_id)) {
+				$query = $this->db->query("SELECT * FROM `hours_type` where company_id ='{$this->db->escape_str($company_id)}'");
+				$regular = $query->row();
+				$query->free_result();
+				if($regular){
+					$query_timein = $this->db->query("SELECT sum(total_hours) as sum FROM  `employee_time_in` where comp_id= '{$company_id}' and emp_id = ".$emp_id);
+					$result = $query_timein->row();
+					$query_timein->free_result();
+					return $result;
+				}else{
+					return 0;
+				}
 			} else {
 				return false;
 			}
@@ -93,6 +123,46 @@
 			}
 		}
 		
+		/**
+		*	GET hours type for the company 
+		*	@param int $company_id
+		*/
+		public function get_hourstype($company_id){
+			if(is_numeric($company_id)) {
+				$query = $this->db->query("SELECT * FROM `hours_type` where status ='active' and company_id = '{$this->db->escape_str($company_id)}'");
+				$result = $query->result();
+				$query->free_result();
+				return $result;
+			} else {
+				return false;
+			}
+		}
+		
+		public function get_payrollperiod($company_id){
+			if(is_numeric($company_id)){
+				$query = $this->db->query("SELECT * FROM payroll_period where company_id = ".$this->db->escape_str($company_id));
+				$row = $query->row();
+				$query->free_result();
+				return $row;
+			}
+		}
+		
+		
+		//GET THE DAYS WITH Holidays SPECFIED WITHIN TH EPAYROLL PERIOD
+		public function get_holiday_dates($company_id,$hour_type_id){
+			if(is_numeric($company_id) && $hour_type_id) {
+				$get_holiday = $this->db->get_where("holiday",array("company_id"=>$company_id,"status"=>"Active","hour_type_id"=>$hour_type_id));
+				$holiday_result = $get_holiday->result();
+				$get_holiday->free_result();
+				$date = array();
+					foreach($holiday_result as $holiday_date) {
+						$date[] = "'".$holiday_date->date."'";
+					}
+				return implode(",",$date);
+			}else{
+				returnfalse;
+			}
+		}
 	}
 /* End of file Approve_leave_model */
 /* Location: ./application/models/hr/Approve_leave_model.php */;

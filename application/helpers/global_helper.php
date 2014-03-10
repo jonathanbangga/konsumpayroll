@@ -416,4 +416,87 @@
 		return random_string('alnum', 16);
 	}
 	
+	/**
+	*	THIS HELPER LET YOU SUBTRACT SPECIFIED TIME ONLY NO DATES!!
+	*	@param string $time_first
+	*	@param string $time_second
+	*	@return time
+	*/
+	function isubtract_time($time_first,$time_second){
+		$dawn = floor($time_first - $time_second);
+		$dawn_hours = floor($dawn / 3600);
+		$dawn_min = sprintf("%02d",floor(($dawn/60) % 60));
+		$dawn_secons = sprintf("%02d",$dawn % 60);		
+		$output = $dawn_hours.":".$dawn_min.":".$dawn_secons;
+		return $output;
+	}
+	
+	function isubtract_time_array($time_first,$time_second){
+		$dawn = floor($time_first - $time_second);
+		$dawn_hours = floor($dawn / 3600);
+		$dawn_min = sprintf("%02d",floor(($dawn/60) % 60));
+		$dawn_secons = sprintf("%02d",$dawn % 60);		
+		$output = $dawn_hours.":".$dawn_min.":".$dawn_secons;
+		$array = array("hours"=>$dawn_hours,"min"=>$dawn_min,"sec"=>$dawn_secons);
+		return $array;
+	}
+	
+	function convertToHoursMins($time, $format = '%d:%d') {
+		settype($time, 'integer');
+		if ($time < 1) {
+			return;
+		}
+		$hours = floor($time / 60);
+		$minutes = ($time % 60);
+		return sprintf($format, $hours, $minutes);
+	}
+	
+	function sum_the_time($time1, $time2) {
+	  $times = array($time1, $time2);
+	  $seconds = 0;
+	  foreach ($times as $time)
+	  {
+		list($hour,$minute,$second) = explode(':', $time);
+		$seconds += $hour*3600;
+		$seconds += $minute*60;
+		$seconds += $second;
+	  }
+	  $hours = floor($seconds/3600);
+	  $seconds -= $hours*3600;
+	  $minutes  = floor($seconds/60);
+	  $seconds -= $minutes*60;
+	  // return "{$hours}:{$minutes}:{$seconds}";
+	  return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds); // Thanks to Patrick
+	}
+
+	function find_difference($start_date,$end_date){
+		list($date,$time) = explode(' ',$start_date);
+		if($time == NULL){$time = '00:00:00';}
+		$startdate = explode("-",$date);
+		$starttime = explode(":",$time);
+	   
+		list($date,$time) = explode(' ',$end_date);
+		if($time == NULL){$time = '00:00:00';}
+		$enddate = explode("-",$date);
+		$endtime = explode(":",$time);
+	   
+		$secons_dif = mktime($endtime[0],$endtime[1],$endtime[2],$enddate[1],$enddate[2],$enddate[0]) -
+	 
+		mktime($starttime[0],$starttime[1],$starttime[2],$startdate[1],$startdate[2],$startdate[0]);
+	 
+		//Different can be returned in many formats
+		//In Minutes: floor($secons_dif/60);
+		//In Hours: floor($secons_dif/60/60);
+		//In days: floor($secons_dif/60/60/24);
+		//In weeks: floor($secons_dif/60/60/24/7;
+		//In Months: floor($secons_dif/60/60/24/7/4);
+		//In years: floor($secons_dif/365/60/24);
+	   
+		//We will return it in hours
+		$difference = floor($secons_dif/60/60);
+	   
+		return $difference;
+	}
+	 
+	
 	

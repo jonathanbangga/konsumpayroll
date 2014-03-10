@@ -39,6 +39,13 @@
 			}
 		}
 		
+		
+		public function payroll_run(){
+			$this->session->set_userdata("company_id",$this->company_id);
+			redirect($this->uri->segment(1)."/payroll_run/overtime/lists");	
+		}
+		
+		
 	}
 
 /* End of file company_approvers.php */
