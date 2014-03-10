@@ -674,14 +674,24 @@
 				$days = floor($interval / (60 * 60 * 24));
 				
 				// if no. of day is greater than 0, add new row for employee time in
+				
+				/*
+				version 1.0
+				
 				if($days > 0){
 					return FALSE;
 				}else{
 					// get employee time in information
 					return $row;
 				}
-				
-				#return $row;
+				*/
+			
+				if(strtotime('-1 day') < strtotime(date($row->date))){
+					return FALSE;		
+				}else{
+					// get employee time in information
+					return $row;
+				}
 			}else{
 				return FALSE;
 			}

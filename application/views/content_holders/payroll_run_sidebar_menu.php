@@ -42,8 +42,11 @@
 	</li>
 <li><a href="">Allowances</a></li>
 <li><a href="">Expense</a></li>
-<li><a href="">Loans &amp; Deductions</a></li>
-<li><a href="">Payroll</a></li>
+<li><a href="">Loans &amp; Deductions</a>
+</li>
+<li>
+<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/payroll/carry_over','Payroll')?>
+</li>
 </ul>
 <script>
 jQuery(document).ready(function(){

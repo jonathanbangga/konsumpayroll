@@ -69,7 +69,7 @@
 				// print $time_x * 60 . " late ";
 				print $time_x * 60;
 			}
-			*/
+			*/		
 			
 			$data['page_title'] = "Time In";
 			$data['min_log'] = $this->min_log;
