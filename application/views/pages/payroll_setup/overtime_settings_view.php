@@ -5,7 +5,7 @@ echo form_open("/{$this->session->userdata('sub_domain')}/payroll_setup/overtime
 ?>
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Listed here are the defualt hour type, please fill in the corresponding overtime rate. </p>
+        <p>Overtime pay rates depend upon the day the work is performed, whether it is ordinary working day, special day, holiday or rest day. Please define below the corresponding compensation you gave to your employees on these days.</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl ot_tbl">
