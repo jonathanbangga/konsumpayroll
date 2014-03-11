@@ -40,6 +40,7 @@
 	<li <?php echo ($uri=='earnings_commissions') ? 'class="selected"' : ''?>>
 	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/earnings_commissions/commission','Earnings &amp; Commissions')?>
 	</li>
+<<<<<<< HEAD
 	<li <?php echo ($uri=='allowance') ? 'class="selected"' : ''?>>
 	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/allowance','Allowances')?>
 	</li>
@@ -48,6 +49,15 @@
 	</li>
 <li><a href="">Loans &amp; Deductions</a></li>
 <li><a href="">Payroll</a></li>
+=======
+<li><a href="">Allowances</a></li>
+<li><a href="">Expense</a></li>
+<li><a href="">Loans &amp; Deductions</a>
+</li>
+<li>
+<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/payroll/carry_over','Payroll')?>
+</li>
+>>>>>>> f93caa67648face1d3f1bca7377baedee918f0b2
 </ul>
 <script>
 jQuery(document).ready(function(){
