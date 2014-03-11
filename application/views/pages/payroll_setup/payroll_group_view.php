@@ -1,8 +1,9 @@
  <div class="main-content">
  <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Payroll group is important in creating payroll. You need to group your employees according to their shift, 
-		workday, hours type, pay rate type and or different rest days.</p>
+        <p>You need to group your employees according to their shift, 
+		workday, hours type, pay rate type and or according to their rest days. </p>
+		<p>Running the payroll is per group</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">
