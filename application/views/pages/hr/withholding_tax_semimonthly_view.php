@@ -1,75 +1,178 @@
 <div class="tbl-wrap">
 	<table class="tbl">
-		<tr>
+		<tbody><tr>
 			<th>Tax</th>
-			<th>1</th>
-			<th>2</th>
-			<th>3</th>
-			<th>4</th>
-			<th>5</th>
-			<th>6</th>
-			<th>7</th>
-			<th>8</th>
+			<th><div class="ihead">1</div></th>
+			<th><div class="ihead">2</div></th>
+			<th><div class="ihead">3</div></th>
+			<th><div class="ihead">4</div></th>
+			<th><div class="ihead">5</div></th>
+			<th><div class="ihead">6</div></th>
+			<th><div class="ihead">7</div></th>
+			<th><div class="ihead">8</div></th>
 		</tr>
-		<?php 
-			if($withholding_tax != null){
-				foreach($withholding_tax as $row){
-		?>
-			<tr>
-				<td><?php print $row->tax_name;?></td>
-				<td><?php print $row->tax1;?></td>
-				<td><?php print $row->tax2;?></td>
-				<td><?php print $row->tax3;?></td>
-				<td><?php print $row->tax4;?></td>
-				<td><?php print $row->tax5;?></td>
-				<td><?php print $row->tax6;?></td>
-				<td><?php print $row->tax7;?></td>
-				<td><?php print $row->tax8;?></td>
-			</tr>
-		<?php 		
-				}
-			}else{
-				echo "<td colspan='9'>";
-				print msg_empty();
-				echo "</td>";
-			}
-		?>
-	</table>
-	<br />
-	<table class="tbl">
 		<tr>
-			<th>Tax Status</th>
-			<th>1</th>
-			<th>2</th>
-			<th>3</th>
-			<th>4</th>
-			<th>5</th>
-			<th>6</th>
-			<th>7</th>
-			<th>8</th>
+			<td><div style="width:120px;">Exemption</div></td>
+			<td>0.00</td>
+			<td>0.00</td>
+			<td>20.83</td>
+			<td>104.17</td>
+			<td>354.17</td>
+			<td>937.50 </td>
+			<td>2,083.33 </td>
+			<td>5,208.33 </td>
 		</tr>
-		<?php 
-			if($withholding_tax_status != null){
-				foreach($withholding_tax_status as $row){
-		?>
-			<tr>
-				<td><?php print $row->tax_name;?></td>
-				<td><?php print $row->amount_excess1;?></td>
-				<td><?php print $row->amount_excess2;?></td>
-				<td><?php print $row->amount_excess3;?></td>
-				<td><?php print $row->amount_excess4;?></td>
-				<td><?php print $row->amount_excess5;?></td>
-				<td><?php print $row->amount_excess6;?></td>
-				<td><?php print $row->amount_excess7;?></td>
-				<td><?php print $row->amount_excess8;?></td>
+		<tr>
+			<td>Status</td>
+			<td>+0% over</td>
+			<td>+5% over</td>
+			<td>+10% over</td>
+			<td>+15% over</td>
+			<td>+20% over</td>
+			<td>+25% over</td>
+			<td>+30% over</td>
+			<td>+32% over</td>
+		</tr>
+		
+			</tbody></table>
+	<br>
+	<table class="tbl">
+		<tbody><tr>
+			<th>Tax Status</th>
+			<th><div class="ihead">1</div></th>
+			<th><div class="ihead">2</div></th>
+			<th><div class="ihead">3</div></th>
+			<th><div class="ihead">4</div></th>
+			<th><div class="ihead">5</div></th>
+			<th><div class="ihead">6</div></th>
+			<th><div class="ihead">7</div></th>
+			<th><div class="ihead">8</div></th>
+		</tr>
+					<tr>
+				<td><div style="width:120px;">Z</div></td>
+				<td>0.00</td>
+				<td>0.00</td>
+				<td>417.00</td>
+				<td>1250.00</td>
+				<td>2917.00</td>
+				<td>5833.00</td>
+				<td>10417.00</td>
+				<td>20833.00</td>
 			</tr>
-		<?php 		
-				}
-			}else{
-				echo "<td colspan='9'>";
-				print msg_empty();
-				echo "</td>";
-			}
-		?>
-	</table>
+					<tr>
+				<td>S</td>
+				<td>1.00</td>
+				<td>2083.00</td>
+				<td>2500.00</td>
+				<td>3333.00</td>
+				<td>5000.00</td>
+				<td>7917.00</td>
+				<td>12500.00</td>
+				<td>22917.00</td>
+			</tr>
+					<tr>
+				<td>S-1</td>
+				<td>1.00</td>
+				<td>3125.00</td>
+				<td>3542.00</td>
+				<td>4375.00</td>
+				<td>6042.00</td>
+				<td>8958.00</td>
+				<td>13542.00</td>
+				<td>23958.00</td>
+			</tr>
+					<tr>
+				<td>S-2</td>
+				<td>1.00</td>
+				<td>4167.00</td>
+				<td>4583.00</td>
+				<td>5417.00</td>
+				<td>7083.00</td>
+				<td>10000.00</td>
+				<td>14583.00</td>
+				<td>25000.00</td>
+			</tr>
+					<tr>
+				<td>S-3</td>
+				<td>1.00</td>
+				<td>5208.00</td>
+				<td>5625.00</td>
+				<td>6458.00</td>
+				<td>8125.00</td>
+				<td>11042.00</td>
+				<td>15625.00</td>
+				<td>26042.00</td>
+			</tr>
+					<tr>
+				<td>S-4</td>
+				<td>1.00</td>
+				<td>6250.00</td>
+				<td>6667.00</td>
+				<td>7500.00</td>
+				<td>9167.00</td>
+				<td>12083.00</td>
+				<td>16667.00</td>
+				<td>27083.00</td>
+			</tr>
+					<tr>
+				<td>M-1</td>
+				<td>1.00</td>
+				<td>3125.00</td>
+				<td>3542.00</td>
+				<td>4375.00</td>
+				<td>6042.00</td>
+				<td>8958.00</td>
+				<td>13542.00</td>
+				<td>23958.00</td>
+			</tr>
+					<tr>
+				<td>M-2</td>
+				<td>1.00</td>
+				<td>4167.00</td>
+				<td>4583.00</td>
+				<td>5417.00</td>
+				<td>7083.00</td>
+				<td>10000.00</td>
+				<td>14583.00</td>
+				<td>25000.00</td>
+			</tr>
+					<tr>
+				<td>M-3</td>
+				<td>1.00</td>
+				<td>5208.00</td>
+				<td>5625.00</td>
+				<td>6458.00</td>
+				<td>8125.00</td>
+				<td>11042.00</td>
+				<td>15625.00</td>
+				<td>26042.00</td>
+			</tr>
+					<tr>
+				<td>M-4</td>
+				<td>1.00</td>
+				<td>6250.00</td>
+				<td>6667.00</td>
+				<td>7500.00</td>
+				<td>9167.00</td>
+				<td>12083.00</td>
+				<td>16667.00</td>
+				<td>27083.00</td>
+			</tr>
+					<tr>
+				<td>M</td>
+				<td>1.00</td>
+				<td>2083.00</td>
+				<td>2500.00</td>
+				<td>3333.00</td>
+				<td>5000.00</td>
+				<td>7917.00</td>
+				<td>12500.00</td>
+				<td>22917.00</td>
+			</tr>
+			</tbody></table>
 </div>
+<style>
+	.ihead{
+		width:60px;
+	}
+</style>

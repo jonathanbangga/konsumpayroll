@@ -34,17 +34,13 @@ class Priority_of_deductions_model extends CI_Model {
      * @param int $sss_calamity_loan
      * @param int $sss_emergency_loan
      */
-    public function save_priority_of_deducations($company_id,$philhealth,$sss,$withholding_tax,$hdmf,$company_loan,$sss_salary_loan,$sss_calamity_loan,$sss_emergency_loan){
+    public function save_priority_of_deducations($company_id,$philhealth,$sss,$withholding_tax,$hdmf){
     	$fields = array(
     		"company_id"		=>$this->db->escape_str($company_id),
     		"philhealth"		=>$this->db->escape_str($philhealth),
     		"sss"				=>$this->db->escape_str($sss),
     		"withholding_tax"	=>$this->db->escape_str($withholding_tax),
     		"hdmf"				=>$this->db->escape_str($hdmf),
-    		"company_loan"		=>$this->db->escape_str($company_loan),
-    		"sss_salary_loan"	=>$this->db->escape_str($sss_salary_loan),
-    		"sss_calamity_loan"	=>$this->db->escape_str($sss_calamity_loan),
-    		"sss_emergency_loan"=>$this->db->escape_str($sss_emergency_loan),
     		"date"				=>idates_now()
     	);
     	$this->db->insert('priority_of_deductions',$fields);
@@ -58,10 +54,10 @@ class Priority_of_deductions_model extends CI_Model {
      * @param int $name
      * @param int $priority
      */
-    public function save_priority_of_deductions_other($company_id,$name,$priority){
+    public function save_priority_of_deductions_other($company_id,$loan_type_id,$priority){
     	$fields = array(
     		"company_id"=>$this->db->escape_str($company_id),
-    		"name"		=>$this->db->escape_str($name),
+    		"loan_type_id"		=>$this->db->escape_str($loan_type_id),
     		"priority"	=>$this->db->escape_str($priority),
     		"date"		=>idates_now(),
     		"deleted"	=> '0'
@@ -83,7 +79,7 @@ class Priority_of_deductions_model extends CI_Model {
      * @param int $sss_calamity_loan
      * @param int $sss_emergency_loan
      */
-	public function update_priority_of_deducations($company_id,$philhealth,$sss,$withholding_tax,$hdmf,$company_loan,$sss_salary_loan,$sss_calamity_loan,$sss_emergency_loan){
+	public function update_priority_of_deducations($company_id,$philhealth,$sss,$withholding_tax,$hdmf){
 		$where = array(
 			"company_id" => $this->db->escape_str($company_id),
 			"deleted" => "0"
@@ -94,10 +90,6 @@ class Priority_of_deductions_model extends CI_Model {
     		"sss"				=>$this->db->escape_str($sss),
     		"withholding_tax"	=>$this->db->escape_str($withholding_tax),
     		"hdmf"				=>$this->db->escape_str($hdmf),
-    		"company_loan"		=>$this->db->escape_str($company_loan),
-    		"sss_salary_loan"	=>$this->db->escape_str($sss_salary_loan),
-    		"sss_calamity_loan"	=>$this->db->escape_str($sss_calamity_loan),
-    		"sss_emergency_loan"=>$this->db->escape_str($sss_emergency_loan),
     		"date"				=>idates_now()
     	);
     	$this->db->update('priority_of_deductions',$fields);
@@ -111,7 +103,7 @@ class Priority_of_deductions_model extends CI_Model {
      */
     public function get_priority_of_deductions_other($company_id){
     	if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other where company_id = '{$this->db->escape_str($company_id)}'");
+    		$query = $this->db->query("SELECT * FROM deductions_other_deductions where comp_id = '{$this->db->escape_str($company_id)}'");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
@@ -120,10 +112,9 @@ class Priority_of_deductions_model extends CI_Model {
     	}
     }
     
-	public function update_priority_of_deductions_other($company_id,$priority_of_deductions_other_id,$name,$priority){
+	public function update_priority_of_deductions_other($company_id,$priority_of_deductions_other_id,$priority){
 		if(is_numeric($priority_of_deductions_other_id)){
 	    	$fields = array(
-	    		"name"		=>$this->db->escape_str($name),
 	    		"priority"	=>$this->db->escape_str($priority),
 	    		"date"		=>idates_now()
 	    	);
@@ -168,12 +159,12 @@ class Priority_of_deductions_model extends CI_Model {
      * @param int $priority
      * @return integer
      */
- 	public function save_priority_of_other_loan($company_id,$name,$priority){
+ 	public function save_priority_of_other_loan($company_id,$loan_type_id,$priority){
  		if(is_numeric($company_id)){
 	    	$fields = array(
 	    		"company_id"=>$this->db->escape_str($company_id),
-	    		"name"		=>$this->db->escape_str($name),
 	    		"priority"	=>$this->db->escape_str($priority),
+				"loan_type_id"=> $loan_type_id,
 	    		"date"		=>idates_now(),
 	    		"deleted"	=> '0'
 	    	);
@@ -184,10 +175,9 @@ class Priority_of_deductions_model extends CI_Model {
  		}
     }
     
-	public function update_priority_of_other_loan($company_id,$priority_of_deductions_other_loans_id,$name,$priority){
+	public function update_priority_of_other_loan($company_id,$priority_of_deductions_other_loans_id,$priority){
  		if(is_numeric($company_id)){
 	    	$fields = array(
-	    		"name"		=>$this->db->escape_str($name),
 	    		"priority"	=>$this->db->escape_str($priority),
 	    		"date"		=>idates_now(),
 	    		"deleted"	=> '0'
@@ -239,8 +229,48 @@ class Priority_of_deductions_model extends CI_Model {
     		return $result;
     	}
     }
+		
+	// REVISE
+	public function get_loan_type($company_id){
+		if(is_numeric($company_id)){
+    		$query = $this->db->query("SELECT * FROM loan_type WHERE company_id = '{$company_id}' AND deleted='0'  AND status='active'");
+    		$result = $query->result();
+    		$query->free_result();
+    		return $result;
+    	}else{
+			return false;
+		}
+	}
+	
+	/**
+	*	THESE will display priorty loan used for updating if have value then we only update
+	*	@param int $company_id
+	*/
+	public function priority_get_loan_type($company_id){
+		if(is_numeric($company_id)){
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans p LEFT JOIN loan_type lt on lt.loan_type_id = p.loan_type_id WHERE p.company_id = '{$company_id}' AND p.deleted='0'  AND  lt.status = 'Active' AND lt.deleted= '0' ");
+    		$result = $query->result();
+    		$query->free_result();
+    		return $result;
+    	}else{
+			return false;
+		}
+	}
     
-    
+	/**
+	*	These will display priority deductions used for updating 
+	*	@param int $company_id
+	*/
+	public function priority_list_priority_deductions_other($company_id) {
+		if(is_numeric($company_id)){
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other p LEFT JOIN deductions_other_deductions d on d.deductions_other_deductions_id = p.deductions_other_deductions_id WHERE p.company_id= '{$company_id}' AND p.deleted='0'");
+    		$result = $query->result();
+    		$query->free_result();
+    		return $result;
+    	}else{
+			return false;
+		}
+	}
 		
 }
 /* End of file */

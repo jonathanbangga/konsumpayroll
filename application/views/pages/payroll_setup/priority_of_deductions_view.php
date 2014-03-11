@@ -24,103 +24,141 @@
             </tr>
             <tr>
               <td>PhilHealth</td>
-              <td><input style="width:95px;" class="txtfield iwarn iprior" name="philhealth" value="<?php echo $priority_deducations ? $priority_deducations->philhealth : ''; ?>" type="text"></td>
+              <td>
+				<!-- <input style="width:95px;" class="txtfield iwarn iprior" name="philhealth" value="<?php echo $priority_deducations ? $priority_deducations->philhealth : ''; ?>" type="text">-->
+				<select name="philhealth" class="txtselect select-medium">
+					<?php priority_options($options,$priority_deducations,$priority_deducations->philhealth);?>
+				</select>
+			  </td>
             </tr>
             <tr>
               <td>SSS</td>
-              <td><input style="width:95px;" class="txtfield iwarn iprior" name="sss" value="<?php echo $priority_deducations ? $priority_deducations->sss : ''; ?>" type="text"></td>
+              <td><!-- <input style="width:95px;" class="txtfield iwarn iprior" name="sss" value="<?php echo $priority_deducations ? $priority_deducations->sss : ''; ?>" type="text">-->
+			  	<select name="sss" class="txtselect select-medium">
+					<?php priority_options($options,$priority_deducations,$priority_deducations->sss);?>
+				</select>
+			  
+			  </td>
             </tr>
             <tr>
               <td>Withholding Tax</td>
-              <td><input style="width:95px;" class="txtfield iwarn iprior" name="withholding_tax" value="<?php echo $priority_deducations ? $priority_deducations->withholding_tax : ''; ?>" type="text"></td>
+              <td>
+				<!-- <input style="width:95px;" class="txtfield iwarn iprior" name="withholding_tax" value="<?php echo $priority_deducations ? $priority_deducations->withholding_tax : ''; ?>" type="text">-->
+				<select name="withholding_tax" class="txtselect select-medium">
+					<?php priority_options($options,$priority_deducations,$priority_deducations->withholding_tax);?>
+				</select>
+				</td>
             </tr>
             <tr>
               <td>HDMF</td>
-              <td><input style="width:95px;" class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->hdmf : ''; ?>" name="hdmf" type="text"></td>
+              <td>
+				<!-- <input style="width:95px;" class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->hdmf : ''; ?>" name="hdmf" type="text">-->
+				<select name="hdmf" class="txtselect select-medium">
+					<?php priority_options($options,$priority_deducations,$priority_deducations->hdmf);?>
+				</select>
+				</td>
             </tr>
           </table>
         </div>
+		
+		  <h5>Loans</h5>
+        <div class="tbl-wrap">
+          <table class="tbl" id="jmoreloan">
+            <tr>
+              <th style="width:152px;">Income</th>
+              <th style="width:115px;">Priority</th>
+            </tr>
+			<?php	
+				if($priority_loan_type == false && $get_loan_type) {
+					foreach($get_loan_type as $glt):
+			?>
+            <tr>
+              <td><?php echo $glt->loan_type_name;?></td>
+              <td>
+			 <!--  <input  class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->company_loan : ''; ?>" name="company_loan" type="text"> -->
+				<input type="hidden" name="loan_type_id[]" value="<?php echo $glt->loan_type_id;?>"/>
+			  	<select name="add_loan_priority[]" class="txtselect select-medium">
+					<option value="first payroll of the month">first payroll of the month</option>
+					<option selected="" value="last payroll of the month">last payroll of the month</option>
+					<option value="equal in every payroll">equal in every payroll</option>
+				</select>
+			  </td>  
+            </tr>
+			<?php
+					endforeach;
+				} else { 
+					if($priority_loan_type) {	
+						foreach($priority_loan_type as $plt) :
+			?>
+					<tr>
+						<td><?php echo $plt->loan_type_name;?></td>
+						<td>					
+						<input type="hidden" name="update_loan_type_id[]" value="<?php echo $plt->priority_of_deductions_other_loans_id;?>"/>
+							<select name="update_loan_priority[]" class="txtselect select-medium">
+							<?php priority_options($options,$priority_loan_type,$plt->priority);?>
+							</select>
+						</td>  
+					</tr>
+			
+			<?php
+						endforeach;
+					}
+				}
+			?>
+			</table>
+       
+        </div>
+		
         <h5>Other Deductions</h5>
         <div class="tbl-wrap">
           <table class="tbl" id="jother_deductions">
             <tr>
               <th style="width:152px;">Income</th>
               <th style="width:115px;">Priority</th>
-              <th style="width:115px;">Status</th>
             </tr>
             <?php 
-            	if($other_deducations){
+            	if($priority_other == false && $other_deducations){
             		foreach($other_deducations as $other_deduc):
            ?> 		
-            	<tr>
-            		<td>
-            			<input type="hidden" value="<?php echo $other_deduc->priority_of_deductions_other_id;?>" class="txtfield" name="update_priority_id[]">
-           				<input type="hidden" value="<?php echo $other_deduc->name;?>" class="txtfield iwarn" name="update_priority_name[]">
+					<tr>
+						<td>
 						<?php echo $other_deduc->name;?>
 						</td>
-            		<td>
-            		<input type="text" value="<?php echo $other_deduc->priority;?>" class="txtfield iwarn iprior" name="update_priority[]"></td>
-            		<td>
-            		<a class="btn btn-red btn-action btn-remove jremove_other_update" id="<?php echo $other_deduc->priority_of_deductions_other_id;?>" href="javascript:void(0);" >REMOVE</a></td>
-            	</tr>
+						<td>
+						<input type="hidden" name="other_deductions_id[]" value="<?php echo $other_deduc->deductions_other_deductions_id?>" />
+						<select name="priority_other_deductions[]" class="txtselect select-medium">
+							<?php priority_options($options,$priority_deducations,"");?>
+						</select>
+						</td>
+					</tr>
             <?php 		
             		endforeach;
-            	}
+            	}else{
+					if($priority_other) {
+						foreach($priority_other as $po_key=>$po_val):
             ?>
-            
+					<tr>
+						<td>
+						<?php echo $po_val->name;?>
+						</td>
+						<td>
+							<input type="hidden" name="update_other_deductions_id[]" value="<?php echo $po_val->priority_of_deductions_other_id?>" />
+							<select name="update_priority_other_deductions[]" class="txtselect select-medium">
+								<?php priority_options($options,$priority_other,$po_val->priority);?>
+							</select>
+						</td>
+					</tr>
+
+			<?php
+						endforeach;
+					}
+				}
+			?>
           </table>
           <br />
-          <a id="jadd_other_deductions" href="#" class="btn">Add More</a>
+          <!-- <a id="jadd_other_deductions" href="#" class="btn">Add More</a> -->
         </div>
-        <h5>Loans</h5>
-        <div class="tbl-wrap">
-          <table class="tbl" id="jmoreloan">
-            <tr>
-              <th style="width:152px;">Income</th>
-              <th style="width:115px;">Priority</th>
-              <th style="width:115px;">Status</th>
-            </tr>
-            <tr>
-              <td>Company Loan</td>
-              <td><input  class="txtfield iwarn iprior" value="<?php echo $priority_deducations ? $priority_deducations->company_loan : ''; ?>" name="company_loan" type="text"></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>SSS Salary Loan</td>
-              <td><input class="txtfield iwarn iprior" name="sss_salary_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_salary_loan : ''; ?>" type="text"></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>SSS Calamity Loan</td>
-              <td><input  class="txtfield iwarn iprior" name="sss_calamity_loan" type="text" value="<?php echo $priority_deducations ? $priority_deducations->sss_calamity_loan : ''; ?>"></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>SSS Emergency Loan</td>
-              <td><input  class="txtfield iwarn iprior" name="sss_emergency_loan" value="<?php echo $priority_deducations ? $priority_deducations->sss_emergency_loan : ''; ?>" type="text"></td>
-              <td>&nbsp;</td>
-            </tr>
-            <?php 
-            	if($other_loans){
-            		foreach($other_loans as $more_loans):
-            ?>
-            	<tr>
-             		<td>
-					<?php echo $other_loans ? $more_loans->name : ''; ?>
-             		<input class="txtfield iwarn" name="update_loan_name[]" value="<?php echo $other_loans ? $more_loans->name : ''; ?>" type="hidden">
-             		<input class="txtfield iwarn" name="update_pod_id[]" value="<?php echo $other_loans ? $more_loans->priority_of_deductions_other_loans_id : ''; ?>" type="hidden">
-             		</td>
-              		<td><input class="txtfield iwarn iprior" name="update_loan_priority[]" value="<?php echo $other_loans ? $more_loans->priority : ''; ?>" type="text"></td>
-             		<td><a href="javascript:void(0);" id="<?php echo $other_loans ? $more_loans->priority_of_deductions_other_loans_id : ''; ?>" class="btn btn-red btn-action btn-remove jremove_other_loan_update">REMOVE</a></td>
-           		 </tr>
-            <?php 		
-            		endforeach;
-            	}
-            ?>   
-          </table>
-          <br />
-           <a id="jadd_other_loan" href="#" class="btn">Add More</a>
-        </div>
+      
         <!-- MAIN-CONTENT END -->
       </div>
       <div class="footer-grp-btn">

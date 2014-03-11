@@ -498,5 +498,16 @@
 		return $difference;
 	}
 	 
+	function priority_options($options,$priority_deducations,$status){
+		foreach($options as $optval): 
+			$selected = "";
+			if($priority_deducations) {
+					if($status == $optval){
+						$selected ='selected="selected"';
+					}
+			}
+			echo "<option value=\"{$optval}\" {$selected}>{$optval}</option>";
+		endforeach;
+	}
 	
 	

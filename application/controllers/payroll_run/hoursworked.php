@@ -49,9 +49,9 @@
 		#	init_pagination($uri,$total_rows,$this->per_page,$this->segment);
 			$data['pagi'] = $this->pagination->create_links();
 			$data['list'] =  $this->hw->hoursworked_list($this->company_info->company_id,$this->per_page,(($page-1) * $this->per_page));
-				echo $this->db->last_query();
 			$data['hours_type'] = $this->hw->get_hourstype($this->company_info->company_id);
-		
+			$data['payroll_period'] = $this->hw->get_payrollperiod($this->company_info->company_id);
+			p($data['payroll_period']);
 		#p($data['list']);
 			$data['sidebar_menu'] = $this->sidebar_menu;
 			$this->layout->set_layout($this->theme);
