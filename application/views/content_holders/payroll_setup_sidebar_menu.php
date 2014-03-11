@@ -48,6 +48,11 @@
 			Earnings
 		</a>
 	</li>
+		<li <?php if($uri=='loans'){ echo 'class="selected"'; } ?>>
+		<a href="/<?php echo $this->uri->segment(1); ?>/payroll_setup/loans">
+			Loans
+		</a>
+	</li>
 	<li <?php if($uri=='deductions'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->uri->segment(1); ?>/payroll_setup/deductions">Deductions</a>
 	</li>
@@ -56,11 +61,7 @@
 			Priority of Deductions
 		</a>
 	</li>
-	<li <?php if($uri=='loans'){ echo 'class="selected"'; } ?>>
-		<a href="/<?php echo $this->uri->segment(1); ?>/payroll_setup/loans">
-			Loans
-		</a>
-	</li>
+
 	<li <?php if($uri=='expenses'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->uri->segment(1); ?>/payroll_setup/expenses">
 			Expenses
