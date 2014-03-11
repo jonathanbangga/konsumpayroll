@@ -44,13 +44,39 @@ class Expense extends CI_Controller {
 	public function index()
 	{
 		if ($this->input->post()) {
+			$this->form_validation->set_rules('employee_id[]','Employee','trim|xss_clean');
+			$this->form_validation->set_rules('expense_type_id[]','Expense Type','trim|xss_clean');
+			$this->form_validation->set_rules('date[]','Date','trim|xss_clean');
+			$this->form_validation->set_rules('amount[]','Amount','trim|xss_clean');
 			
+			if ($this->form_validation->run() == TRUE) {
+				$post = $this->input->post();
+				foreach ($post['employee_id'] as $key => $employee) {
+					if ($employee) {
+						
+						$q  = $this->em->get_employee($this->company_id,$employee);
+						$q1 = $this->em->get_expense_type($this->company_id,$post['expense_type_id'][$key]);
+						
+						$expense = array(
+							'company_id' => $this->company_id,
+							'account_id' => $q->account_id,
+							'expense_type_id' => ($q1) ? $q1->expense_type_id : '',
+							'minimum'		  => ($q1) ? $q1->minimum_amount : '',
+							'maximum'		  => ($q1) ? $q1->maximum_amount : '',
+							'date'			  => ($post['date'][$key]) ? date('Y-m-d',strtotime(str_replace('/', '-', $post['date'][$key]))) : '',
+							'amount'		  => $post['amount'][$key]
+						);
+						$this->em->add_expense($expense);
+					}
+				}	
+				//redirect ('/'.$this->subdomain.'/payroll_run/expense','location');
+			}
 		}
 		
 		$data['page_title'] = "Expense";
 		$data['sidebar_menu'] = $this->sidebar_menu;
 		
-		$data['q'] = $this->em->get_employees($this->company_id);
+		$data['q'] = $this->em->get_payroll_expenses($this->company_id);
 		
 		$this->layout->set_layout($this->theme);
 		$this->layout->view('pages/payroll_run/expense_view',$data);
@@ -85,8 +111,8 @@ class Expense extends CI_Controller {
 				<td>'.$exp.'</td>
 				<td class="minimum">&nbsp;</td>
 				<td class="maximum">&nbsp;</td>
-				<td><input type="text" name="date[]" class="txtfield datepicker" /></td>
-				<td><input type="text" name="amount[]" class="txtfield" /></td>
+				<td><input type="text" name="date[]" class="date txtfield datepicker" readonly="readonly" /></td>
+				<td><input type="text" name="amount[]" class="amount txtfield" /></td>
 			</tr>';
 		} else {
 			show_404();

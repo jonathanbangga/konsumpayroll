@@ -13,6 +13,22 @@ class Expense_model extends CI_Model {
 		return $this->db->count_all_results('employee');
 	}
 	
+	public function get_payroll_expenses($company_id)
+	{
+		$where = array(
+			'payroll_expense.company_id' => $company_id,
+			'payroll_expense.status'	 => 'Active'
+		);
+		$this->db->where($where);
+		$this->db->join('accounts','accounts.account_id = payroll_expense.account_id','left');
+		$this->db->join('employee','employee.account_id = payroll_expense.account_id','left');
+		$this->db->join('expense_type','expense_type.expense_type_id = payroll_expense.expense_type_id','left');
+		$q = $this->db->get('payroll_expense');
+		$result = $q->result();
+		
+		return ($result) ? $result : false;
+	}
+	
 	public function get_employees($company_id)
 	{
 		$where = array(
@@ -67,6 +83,11 @@ class Expense_model extends CI_Model {
 		$result = $q->row();
 		
 		return ($result) ? $result : false;
+	}
+	
+	public function add_expense($val)
+	{
+		$this->db->insert('payroll_expense',$val);
 	}
 	
 }

@@ -15,7 +15,27 @@
 				<th width="117">Amount</th>
 			</tr>
 			</thead>
-			<tbody></tbody>
+			<tbody>
+			<?php 
+			if ($q) {
+				foreach ($q as $key => $employee) {
+					?>
+			<tr>
+				<td><input type="checkbox" value="<?php echo $employee->payroll_expense_id?>"></td>
+				<td><?php echo $key+1?></td>
+				<td><?php echo $employee->payroll_cloud_id?></td>
+				<td><?php echo $employee->first_name.' '.$employee->middle_name.' '.$employee->last_name?></td>
+				<td><?php echo $employee->expense_type_name?></td>
+				<td class="minimum"><?php echo $employee->minimum?></td>
+				<td class="maximum"><?php echo $employee->maximum?></td>
+				<td><?php echo ($employee->date) ? date('d/m/Y',strtotime($employee->date)) : ''?></td>
+				<td><?php echo $employee->amount?></td>
+			</tr>
+					<?php
+				}
+			}
+			?>
+			</tbody>
 		</table>
 	</div>
 	<div class="group-btns" style="margin: -25px 0 30px; overflow: hidden">

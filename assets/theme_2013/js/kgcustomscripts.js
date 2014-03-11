@@ -74,7 +74,9 @@ var exp = {
 				
 				$.get(url, function(data){
 					$('.expenseBox tbody').append(data);
-					$('.datepicker').datepicker();
+					$('.datepicker').datepicker({
+						dateFormat: 'dd/mm/yy'
+					});
 				});
 			});
 			
@@ -103,8 +105,9 @@ var exp = {
 						$('tr#'+z).find('.maximum').html(data.maximum_amount);
 					}
 				});
-			});
-			
+			})
+		},
+		form_validation: function() {
 			
 		}
 }
