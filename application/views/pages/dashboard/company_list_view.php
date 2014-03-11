@@ -1,6 +1,10 @@
  <div class="tbl-wrap">
+ 
         <h1>Company List</h1>
+        
 	<?php if($company->num_rows()>0){ ?>
+	
+	    <a href="/<?php echo $sub_domain; ?>/company_setup/company_information/" class="btn">ADD COMPANY</a>
 		<table class="company-list-tbl">
 			<?php 
 			if($company->result()){
