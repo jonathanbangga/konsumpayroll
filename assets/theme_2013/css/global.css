@@ -319,6 +319,7 @@ ol li {
 	text-transform:uppercase;
 	cursor:pointer;
 	-webkit-appearance:none;
+	margin:15px 10px;
 }
 input[type="button"].btn {
 	height: 27.4px;

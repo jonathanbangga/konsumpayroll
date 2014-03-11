@@ -6,7 +6,8 @@
           applied. During deductions, if the employees net income become less than the minimum net pay amount<br>
           defined, that deduction and all subsequent deductions of lower priority will be deferred to the next<br>
           payroll period. Deductions will be done by priority during the payroll run starting from the priority 1<br>
-          that is the highest rank. Example: If priority 3 deduction will cause the employee's net income amount to get <br>
+          that is the highest rank.</p>
+          <p> Example: If priority 3 deduction will cause the employee's net income amount to get <br>
           ower than the minimum net pay, that deduction and all other deductions priority 4and up will be moved<br>
           to the next payroll period for processing.</p>
         <h5>Mandatory Contribution</h5>

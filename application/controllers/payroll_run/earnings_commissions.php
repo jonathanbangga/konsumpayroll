@@ -19,7 +19,8 @@ class Earnings_commissions extends CI_Controller {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct() 
+	{
 		parent::__construct();
 		
 		$this->load->model("payroll_run/earnings_commissions_model","ecm");

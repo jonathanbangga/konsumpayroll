@@ -61,3 +61,53 @@ var enc = {
 			});
 		}
 }
+
+var exp = {
+		init: function() {
+			var cnt = 0;
+			$('.addBtn').click(function(){
+				$('.saveBtn').show();
+				
+				var x = cnt;
+				cnt++;
+				var url = location.pathname + '/add_expense/' + x;
+				
+				$.get(url, function(data){
+					$('.expenseBox tbody').append(data);
+					$('.datepicker').datepicker({
+						dateFormat: 'dd/mm/yy'
+					});
+				});
+			});
+			
+			$(document).on('change','.employee',function() {
+				var y = $(this).val();
+				var z = $(this).attr('id');
+				$.ajax({
+					url: location.pathname + '/get_employee/' + y,
+					type: 'GET',
+					dataType: 'JSON',
+					success: function(data) {
+						$('tr#'+z).find('.name').html(data.name);
+					}
+				});
+			});
+			
+			$(document).on('change','.expense_type_id',function() {
+				var y = $(this).val();
+				var z = $(this).attr('id');
+				$.ajax({
+					url: location.pathname + '/get_expense_type/' + y,
+					type: 'GET',
+					dataType: 'JSON',
+					success: function(data) {
+						$('tr#'+z).find('.minimum').html(data.minimum_amount);
+						$('tr#'+z).find('.maximum').html(data.maximum_amount);
+					}
+				});
+			})
+		},
+		form_validation: function() {
+			
+		}
+}

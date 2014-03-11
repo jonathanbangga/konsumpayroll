@@ -2,7 +2,7 @@
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
         <p>Select loan types that will be used as a deduction to employees<br>
-          To add loan record for an employee, go to the loans tab in company settings</p>
+          To add loan record for an employee, go to the loans tab of employee</p>
         <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
 		  <?php

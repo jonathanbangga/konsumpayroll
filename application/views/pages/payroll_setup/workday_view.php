@@ -5,7 +5,7 @@
 		$attributes = array('id' => 'jform');
 		echo form_open("/".$this->session->userdata('sub_domain')."/payroll_setup/workday", $attributes);
 		?>
-        <p>Assign and create each payroll group a workday or work schedule. The tardiness, undertime and overtime will be based from here. 
+        <p>Assign and create each payroll group a work schedule. Tardiness, undertime and overtime will be based on this schedule. 
 		 </p>
 <?php
 if($pg_sql->num_rows()>0){
