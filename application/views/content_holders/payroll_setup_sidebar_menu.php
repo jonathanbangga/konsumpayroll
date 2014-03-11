@@ -73,7 +73,7 @@
 	</li>
 	<li <?php if($uri=='withholding_tax'){ echo 'class="selected"'; } ?>>
 		<a href="/<?php echo $this->uri->segment(1); ?>/payroll_setup/withholding_tax">
-			Witholding Tax
+			Withholding Tax
 		</a>
 	</li>
 	<li <?php if($uri=='thirteen_month_pay_settings'){ echo 'class="selected"'; } ?>>
