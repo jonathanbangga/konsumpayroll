@@ -1,7 +1,7 @@
 <div class="main-content">
 <div style="display:none;" class="highlight_message">Message</div>
         <!-- MAIN-CONTENT START -->
-        <p>Specify the compensation you gave to your employees for each different hour type. This will be the basis of computing their regular hourly rate and premium rate. </p>
+        <p>Specify the compensation you give to your employees for each different hour type. This will be the basis of computing their regular hourly rate and premium rate. </p>
          <div class="tbl-wrap">
           <!-- TBL-WRAP START -->
           <table class="tbl">
