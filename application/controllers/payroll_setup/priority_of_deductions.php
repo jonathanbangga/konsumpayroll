@@ -44,12 +44,13 @@ class Priority_of_deductions extends CI_Controller {
 				$sss 			= $this->input->post('sss');
 				$withholding_tax = $this->input->post('withholding_tax');
 				$hdmf 				= $this->input->post('hdmf');
-				$company_loan 		= $this->input->post('company_loan');
-				$sss_salary_loan 	= $this->input->post('sss_salary_loan');
-				$sss_calamity_loan 	= $this->input->post('sss_calamity_loan');
-				$sss_emergency_loan = $this->input->post('sss_emergency_loan');
+			# $company_loan 		= $this->input->post('company_loan');
+			#	$sss_salary_loan 	= $this->input->post('sss_salary_loan');
+			#	$sss_calamity_loan 	= $this->input->post('sss_calamity_loan');
+			#	$sss_emergency_loan = $this->input->post('sss_emergency_loan');
 	
 				// loans 
+				
 				$add_loan_type_id = $this->input->post('loan_type_id');
 				$add_loan_priority	= $this->input->post('add_loan_priority');
 				
