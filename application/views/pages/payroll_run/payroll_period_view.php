@@ -1,22 +1,15 @@
 <?php 
 $attr = array('id'=>'jform');
-echo form_open("/{$this->session->userdata('sub_domain2')}/payroll_run/payroll_period",$attr); 
+echo form_open("/".$this->subdomain."/payroll_run/payroll_period",$attr); 
 // payroll period
 
-if($pp_sql->num_rows()>0){
-	$pp = $pp_sql->row();
-	$pid = $pp->payroll_period_id;
-	$pg_id = $pp->payroll_group_id;
-	$period = $pp->payroll_period;
-	$pfrom = date('m/d/Y',strtotime($pp->period_from));
-	$pto = date('m/d/Y',strtotime($pp->period_to));
-}else{
-	$pid = "";
-	$pg_id = "";
-	$period = "";
-	$pfrom = "";
-	$pto = "";
-}
+
+$pid = ($q) ? $q->payroll_period_id : '';
+$pg_id = ($q) ? $q->payroll_group_id : '';
+$period = ($q) ? $q->payroll_period : '';
+$pfrom = ($q) ? date('d/m/Y',strtotime($q->period_from)) : '';
+$pto = ($q) ? date('d/m/Y',strtotime($q->period_to)) : '';
+
 
 ?>
 <div class="main-content"> 
@@ -32,9 +25,9 @@ if($pp_sql->num_rows()>0){
 					<select class="txtselect" id="payroll_group" name="payroll_group">
 						<option value="">Select Payroll Group</option>
 						<?php
-						foreach($pg_sql->result() as $pg){ ?>
-							<option value="<?php echo $pg->payroll_group_id; ?>" <?php echo ($pg->payroll_group_id==$pg_id)?'selected="selected"':''; ?>><?php echo $pg->name ?></option>
-						<?php	
+						foreach($q1 as $pg){
+							$sel = ($pg->payroll_group_id == $pg_id) ? 'selected="selected"' : '';
+							echo '<option value="'.$pg->payroll_group_id.'" '.$sel.'>'.$pg->name.'</option>';
 						}
 						?>
 					</select>
@@ -45,20 +38,17 @@ if($pp_sql->num_rows()>0){
 				<td>
 					<select class="txtselect" id="payroll_period" name="payroll_period">
 						<?php
-							if($period!=""){
-							$pp_sql = $this->payroll_period_model->get_payroll_calendar($pg_id);
-								foreach($pp_sql->result() as $pp){
-						?>
-							<option value="<?php echo $pp->payroll_calendar_id; ?>" <?php echo ($pp->first_payroll_date==$period)?'selected="selected"':''; ?>><?php echo date("m/d/Y",strtotime($pp->first_payroll_date)); ?></option>	
-						<?php
-								}
-							}else{ ?>
+						if (!$period) {
+							$q2 = $this->payroll_period_model->get_payroll_calendar($pg_id,$this->company_id);
+							foreach($q2 as $pp){
+								$sel = ($pp->first_payroll_date == $period)?'selected="selected"' : '';
+								echo '<option value="'.$pp->payroll_calendar_id.' '.$sel.'">'.date("d/md/Y",strtotime($pp->first_payroll_date)).'</option>';
+							}
+						}else{ ?>
 							<option value="">Select Payroll Period</option>
 						<?php	
 						}
 						?>
-						
-						
 					</select>
 				</td>
 			</tr>

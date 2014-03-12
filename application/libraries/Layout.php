@@ -30,7 +30,7 @@ class Layout {
      * Layout class constructor
      * @param string $layout The layout name to use.
      */
-    public function __construct($layout = 'main')
+    public function __construct($layout = 'default_template')
     {
         $this->_ci =& get_instance();
         $this->_layout = $layout;

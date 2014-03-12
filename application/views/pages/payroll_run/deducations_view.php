@@ -6,12 +6,10 @@
 				<th width="41">&nbsp;</th>
 				<th width="116">Employee ID</th>
 				<th width="176">Employee Name</th>
-				<th width="116">SSS</th>
 				<th width="116">Philheath</th>
+				<th width="116">SSS</th>
+				<th width="176">Withholding Tax</th> 
 				<th width="116">HDMF</th>
-				<th width="121">Tardiness</th>
-				<th width="121">Absences</th>
-				<th width="121">Undertime</th>
 			</tr>
 			<?php 
 			if ($q) {
@@ -21,9 +19,6 @@
 				<td><?php echo $key+1?></td>
 				<td><?php echo $employee->payroll_cloud_id?></td>
 				<td><?php echo $employee->first_name.' '.$employee->middle_name.' '.$employee->last_name?></td>
-				<td></td>
-				<td></td>
-				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
