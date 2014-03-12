@@ -923,6 +923,183 @@
 	}
 	
 	/**
+	 * Total Hourly Rate for Absences
+	 * @param unknown_type $workday
+	 * @param unknown_type $emp_id
+	 */
+	function total_hourly_rate_for_absences($workday, $emp_id){
+		$CI =& get_instance();
+		
+		$mininum_wage_rate = "";
+		$working_hours = "";
+		$no_of_days = "";
+		$regular_hourly_rate = "";
+		
+		// check if workday is workshit schedule
+		$sql_workshift = $CI->db->query("
+			SELECT *
+			FROM `employee_time_in` eti
+			LEFT JOIN workshift_settings ws ON eti.comp_id = ws.company_id
+			LEFT JOIN workshift w ON ws.company_id = w.company_id
+			WHERE eti.emp_id = '{$emp_id}'
+			GROUP BY ws.total_working_days_per_year
+			
+		");
+		
+		$row_workshift = $sql_workshift->row();
+		if($sql_workshift->num_rows() > 0){
+			$sql_workshift->free_result();
+			
+			if($row_workshift->total_working_days_per_year != null || $row_workshift->working_hours != ""){
+				// for workshift
+				$no_of_days = $row_workshift->total_working_days_per_year / 12; // 12 = months
+				$working_hours = $row_workshift->working_hours;
+			}
+		}
+		
+		// ==========================================
+		
+		// check if workday is flexible hours
+		$sql_flexible_hours = $CI->db->query("
+			SELECT *
+			FROM `employee_time_in` eti
+			LEFT JOIN flexible_hours fh ON eti.comp_id = fh.company_id
+			WHERE eti.emp_id = '{$emp_id}'
+			GROUP BY fh.total_days_per_year
+		");
+		
+		$row_flexible_hours = $sql_flexible_hours->row();
+		if($sql_flexible_hours->num_rows() > 0){
+			$sql_flexible_hours->free_result();
+			
+			if($row_flexible_hours->total_days_per_year != null){
+				// for flexible hours
+				$no_of_days = $row_flexible_hours->total_days_per_year / 12; // 12 = months
+				$working_hours = $row_flexible_hours->total_hours_for_the_day;
+			}
+		}
+		
+		if($working_hours != "" && $no_of_days != ""){
+			// get mininum wage rate for employee
+			$sql_minimum_wage_rate = $CI->db->query("
+				SELECT *
+				FROM `basic_pay_adjustment`
+				WHERE emp_id = '{$emp_id}'
+				AND status = 'Active'
+				AND deleted = '0'
+			");
+			
+			$row_minimum_wage_rate = $sql_minimum_wage_rate->row();
+			if($sql_minimum_wage_rate->num_rows() > 0){
+				$sql_minimum_wage_rate->free_result();
+				$effective_date = strtotime(date("Y-m-d",strtotime($row_minimum_wage_rate->effective_date)));
+				$current_date = strtotime(date("Y-m-d"));
+				if($current_date >= $effective_date){
+					$current_basic_pay = $row_minimum_wage_rate->new_basic_pay;
+				}else{
+					$current_basic_pay = $row_minimum_wage_rate->current_basic_pay;
+				}
+				
+				$mininum_wage_rate = $current_basic_pay / $no_of_days;
+			}else{
+				$current_basic_pay = 0;
+				$mininum_wage_rate = 0;
+			}
+			
+			// get regular hours type
+		
+			$regular_hourly_rate = number_format($mininum_wage_rate, 2) / number_format($working_hours);
+		}
+		
+		$workday_val = date("l",strtotime($workday));
+					
+		// check if workday is uniform working days, get the total working days per year
+		$sql_uniform_working_days = $CI->db->query("
+			SELECT *
+			FROM `employee_time_in` eti
+			LEFT JOIN uniform_working_day_settings uwds ON eti.comp_id = uwds.company_id
+			LEFT JOIN uniform_working_day uwd ON uwds.company_id = uwd.company_id
+			WHERE eti.emp_id = '{$emp_id}'
+			AND uwd.working_day = '{$workday_val}'
+			GROUP BY uwd.working_day
+		");
+		
+		// get number of days
+		$row_uniform_working_days = $sql_uniform_working_days->row();
+		if($sql_uniform_working_days->num_rows() > 0){
+			$sql_uniform_working_days->free_result();
+			
+			if($row_uniform_working_days->total_working_days_per_year != null || $row_uniform_working_days->working_hours != ""){
+				// for uniform working days
+				$no_of_days = $row_uniform_working_days->total_working_days_per_year / 12; // 12 = months
+				$working_hours = $row_uniform_working_days->working_hours;
+
+				// get mininum wage rate for employee
+				$sql_minimum_wage_rate = $CI->db->query("
+					SELECT *
+					FROM `basic_pay_adjustment`
+					WHERE emp_id = '{$emp_id}'
+					AND status = 'Active'
+					AND deleted = '0'
+				");
+				
+				$row_minimum_wage_rate = $sql_minimum_wage_rate->row();
+				if($sql_minimum_wage_rate->num_rows() > 0){
+					$sql_minimum_wage_rate->free_result();
+					$effective_date = strtotime(date("Y-m-d",strtotime($row_minimum_wage_rate->effective_date)));
+					$current_date = strtotime(date("Y-m-d"));
+					if($current_date >= $effective_date){
+						$current_basic_pay = $row_minimum_wage_rate->new_basic_pay;
+					}else{
+						$current_basic_pay = $row_minimum_wage_rate->current_basic_pay;
+					}
+					
+					$mininum_wage_rate = $current_basic_pay / $no_of_days;
+				}else{
+					$current_basic_pay = 0;
+					$mininum_wage_rate = 0;
+				}
+				
+				// get regular hours type
+
+				$regular_hourly_rate = number_format($mininum_wage_rate, 2) / number_format($working_hours);
+			}
+		}
+		
+		// get company id
+		$sql_comp_id = $CI->db->query("
+			SELECT *FROM employee
+			WHERE emp_id = '{$emp_id}'
+		");
+		
+		$row_comp_id = $sql_comp_id->row();
+		
+		$rest_day_default = "1";
+		$sql_ordinary_day = $CI->db->query("
+			SELECT *,ot.pay_rate as pay_rate, ot.ot_rate as ot_rate
+			FROM `overtime_type` ot
+			LEFT JOIN hours_type ht ON ot.hour_type_id = ht.hour_type_id
+			WHERE ht.default = '{$rest_day_default}'
+			AND ot.company_id = '{$row_comp_id->company_id}'
+		");
+		
+		$row_ordinary_day = $sql_ordinary_day->row();
+		if($sql_ordinary_day->num_rows() > 0){
+			
+			$sql_ordinary_day->free_result();
+			
+			$ot_rate = $row_ordinary_day->ot_rate;
+			
+			// compute new regular hourly rate
+			#$regular_hourly_rate = (number_format($mininum_wage_rate, 2) / number_format($working_hours));
+			$regular_hourly_rate = (number_format($mininum_wage_rate, 2) ." / ". number_format($working_hours));
+		}
+		
+		$num_of_hours = $regular_hourly_rate;
+		return $num_of_hours;
+	}
+	
+	/**
 	 * Get Holiday Premium
 	 * @param unknown_type $emp_id
 	 */
@@ -1072,7 +1249,7 @@
 						LEFT JOIN uniform_working_day_settings uwds ON eti.comp_id = uwds.company_id
 						LEFT JOIN uniform_working_day uwd ON uwds.company_id = uwd.company_id
 						WHERE eti.emp_id = '{$emp_id}'
-						AND uwd.working_day = 'Friday'
+						AND uwd.working_day = '{$workday_val}'
 						GROUP BY uwd.working_day
 					");
 					
@@ -2257,4 +2434,70 @@
 		}
 		
 		return $row_ini->$withholding_tax_no."-".$row_add->$withholding_tax_no;
+	}
+	
+	/**
+	 * Check Workday for Time Ins
+	 * @param unknown_type $workday
+	 */
+	function check_workday_for_timein($workday, $emp_id){
+		$CI =& get_instance();
+		
+		$sql_timein = $CI->db->query("
+			SELECT *
+			FROM `employee_time_in`
+			WHERE date = '{$workday}'
+			AND emp_id = '{$emp_id}'
+		");
+		
+		if($sql_timein->num_rows() > 0){
+			return "";
+		}else{
+			return "1";
+		}
+	}
+	
+	/**
+	 * Get Days for Timeins Workday
+	 * @param unknown_type $emp_id
+	 */
+	function get_days_timeins_workday($emp_id){
+		$CI =& get_instance();
+		
+		// company payroll period, period from and period to
+		
+		$sql_payroll_period = $CI->db->query("
+			SELECT *
+			FROM `payroll_period` pp
+			LEFT JOIN employee e ON pp.company_id = e.company_id
+			WHERE e.emp_id = '{$emp_id}' 
+		");
+		
+		$row_payroll_payroid = $sql_payroll_period->row();
+		if($sql_payroll_period->num_rows() > 0){
+			
+			$from = strtotime(date('Y-m-d', strtotime($row_payroll_payroid->period_from)));
+			$to = strtotime(date('Y-m-d', strtotime($row_payroll_payroid->period_to)));
+			
+			$total_days = (($to - $from) / (3600 * 24)) + 1;
+			
+			$list_workdays = "";
+			$date_from3 = $row_payroll_payroid->period_from;
+			for($i=0;$i<$total_days;$i++){
+				$workday = date('l',strtotime($date_from3));
+				$get_restday = get_restday($emp_id, $workday);
+				if($get_restday != "1"){
+					$check_timein_table = check_workday_for_timein(date('Y-m-d',strtotime($date_from3)), $emp_id);
+					$total_hourly_rate_for_absences = total_hourly_rate_for_absences(date('Y-m-d',strtotime($date_from3)), $emp_id);
+					if($check_timein_table == "1"){
+						// set employee to absent
+						$list_workdays .= $workday."({$date_from3}) = {$total_hourly_rate_for_absences} <br/>";
+					}
+				}
+				$date_from3 = date('m/d/Y',strtotime($date_from3." +1 day"));
+			}
+			return $list_workdays;
+		}else{
+			return 0;
+		}
 	}

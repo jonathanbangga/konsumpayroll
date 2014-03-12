@@ -57,7 +57,19 @@
             			print view_table_group_amortization($row->emp_loan_id,$row->employee_amortization_schedule_group,$row->loan_amount_child);
 					}
 				}else{
-            		print "<tr class='msg_empt_cont'><td colspan='7' style='text-align:left;'>".msg_empty()."</td></tr>";
+					print '
+						<table style="width:930px;" class="tbl emp_conList">
+			            <tbody><tr>
+			              <th style="width:50px;"></th>
+			              <th>Payroll Date</th>
+			              <th>Principal</th>
+			              <th>Interest</th>
+			              <th>Installment</th>
+			              <th>Loan Balance</th>
+			              <th style="width:170px">Action</th>
+			            </tr>
+					';
+            		print "<tr class='msg_empt_cont'><td colspan='7' style='text-align:left;'>".msg_empty()."</td></tr></tbody></table>";
             	}
 			?>
            

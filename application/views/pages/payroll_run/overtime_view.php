@@ -182,12 +182,16 @@ print get_undertime('78');
 ?>
 <br/>
 <br/>
+Time In Workdays = <br /><br />
+<?php print get_days_timeins_workday('78');?>
+<br/>
+<br/>
 No of days for payroll period =
 <?php
 print no_days_payroll_period('78');
 ?>
-<br/>
-<br/>
+<br />
+<br />
 Days Timein =
 <?php
 $days_timeins = get_days_timeins('78');
