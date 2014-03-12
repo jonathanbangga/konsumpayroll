@@ -12,7 +12,7 @@ class Priority_of_deductions_model extends CI_Model {
     
     public function get_priority_of_deductions($company_id){
     	if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions WHERE company_id='{$this->db->escape_str($company_id)}' AND deleted='0'");
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions WHERE company_id='{$this->db->escape_str($company_id)}' AND status='Active'");
     		$row = $query->row();
     		$query->free_result();
     		return $row;
@@ -54,13 +54,13 @@ class Priority_of_deductions_model extends CI_Model {
      * @param int $name
      * @param int $priority
      */
-    public function save_priority_of_deductions_other($company_id,$loan_type_id,$priority){
+    public function save_priority_of_deductions_other($company_id,$deductions_other_deductions_id,$priority){
     	$fields = array(
     		"company_id"=>$this->db->escape_str($company_id),
-    		"loan_type_id"		=>$this->db->escape_str($loan_type_id),
+    		"deductions_other_deductions_id"		=>$this->db->escape_str($deductions_other_deductions_id),
     		"priority"	=>$this->db->escape_str($priority),
     		"date"		=>idates_now(),
-    		"deleted"	=> '0'
+    		"status"	=> 'Active'
     	);
     	$this->db->insert('priority_of_deductions_other',$fields);
     	return $this->db->insert_id();
@@ -82,7 +82,7 @@ class Priority_of_deductions_model extends CI_Model {
 	public function update_priority_of_deducations($company_id,$philhealth,$sss,$withholding_tax,$hdmf){
 		$where = array(
 			"company_id" => $this->db->escape_str($company_id),
-			"deleted" => "0"
+			"status" => "Active"
 		);
     	$this->db->where($where);
 		$fields = array(
@@ -166,7 +166,7 @@ class Priority_of_deductions_model extends CI_Model {
 	    		"priority"	=>$this->db->escape_str($priority),
 				"loan_type_id"=> $loan_type_id,
 	    		"date"		=>idates_now(),
-	    		"deleted"	=> '0'
+	    		"status"	=> 'Active'
 	    	);
 	    	$this->db->insert('priority_of_deductions_other_loans',$fields);
 	    	return $this->db->insert_id();
@@ -180,7 +180,7 @@ class Priority_of_deductions_model extends CI_Model {
 	    	$fields = array(
 	    		"priority"	=>$this->db->escape_str($priority),
 	    		"date"		=>idates_now(),
-	    		"deleted"	=> '0'
+	    		"status"	=> 'Active'
 	    	);
 	    	$where = array(
 	    		"company_id"=>$this->db->escape_str($company_id),
@@ -223,7 +223,7 @@ class Priority_of_deductions_model extends CI_Model {
      */
     public function get_priority_of_other_loan($company_id){
     	if($company_id){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans WHERE company_id = '{$company_id}' AND deleted='0' ");
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans WHERE company_id = '{$company_id}' AND status='Active' ");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
@@ -233,7 +233,7 @@ class Priority_of_deductions_model extends CI_Model {
 	// REVISE
 	public function get_loan_type($company_id){
 		if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM loan_type WHERE company_id = '{$company_id}' AND deleted='0'  AND status='active'");
+    		$query = $this->db->query("SELECT * FROM loan_type WHERE company_id = '{$company_id}'  AND status='Active'");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
@@ -248,7 +248,7 @@ class Priority_of_deductions_model extends CI_Model {
 	*/
 	public function priority_get_loan_type($company_id){
 		if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans p LEFT JOIN loan_type lt on lt.loan_type_id = p.loan_type_id WHERE p.company_id = '{$company_id}' AND p.deleted='0'  AND  lt.status = 'Active' AND lt.deleted= '0' ");
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other_loans p LEFT JOIN loan_type lt on lt.loan_type_id = p.loan_type_id WHERE p.company_id = '{$company_id}' AND p.status='Active'  AND  lt.status = 'Active' AND lt.status= 'Active' ");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
@@ -263,7 +263,7 @@ class Priority_of_deductions_model extends CI_Model {
 	*/
 	public function priority_list_priority_deductions_other($company_id) {
 		if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other AS p LEFT JOIN deductions_other_deductions d on d.deductions_other_deductions_id = p.deductions_other_deductions_id WHERE p.company_id= '{$company_id}' AND p.deleted='0'");
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other p LEFT JOIN deductions_other_deductions d on d.deductions_other_deductions_id = p.deductions_other_deductions_id WHERE p.company_id= '{$company_id}' AND p.status='Active'");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
