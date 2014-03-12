@@ -46,7 +46,9 @@
 	<li <?php echo ($uri=='expense') ? 'class="selected"' : ''?>>
 	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/expense','Expense')?>
 	</li>
-<li><a href="">Loans &amp; Deductions</a></li>
+	<li <?php echo ($uri=='loan_deduction') ? 'class="selected"' : ''?>>
+	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/loan_deduction/loans','Loans &amp; Deductions')?>
+	</li>
 	<li>
 	<?php echo anchor('/'.$this->uri->segment(1).'/payroll_run/payroll/carry_over','Payroll')?>
 	</li>

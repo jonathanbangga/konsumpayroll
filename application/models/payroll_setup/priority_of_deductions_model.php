@@ -263,7 +263,7 @@ class Priority_of_deductions_model extends CI_Model {
 	*/
 	public function priority_list_priority_deductions_other($company_id) {
 		if(is_numeric($company_id)){
-    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other p LEFT JOIN deductions_other_deductions d on d.deductions_other_deductions_id = p.deductions_other_deductions_id WHERE p.company_id= '{$company_id}' AND p.deleted='0'");
+    		$query = $this->db->query("SELECT * FROM priority_of_deductions_other AS p LEFT JOIN deductions_other_deductions d on d.deductions_other_deductions_id = p.deductions_other_deductions_id WHERE p.company_id= '{$company_id}' AND p.deleted='0'");
     		$result = $query->result();
     		$query->free_result();
     		return $result;
