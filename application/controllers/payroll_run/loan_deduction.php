@@ -60,6 +60,6 @@ class Loan_deduction extends CI_Controller {
 		$data['q'] = $this->ldm->get_loans($this->company_id);
 		
 		$this->layout->set_layout($this->theme);
-		$this->layout->view('pages/payroll_run/loans_view',$data);
+		$this->layout->view('pages/payroll_run/deductions_view',$data);
 	}
 }
